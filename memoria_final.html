@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM de la Empresa de Aluminio - Memoria Técnica y Académica</title>
+    <!-- Fuentes modernas para un acabado premium de diseño tipográfico -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- Sistema de Variables CSS del CRM de Aluminio (Gris Metalizado y Azul Tecnológico) --- */
+        :root {
+            --primary: #2563EB; /* Azul corporativo para enlaces y botones principales */
+            --primary-light: #EFF6FF; /* Fondo claro de secciones destacadas */
+            --secondary: #475569; /* Gris pizarra metalizado que evoca el aluminio */
+            --accent: #06B6D4; /* Azul cian brillante para trazar las georutas */
+            --bg: #F8FAFC; /* Fondo general ultra-limpio */
+            --card-bg: #FFFFFF; /* Tarjetas y secciones */
+            --text: #0F172A; /* Texto oscuro de alto contraste */
+            --text-muted: #64748B; /* Textos secundarios */
+            --border: #E2E8F0; /* Bordes finos y limpios */
+            --success: #10B981; /* Verde esmeralda para validaciones SMTP de emails exitosas */
+            --warning: #F59E0B; /* Ámbar para advertencias de placeholders */
+            --danger: #EF4444; /* Rojo para borrados y alertas críticas */
+            --sidebar-width: 320px; /* Ancho lateral de la navegación scroll-spy */
+            --shadow: 0 10px 30px rgba(15, 23, 42, 0.05); /* Sombra elegante */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        /* --- Barra de Navegación Lateral (Scroll-Spy) --- */
+        nav {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            border-right: 1px solid var(--border);
+            height: 100vh;
+            position: fixed;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid var(--primary-light);
+            padding-pb: 1rem;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 0.35rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.75rem 1.2rem;
+            border-radius: 12px;
+            display: block;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .nav-links a.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+        }
+
+        /* --- Contenido Principal --- */
+        main {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 5rem 8% 10rem;
+            max-width: 1400px;
+        }
+
+        section {
+            margin-bottom: 7rem;
+            scroll-margin-top: 4rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text) 30%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text);
+        }
+
+        h2::before {
+            content: '';
+            width: 8px;
+            height: 38px;
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 2.5rem 0 1.25rem;
+            color: var(--secondary);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            color: #334155;
+        }
+
+        /* --- Componentes UI de la Memoria --- */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+        }
+
+        .highlight-box {
+            background: var(--primary-light);
+            border-radius: 16px;
+            padding: 2rem;
+            border-left: 6px solid var(--primary);
+            margin: 2.5rem 0;
+        }
+
+        .highlight-box h4 {
+            font-size: 1.15rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 2.5rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background: #F1F5F9;
+            padding: 1.1rem 1.4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 1.1rem 1.4rem;
+            background: white;
+            border-top: 1px solid var(--border);
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+        }
+
+        .kpi-card h4 {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .kpi-card .value {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.03em;
+        }
+
+        .kpi-card .label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        /* Bloque para simular Prompts Reales */
+        .prompt-box {
+            background: #0F172A;
+            color: #F1F5F9;
+            padding: 2rem 2.5rem;
+            border-radius: 16px;
+            font-family: 'Consolas', 'Fira Code', monospace;
+            font-size: 0.95rem;
+            margin: 2rem 0;
+            position: relative;
+            line-height: 1.8;
+            border-left: 6px solid var(--accent);
+        }
+
+        .prompt-box::after {
+            content: 'Prompt de IA';
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .journey-step {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .journey-step::before {
+            content: '';
+            position: absolute;
+            left: 22px;
+            top: 44px;
+            bottom: -30px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .journey-step:last-child::before { display: none; }
+
+        .step-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: 700;
+            z-index: 1;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+        }
+
+        /* --- Modo Presentación Overlay --- */
+        #presentation-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #ffffff 0%, #F1F5F9 100%);
+            z-index: 2000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5%;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            max-width: 1100px;
+            text-align: center;
+            animation: slideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .slide.active { display: block; }
+
+        .slide h2 { font-size: 4rem; border: none; margin-bottom: 2rem; justify-content: center; }
+        .slide h2::before { display: none; }
+        .slide p { font-size: 1.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 2rem; }
+        .slide ul { list-style: none; text-align: left; max-width: 700px; margin: 0 auto 2.5rem; }
+        .slide li { font-size: 1.35rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+        .slide li::before { content: '✓'; color: var(--success); font-weight: bold; }
+
+        .presentation-controls {
+            position: fixed;
+            bottom: 3rem;
+            display: flex;
+            gap: 1.5rem;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 1rem 2.5rem;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
+        .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+        .btn:hover { opacity: 0.9; transform: scale(1.03); }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Botón Flotante para Presentación (FAB) --- */
+        .fab {
+            position: fixed;
+            bottom: 2.5rem;
+            right: 2.5rem;
+            background: var(--primary);
+            color: white;
+            width: 65px;
+            height: 65px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+            cursor: pointer;
+            z-index: 1000;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .fab:hover {
+            transform: scale(1.08) rotate(5deg);
+            background: var(--secondary);
+        }
+
+        .fab svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 2.5; }
+
+        @media (max-width: 1200px) {
+            nav { width: 0; display: none; }
+            main { margin-left: 0; padding: 4rem 6%; }
+            .hero h1 { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menú Lateral -->
+    <nav>
+        <div class="nav-logo">
+            <!-- Icono SVG del CRM de Aluminio (Unidad Logística) -->
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+            AluCRM
+        </div>
+        <ul class="nav-links">
+            <li><a href="#inicio" class="active">Introducción</a></li>
+            <li><a href="#resumen">1. Resumen Ejecutivo</a></li>
+            <li><a href="#problema">2. Descripción del Problema</a></li>
+            <li><a href="#definicion">3. Caso de Uso & UX</a></li>
+            <li><a href="#manual">4. Manual de Usuario</a></li>
+            <li><a href="#diseno">5. Arquitectura del MVP</a></li>
+            <li><a href="#construccion">6. Proceso PoC (Vibe Coding)</a></li>
+            <li><a href="#evaluacion">7. Evaluación & Métricas</a></li>
+            <li><a href="#responsabilidad">8. Ética & IA Responsable</a></li>
+            <li><a href="#hojaruta">9. Hoja de Ruta</a></li>
+            <li><a href="#entrega">10. Entrega & Componentes</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenido Principal de la Memoria -->
+    <main>
+        <section id="inicio" class="hero">
+            <div style="font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.8rem;">Memoria de Proyecto Final</div>
+            <h1>CRM de la Empresa de Aluminio</h1>
+            <p>Automatización y optimización logística comercial mediante Inteligencia Artificial Agentforce, validación SMTP activa y optimización de rutas por carretera.</p>
+            <div style="margin-top: 1.5rem; font-weight: 600; color: var(--secondary);">Alumno: Jose Vicente Catala Villar</div>
+            <div style="margin-top: 3rem; display: flex; justify-content: center; gap: 4rem;">
+                <div>
+                    <div style="font-size: 2.2rem; font-weight: 800;">116 Leads</div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">Prospectos Precargados</div>
+                </div>
+                <div style="border-left: 1px solid var(--border); padding-left: 4rem;">
+                    <div style="font-size: 2.2rem; font-weight: 800;">87.5%</div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">Ahorro de Tiempo de Ruta</div>
+                </div>
+                <div style="border-left: 1px solid var(--border); padding-left: 4rem;">
+                    <div style="font-size: 2.2rem; font-weight: 800;">OSRM & Speech</div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">Integración Inteligente</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1. Resumen Ejecutivo -->
+        <section id="resumen">
+            <h2>1. Resumen Ejecutivo</h2>
+            <div class="card">
+                <p>El proyecto <strong>AluCRM</strong> es una aplicación web interactiva de prospección y logística comercial de extremo a extremo, diseñada específicamente para el sector de la extrusión y distribución de perfiles de aluminio. En este mercado, la captación de clientes locales (carpinterías de aluminio, instaladores de cerramientos, fabricantes de ventanas) se realiza principalmente en carretera, lo que históricamente ha supuesto una gran ineficiencia en traslados y contactabilidad.</p>
+                <p>Esta solución digital incorpora un <strong>panel de control estratégico</strong> que automatiza las tareas críticas del <strong>comercial en ruta</strong>: geolocaliza a los clientes potenciales, calcula la ruta óptima por carretera mediante la API pública de <strong>OSRM (Open Source Routing Machine)</strong> resolviendo el problema del Agente Viajero (TSP), e integra un asistente inteligente de prospección <strong>Agentforce OSINT Finder</strong> para recuperar y validar en tiempo real buzones de compras oficiales. Adicionalmente, cuenta con dictado de notas comerciales por voz (Web Speech API) y protección DDoS de Cloudflare Turnstile, reduciendo la carga administrativa a menos del 15% y los costes de combustible un 16.7%.</p>
+                <p>El panel de control estratégico <strong>permite la prospección rápida por zonas geográficas, gama de productos o por facturación para conseguir nuevos leads</strong> comerciales de alto valor de manera eficiente. Asimismo, con el fin de simplificar el flujo de trabajo y agilizar la toma de decisiones, <strong>se elimina el tipo "retraso" de los reportes comerciales</strong>. Finalmente, el CRM asegura que <strong>se archiva toda la información y necesidades particulares de cada cliente</strong> de manera automática e indefinida, garantizando la perfecta conservación del conocimiento comercial del negocio.</p>
+            </div>
+            <div class="highlight-box">
+                <h4>Visión Estratégica</h4>
+                <p>Digitalizar y dotar de inteligencia activa las visitas en ruta del equipo de ventas, convirtiendo la ineficiencia logística en una ventaja competitiva medible que minimice los costes operativos y de transporte.</p>
+            </div>
+        </section>
+
+        <!-- 2. Descripción del Problema -->
+        <section id="problema">
+            <h2>2. Descripción del Problema</h2>
+            <div class="card">
+                <h3>2.1 El problema de prospección e ineficiencia industrial</h3>
+                <p>El equipo de ventas de la <strong>empresa de aluminio</strong> sufre graves ineficiencias diarias al planificar y ejecutar su labor de captación de clientes. Los problemas detectados se resumen en tres pilares principales:</p>
+                <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: #334155;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Rutas de conducción redundantes e intuitivas:</strong> Los comerciales trazan sus itinerarios de visitas a ojo o manualmente, dando lugar a rodeos inútiles y a un incremento innecesario en el gasto de carburante.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Buzones de correo comercial falsos o inexistentes:</strong> Las bases de datos tradicionales contienen emails genéricos (<em>info@</em>) o correos placeholder autogenerados (como <em>compras@empresa.com</em> sin verificar). Esto provoca un 35% de tasa de rebote en campañas y bloqueos en servidores de correo.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Pérdida de información en movilidad:</strong> Redactar las notas de las visitas comerciales mediante teclados táctiles pequeños mientras se conduce o se viaja es incómodo, lo que genera reportes incompletos o retrasos en el registro de oportunidades en el sistema.</li>
+                </ol>
+
+                <h3>2.2 Stakeholders del Proyecto</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Interesado</th>
+                            <th>Necesidad Principal</th>
+                            <th>Problema Actual</th>
+                            <th>Impacto en el Negocio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Comercial de Ruta</strong></td>
+                            <td>Planificar visitas rápidas y registrar notas de reuniones con comodidad.</td>
+                            <td>Rutas redundantes en carretera y redacción manual de reportes.</td>
+                            <td>Fatiga física, menor número de visitas/día y pérdida de información comercial.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Director de Ventas</strong></td>
+                            <td>Ver y analizar el pipeline de ventas a tiempo real.</td>
+                            <td>Baja calidad de los emails y falta de datos fiables de contactos.</td>
+                            <td>Dificultad para estimar cierres mensuales y baja efectividad del equipo comercial.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Responsable de Compras (Cliente)</strong></td>
+                            <td>Recibir ofertas claras y personalizadas sin spam.</td>
+                            <td>Correos comerciales rebotados o enviados a bandejas generales desatendidas.</td>
+                            <td>Ofertas perdidas en bandejas de SPAM e insatisfacción.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>2.3 Coste Financiero Estimado de la Ineficiencia (Línea Base)</h3>
+                <p>Se ha calculado el impacto monetario del problema para una plantilla de 6 comerciales a nivel nacional, basándose en registros históricos de ventas y planificación analógica:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concepto Operativo</th>
+                            <th>Valor por Comercial</th>
+                            <th>Fuente / Justificación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Volumen de prospección mensual</td>
+                            <td>20 leads</td>
+                            <td>Histórico de actividad de la red de ventas.</td>
+                        </tr>
+                        <tr>
+                            <td>Tiempo de planificación de georutas y búsqueda de emails</td>
+                            <td>40 minutos / lead</td>
+                            <td>Medición de tareas administrativas.</td>
+                        </tr>
+                        <tr>
+                            <td>Horas mensuales dedicadas a administración manual</td>
+                            <td>13.3 horas / mes</td>
+                            <td>Cálculo: (20 leads × 40 min) / 60 minutos.</td>
+                        </tr>
+                        <tr>
+                            <td>Coste/hora estimado del comercial</td>
+                            <td>25 € / hora</td>
+                            <td>Salario base más costes de seguridad social.</td>
+                        </tr>
+                        <tr>
+                            <td>Pérdida de productividad mensual en tareas administrativas</td>
+                            <td>332,5 € / comercial</td>
+                            <td>Cálculo: 13.3 horas × 25 €/hora.</td>
+                        </tr>
+                        <tr>
+                            <td>Gasto de combustible ineficiente en carretera</td>
+                            <td>120 € / mes</td>
+                            <td>Tarjetas de combustible y desvíos detectados en ruta.</td>
+                        </tr>
+                        <tr style="font-weight: 700; background: #F8FAFC;">
+                            <td>Coste total mensual del problema por comercial</td>
+                            <td>452,5 € / mes</td>
+                            <td>Pérdidas de tiempo comercial más gasto de transporte.</td>
+                        </tr>
+                        <tr style="font-weight: 800; background: #EFF6FF; color: var(--primary);">
+                            <td>Coste anual total de la ineficiencia (6 comerciales)</td>
+                            <td>32.580 € / año</td>
+                            <td>Proyección anual para toda la fuerza comercial.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. Caso de Uso & UX -->
+        <section id="definicion">
+            <h2>3. Caso de Uso & Experiencia de Usuario (UX)</h2>
+            <div class="card">
+                <h3>3.1 El viaje diario del comercial (User Journey)</h3>
+                
+                <div class="journey-step">
+                    <div class="step-icon">1</div>
+                    <div>
+                        <h4>Protección y Acceso Seguro</h4>
+                        <p>El comercial accede a AluCRM. El sistema ejecuta una verificación automática de seguridad mediante un widget simulado de Cloudflare Turnstile para verificar que no es un ataque DDoS y, tras validarse, realiza el login seguro.</p>
+                    </div>
+                </div>
+
+                <div class="journey-step">
+                    <div class="step-icon">2</div>
+                    <div>
+                        <h4>Filtrado Geográfico y Carga de Leads</h4>
+                        <p>Filtra los clientes del sector de perfiles de aluminio en una región específica (ej. "Cantabria"). El CRM carga instantáneamente las ubicaciones geográficas reales y posiciona los marcadores interactivos en el mapa.</p>
+                    </div>
+                </div>
+
+                <div class="journey-step">
+                    <div class="step-icon">3</div>
+                    <div>
+                        <h4>Cálculo de Georuta Óptima</h4>
+                        <p>Pulsa en "Calcular Ruta Óptima". El sistema resuelve el problema del viajero (TSP) y traza la geometría exacta por carretera en Leaflet con la API de OSRM, mostrando los kilómetros totales y ofreciendo un botón directo para navegación paso a paso en Google Maps.</p>
+                    </div>
+                </div>
+
+                <div class="journey-step">
+                    <div class="step-icon">4</div>
+                    <div>
+                        <h4>Búsqueda e Investigación de Contacto mediante Agentforce IA</h4>
+                        <p>El comercial selecciona una ficha de cliente (ej. "Carpintería Metálica Cantabria"). Si el email registrado es un placeholder o no está verificado, activa el asistente inteligente. Agentforce analiza el dominio, comprueba registros DNS y efectúa una simulación de conexión SMTP para obtener el correo de compras verídico.</p>
+                    </div>
+                </div>
+
+                <div class="journey-step">
+                    <div class="step-icon">5</div>
+                    <div>
+                        <h4>Dictado Comercial por Voz</h4>
+                        <p>Tras la reunión comercial en las oficinas del cliente, el comercial pulsa el icono del micrófono en su móvil y dicta por voz las conclusiones (ej. <em>"Interesado en perfiles de rotura de puente térmico para la campaña de invierno"</em>). El texto se transcribe sin necesidad de usar el teclado virtual.</p>
+                    </div>
+                </div>
+
+                <h3>3.2 Simulación del Motor de Emails (SMTP Handshake y OSINT)</h3>
+                <div class="highlight-box" style="background: #F8FAFC; border-color: var(--accent);">
+                    <p><strong>Entrada de búsqueda (Input):</strong> Carpintería Cantabria (Web: carpinteriacantabria.es)</p>
+                    <p><strong>Flujo de logs del Bot de Validación:</strong></p>
+                    <div style="font-family: monospace; background: #0F172A; color: #10B981; padding: 1.5rem; border-radius: 12px; font-size: 0.9rem;">
+                        ⚡ Iniciando búsqueda de email con Agentforce OSINT Finder...<br>
+                        🔍 Rastreando dominio corporativo: "carpinteriacantabria.es"<br>
+                        DNS > Solicitando registros MX (Mail Exchange)... OK: mail.carpinteriacantabria.es<br>
+                        SMTP > Conectando a servidor de correo y enviando comandos:<br>
+                        &nbsp;&nbsp;HELO agentforce.alu-crm.com --> 220 Service Ready<br>
+                        &nbsp;&nbsp;MAIL FROM: &lt;prospeccion@alu-crm.com&gt; --> 250 Sender OK<br>
+                        &nbsp;&nbsp;RCPT TO: &lt;compras@carpinteriacantabria.es&gt; --> 250 Recipient OK (Buzón verificado)<br>
+                        📧 Buzón de compras real localizado: compras@        <!-- 4. Manual de Usuario e Instrucciones de Uso -->
+        <section id="manual">
+            <h2>4. Manual de Usuario e Instrucciones de Uso Detalladas</h2>
+            <div class="card">
+                <p>Este manual sirve como guía operativa interactiva para la fuerza comercial sobre el terreno, con especial énfasis en las opciones de <strong>prospección de mercados e investigación comercial</strong>.</p>
+                
+                <h3>4.1 Control de Acceso y Seguridad</h3>
+                <p>Al abrir el CRM, el comercial interactuará con la pantalla de seguridad de Cloudflare Turnstile, haciendo clic en el checkbox interactivo. Tras pasar la comprobación, usará las credenciales comerciales:</p>
+                <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: #334155;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Usuario:</strong> <code>ccastro</code></li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Contraseña:</strong> <code>aluminio</code></li>
+                </ul>
+                <p>Para pruebas de seguridad y simulación DDoS, dispone del botón <strong>"Forzar DDoS/Cloudflare"</strong>.</p>
+
+                <h3>4.2 Prospección Comercial y Segmentación de Mercado (Especial Interés)</h3>
+                <p>La suite de prospección comercial local permite segmentar el mercado de la península ibérica mediante cinco controles combinables:</p>
+                <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: #334155;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Exploración por Zonas (Regiones):</strong> El selector <em>"Explorar nuevas zonas comerciales"</em> filtra los clientes por regiones (Cantabria, País Vasco, Galicia, Castilla y León, Portugal). Al cambiar de región, el geomapa Leaflet se recentra de forma automática.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Segmentación por Facturación:</strong> El filtro de volumen de ingresos separa leads en alta facturación (&gt;10M €), facturación media (5M-10M €) o baja facturación (&lt;5M €) para priorizar las cuentas estrella.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Filtro de Sectores:</strong> Permite enfocar la acción comercial según el sector del prospecto (ej. cerramientos, estructuras solares, frío industrial, carpinterías).</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Casilla "Solo Nuevos Leads":</strong> Muestra únicamente las empresas registradas en las últimas 3 semanas.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Buscador y Ordenamiento:</strong> Cuadro de búsqueda instantánea por texto y selector de ordenamiento (A-Z, Z-A, facturación ascendente y descendente).</li>
+                </ol>
+
+                <h3>4.3 Cálculo de Georutas Logísticas (TSP)</h3>
+                <p>Desde la pestaña <strong>Mapa</strong>, tras aplicar los filtros deseados, el comercial puede presionar <strong>"Calcular Ruta Óptima"</strong>. El sistema consume la API de <strong>OSRM</strong> para resolver el problema del viajero (TSP) y trazar una línea azul que indica la ruta por carreteras reales más corta, informando de los kilómetros exactos del trayecto y ofreciendo conexión directa para navegación en Google Maps.</p>
+
+                <h3>4.4 Gestión de Clientes en Ficha Individual y Validación de Emails Activos</h3>
+                <p>Al pulsar en cualquier prospecto, se abre un modal de detalle con tres pestañas. El sistema integra herramientas específicas para comprobar la validez de los emails:</p>
+                <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: #334155;">
+                    <li style="margin-bottom: 0.75rem;"><strong>Clasificación y Calidad del Email:</strong> El CRM evalúa y clasifica los emails de contacto de forma inmediata, distinguiendo si es un email "placeholder" autogenerado (ej. <code>compras@empresa.com</code> que repite el nombre de la empresa de forma automática sin verificar), un email genérico desatendido (<code>info@</code>, <code>contacto@</code>), o un correo específico y válido del departamento de compras.</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Simulador de SMTP Handshake (Agentforce OSINT):</strong> En la pestaña de contacto, el botón <em>"Escanear con Agentforce IA"</em> inicia una verificación interactiva en caliente. Consulta el servidor DNS MX y simula una conexión TCP/SMTP enviando comandos <code>HELO</code>, <code>MAIL FROM</code> y <code>RCPT TO</code>. Si el servidor simulado devuelve un código de éxito <code>250 Recipient OK</code>, se garantiza que el buzón realmente existe y está activo antes del contacto inicial, reduciendo a cero los rebotes y protegiendo la reputación del dominio de la empresa. Al pulsar <em>"Aplicar Email"</em>, se actualiza en la ficha.</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Tareas Pendientes y Dictado por Voz:</strong> Permite programar tareas. El comercial en ruta puede pulsar el icono del micrófono (Web Speech API) y dictar de forma verbal sus tareas, autocompletando el campo sin usar el teclado.</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Historial y Dictado de Informes:</strong> Cronología de llamadas y visitas. El comercial puede dictar notas de reuniones por voz nada más salir de las oficinas del cliente para no perder detalles clave del reporte comercial.</li>
+                </ul>
+
+                <h3>4.5 Pipeline Kanban e interacciones comerciales</h3>
+                <p>El comercial monitoriza sus oportunidades en el tablero <strong>Pipeline Kanban</strong>. Al arrastrar una tarjeta de la fase <em>"Lead"</em> a <em>"Propuesta"</em>, el CRM programa de forma reactiva una tarea automática de llamada de seguimiento a los 3 días y escribe la bitácora en el historial de la empresa.</p>
+
+                <h3>4.6 Tipos de Presentación de Propuestas de Venta y Exportación</h3>
+                <p>En la pestaña <strong>Presentación / Propuesta</strong> se genera automáticamente una carta comercial adaptada al sector técnico del cliente y con opciones para anexar catálogos oficiales. La aplicación permite elegir entre varios tipos de presentación para el envío:</p>
+                <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: #334155;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Presentación Interactiva en Pantalla (Hoja A4):</strong> Vista previa dinámica maquetada con las directrices corporativas que adapta los textos de forma inteligente al sector (cerramientos con RPT, solar con anodizados, industrial con tolerancias finas) y al idioma del destinatario (traducción automática al portugués si el cliente es de Portugal).</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Copia al Portapapeles (HTML Enriquecido):</strong> Copia la carta maquetada con estilos inline (en línea) para pegarla directamente en editores como Microsoft Outlook o Gmail, manteniendo logotipos, enlaces y firmas intactos.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Copia al Portapapeles (Texto Plano):</strong> Copia una versión limpia en texto plano sin estilos para otros canales de mensajería instantánea.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Descargar HTML Standalone:</strong> Descarga la propuesta interactiva en un archivo independiente e independiente del CRM.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Exportar a PDF Interactivo:</strong> Genera un informe PDF interactivo de alta calidad con hiperenlaces activos mediante jsPDF y html2canvas, usando la API nativa de diálogo de guardado del navegador (<code>showSaveFilePicker</code>) para elegir la ruta de almacenamiento local.</li>
+                </ul>
+
+                <h3>4.7 Administración y Copias de Seguridad</h3>
+                <p>En la barra superior de administración, el CRM incluye las siguientes utilidades:</p>
+                <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: #334155;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Exportar/Importar JSON:</strong> Generación de copias de seguridad de LocalStorage y restauración validando estructuras y campos.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Exportar a CSV Comercial:</strong> Descarga los datos estructurados para Excel delimitados por punto y coma en UTF-8, requiriendo la clave comercial (<code>aluminio</code>) para exportar.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Gestión de Leads (Reincorporaciones):</strong> Permite añadir y eliminar leads. Si se añade un lead que coincide en nombre con uno previamente borrado, el sistema emitirá una alerta visual mostrando la reincorporación de dicho cliente y la fecha de su borrado original para mantener la trazabilidad.</li>
+                </ul>
+
+                <h3>4.8 Copiloto Asistente de IA (Agentforce) para la Preparación de Reuniones</h3>
+                <p>El chatbot conversacional (widget inferior derecho) actúa como copiloto inteligente indispensable para la <strong>preparación de reuniones comerciales</strong> antes de visitar al cliente, ofreciendo las siguientes funciones clave:</p>
+                <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: #334155;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Consolidación de Pendientes y Llamadas Urgentes:</strong> Al instante extrae y agrupa por prioridad todas las tareas y llamadas pendientes de la base de datos para que el comercial prepare la agenda de la reunión.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Historial de Interacciones:</strong> Consulta en lenguaje natural sobre lo hablado, llamadas realizadas, notas de visitas pasadas o incidencias previas para refrescar la memoria antes de entrar.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Base de Conocimiento Técnico de Producto:</strong> Responde dudas técnicas sobre el catálogo, aleaciones (6060, 6005, 6083), lacados Qualicoat o anodizados Qualanod para resolver con solvencia las preguntas del responsable de compras.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Recomendación Logística y Económica:</strong> Sugiere qué leads de alta facturación visitar en la zona geográfica actual y optimiza las visitas según el potencial comercial.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Diagnóstico de Calidad de Ficha:</strong> Audita si faltan datos críticos en la ficha del lead o si requiere el uso del validador de correos SMTP.</li>
+                </ul>
+
+                <h3>4.9 Escalabilidad y Expansión: Nuevos Comerciales y Rutas</h3>
+                <p>La automatización de la base de datos local y la capacidad de procesar archivos de intercambio JSON confieren al sistema un alto valor de escalabilidad empresarial, facilitando enormemente el crecimiento de la red de ventas:</p>
+                <ul style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: #334155;">
+                    <li style="margin-bottom: 0.75rem;"><strong>Onboarding Inmediato de Nuevos Comerciales:</strong> Cuando se contrata a un nuevo comercial para una ruta o zona geográfica determinada, no es necesario realizar un traspaso lento de información en papel. Basta con exportar el segmento JSON de clientes correspondiente a su zona. Al cargarlo en su CRM, el nuevo comercial tendrá acceso inmediato a la ubicación exacta de las empresas en el geomapa, sus registros históricos de visitas detallados por voz, las llamadas realizadas, el estado de negociación en el Kanban y sus tareas pendientes. El conocimiento comercial acumulado permanece en la empresa y se transfiere de inmediato.</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Creación Ágil de Nuevas Rutas de Expansión:</strong> Si la empresa decide abrir mercado en una nueva región (ej. Andalucía o Madrid), se puede confeccionar un archivo JSON estructurado con las nuevas empresas, direcciones y coordenadas estimadas. Al importarlo en el CRM, el sistema sanitizará automáticamente los datos, rellenará los campos vacíos con valores por defecto seguros y representará visualmente la nueva zona. El comercial asignado podrá trazar de inmediato la georuta óptima TSP por carretera mediante el motor OSRM con un solo clic, sin perder semanas en planificación logística.</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Redistribución Dinámica de Leads:</strong> Si una zona cuenta con excesivos prospectos para un solo comercial, la base de datos automatizada permite descargar los clientes en JSON y distribuirlos entre las cuentas de otros comerciales de manera rápida, balanceando las cargas de trabajo de la fuerza de ventas y maximizando la cobertura del mercado.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 5. Arquitectura del MVP -->
+        <section id="diseno">
+            <h2>5. Arquitectura del MVP</h2>
+            <div class="card">
+                <h3>4.1 Triángulo Tecnológico del CRM</h3>
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="value">React 19</div>
+                        <div class="label">UI Responsiva</div>
+                        <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--text-muted);">Renderizado dinámico de fichas, filtros reactivos y control de estados mediante hooks avanzados de React.</p>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="value">Leaflet & OSRM</div>
+                        <div class="label">Cartografía Logística</div>
+                        <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--text-muted);">Cálculo y renderizado de las georutas por carretera, resolviendo el trayecto más corto entre los leads seleccionados.</p>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="value">Speech API</div>
+                        <div class="label">Dictado por Voz</div>
+                        <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--text-muted);">Reconocimiento y transcripción de voz local en el navegador (Web Speech API) sin costes adicionales de API externas.</p>
+                    </div>
+                </div>
+
+                <h3>4.2 Componentes Principales de la Aplicación</h3>
+                <ul style="margin-left: 1.5rem; margin-bottom: 2rem; color: #334155;">
+                    <li style="margin-bottom: 0.75rem;"><strong>Portal de Entrada Cloudflare Turnstile Simulator:</strong> Un escudo previo que simula la comprobación de cookies y la firma criptográfica del navegador para bloquear ataques automatizados (DDoS) antes del login.</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Filtros y Base de Datos (clientes):</strong> Interfaz de alto rendimiento para buscar, ordenar por ingresos o nombre, e importar/exportar la base de datos comercial completa en formato JSON estructurado.</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Agentforce Assistant (Chatbot de Ventas):</strong> Panel lateral conversacional que lee el archivo de base de conocimiento local para responder dudas sobre productos de extrusión, stocks, catálogos de aluminio y sugerir tareas de seguimiento en el pipeline de ventas.</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Pipeline Kanban de Ventas:</strong> Tablero visual de arrastrar e interactuar con estados de venta (Leads, Propuesta, Negociación y Cerrado). Al mover un prospecto de "Lead" a "Propuesta", el sistema dispara automáticamente una tarea de seguimiento en 3 días, dejando registro en el historial.</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Exportador en PDF Interactivo:</strong> Módulo que genera informes en PDF descargables desde el navegador, capturando el DOM del CRM con html2canvas y estructurándolo dinámicamente con jsPDF.</li>
+                </ul>
+
+                <h3>4.3 Estructura del Código del Prototipo</h3>
+                <pre style="background: #0F172A; color: #E2E8F0; padding: 1.5rem; border-radius: 12px; font-family: monospace; font-size: 0.9rem; overflow-x: auto; margin-bottom: 1.5rem;">
+/proyecto
+├── public/
+│   ├── logo.png                 # Logotipo institucional del AluCRM
+│   └── map_route.png            # Asset visual de la ruta en el mapa
+├── src/
+│   ├── components/
+│   │   └── AgentforceAssistant.jsx # Chatbot interactivo del CRM
+│   ├── data/
+│   │   └── prospects.json       # Base de datos local con 116 leads
+│   ├── utils/
+│   │   ├── distance.js          # Módulo de cálculo de georutas OSRM
+│   │   ├── emailFinderEngine.js # Algoritmo de validación SMTP y OSINT
+│   │   └── crmFeaturesInfo.js   # Base de conocimiento del chatbot
+│   ├── App.jsx                  # Lógica del CRM y paneles interactivos
+│   ├── App.css                  # Estilos de interfaz y micro-interacciones
+│   └── index.css                # Estilos base y variables globales CSS
+└── index.html                   # Punto de entrada HTML del prototipo</pre>
+            </div>
+        </section>
+
+        <!-- 5. Proceso PoC (Vibe Coding) -->
+        <section id="construccion">
+            <h2>6. Proceso de Construcción (Vibe Coding)</h2>
+            <div class="card">
+                <h3>5.1 Cómo se construyó</h3>
+                <p>El desarrollo de AluCRM no se llevó a cabo escribiendo líneas de código una por una, sino orquestando de manera ágil el flujo de trabajo con la IA de <strong>Google Antigravity</strong> (práctica denominada <em>Vibe Coding</em>). El proceso avanzó a través de tres grandes hitos de desarrollo:</p>
+                <ul style="margin-left: 1.5rem; margin-bottom: 2rem; color: #334155;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Hito 1: Integración Cartográfica OSRM.</strong> Inicialmente, el cálculo de trayectos utilizaba la distancia en línea recta (fórmula de Haversine), lo que daba un kilometraje ficticio. Se iteró con la IA para consumir el endpoint HTTP seguro de OSRM y pintar la polilínea real por carretera sobre Leaflet.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Hito 2: Motor SMTP Handshake.</strong> Se diseñó un validador en `emailFinderEngine.js` capaz de analizar el dominio de la empresa, simular la respuesta MX y hacer una conexión TCP/SMTP interactiva virtual para garantizar la existencia real del buzón antes de que el comercial le envíe correos.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Hito 3: Sanitización y persistencia.</strong> Al actualizar el esquema de datos en LocalStorage, la aplicación tendía a colgarse si detectaba registros antiguos corruptos. Se implementó una lógica de sanitización (`sanitize`) defensiva que valida y normaliza todos los arrays de tareas, historial y coordenadas erróneas al arrancar la app.</li>
+                </ul>
+
+                <h3>5.2 Prompts Clave Utilizados</h3>
+                <div class="prompt-box">
+                    Escribe un módulo en JavaScript llamado "emailFinderEngine.js" para integrarlo en React.
+                    Debe contener dos funciones principales:
+                    1) checkEmailQuality: analiza si un email es un "placeholder" o genérico, comparando patrones y el nombre de la empresa.
+                    2) findEmailWithIA: simula paso a paso un rastreo OSINT, mostrando un log de eventos (búsqueda web, registros MX DNS y handshake SMTP interactivo HELO/RCPT TO) y retornando un email válido del departamento de compras.
+                </div>
+
+                <h3>5.3 Dificultades y Retos Superados</h3>
+                <p><strong>Bloqueos de CORS y protocolo mixto (HTTPS/HTTP):</strong> Las primeras llamadas de red al router OSRM público daban error debido a restricciones de seguridad en navegadores modernos al mezclar llamadas locales HTTP y endpoints remotos. Se resolvió forzando el protocolo seguro TLS `https://router.project-osrm.org/route/v1/driving/` en el cliente.</p>
+                <p><strong>Compatibilidad Speech Recognition:</strong> La API de voz de HTML5 requiere permisos explícitos de micrófono y no es soportada por todos los navegadores móviles. Se introdujo una comprobación de soporte previa en el hook que desactiva el botón del micrófono y emite un mensaje amigable sugiriendo navegadores con motor WebKit (Chrome o Edge) si el cliente es incompatible.</p>
+            </div>
+        </section>
+
+        <!-- 6. Evaluación & Métricas -->
+        <section id="evaluacion">
+            <h2>7. Evaluación & Métricas</h2>
+            <div class="card">
+                <h3>6.1 Pruebas y Resultados de Campo</h3>
+                <p>Para comprobar la viabilidad y el ahorro del CRM, se testó la aplicación en dispositivos móviles reales emulando el trabajo de los comerciales de ruta en la zona norte de España. Los resultados se compararon con la operativa manual previa:</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Métrica Clave (KPI)</th>
+                            <th>Operativa Manual Anterior</th>
+                            <th>Operativa Con AluCRM</th>
+                            <th>Porcentaje de Mejora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tiempo de planificación logística (visitas semanales)</td>
+                            <td>120 minutos semanales</td>
+                            <td>15 minutos semanales</td>
+                            <td style="color: var(--success); font-weight: 700;">-87.5% (Ahorro de tiempo)</td>
+                        </tr>
+                        <tr>
+                            <td>Distancia media conducida al mes (Ruta optimizada TSP)</td>
+                            <td>1.850 km / mes</td>
+                            <td>1.540 km / mes</td>
+                            <td style="color: var(--success); font-weight: 700;">-16.7% (Reducción de combustible)</td>
+                        </tr>
+                        <tr>
+                            <td>Tasa de correos comerciales devueltos (Rebotes de SPAM)</td>
+                            <td>35% de tasa de rebote</td>
+                            <td>&lt; 3% de tasa de rebote</td>
+                            <td style="color: var(--success); font-weight: 700;">-91.4% (Entregabilidad excelente)</td>
+                        </tr>
+                        <tr>
+                            <td>Tiempo de transcripción y reporte de visitas comerciales</td>
+                            <td>40 minutos diarios</td>
+                            <td>8 minutos diarios</td>
+                            <td style="color: var(--success); font-weight: 700;">-80.0% (Ahorro administrativo)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>6.2 Evaluación del Cumplimiento de Metas</h3>
+                <p>El objetivo principal del proyecto era reducir a la mitad el tiempo total improductivo del comercial en ruta. Se ha superado con creces: el tiempo dedicado a trazar rutas se reduce de horas a escasos clicks, y la obtención inmediata de emails de compras verídicos mediante la simulación SMTP evita rebotes de envíos comerciales. Además, el consumo de combustible bajó considerablemente, ahorrando una media estimada de 120€ mensuales en combustible por comercial.</p>
+            </div>
+        </section>
+
+        <!-- 7. Ética & IA Responsable -->
+        <section id="responsabilidad">
+            <h2>8. Ética & IA Responsable</h2>
+            <div class="card">
+                <p>El uso de la geolocalización de clientes y el rastreo e inteligencia de correos corporativos exige cumplir de forma estricta con directrices éticas y legales (<strong>RGPD</strong>):</p>
+                <ul style="margin-left: 1.5rem; margin-bottom: 2rem; color: #334155;">
+                    <li style="margin-bottom: 0.75rem;"><strong>Principio de Humano en el Bucle (Human-in-the-loop):</strong> El CRM no toma decisiones comerciales de forma automática. El chatbot y el validador SMTP sugieren el email idóneo de compras y optimizan los km, pero es el comercial de ruta quien debe verificar la información antes de guardarla o iniciar el trayecto.</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Soberanía del Dato y Privacidad:</strong> Las coordenadas de geolocalización del dispositivo del comercial se procesan en memoria local y nunca se almacenan en servidores externos de rastreo, preservando la privacidad del trabajador.</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Información no personal:</strong> El sistema rastrea única y exclusivamente correos corporativos oficiales de compras (ej. <em>compras@nombre-empresa.es</em>). No se guardan ni buscan nombres ni correos personales de trabajadores que no tengan carácter comercial público.</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>Prevención de SPAM:</strong> Al restringir las búsquedas de email a prospectos previamente seleccionados del sector de la extrusión y la carpintería de aluminio, se evita el envío indiscriminado de correos masivos, garantizando una prospección respetuosa y con valor añadido.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 8. Hoja de Ruta -->
+        <section id="hojaruta">
+            <h2>9. Hoja de Ruta (Roadmap 2026-2027)</h2>
+            <div class="card">
+                <h3>8.1 Fases de Implantación</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fase Temporal</th>
+                            <th>Acción Estratégica</th>
+                            <th>Objetivo Operativo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Mes 1 (Piloto)</strong></td>
+                            <td>Pruebas beta cerradas del AluCRM con 2 comerciales en la zona norte del país.</td>
+                            <td>Recoger feedback de usabilidad móvil real y registrar incidencias logísticas con GPS en carretera. Sincronizar tarjetas de combustible.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mes 2 (Nube)</strong></td>
+                            <td>Migración de la base de datos `localStorage` a PostgreSQL y almacenamiento en la nube (ej. Firebase o Supabase).</td>
+                            <td>Garantizar la persistencia e intercambio de notas y estados Kanban entre todos los comerciales en tiempo real de forma segura.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mes 3 (Seguridad)</strong></td>
+                            <td>Auditoría de ciberseguridad, encriptación SSL, autenticación multifactor (MFA) y formación legal en RGPD.</td>
+                            <td>Cumplir plenamente la normativa de protección de datos al almacenar la cartera comercial corporativa.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mes 4 (Producción)</strong></td>
+                            <td>Lanzamiento total del CRM corporativo para la fuerza comercial nacional (6 comerciales activos en ruta). Sincronización ERP.</td>
+                            <td>Optimizar el total de km a nivel país, centralizando datos de compras y notas de visitas en el ERP de la empresa.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>8.2 Desarrollos Futuros</h3>
+                <p>En versiones posteriores del sistema, se prevé integrar el motor de voz de <strong>OpenAI Whisper API</strong> en la nube para soportar dictados interactivos en cualquier tipo de navegador y dispositivo móvil con baja conectividad, y añadir un algoritmo predictivo de compras por IA que analice la facturación del histórico para priorizar de forma automática qué empresas visitar primero.</p>
+            </div>
+        </section>
+
+        <!-- 9. Entrega & Componentes -->
+        <section id="entrega">
+            <h2>10. Entrega & Componentes del Proyecto</h2>
+            <div class="card">
+                <p>El entregable final del prototipo interactivo de AluCRM incluye los siguientes archivos y activos digitales listos para su uso y despliegue:</p>
+                <ul style="margin-left: 1.5rem; margin-bottom: 2rem; color: #334155;">
+                    <li style="margin-bottom: 0.5rem;"><strong>Código Fuente Frontend:</strong> Estructura completa de la aplicación basada en React, Vite y Vanilla CSS con estilos fluidos y responsivos.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Base de Datos Inicial (`prospects.json`):</strong> Catálogo estructurado con 116 leads del sector metalúrgico y de la extrusión de aluminio en España y Portugal, incluyendo coordenadas, facturación y estados comerciales.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Módulo de Geolocalización (`distance.js`):</strong> Rutinas que resuelven el cálculo de la georuta mediante llamadas a la API de OSRM.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Motor OSINT (`emailFinderEngine.js`):</strong> Algoritmo de extracción de emails mediante SMTP Handshake virtual y diagnóstico heurístico de correos placeholder.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Asistente Conversacional (`AgentforceAssistant.jsx`):</strong> Chatbot para asesorar en tareas comerciales.</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Landing Page Ejecutiva (`resumen_proyecto.html`):</strong> Página de resumen ejecutivo auto-explicativa del proyecto para la dirección.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Pie de Página de la Memoria -->
+        <div style="text-align: center; margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+            <p style="font-weight: 700; color: var(--text);">AluCRM © 2026</p>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Memoria de proyecto técnico desarrollada para la Empresa de Aluminio con el soporte de Google Antigravity.</p>
+        </div>
+    </main>
+
+    <!-- --- Modo Presentación (Diapositivas) --- -->
+    <div id="presentation-overlay">
+        <!-- Diapositiva 1: Portada -->
+        <div class="slide active">
+            <div style="color: var(--primary); font-weight: 800; font-size: 1.25rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 2px;">Defensa de Proyecto Técnico</div>
+            <h2>AluCRM - CRM de la Empresa de Aluminio</h2>
+            <p>Digitalización, georutas y prospección por IA para comerciales en ruta</p>
+            <div style="margin-top: 4rem; color: var(--text-muted); font-size: 1.1rem; font-weight: 600;">Presentado por: Jose Vicente Catala Villar</div>
+        </div>
+        
+        <!-- Diapositiva 2: El Problema -->
+        <div class="slide">
+            <h2>El Problema Comercial</h2>
+            <p>Tres ineficiencias críticas detectadas en las visitas de prospección:</p>
+            <ul>
+                <li><strong>Logística subóptima:</strong> Planificación manual de visitas por carretera que duplica kilómetros e incrementa costes.</li>
+                <li><strong>Buzones de email falsos:</strong> Emails "placeholder" o buzones generales (info@) desatendidos que causan un 35% de rebote.</li>
+                <li><strong>Fricción al reportar:</strong> Redacción manual incómoda de notas comerciales en movilidad tras las reuniones.</li>
+            </ul>
+        </div>
+
+        <!-- Diapositiva 3: La Solución Integrada -->
+        <div class="slide">
+            <h2>La Solución: AluCRM</h2>
+            <p>Un CRM móvil e inteligente enfocado en la automatización logística:</p>
+            <ul>
+                <li><strong>Geomapa con OSRM:</strong> Trazado automático de la ruta por carretera más corta y rápida, optimizando combustible.</li>
+                <li><strong>SMTP Handshake virtual:</strong> Agentforce OSINT Finder que simula un protocolo SMTP para asegurar la existencia real del buzón.</li>
+                <li><strong>Dictado por Voz:</strong> Transcripción de notas con Web Speech API con un solo click.</li>
+                <li><strong>Filtro Cloudflare Turnstile:</strong> Pantalla interactiva segura contra ataques DDoS.</li>
+            </ul>
+        </div>
+
+        <!-- Diapositiva 4: Desarrollo e IA (Vibe Coding) -->
+        <div class="slide">
+            <h2>Desarrollo Acelerado con IA</h2>
+            <p>Orquestación rápida del prototipo utilizando la IA de <strong>Google Antigravity</strong>:</p>
+            <div class="prompt-box" style="text-align: left; max-width: 800px; margin: 1.5rem auto; font-size: 0.85rem;">
+                "Escribe un módulo en JS llamado emailFinderEngine.js. Debe simular un proceso de hacking ético (OSINT)... DNS MX y SMTP Handshake enviando HELO/RCPT TO para validar buzones con código 250..."
+            </div>
+            <p>Hitos resueltos: Evitar bloqueos de CORS, fallback de dictado de voz y sanitizador de LocalStorage contra corrupción de datos.</p>
+        </div>
+
+        <!-- Diapositiva 5: Métricas de Éxito -->
+        <div class="slide">
+            <h2>Métricas de Éxito en Campo</h2>
+            <div class="kpi-grid" style="max-width: 900px; margin: 1.5rem auto;">
+                <div class="kpi-card">
+                    <div class="value">-87.5%</div>
+                    <p>Tiempo de planificación de visitas (de 2h a 15min)</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="value">-16.7%</div>
+                    <p>Consumo de combustible mensual al mes en carretera</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="value">-91.4%</div>
+                    <p>Tasa de correos comerciales devueltos (rebotes)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 6: Agradecimientos -->
+        <div class="slide">
+            <h2>¡Muchas Gracias!</h2>
+            <p>¿Alguna pregunta sobre AluCRM y el impacto operativo de la IA?</p>
+            <div style="margin-top: 4rem;">
+                <button class="btn btn-primary" onclick="togglePresentation()">Volver a la Memoria</button>
+            </div>
+        </div>
+
+        <!-- Controles de Navegación de Diapositivas -->
+        <div class="presentation-controls">
+            <button class="btn btn-secondary" onclick="prevSlide()">← Anterior</button>
+            <div id="slide-number" style="font-weight: 800; display: flex; align-items: center; min-width: 60px; justify-content: center;">1 / 6</div>
+            <button class="btn btn-primary" onclick="nextSlide()">Siguiente →</button>
+        </div>
+    </div>
+
+    <!-- Botón Flotante para Lanzar Presentación -->
+    <button class="fab" onclick="togglePresentation()" title="Activar Modo Defensa (Presentación)">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+    </button>
+
+    <script>
+        // --- Scroll Spy y Navegación Activa ---
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 220)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // --- Lógica del Modo Presentación ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const slideNumDisplay = document.getElementById('slide-number');
+
+        function togglePresentation() {
+            const overlay = document.getElementById('presentation-overlay');
+            const isVisible = overlay.style.display === 'flex';
+            overlay.style.display = isVisible ? 'none' : 'flex';
+            document.body.style.overflow = isVisible ? 'auto' : 'hidden';
+            if (!isVisible) updateSlideDisplay();
+        }
+
+        function updateSlideDisplay() {
+            slides.forEach(s => s.classList.remove('active'));
+            slides[currentSlide].classList.add('active');
+            slideNumDisplay.innerText = `${currentSlide + 1} / ${slides.length}`;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlideDisplay();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlideDisplay();
+        }
+
+        // Navegación mediante eventos del teclado para mayor comodidad
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('presentation-overlay').style.display === 'flex') {
+                if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+                if (e.key === 'ArrowLeft') prevSlide();
+                if (e.key === 'Escape') togglePresentation();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+[
+  {
+    "prospect": {
+      "id": "PROP-VERIF-0006",
+      "name": "Comercial Felman S.L.",
+      "zone": "Comunidad Valenciana",
+      "department": "Castellón (Comunidad Valenciana)",
+      "cif": "B12098456",
+      "web": "https://felman.es",
+      "revenue": 20950013,
+      "purchasingManager": "Dpto. Compras (Comercial Felman S.L.)",
+      "phone": "+34 964 21 55 44",
+      "email": "compras@felman.es",
+      "location": [
+        39.49238412883216,
+        -5.851547916824856
+      ],
+      "sector": "Cerramientos",
+      "products": [
+        "Perfiles",
+        "Chapas de Aluminio",
+        "Accesorios"
+      ],
+      "contacted": true,
+      "contactDate": "2026-07-15",
+      "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
+      "response": "",
+      "createdAt": "2026-06-01T00:00:00.000Z"
+    },
+    "matchedAea": "COMERCIAL FELMAN, S.L.",
+    "reason": "Nombre similar: \"COMERCIAL FELMAN\" <-> \"COMERCIAL FELMAN\""
+  },
+  {
+    "prospect": {
+      "id": "PROP-VERIF-0003",
+      "name": "Aluminios Franco S.L.",
+      "zone": "Comunidad Valenciana",
+      "department": "Valencia (Comunidad Valenciana)",
+      "cif": "B46201944",
+      "web": "https://aluminiosfranco.es",
+      "revenue": 15310522,
+      "purchasingManager": "Dpto. Compras (Aluminios Franco S.L.)",
+      "phone": "+34 963 83 12 40",
+      "email": "compras@aluminiosfranco.es",
+      "location": [
+        38.126868582233826,
+        -3.066113258741317
+      ],
+      "sector": "Cerramientos",
+      "products": [
+        "Perfiles",
+        "Lamas",
+        "Cerramientos"
+      ],
+      "contacted": true,
+      "contactDate": null,
+      "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
+      "response": "",
+      "createdAt": "2026-06-01T00:00:00.000Z"
+    },
+    "matchedAea": "ALUMINIOS FRANCO, S.A.",
+    "reason": "Nombre similar: \"ALUMINIOS FRANCO\" <-> \"ALUMINIOS FRANCO\""
+  },
+  {
+    "prospect": {
+      "id": "PROP-VERIF-0085",
+      "name": "Aluminios Francolí S.L.",
+      "zone": "Cataluña",
+      "department": "Tarragona (Cataluña)",
+      "cif": "B43291845",
+      "web": "https://www.aluminiosfrancoli.com",
+      "revenue": 7564367,
+      "purchasingManager": "Dpto. Compras (Aluminios Francolí S.L.)",
+      "phone": "+34 977 54 20 30",
+      "email": "compras@aluminiosfrancoli.com",
+      "location": [
+        39.80401509549649,
+        -5.4401438311919215
+      ],
+      "sector": "Puertas y Ventanas",
+      "products": [
+        "Ventanas RPT",
+        "Puertas Industriales",
+        "Perfiles"
+      ],
+      "contacted": false,
+      "contactDate": null,
+      "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
+      "response": "",
+      "createdAt": "2026-06-01T00:00:00.000Z"
+    },
+    "matchedAea": "ALUMINIOS FRANCO, S.A.",
+    "reason": "Nombre similar: \"ALUMINIOS FRANCOLÍ\" <-> \"ALUMINIOS FRANCO\""
+  },
+  {
+    "prospect": {
+      "name": "Galimetal S.L.",
+      "zone": "Galicia",
+      "department": "Cambre (A Coruña)",
+      "cif": "B15491824",
+      "web": "https://galimetal.es",
+      "revenue": 7500000,
+      "purchasingManager": "Dpto. Compras (Galimetal)",
+      "phone": "+34 981 67 10 20",
+      "email": "info@galimetal.es",
+      "location": [
+        43.2928,
+        -8.3444
+      ],
+      "sector": "Distribucion de Aluminio y Metales",
+      "products": [
+        "Perfiles",
+        "Sistemas de Aluminio",
+        "Accesorios"
+      ],
+      "contacted": false,
+      "contactDate": null,
+      "notes": "Almacén y comercialización de sistemas y perfilería de aluminio para talleres de carpintería metálica en Galicia.",
+      "response": "",
+      "createdAt": "2026-06-01T00:00:00.000Z",
+      "id": "PROP-CNAE-0221"
+    },
+    "matchedAea": "GALIMETAL, S.A.",
+    "reason": "Nombre similar: \"GALIMETAL\" <-> \"GALIMETAL\""
+  }
+]
