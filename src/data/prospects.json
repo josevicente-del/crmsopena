@@ -9170,5 +9170,140 @@
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-09-03T05:18:14.835Z",
     "id": "PROP-VERIF-0339"
+  },
+  {
+    "id": "PROP-VERIF-0351",
+    "name": "Escaleras Arizona S.L.",
+    "zone": "Pais Vasco",
+    "department": "Olite (Navarra)",
+    "cif": "B31076656",
+    "web": "https://www.escalerasarizona.com",
+    "revenue": 4850000,
+    "purchasingManager": "Dpto. Compras (Escaleras Arizona)",
+    "phone": "+34 948 740 386",
+    "email": "escaleras@escalerasarizona.com",
+    "location": [
+      42.4842,
+      -1.6508
+    ],
+    "sector": "Fabricantes de Escaleras de Aluminio",
+    "products": [
+      "Perfiles de Aluminio",
+      "Escaleras Extensibles",
+      "Peldaños Ranurados"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante de escaleras de aluminio extrusionado y combinadas para sector industrial, telecomunicaciones y electricidad.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-06-01T00:00:00.000Z"
+  },
+  {
+    "id": "PROP-VERIF-0352",
+    "name": "Hispano Industrias Svelt S.L.",
+    "zone": "Asturias",
+    "department": "Siero (Asturias)",
+    "cif": "B33667551",
+    "web": "https://www.svelt.it/es",
+    "revenue": 6900000,
+    "purchasingManager": "Dpto. Compras (Svelt España)",
+    "phone": "+34 985 793 012",
+    "email": "ventas@svelt.es",
+    "location": [
+      43.3892,
+      -5.7725
+    ],
+    "sector": "Fabricantes de Escaleras de Aluminio",
+    "products": [
+      "Perfiles Ranurados",
+      "Tubos de Aluminio",
+      "Escaleras Telescópicas"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante y distribuidor de escaleras profesionales de aluminio, andamios tubulares y pasarelas bajo normativa EN-131.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-06-01T00:00:00.000Z"
+  },
+  {
+    "id": "PROP-VERIF-0353",
+    "name": "Escaleras Alhama S.L. (Escalera Europea)",
+    "zone": "Cataluña",
+    "department": "Cuarte de Huerva (Zaragoza)",
+    "cif": "B50926898",
+    "web": "https://www.escalera-europea.com",
+    "revenue": 5100000,
+    "purchasingManager": "Dpto. Compras (Escalera Europea)",
+    "phone": "+34 976 505 541",
+    "email": "info@escalera-europea.com",
+    "location": [
+      41.5956,
+      -0.9328
+    ],
+    "sector": "Fabricantes de Escaleras de Aluminio",
+    "products": [
+      "Perfiles Especiales",
+      "Pasarelas de Aluminio",
+      "Escaleras de Gato"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Especialistas en fabricación y montaje a medida de escaleras de aluminio para la industria, líneas de vida y pasarelas.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-06-01T00:00:00.000Z"
+  },
+  {
+    "id": "PROP-VERIF-0354",
+    "name": "Jormax Indústria de Escadas Lda.",
+    "zone": "Portugal",
+    "department": "Santa Maria da Feira (Portugal)",
+    "cif": "PT502433884",
+    "web": "https://jormax.com",
+    "revenue": 8200000,
+    "purchasingManager": "Dpto. Compras (Jormax)",
+    "phone": "+351 256 783 585",
+    "email": "comercial@jormax.com",
+    "location": [
+      40.9422,
+      -8.5719
+    ],
+    "sector": "Fabricantes de Escaleras de Aluminio",
+    "products": [
+      "Perfis Extrudidos",
+      "Escadas de Alumínio",
+      "Andaimes Modulares"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante ibérico líder de escadas, escadotes e andaimes em perfis de alumínio de alta resistência.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-06-01T00:00:00.000Z"
+  },
+  {
+    "id": "PROP-VERIF-0355",
+    "name": "Andamios Ibéricos del Sur S.L. (Iberandamios)",
+    "zone": "Andalucia",
+    "department": "Sevilla (Andalucia)",
+    "cif": "B67988071",
+    "web": "https://www.iberandamios.com",
+    "revenue": 3800000,
+    "purchasingManager": "Dpto. Compras (Iberandamios)",
+    "phone": "+34 955 074 336",
+    "email": "info@iberandamios.com",
+    "location": [
+      37.5258,
+      -5.2483
+    ],
+    "sector": "Fabricantes de Escaleras de Aluminio",
+    "products": [
+      "Tubos Estructurales",
+      "Escaleras de Tijera",
+      "Andamios de Aluminio"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante y distribuidor de torres móviles, escaleras profesionales de aluminio y plataformas plegables de trabajo.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-06-01T00:00:00.000Z"
   }
 ]
