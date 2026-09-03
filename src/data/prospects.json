@@ -811,33 +811,6 @@
     "createdAt": "2026-06-01T00:00:00.000Z"
   },
   {
-    "name": "AFP Courts (All For Padel Courts S.L.)",
-    "zone": "Comunidad de Madrid",
-    "department": "Madrid (Madrid)",
-    "cif": "B87291840",
-    "web": "https://allforpadel.com",
-    "revenue": 32000000,
-    "purchasingManager": "Dpto. Compras (AFP Courts)",
-    "phone": "+34 91 661 20 10",
-    "email": "courts@allforpadel.com",
-    "location": [
-      40.4168,
-      -3.7038
-    ],
-    "sector": "Pistas de Padel",
-    "products": [
-      "Perfiles",
-      "Perfiles Ranurados",
-      "Accesorios"
-    ],
-    "contacted": false,
-    "contactDate": null,
-    "notes": "Licenciatario y fabricante mundial de pistas adidas Padel. Ingeniería y fabricación de estructuras de pádel con perfiles de alta resistencia.",
-    "response": "Pendiente de primer contacto comercial",
-    "createdAt": "2026-06-01T00:00:00.000Z",
-    "id": "PROP-PADEL-0229"
-  },
-  {
     "name": "Kendu In-Store Visual Solutions S.L.",
     "zone": "Pais Vasco",
     "department": "San Sebastián (Guipúzcoa)",
@@ -6052,8 +6025,8 @@
   {
     "id": "PROP-VERIF-0016",
     "name": "Acristalia S.L.",
-    "zone": "Comunidad Valenciana",
-    "department": "Valencia (Comunidad Valenciana)",
+    "zone": "Andalucia",
+    "department": "Málaga (Andalucia)",
     "cif": "B29841290",
     "web": "https://acristalia.com",
     "revenue": 5564132,
@@ -6061,8 +6034,8 @@
     "phone": "+34 900 81 20 30",
     "email": "compras@acristalia.com",
     "location": [
-      42.63789788445273,
-      -2.429155224296141
+      36.5342,
+      -4.6552
     ],
     "sector": "Cerramientos",
     "products": [
@@ -6072,7 +6045,7 @@
     ],
     "contacted": false,
     "contactDate": "2026-07-15",
-    "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
+    "notes": "Empresa con actividad real y web verificada HTTP 200 OK. Sede en Mijas Costa (Málaga, Andalucía).",
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z"
   },
