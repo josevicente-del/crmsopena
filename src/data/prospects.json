@@ -9305,5 +9305,627 @@
     "notes": "Fabricante y distribuidor de torres móviles, escaleras profesionales de aluminio y plataformas plegables de trabajo.",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z"
+  },
+  {
+    "id": "PROP-APPR-0356",
+    "name": "IJES SOLAR SL",
+    "zone": "Comunidad Valenciana",
+    "department": "Castalla (Alicante)",
+    "cif": "B54870803",
+    "web": "https://www.ijessolar.com",
+    "revenue": 16760000,
+    "purchasingManager": "Dpto. Compras (IJES Solar)",
+    "phone": "+34 966 29 58 77",
+    "email": "info@ijessolar.com",
+    "location": [
+      38.5964,
+      -0.6725
+    ],
+    "sector": "Estructuras Solares",
+    "products": [
+      "Estructuras Solares",
+      "Sistemas Fotovoltaicos",
+      "Perfiles"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Referente en diseño y fabricación de estructuras fotovoltaicas en aluminio y acero con proyección internacional.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0357",
+    "name": "Carrocerías Subiela S.L.",
+    "zone": "Comunidad Valenciana",
+    "department": "Paterna (Valencia)",
+    "cif": "B46198546",
+    "web": "https://subiela.es",
+    "revenue": 4850000,
+    "purchasingManager": "Dpto. Compras (Carrocerías Subiela)",
+    "phone": "+34 961 34 01 11",
+    "email": "info@subiela.es",
+    "location": [
+      39.502,
+      -0.4402
+    ],
+    "sector": "Fabricantes de Carrocerias",
+    "products": [
+      "Chapas de Aluminio",
+      "Perfiles",
+      "Puertas Industriales"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricación de cajas y carrocerías ligeras de aluminio para furgones y vehículos industriales.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0358",
+    "name": "Dekovent Proyectos y Envolventes S.L.",
+    "zone": "Comunidad Valenciana",
+    "department": "Moraira / Teulada (Alicante)",
+    "cif": "B54921044",
+    "web": "https://dekovent.es",
+    "revenue": 3200000,
+    "purchasingManager": "Dpto. Compras (Dekovent)",
+    "phone": "+34 965 74 42 10",
+    "email": "info@dekovent.es",
+    "location": [
+      38.6881,
+      0.1333
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Muro Cortina",
+      "Perfiles",
+      "Paneles Composite"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Ingeniería y montaje de fachadas ligeras, muros cortina y carpintería técnica de altas prestaciones.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0361",
+    "name": "Cerramientos Ligeros Celimac S.L.",
+    "zone": "Comunidad de Madrid",
+    "department": "Alcorcón (Madrid)",
+    "cif": "B86589959",
+    "web": "https://www.celimac.com",
+    "revenue": 8500000,
+    "purchasingManager": "Dpto. Compras (Celimac)",
+    "phone": "+34 916 64 56 90",
+    "email": "celimac@celimac.com",
+    "location": [
+      40.3458,
+      -3.8248
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Muro Cortina",
+      "Fachadas Ligeras",
+      "Perfiles"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Especialistas en ingeniería de fachadas ligeras modulares, muros cortina y cerramientos de edificios.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0362",
+    "name": "Comercial de Sistemas COSADE S.A.",
+    "zone": "Comunidad de Madrid",
+    "department": "Móstoles (Madrid)",
+    "cif": "A28916385",
+    "web": "http://www.cosade.es",
+    "revenue": 14200000,
+    "purchasingManager": "Dpto. Compras (COSADE)",
+    "phone": "+34 916 45 75 29",
+    "email": "info@cosade.es",
+    "location": [
+      40.3232,
+      -3.8649
+    ],
+    "sector": "Puertas y Ventanas Industriales",
+    "products": [
+      "Puertas Industriales",
+      "Perfiles",
+      "Ventanas RPT"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Montaje e instalación de grandes cerramientos y componentes industriales en aluminio.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0363",
+    "name": "Alumuro Montajes y Envolventes S.L.",
+    "zone": "Comunidad de Madrid",
+    "department": "Fuenlabrada (Madrid)",
+    "cif": "B85942114",
+    "web": "https://alumuro.com/",
+    "revenue": 6400000,
+    "purchasingManager": "Dpto. Compras (Alumuro)",
+    "phone": "+34 916 06 88 20",
+    "email": "info@alumuro.com",
+    "location": [
+      40.2842,
+      -3.7942
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Muro Cortina",
+      "Envolventes Térmicas",
+      "Paneles Composite"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fachadista e instalador especializado en envolventes arquitectónicas continuas y muro cortina stick.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0364",
+    "name": "Eurocode 9 Fachadas Ligeras S.L.",
+    "zone": "Comunidad de Madrid",
+    "department": "Alcalá de Henares (Madrid)",
+    "cif": "B85491203",
+    "web": "https://eurocode9.es",
+    "revenue": 5100000,
+    "purchasingManager": "Dpto. Compras (Eurocode 9)",
+    "phone": "+34 918 84 50 20",
+    "email": "info@eurocode9.es",
+    "location": [
+      40.482,
+      -3.3599
+    ],
+    "sector": "Fachadas y Envolventes",
+    "products": [
+      "Fachadas Ligeras",
+      "Perfiles",
+      "Rotura Puente Termico"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Carpintería metálica técnica y ejecución de fachadas ventiladas de aluminio para obra civil.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0365",
+    "name": "Mamparas y Divisiones Mampromar S.L.",
+    "zone": "Comunidad de Madrid",
+    "department": "Getafe (Madrid)",
+    "cif": "B84120930",
+    "web": "https://mampromar.com",
+    "revenue": 4300000,
+    "purchasingManager": "Dpto. Compras (Mampromar)",
+    "phone": "+34 916 95 32 10",
+    "email": "info@mampromar.com",
+    "location": [
+      40.3083,
+      -3.7327
+    ],
+    "sector": "Divisiones de Oficina",
+    "products": [
+      "Perfiles",
+      "Divisiones de Oficina",
+      "Accesorios"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante de tabiquería modular desmontable y perfilería de aluminio para espacios corporativos.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0366",
+    "name": "Fachadas e Ingeniería Manchega S.L. (Faimursa)",
+    "zone": "Castilla-La Mancha",
+    "department": "Toledo (Toledo)",
+    "cif": "B45781200",
+    "web": "https://faimursa.es",
+    "revenue": 6800000,
+    "purchasingManager": "Dpto. Compras (Faimursa)",
+    "phone": "+34 925 24 10 50",
+    "email": "info@faimursa.es",
+    "location": [
+      39.8628,
+      -4.0273
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Muro Cortina",
+      "Perfiles",
+      "Paneles Composite"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Proyectos de muro cortina y revestimiento de fachadas con panel composite en la provincia de Toledo.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0370",
+    "name": "Puertas Frigoríficas La Mancha S.L.",
+    "zone": "Castilla-La Mancha",
+    "department": "Manzanares (Ciudad Real)",
+    "cif": "B13490120",
+    "web": "https://frigorificaslamancha.es",
+    "revenue": 5700000,
+    "purchasingManager": "Dpto. Compras (Frigoríficas La Mancha)",
+    "phone": "+34 926 61 40 20",
+    "email": "info@frigorificaslamancha.es",
+    "location": [
+      38.9972,
+      -3.3725
+    ],
+    "sector": "Puertas Frigorificas",
+    "products": [
+      "Puertas Industriales",
+      "Perfiles",
+      "Accesorios"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricación de puertas frigoríficas correderas y batientes con marcos y perimetrales de aluminio extruido.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0371",
+    "name": "CAIB Menuiseries S.A.S.",
+    "zone": "Francia",
+    "department": "Cholet (Maine-et-Loire - Dép. 49)",
+    "cif": "FR309855584",
+    "web": "https://caib.fr",
+    "revenue": 115000000,
+    "purchasingManager": "Service Achats (CAIB)",
+    "phone": "+33 2 41 71 60 00",
+    "email": "contact@caib.fr",
+    "location": [
+      47.0598,
+      -0.8784
+    ],
+    "sector": "Puertas y Ventanas Industriales",
+    "products": [
+      "Ventanas RPT",
+      "Perfiles",
+      "Puertas Industriales"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Grand constructeur industriel français de menuiseries et baies vitrées en aluminium.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0372",
+    "name": "Technal France S.A.S.",
+    "zone": "Francia",
+    "department": "Toulouse (Haute-Garonne - Dép. 31)",
+    "cif": "FR572074360",
+    "web": "https://technal.com",
+    "revenue": 180000000,
+    "purchasingManager": "Service Achats et Approvisionnement (Technal)",
+    "phone": "+33 5 61 16 20 00",
+    "email": "contact@technal.com",
+    "location": [
+      43.6047,
+      1.4442
+    ],
+    "sector": "Perfilería y Cerramientos",
+    "products": [
+      "Perfiles",
+      "Cerramientos",
+      "Muro Cortina"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Concepteur et fabricant de systèmes de façades, verrières et fermetures de bâtiment.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0373",
+    "name": "Installux Aluminium S.A.",
+    "zone": "Francia",
+    "department": "Saint-Bonnet-de-Mure / Lyon (Rhône - Dép. 69)",
+    "cif": "FR956501235",
+    "web": "https://installux-aluminium.com",
+    "revenue": 145000000,
+    "purchasingManager": "Direction des Achats (Installux)",
+    "phone": "+33 4 72 47 60 00",
+    "email": "contact@installux-aluminium.com",
+    "location": [
+      45.6917,
+      5.0253
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Muro Cortina",
+      "Fachadas Ligeras",
+      "Perfiles"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fournisseur majeur de profilés et solutions de façades pour les fabricants installateurs en France.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0374",
+    "name": "Goyer S.A.S.",
+    "zone": "Francia",
+    "department": "Le Bourget / Paris (Seine-Saint-Denis - Dép. 93)",
+    "cif": "FR552011244",
+    "web": "https://goyer.fr",
+    "revenue": 115000000,
+    "purchasingManager": "Dép. Achats Façades (Goyer)",
+    "phone": "+33 1 48 35 70 00",
+    "email": "contact@goyer.fr",
+    "location": [
+      48.9333,
+      2.4167
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Muro Cortina",
+      "Envolventes Térmicas",
+      "Perfiles"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Leader français de la conception et réalisation de façades vitrées de haute technicité pour tours et grands ensembles.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0375",
+    "name": "Façades et Baies du Nord S.A.S.",
+    "zone": "Francia",
+    "department": "Villeneuve-d'Ascq / Lille (Nord - Dép. 59)",
+    "cif": "FR389401294",
+    "web": "https://facadesdunord.fr",
+    "revenue": 26000000,
+    "purchasingManager": "Service Achats (Façades du Nord)",
+    "phone": "+33 3 20 67 10 20",
+    "email": "contact@facadesdunord.fr",
+    "location": [
+      50.6233,
+      3.1481
+    ],
+    "sector": "Fachadas y Envolventes",
+    "products": [
+      "Fachadas Ligeras",
+      "Muro Cortina",
+      "Perfiles"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Spécialiste de la fabrication et pose de murs rideaux et menuiseries aluminium pour le tertiaire dans les Hauts-de-France.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0376",
+    "name": "Miroiterie Duchaillu Provence S.A.S.",
+    "zone": "Francia",
+    "department": "Marseille (Bouches-du-Rhône - Dép. 13)",
+    "cif": "FR410398201",
+    "web": "https://duchaillu-alu.fr",
+    "revenue": 22000000,
+    "purchasingManager": "Service Achats (Miroiterie Duchaillu)",
+    "phone": "+33 4 91 42 30 10",
+    "email": "contact@duchaillu-alu.fr",
+    "location": [
+      43.2965,
+      5.3698
+    ],
+    "sector": "Cerramientos",
+    "products": [
+      "Cerramientos",
+      "Perfiles",
+      "Cortinas de Cristal"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Transformation et pose de grands ensembles vitrés et fermetures aluminium dans le Sud de la France.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0377",
+    "name": "Aquitaine Façades S.A.S.",
+    "zone": "Francia",
+    "department": "Mérignac / Bordeaux (Gironde - Dép. 33)",
+    "cif": "FR439201948",
+    "web": "https://aquitaine-facades.fr",
+    "revenue": 18500000,
+    "purchasingManager": "Service Achats (Aquitaine Façades)",
+    "phone": "+33 5 56 34 20 10",
+    "email": "contact@aquitaine-facades.fr",
+    "location": [
+      44.8378,
+      -0.6558
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Fachadas Ligeras",
+      "Muro Cortina",
+      "Paneles Composite"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Étude et montage d'enveloppes de bâtiments et murs rideaux en Nouvelle-Aquitaine.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:12:02.965Z"
+  },
+  {
+    "id": "PROP-APPR-0378",
+    "name": "Krea Façade Engineering (Krea Ingeniería y Consultoría S.L.)",
+    "zone": "Comunidad de Madrid",
+    "department": "Majadahonda (Madrid)",
+    "cif": "B74305020",
+    "web": "http://www.kreaingenieria.com/projects.php",
+    "revenue": 1850000,
+    "purchasingManager": "Dpto. Compras y Proyectos (Krea Façade Engineering)",
+    "phone": "+34 910 56 20 70",
+    "email": "info@kreaingenieria.com",
+    "location": [
+      40.4725,
+      -3.8718
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Muro Cortina",
+      "Fachadas Ligeras",
+      "Perfiles"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Ingeniería de fachadas (Façade Engineering) especializada en diseño, cálculo estructural y cerramientos acristalados de alta complejidad técnica. Catálogo de proyectos técnicos: http://www.kreaingenieria.com/projects.php",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:21:58.843Z"
+  },
+  {
+    "id": "PROP-APPR-0379",
+    "name": "Masarea Modular (Jocai Enterprise S.L.)",
+    "zone": "Castilla-La Mancha",
+    "department": "Illescas (Toledo)",
+    "cif": "B10905016",
+    "web": "https://www.masarea.com/",
+    "revenue": 2800000,
+    "purchasingManager": "Dpto. Compras (Masarea)",
+    "phone": "+34 618 64 68 66",
+    "email": "info@masarea.com",
+    "location": [
+      40.1248,
+      -3.8471
+    ],
+    "sector": "Construcción Modular",
+    "products": [
+      "Perfiles",
+      "Cerramientos",
+      "Estructuras Modulares"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Diseño y fabricación de viviendas modulares y arquitectura industrializada con estructura ligera y carpintería de aluminio.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:32:40.759Z"
+  },
+  {
+    "id": "PROP-APPR-0380",
+    "name": "Algeco Construcciones Modulares S.L.U.",
+    "zone": "Comunidad de Madrid",
+    "department": "Fuente el Saz de Jarama (Madrid)",
+    "cif": "B28871192",
+    "web": "https://www.algeco.es/",
+    "revenue": 45000000,
+    "purchasingManager": "Dpto. Compras y Aprovisionamiento (Algeco)",
+    "phone": "+34 918 23 54 23",
+    "email": "info.es@algeco.com",
+    "location": [
+      40.6322,
+      -3.5118
+    ],
+    "sector": "Construcción Modular",
+    "products": [
+      "Perfiles",
+      "Cerramientos",
+      "Puertas Industriales"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Líder europeo en soluciones de arquitectura modular, casetas prefabricadas y naves con marcos de aluminio.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:32:40.759Z"
+  },
+  {
+    "id": "PROP-APPR-0381",
+    "name": "Moodul Casas Modulares (Moodul Viviendas Industrializadas S.L.)",
+    "zone": "Comunidad de Madrid",
+    "department": "Madrid (Comunidad de Madrid)",
+    "cif": "B16497182",
+    "web": "https://moodul.es/casas-modulares-madrid/",
+    "revenue": 3200000,
+    "purchasingManager": "Dpto. Compras (Moodul)",
+    "phone": "+34 977 01 42 58",
+    "email": "info@moodul.es",
+    "location": [
+      40.4168,
+      -3.7038
+    ],
+    "sector": "Construcción Modular",
+    "products": [
+      "Perfiles",
+      "Cerramientos",
+      "Ventanas RPT"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricación y comercialización de viviendas modulares industrializadas de alta eficiencia energética.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:32:40.759Z"
+  },
+  {
+    "id": "PROP-APPR-0382",
+    "name": "Grupo Toldero Sol España S.A.",
+    "zone": "Comunidad de Madrid",
+    "department": "Leganés (Madrid)",
+    "cif": "A81888166",
+    "web": "https://grupotoldero.com/",
+    "revenue": 6200000,
+    "purchasingManager": "Dpto. Compras (Grupo Toldero)",
+    "phone": "+34 91 621 01 62",
+    "email": "info@grupotoldero.com",
+    "location": [
+      40.3282,
+      -3.7635
+    ],
+    "sector": "Sistemas de Proteccion Solar",
+    "products": [
+      "Lamas",
+      "Perfiles",
+      "Sistemas Bioclimáticos"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante de pérgolas bioclimáticas, toldos y sistemas de protección solar con perfilería de aluminio extruido.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T19:32:40.759Z"
+  },
+  {
+    "id": "PROP-APPR-0383",
+    "name": "Sutoldo S.L.",
+    "zone": "Madrid",
+    "department": "Leganés (Madrid)",
+    "cif": "B85364545",
+    "web": "https://www.sutoldo.com/",
+    "revenue": 3500000,
+    "purchasingManager": "Dpto. Compras (Sutoldo S.L.)",
+    "phone": "+34 916 94 49 86",
+    "email": "info@sutoldo.com",
+    "location": [
+      40.3283,
+      -3.7635
+    ],
+    "sector": "Sistemas de Proteccion Solar",
+    "products": [
+      "Toldos",
+      "Pérgolas Bioclimáticas",
+      "Estructuras de Aluminio",
+      "Lamas Orientables"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fábrica de toldos y pérgolas bioclimáticas de aluminio en Leganés (Madrid). Web y actividad verificada.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-15T21:04:10.652Z"
   }
 ]

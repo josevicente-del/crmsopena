@@ -59,8 +59,40 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
     }
   }, [globalZone]);
 
+  // --- ZONAS PERMITIDAS Y ACCESIBLES PARA EL AGENTE DE PROSPECCIÓN ---
+  const availableSearchZones = useMemo(() => {
+    const allKnownZones = [
+      'Portugal',
+      'Pais Vasco',
+      'Castilla y Leon',
+      'Cantabria',
+      'Galicia',
+      'Asturias',
+      'Comunidad Valenciana',
+      'Comunidad de Madrid',
+      'Castilla-La Mancha',
+      'Francia',
+      'Cataluña',
+      'Andalucia'
+    ];
+    if (!userAllowedZones || userAllowedZones.length === 0 || userAllowedZones.includes('ALL')) {
+      return allKnownZones;
+    }
+    return allKnownZones.filter(z => userAllowedZones.includes(z));
+  }, [userAllowedZones]);
+
   // --- ESTADOS DEL AGENTE DE PROSPECCIÓN (LEAD FINDER) ---
-  const [searchZone, setSearchZone] = useState(defaultUserZone);
+  const [searchZone, setSearchZone] = useState(() => {
+    if (availableSearchZones.length > 0) return availableSearchZones[0];
+    return defaultUserZone;
+  });
+
+  useEffect(() => {
+    if (availableSearchZones.length > 0 && !availableSearchZones.includes(searchZone)) {
+      setSearchZone(availableSearchZones[0]);
+    }
+  }, [availableSearchZones, searchZone]);
+
   const [searchSector, setSearchSector] = useState('Todos');
   const [isSearching, setIsSearching] = useState(false);
   const [searchLogs, setSearchLogs] = useState([]);
@@ -213,7 +245,74 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
       { name: 'Astilleros Gondán', sector: 'Fabricantes de Carrocerias', revenue: 25000000, purchasingManager: 'Juan Manuel Gondán', email: 'compras@gondan.com', address: 'Puerto de Figueras', city: 'Castropol', web: 'www.gondan.com' },
       { name: 'Astur Solar Proyectos', sector: 'Estructuras Solares', revenue: 6500000, purchasingManager: 'Covadonga Suárez', email: 'compras@astursolar.com', address: 'Polígono de Roces', city: 'Gijón', web: 'www.astursolar.com' },
       { name: 'Blocotelha', sector: 'Fachadas Especiales', revenue: 38000000, purchasingManager: 'Director de Compras (Blocotelha)', email: 'blocotelha@mekkin.pt', address: 'Zona Industrial da Guia', city: 'Pombal', web: 'www.blocotelha.com' }
+    ],
+    'Comunidad Valenciana': [
+      { name: 'Alumed Sistemas S.L.', sector: 'Puertas y Ventanas', revenue: 14000000, purchasingManager: 'Vicente Morales', email: 'compras@alumed.es', address: 'Polígono Industrial Las Atalayas', city: 'Alicante', web: 'www.alumed.es' },
+      { name: 'Valenciana de Cerramientos S.L.', sector: 'Cerramientos', revenue: 8500000, purchasingManager: 'Rosa María Gil', email: 'proveedores@valencianacerramientos.com', address: 'Polígono Industrial Fuente del Jarro', city: 'Paterna', web: 'www.valencianacerramientos.com' },
+      { name: 'Solaria Levante Energía', sector: 'Estructuras Solares', revenue: 17000000, purchasingManager: 'Emilio Barberá', email: 'compras@solarialevante.com', address: 'Polígono Industrial Ciudad del Transporte', city: 'Castellón', web: 'www.solarialevante.com' },
+      { name: 'Chapa y Plegados Turia S.L.', sector: 'Transformacion de Chapa', revenue: 6200000, purchasingManager: 'Carles Benlliure', email: 'info@chapasturia.es', address: 'Polígono Industrial El Oliveral', city: 'Ribarroja del Turia', web: 'www.chapasturia.es' },
+      { name: 'Innova Modular Levante', sector: 'Construccion Modular', revenue: 9400000, purchasingManager: 'Laura Peñarrubia', email: 'compras@innovamodular.com', address: 'Polígono Industrial Carrús', city: 'Elche', web: 'www.innovamodular.com' }
+    ],
+    'Comunidad de Madrid': [
+      { name: 'TecnoFachadas Madrid S.A.', sector: 'Fachadas de Aluminio', revenue: 26000000, purchasingManager: 'Fernando Alarcón', email: 'compras@tecnofachadas.com', address: 'Polígono Industrial Cobo Calleja', city: 'Fuenlabrada', web: 'www.tecnofachadas.com' },
+      { name: 'Carrocerías Madrileñas Especiales', sector: 'Fabricantes de Carrocerias', revenue: 18500000, purchasingManager: 'Julián Santos', email: 'proveedores@carroceriasmadrid.es', address: 'Polígono Industrial San Fernando', city: 'San Fernando de Henares', web: 'www.carroceriasmadrid.es' },
+      { name: 'Solener Madrid Solar', sector: 'Estructuras Solares', revenue: 22000000, purchasingManager: 'Elena Villalba', email: 'compras@solenermadrid.com', address: 'Polígono Industrial Los Ángeles', city: 'Getafe', web: 'www.solenermadrid.com' },
+      { name: 'ClimaFrio Centro S.L.', sector: 'Frio Industrial', revenue: 11000000, purchasingManager: 'Andrés Barroso', email: 'compras@climafriocentro.com', address: 'Polígono Camporroso', city: 'Alcalá de Henares', web: 'www.climafriocentro.com' },
+      { name: 'Carpintería y Cerramientos Castellana', sector: 'Puertas y Ventanas', revenue: 7800000, purchasingManager: 'Marcos Del Río', email: 'compras@cerramientocastellana.es', address: 'Calle Londres, 12', city: 'Las Rozas', web: 'www.cerramientocastellana.es' }
+    ],
+    'Castilla-La Mancha': [
+      { name: 'ManchaSolar Renovable S.L.', sector: 'Estructuras Solares', revenue: 15000000, purchasingManager: 'Gonzalo Córcoles', email: 'compras@manchasolar.com', address: 'Polígono Industrial de Manzanares', city: 'Manzanares', web: 'www.manchasolar.com' },
+      { name: 'Remolques y Carrocerías La Mancha', sector: 'Fabricantes de Carrocerias', revenue: 12500000, purchasingManager: 'Ángel Valbuena', email: 'compras@carroceriasmancha.es', address: 'Polígono Campollano', city: 'Albacete', web: 'www.carroceriasmancha.es' },
+      { name: 'Carpintería Metálica Manchega', sector: 'Puertas y Ventanas', revenue: 5500000, purchasingManager: 'Ismael Domínguez', email: 'ventas@metalicamanchega.es', address: 'Polígono Industrial Avanzado', city: 'Ciudad Real', web: 'www.metalicamanchega.es' },
+      { name: 'Industrial Chapa Toledo', sector: 'Transformacion de Chapa', revenue: 7200000, purchasingManager: 'Diego Serrano', email: 'proveedores@chapatoledo.com', address: 'Polígono Industrial de Toledo', city: 'Toledo', web: 'www.chapatoledo.com' }
+    ],
+    'Francia': [
+      { name: 'SolarTech France SAS', sector: 'Estructuras Solares', revenue: 34000000, purchasingManager: 'Pierre Laurent', email: 'achats@solartech-france.fr', address: 'Rue de l’Industrie, 14', city: 'Lyon', web: 'www.solartech-france.fr' },
+      { name: 'Carrosseries Industrielles d’Aquitaine', sector: 'Fabricantes de Carrocerias', revenue: 29000000, purchasingManager: 'Jacques Moreau', email: 'comptoir@carrosseries-aquitaine.fr', address: 'Avenue de Bordeaux, 50', city: 'Burdeos', web: 'www.carrosseries-aquitaine.fr' },
+      { name: 'Façades & Métaux France', sector: 'Fachadas de Aluminio', revenue: 41000000, purchasingManager: 'Camille Dubois', email: 'appro@facades-metaux.fr', address: 'Zone Industrielle Nord', city: 'París', web: 'www.facades-metaux.fr' },
+      { name: 'Froid & Isolation Rhônalpine', sector: 'Frio Industrial', revenue: 13000000, purchasingManager: 'Étienne Rousseau', email: 'achats@froid-rhonalpine.fr', address: 'Parc Technologique', city: 'Grenoble', web: 'www.froid-rhonalpine.fr' }
+    ],
+    'Cataluña': [
+      { name: 'Iberica de Fachadas Ligeras', sector: 'Fachadas de Aluminio', revenue: 33000000, purchasingManager: 'Jordi Soler', email: 'compras@fachadasiberica.cat', address: 'Polígon Industrial del Besòs', city: 'Barcelona', web: 'www.fachadasiberica.cat' },
+      { name: 'SolarCat Estructuras S.L.', sector: 'Estructuras Solares', revenue: 21000000, purchasingManager: 'Mireia Puig', email: 'compras@solarcat.cat', address: 'Polígon Can Feu', city: 'Sabadell', web: 'www.solarcat.cat' }
+    ],
+    'Andalucia': [
+      { name: 'SolarSur Energía Metálica', sector: 'Estructuras Solares', revenue: 24000000, purchasingManager: 'Manuel Beltrán', email: 'compras@solarsurenergia.es', address: 'Polígono La Isla', city: 'Sevilla', web: 'www.solarsurenergia.es' },
+      { name: 'Carrocerías del Guadalquivir', sector: 'Fabricantes de Carrocerias', revenue: 16000000, purchasingManager: 'Rafael Expósito', email: 'compras@carroceriasguadalquivir.com', address: 'Polígono Los Olivares', city: 'Jaén', web: 'www.carroceriasguadalquivir.com' }
     ]
+  };
+
+  // Coordenadas geográficas aproximadas por zona para renderizado en mapa y cálculo de rutas
+  const ZONE_COORDINATES = {
+    'Portugal': [41.15, -8.62],
+    'Pais Vasco': [43.26, -2.93],
+    'Castilla y Leon': [41.65, -4.72],
+    'Cantabria': [43.46, -3.80],
+    'Galicia': [42.88, -8.54],
+    'Asturias': [43.36, -5.85],
+    'Comunidad Valenciana': [39.46, -0.37],
+    'Comunidad de Madrid': [40.41, -3.70],
+    'Castilla-La Mancha': [39.86, -4.02],
+    'Cataluña': [41.38, 2.17],
+    'Andalucia': [37.38, -5.98],
+    'Francia': [48.85, 2.35]
+  };
+
+  // Mapeo de productos estándar según el sector industrial para correcta indexación en el CRM
+  const SECTOR_PRODUCTS_MAP = {
+    'Estructuras Solares': ['Perfiles', 'Estructuras Solares', 'Chapas de Aluminio'],
+    'Fabricantes de Carrocerias': ['Chapas de Aluminio', 'Perfiles', 'Puertas Industriales'],
+    'Fachadas de Aluminio': ['Muro Cortina', 'Panel Composite', 'Perfiles'],
+    'Fachadas Especiales': ['Muro Cortina', 'Panel Composite', 'Chapas Lacadas'],
+    'Transformacion de Chapa': ['Chapas de Aluminio', 'Bobinas', 'Corte y Plegado'],
+    'Construccion Modular': ['Perfiles Estructurales', 'Chapas Sandwich', 'Tubos'],
+    'Puertas y Ventanas': ['Perfiles RPT', 'Accesorios de Aluminio', 'Herrajes'],
+    'Cerramientos': ['Perfiles RPT', 'Vidrio y Aluminio', 'Lamas'],
+    'Sistemas de Proteccion Solar': ['Lamas de Aluminio', 'Cajones', 'Perfiles Extruidos'],
+    'Frio Industrial': ['Panel Frigorifico', 'Perfiles Sanitarios', 'Chapas de Aluminio'],
+    'Metal Arquitectonico y Chapa Perforada': ['Chapas Perforadas', 'Mallas de Aluminio', 'Perfiles Lacados'],
+    'Perfiles Estructurales Aluminio': ['Perfiles Pesados', 'Barras', 'Tubos Estructurales'],
+    'Proveedor de Aluminio': ['Perfiles', 'Chapas de Aluminio', 'Barras']
   };
 
   // Simulación de competidores registrados en la AEA (extrusores de aluminio) que el Lead Finder detectará y descartará de manera explícita
@@ -283,8 +382,14 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
  
     // Detección y exclusión de competidores de la AEA en la zona
     setTimeout(() => {
-      // Determinamos qué competidor simular según la zona
-      const blacklistedComp = searchZone === 'Portugal' ? 'Anicolor Portugal' : 'Cortizo España';
+      let blacklistedComp = 'Cortizo España';
+      if (searchZone === 'Portugal') blacklistedComp = 'Anicolor Portugal';
+      else if (searchZone === 'Comunidad Valenciana') blacklistedComp = 'Extruperfil S.A.';
+      else if (searchZone === 'Comunidad de Madrid') blacklistedComp = 'Alugom Alcobendas';
+      else if (searchZone === 'Andalucia') blacklistedComp = 'Nevaluz Sevilla';
+      else if (searchZone === 'Galicia') blacklistedComp = 'Extrugasa S.A.';
+      else if (searchZone === 'Pais Vasco') blacklistedComp = 'Itesal Sistemas';
+
       addLog(`⚠️ Detectada coincidencia comercial: "${blacklistedComp}"`, 'warning');
       addLog(`❌ EXCLUSIÓN AEA: Empresa "${blacklistedComp}" descartada de forma automática por pertenecer al registro de extrusores asociados de la AEA (Actividad 12).`, 'danger');
     }, 9600);
@@ -307,7 +412,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
  
       let addedCount = 0;
       const newProspectsToAdd = [];
- 
+
       filteredCandidates.forEach((cand, index) => {
         // Verificar duplicados (comparando nombres de forma insensible y la zona)
         const isDuplicated = prospects.some(p => (p.name.toLowerCase() === cand.name.toLowerCase() || p.name.toLowerCase().includes(cand.name.toLowerCase()) || cand.name.toLowerCase().includes(p.name.toLowerCase())) && p.zone === searchZone);
@@ -317,46 +422,81 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
           addLog(`🚫 DUPLICADO: La empresa ya se encuentra registrada en el CRM. Descartada para asegurar datos nuevos.`, 'warning');
         } else {
           addLog(`✅ VALIDADO: "${cand.name}" | Sector: ${cand.sector} | Facturación auditada (elEconomista/Axesor/Iberinform): ${(cand.revenue/1000000).toFixed(1)}M €`, 'success');
-          addLog(`📥 Empresa "${cand.name}" calificada como Lead y lista para importación.`, 'success');
+          addLog(`📥 Empresa "${cand.name}" calificada como Lead y lista para importación definitiva.`, 'success');
           
           addedCount++;
-          // Construir objeto de prospecto oficial
+          const defaultProducts = SECTOR_PRODUCTS_MAP[cand.sector] || ['Perfiles', 'Chapas de Aluminio'];
+          const coords = cand.location || ZONE_COORDINATES[searchZone] || [40.0, -4.0];
+
+          // Construir objeto de prospecto oficial con persistencia íntegra
           newProspectsToAdd.push({
-            id: 'P' + (prospects.length + addedCount + 10).toString().padStart(3, '0'),
+            id: 'PROP-LEAD-' + Date.now() + '-' + addedCount,
             name: cand.name,
             sector: cand.sector,
             revenue: cand.revenue,
             purchasingManager: cand.purchasingManager,
-            purchasingPhone: '+34 600 000 000',
-            purchasingLinkedin: 'No disponible',
+            purchasingPhone: cand.phone || '+34 600 000 000',
+            purchasingLinkedin: cand.purchasingLinkedin || 'No disponible',
             email: cand.email,
             address: cand.address,
             city: cand.city,
             zone: searchZone,
-            location: searchZone === 'Portugal' ? [41.15, -8.62] : [43.0, -4.0], // coordenadas aproximadas
+            location: coords,
             web: cand.web,
             linkedin: 'No disponible',
             contacted: false,
-            notes: null,
+            notes: `Lead cualificado automáticamente por Agentforce Lead Finder. Facturación auditada: ${(cand.revenue/1000000).toFixed(1)}M €. Verificación contra el registro de extrusores de la AEA superada con éxito (No competidor).`,
             response: null,
-            products: [],
-            tasks: [],
-            createdAt: new Date().toISOString(), // Fecha de importación para control de novedades (3 semanas)
-            history: [{ id: Date.now() + index, type: '📝 Nota', text: 'Empresa prospectada e importada de forma automática mediante Agentforce Lead Finder. Datos financieros y de solvencia cruzados con INE, Cámara de Comercio, eInforma, elEconomista, Axesor, Iberinform y Cinco Días en su actualización post-2024.', date: new Date().toISOString() }],
+            products: defaultProducts,
+            tasks: [
+              {
+                id: Date.now() + index + 10,
+                text: `📞 Primer contacto comercial: presentar catálogo y capacidades Grupo Sopeña para el sector ${cand.sector}`,
+                date: new Date().toISOString(),
+                completed: false
+              }
+            ],
+            createdAt: new Date().toISOString(),
+            history: [
+              { 
+                id: Date.now() + index, 
+                type: '📝 Incorporación', 
+                text: 'Empresa prospectada e incorporada de forma definitiva a la base de datos comercial mediante Agentforce Lead Finder. Datos financieros y solvencia cruzados con INE, Cámara de Comercio, eInforma, elEconomista, Axesor, Iberinform y Cinco Días.', 
+                date: new Date().toISOString() 
+              }
+            ],
             pipelineStage: 'Lead',
             quality: '',
             logistics: '',
-            packaging: ''
+            packaging: '',
+            isAutoProspect: true,
+            source: 'Agentforce Lead Finder'
           });
         }
       });
  
       if (newProspectsToAdd.length > 0) {
-        // Actualizar base de datos
+        // 1. Incorporación definitiva en el almacenamiento persistente (LocalStorage)
+        try {
+          const savedAdded = localStorage.getItem('aluminio_crm_added');
+          const currentAdded = savedAdded ? JSON.parse(savedAdded) : [];
+          // Prevenir duplicidades por nombre y zona en almacenamiento local
+          const filteredCurrent = currentAdded.filter(existing => 
+            !newProspectsToAdd.some(n => n.name.toLowerCase() === existing.name.toLowerCase() && n.zone === existing.zone)
+          );
+          const updatedAdded = [...newProspectsToAdd, ...filteredCurrent];
+          localStorage.setItem('aluminio_crm_added', JSON.stringify(updatedAdded));
+        } catch (err) {
+          console.error('Error al guardar de forma definitiva las empresas en LocalStorage:', err);
+        }
+
+        // 2. Actualizar estado global reactivo del CRM
         setProspects(prev => [...newProspectsToAdd, ...prev]);
         setFoundLeadsCount(newProspectsToAdd.length);
+
         addLog(`🎉 Agente de Prospección finalizado con éxito.`, 'success');
-        addLog(`💾 ¡Se han añadido ${newProspectsToAdd.length} nuevas empresas cualificadas en "${searchZone}" al CRM!`, 'success');
+        addLog(`💾 ¡Se han incorporado de forma definitiva ${newProspectsToAdd.length} nuevas empresas cualificadas en "${searchZone}" a la base de datos comercial!`, 'success');
+        addLog(`🔒 Persistencia permanente asegurada: Los nuevos registros se mantendrán guardados aunque recargues la página o inicies una nueva sesión.`, 'success');
       } else {
         addLog(`🏁 Proceso concluido. Todos los candidatos analizados ya existían en tu base de datos comercial.`, 'info');
       }
@@ -1546,12 +1686,11 @@ ccastro@empresa-aluminio.com | +34 610 240 017`;
                 disabled={isSearching}
                 style={{ width: '100%', padding: '10px', borderRadius: '6px', marginTop: '6px' }}
               >
-                <option value="Portugal">Portugal (Norte/Centro)</option>
-                <option value="Pais Vasco">País Vasco</option>
-                <option value="Castilla y Leon">Castilla y León</option>
-                <option value="Cantabria">Cantabria</option>
-                <option value="Galicia">Galicia</option>
-                <option value="Asturias">Asturias</option>
+                {availableSearchZones.map(zone => (
+                  <option key={zone} value={zone}>
+                    {zone}
+                  </option>
+                ))}
               </select>
             </div>
 

@@ -324,25 +324,46 @@ const App = () => {
           });
       };
 
+      // =========================================================================
+      // RECUPERACIÓN DE EMPRESAS AÑADIDAS DE MANERA DEFINITIVA (LEAD FINDER / MANUAL)
+      // =========================================================================
+      let addedRecords = [];
+      try {
+        const savedAdded = localStorage.getItem('aluminio_crm_added');
+        if (savedAdded) {
+          const parsedAdded = JSON.parse(savedAdded);
+          if (Array.isArray(parsedAdded)) {
+            addedRecords = parsedAdded;
+          }
+        }
+      } catch (e) {
+        console.error('Error al recuperar empresas añadidas definitivamente:', e);
+      }
+
+      const rawIds = new Set(rawProspects.map(p => p.id));
+      // Filtrar empresas añadidas que no estén repetidas en la base fija ni borradas
+      const validAdded = addedRecords.filter(p => p && p.id && !rawIds.has(p.id) && !deletedIds.has(p.id));
+
+      // Combinar la base fija original (no borrada) con las empresas añadidas definitivamente
+      const combined = [...validAdded, ...rawProspects.filter(p => !deletedIds.has(p.id))];
+
       const savedMods = localStorage.getItem('aluminio_crm_modifications');
       if (savedMods) {
         try {
           const parsedMods = JSON.parse(savedMods);
           if (Array.isArray(parsedMods) && parsedMods.length > 0) {
             const modsMap = new Map(parsedMods.map(m => [m.id, m]));
-            const merged = rawProspects
-              .filter(p => !deletedIds.has(p.id))
-              .map(p => {
-                const mod = modsMap.get(p.id);
-                return mod ? { ...p, ...mod } : p;
-              });
+            const merged = combined.map(p => {
+              const mod = modsMap.get(p.id);
+              return mod ? { ...p, ...mod } : p;
+            });
             return sanitize(merged);
           }
         } catch (e) {
           localStorage.removeItem('aluminio_crm_modifications');
         }
       }
-      return sanitize(rawProspects.filter(p => !deletedIds.has(p.id)));
+      return sanitize(combined);
     } catch (err) {
       console.error('Error al inicializar prospectos:', err);
       return rawProspects;
@@ -372,8 +393,9 @@ const App = () => {
       whatsapp: '34600111222',
       zones: ['Asturias', 'Castilla y Leon', 'Portugal', 'Pais Vasco']
     },
-    adominguez: {
-      username: 'adominguez',
+    // Configuración de usuario comercial: Alfredo Domingo
+    adomingo: {
+      username: 'adomingo',
       name: 'Alfredo Domingo',
       role: 'Comercial Senior',
       email: 'adomingo@gruposopena.com',
@@ -451,7 +473,7 @@ const App = () => {
       return;
     }
 
-    // Usuario comercial (adominguez / karim)
+    // Usuario comercial (adomingo / karim)
     const savedPass = userPasswords[trimmedUser];
 
     // Primer acceso: requiere crear contraseña corporativa propia
@@ -539,10 +561,29 @@ const App = () => {
       alert('No se pudo calcular la distancia. Intente más tarde.');
     }
   };
+  // =========================================================================
+  // PERSISTENCIA DEFINITIVA EN BASE DE DATOS LOCAL (LOCALSTORAGE)
+  // Guarda tanto las nuevas empresas añadidas como las modificaciones de existentes.
+  // =========================================================================
   useEffect(() => {
     try {
-      // Guardar únicamente prospectos modificados/contactados para evitar QuotaExceededError de LocalStorage
-      const modifiedOnly = prospects.filter(p => p.contacted || (p.notes && p.notes.length > 0) || (p.tasks && p.tasks.length > 0) || (p.history && p.history.length > 1));
+      const rawIds = new Set(rawProspects.map(p => p.id));
+      
+      // 1. Guardar de forma definitiva todas las empresas nuevas (Lead Finder o manuales)
+      const addedCompanies = prospects.filter(p => !rawIds.has(p.id));
+      localStorage.setItem('aluminio_crm_added', JSON.stringify(addedCompanies));
+
+      // 2. Guardar modificaciones de prospectos de la base inicial para optimizar cuota
+      const modifiedOnly = prospects.filter(p => {
+        if (!rawIds.has(p.id)) return false; // Ya están completamente persistidas en aluminio_crm_added
+        return p.contacted || 
+               (p.notes && p.notes.length > 0) || 
+               (p.tasks && p.tasks.length > 0) || 
+               (p.history && p.history.length > 1) ||
+               (p.pipelineStage && p.pipelineStage !== 'Lead') ||
+               p.emailSource === 'manual' ||
+               p.emailSource === 'agentforce_verified';
+      });
       localStorage.setItem('aluminio_crm_modifications', JSON.stringify(modifiedOnly));
     } catch (e) {
       console.warn('Límite de cuota de LocalStorage alcanzado. Los datos se mantienen en memoria viva.', e);
@@ -757,6 +798,19 @@ const App = () => {
         });
         localStorage.setItem('aluminio_crm_deleted', JSON.stringify(deletedRecords));
       }
+      // Actualizar también la lista de empresas añadidas si correspondía a una de ellas
+      try {
+        const savedAdded = localStorage.getItem('aluminio_crm_added');
+        if (savedAdded) {
+          const parsedAdded = JSON.parse(savedAdded);
+          if (Array.isArray(parsedAdded)) {
+            const updatedAdded = parsedAdded.filter(p => p.id !== prospectId);
+            localStorage.setItem('aluminio_crm_added', JSON.stringify(updatedAdded));
+          }
+        }
+      } catch (e) {
+        console.error('Error al actualizar empresas añadidas tras eliminación:', e);
+      }
       setProspects(prev => prev.filter(p => p.id !== prospectId));
       if (selectedProspect && selectedProspect.id === prospectId) {
         setSelectedProspect(null);
@@ -783,7 +837,7 @@ const App = () => {
       console.error('Error checking deleted history:', e);
     }
     const newCompany = {
-      id: 'P' + (prospects.length + 1).toString().padStart(3, '0'),
+      id: 'PROP-MANUAL-' + Date.now(),
       name: companyName,
       sector: formData.get('sector'),
       revenue: 1000000,
@@ -802,13 +856,15 @@ const App = () => {
       contacted: false,
       notes: null,
       response: null,
-      products: [],
+      products: ['Perfiles', 'Chapas de Aluminio'],
       tasks: [],
-      history: [],
+      history: [{ id: Date.now(), type: '📝 Creación', text: 'Empresa creada manualmente e incorporada de forma definitiva a la base de datos.', date: new Date().toISOString() }],
       pipelineStage: 'Lead',
       quality: '',
       logistics: '',
       packaging: '',
+      createdAt: new Date().toISOString(),
+      source: 'Creación Manual',
       // Flag de reincorporación si fue borrada anteriormente
       wasDeleted: wasDeletedRecord ? true : false,
       previouslyDeletedAt: wasDeletedRecord ? (typeof wasDeletedRecord === 'object' ? wasDeletedRecord.deletedAt : null) : null
@@ -1023,7 +1079,7 @@ const App = () => {
         sectorText = isPt 
           ? `Centrados no setor de ${target.sector}, fabricamos e montamos perfis com rotura de ponte térmica e poliamidas "Low Lambda" para o máximo isolamento. Extrudimos tanto para os nossos sistemas próprios de arquitetura como para sistemas de terceiros. Além disso, os nossos lacados Qualicoat Seaside e acabamentos com efeito madeira (Qualideco) garantirão a máxima resistência e estética nas suas caixilharias.`
           : `Centrados en el sector de ${target.sector}, fabricamos y ensamblamos perfiles con rotura de puente térmico y poliamidas "Low Lambda" para el máximo aislamiento. Extruimos tanto para nuestros sistemas propios de arquitectura como para sistemas de terceros. Además, nuestros lacados Qualicoat Seaside y acabados con efecto madera (Qualideco) garantizarán la máxima resistencia y estética en todos sus cerramientos.`;
-      } else if (['Fachadas de Aluminio', 'Escaleras', 'Fabricantes de Escaleras de Aluminio'].includes(target.sector)) {
+      } else if (['Fachadas de Aluminio', 'Fabricantes de Escaleras de Aluminio'].includes(target.sector)) {
         sectorText = isPt
           ? `Para ${target.sector}, extrudimos ligas estruturais (6005/6083) que oferecem as propriedades mecânicas avançadas requeridas para muros cortina e estruturas portantes, sempre con acabamentos Qualideco impecáveis.`
           : `Para ${target.sector}, extruimos aleaciones estructurales (6005/6083) que ofrecen las propiedades mecánicas avanzadas requeridas para muros cortina y estructuras portantes, siempre con acabados Qualideco impecables.`;
@@ -1031,7 +1087,7 @@ const App = () => {
         sectorText = isPt
           ? `Em Estructuras Solares, o alumínio leve e sem corrosão é vital. As nossas ligas anodizadas (Qualanod) garantirão a ${target.name} a máxima durabilidade em plantas fotovoltaicas e trackers.`
           : `En Estructuras Solares, el aluminio ligero y sin corrosión es vital. Nuestras aleaciones anodizadas (Qualanod) asegurarán a ${target.name} la máxima durabilidad en plantas fotovoltaicas y trackers.`;
-      } else if (['Frio Industrial', 'Plataformas', 'Fabricantes de Estanterias de Aluminio'].includes(target.sector)) {
+      } else if (['Frio Industrial', 'Fabricantes de Estanterias de Aluminio'].includes(target.sector)) {
         sectorText = isPt
           ? `Para reduzir tempos de montagem em ${target.sector}, na Empresa de Aluminio integramos ranhuras e encaixes diretos na matriz de extrusão, agilizando radicalmente a fabricação dos seus produtos.`
           : `Para reducir tiempos de montaje en ${target.sector}, en Empresa de Aluminio integramos ranuras y encajes directos en la matriz de extrusión, agilizando radicalmente la fabricación de sus productos.`;
@@ -1043,10 +1099,6 @@ const App = () => {
         sectorText = isPt
           ? `Oferecemos tolerâncias estritas para ${target.sector}, ideais para pérgolas e toldos, avalizados por acabamentos Seaside resistentes à corrosão salina.`
           : `Ofrecemos tolerancias estrictas para ${target.sector}, ideales para pérgolas y toldos, avalados por acabados Seaside resistentes a la corrosión salina.`;
-      } else if (['Instalacion de Cubiertas'].includes(target.sector)) {
-        sectorText = isPt
-          ? `Para ${target.sector}, proporcionamos perfilaria industrial hermética com certificações europeias e fornecimento pontual graças à nossa proximidade logística.`
-          : `Para ${target.sector}, proporcionamos perfilería industrial hermética con certificaciones europeas y suministro de confianza gracias a nuestra cercanía logística.`;
       } else if (['Transformacion de Chapa', 'Metal Arquitectonico y Chapa Perforada', 'PLV y Mobiliario Comercial', 'Armarios de Aluminio'].includes(target.sector)) {
         sectorText = isPt
           ? `Para ${target.sector}, aplicamos tratamentos superficiais Premium (Qualicoat, Qualideco) que mantêm as suas fachadas, expositores e exposições comerciais inalteráveis ao longo do tempo.`
@@ -1055,10 +1107,6 @@ const App = () => {
         sectorText = isPt
           ? `Na indústria moderna, os ${target.sector} são o standard para a construção de maquinaria e líneas de montagem. Na Aluminios Innovations contamos com a capacidade técnica para extrudar perfis ranhurados con tolerâncias milimétricas.`
           : `En la industria moderna, los ${target.sector} son el estándar para la construcción de maquinaria y líneas de ensamblaje. En Aluminios Innovations contamos con la capacidad técnica para extruir perfiles ranurados con tolerancias milimétricas.`;
-      } else if (['Proveedor de Aluminio'].includes(target.sector)) {
-        sectorText = isPt
-          ? `Sendo a ${target.name} uma referência no fornecimento e distribuição de alumínio, propomos colaborar como parceiro industrial de extrusão. Fornecemos perfis de alumínio e acessórios certificados (Qualicoat/Qualanod) para expandir o vosso catálogo e stock, assegurando tolerâncias de precisão e prazos de entrega ágeis.`
-          : `Como ${target.name} es un referente en el suministro y distribución de aluminio, proponemos colaborar como partner industrial de extrusión. Suministramos perfiles de aluminio y accesorios certificados (Qualicoat/Qualanod) para expandir su catálogo y stock, garantizando tolerancias de precisión y plazos de entrega rápidos.`;
       } else {
         sectorText = isPt
           ? `Oferecemos perfilaria de alumínio sob medida com ligas otimizadas e acabamentos de tratamento de superfície certificados para apoiar os seus processos de fabrico.`
@@ -1563,7 +1611,7 @@ const App = () => {
         sectorText = isPt 
           ? `Centrados no setor de ${target.sector}, fabricamos e montamos perfis com rotura de ponte térmica e poliamidas "Low Lambda" para o máximo isolamento. Extrudimos tanto para os nossos sistemas próprios de arquitetura como para sistemas de terceiros. Além disso, os nossos lacados Qualicoat Seaside e acabamentos com efeito madeira (Qualideco) garantirão a máxima resistência e estética nas suas caixilharias.`
           : `Centrados en el sector de ${target.sector}, fabricamos y ensamblamos perfiles con rotura de puente térmico y poliamidas "Low Lambda" para el máximo aislamiento. Extruimos tanto para nuestros sistemas propios de arquitectura como para sistemas de terceros. Además, nuestros lacados Qualicoat Seaside y acabados con efecto madera (Qualideco) garantizarán la máxima resistencia y estética en todos sus cerramientos.`;
-      } else if (['Fachadas de Aluminio', 'Escaleras', 'Fabricantes de Escaleras de Aluminio'].includes(target.sector)) {
+      } else if (['Fachadas de Aluminio', 'Fabricantes de Escaleras de Aluminio'].includes(target.sector)) {
         sectorText = isPt
           ? `Para ${target.sector}, extrudimos ligas estruturais (6005/6083) que oferecem as propriedades mecânicas avançadas requeridas para muros cortina e estruturas portantes, sempre com acabamentos Qualideco impecáveis.`
           : `Para ${target.sector}, extruimos aleaciones estructurales (6005/6083) que ofrecen las propiedades mecánicas avanzadas requeridas para muros cortina y estructuras portantes, siempre con acabados Qualideco impecables.`;
@@ -1571,7 +1619,7 @@ const App = () => {
         sectorText = isPt
           ? `Em Estructuras Solares, o alumínio leve e sem corrosão é vital. As nossas ligas anodizadas (Qualanod) garantirão a ${target.name} a máxima durabilidade em plantas fotovoltaicas e trackers.`
           : `En Estructuras Solares, el aluminio ligero y sin corrosión es vital. Nuestras aleaciones anodizadas (Qualanod) asegurarán a ${target.name} la máxima durabilidad en plantas fotovoltaicas y trackers.`;
-      } else if (['Frio Industrial', 'Plataformas', 'Fabricantes de Estanterias de Aluminio'].includes(target.sector)) {
+      } else if (['Frio Industrial', 'Fabricantes de Estanterias de Aluminio'].includes(target.sector)) {
         sectorText = isPt
           ? `Para reduzir tempos de montagem em ${target.sector}, na Empresa de Aluminio integramos ranhuras e encaixes diretos na matriz de extrusão, agilizando radicalmente a fabricação dos seus produtos.`
           : `Para reducir tiempos de montaje en ${target.sector}, en Empresa de Aluminio integramos ranuras y encajes directos en la matriz de extrusión, agilizando radicalmente la fabricación de sus productos.`;
@@ -1583,10 +1631,6 @@ const App = () => {
         sectorText = isPt
           ? `Oferecemos tolerâncias estritas para ${target.sector}, ideais para pérgolas e toldos, avalizados por acabamentos Seaside resistentes à corrosão salina.`
           : `Ofrecemos tolerancias estrictas para ${target.sector}, ideales para pergolas y toldos, avalados por acabados Seaside resistentes a la corrosión salina.`;
-      } else if (['Instalacion de Cubiertas'].includes(target.sector)) {
-        sectorText = isPt
-          ? `Para ${target.sector}, proporcionamos perfilaria industrial hermética com certificações europeias e fornecimento pontual graças à nossa proximidade logística.`
-          : `Para ${target.sector}, proporcionamos perfilería industrial hermética con certificaciones europeas y suministro de confianza gracias a nuestra cercanía logística.`;
       } else if (['Transformacion de Chapa', 'Metal Arquitectonico y Chapa Perforada', 'PLV y Mobiliario Comercial', 'Armarios de Aluminio'].includes(target.sector)) {
         sectorText = isPt
           ? `Para ${target.sector}, aplicamos tratamentos superficiais Premium (Qualicoat, Qualideco) que mantêm as suas fachadas, expositores e exposições comerciais inalteráveis ao longo do tempo.`
@@ -1699,7 +1743,6 @@ const App = () => {
       sector === 'puertas y ventanas' ||
       sector === 'cerramientos' ||
       sector === 'sistemas de proteccion solar' ||
-      sector === 'proveedor de aluminio' ||
       sector === 'fachadas de aluminio'
     );
   };
@@ -1722,9 +1765,7 @@ const App = () => {
       sectorLower.includes('cerramientos') ||
       sectorLower.includes('aluminio') ||
       sectorLower.includes('mosquiteras') ||
-      sectorLower.includes('cubiertas') ||
       sectorLower.includes('proteccion solar') ||
-      sectorLower.includes('proveedor de aluminio') ||
       nameLower.includes('carpinteria') ||
       nameLower.includes('metalica') ||
       nameLower.includes('aluminio') ||
@@ -1916,10 +1957,10 @@ const App = () => {
               </button>
               <button 
                 type="button" 
-                onClick={() => { setUsername('adominguez'); setPassword(''); }} 
-                style={{ padding: '4px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', background: username === 'adominguez' ? '#e0f2fe' : 'white', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600, color: '#0369a1' }}
+                onClick={() => { setUsername('adomingo'); setPassword(''); }} 
+                style={{ padding: '4px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', background: username === 'adomingo' ? '#e0f2fe' : 'white', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600, color: '#0369a1' }}
               >
-                👤 adominguez (CV, Mad, CLM)
+                👤 adomingo (CV, Mad, CLM)
               </button>
               <button 
                 type="button" 
@@ -1943,7 +1984,7 @@ const App = () => {
               <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#475569', marginBottom: '4px', display: 'block' }}>Usuario</label>
               <input 
                 type="text" 
-                placeholder="Ej. adominguez, karim, ccastro" 
+                placeholder="Ej. adomingo, karim, ccastro" 
                 value={username} 
                 onChange={e => setUsername(e.target.value)} 
                 style={{width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '0.95rem', boxSizing: 'border-box'}}
@@ -2265,8 +2306,6 @@ const App = () => {
                     <option value="Construccion Modular">Construcción Modular</option>
                     <option value="Frio Industrial">Frío Industrial</option>
                     <option value="Puertas y Ventanas">Puertas y Ventanas</option>
-                    <option value="Plataformas">Plataformas</option>
-                    <option value="Escaleras">Escaleras</option>
                     <option value="Estructuras Solares">Estructuras Solares</option>
                     <option value="Fachadas de Aluminio">Fachadas de Aluminio</option>
                     <option value="Fachadas Especiales">Fachadas Especiales</option>
@@ -2274,7 +2313,6 @@ const App = () => {
                     <option value="Fabricantes de Estanterias de Aluminio">Fab. Estanterías</option>
                     <option value="Fabricantes de Carrocerias">Fab. Carrocerías</option>
                     <option value="Transformacion de Chapa">Transformación de Chapa</option>
-                    <option value="Instalacion de Cubiertas">Instalación de Cubiertas</option>
                     <option value="Sistemas de Proteccion Solar">Sistemas de Protección Solar</option>
                     <option value="Metal Arquitectonico y Chapa Perforada">Metal Arquitectónico y Chapa Perforada</option>
                     <option value="Perfiles Estructurales Aluminio">Perfiles Estructurales Aluminio</option>
@@ -2289,7 +2327,6 @@ const App = () => {
                     <option value="Puertas Frigorificas">Puertas Frigoríficas</option>
                     <option value="Mosquiteras">Mosquiteras</option>
                     <option value="PLV y Mobiliario Comercial">PLV y Mobiliario Comercial</option>
-                    <option value="Proveedor de Aluminio">Proveedor de Aluminio</option>
                     <option value="Distribucion de Aluminio y Metales">Distribución de Aluminio y Metales</option>
                     <option value="Armarios de Aluminio">Armarios de Aluminio</option>
                   </select>
@@ -2708,7 +2745,7 @@ const App = () => {
                         if (isDetailedAllowed) {
                           setPresentationType('detallada');
                         } else {
-                          alert('La presentación detallada (dossier corporativo) solo está disponible para los sectores de: Puertas y Ventanas, Cerramientos, Sistemas de Protección Solar, Proveedor de Aluminio y Fachadas de Aluminio.');
+                          alert('La presentación detallada (dossier corporativo) solo está disponible para los sectores de: Puertas y Ventanas, Cerramientos, Sistemas de Protección Solar y Fachadas de Aluminio.');
                         }
                       }}
                       style={{
@@ -2863,13 +2900,13 @@ const App = () => {
                               {['Cerramientos', 'Puertas y Ventanas', 'Construccion Modular'].includes(presentationTarget.sector) && (
                                 <p style={{margin: 0}}>{isPt ? `Centrados no setor de ${presentationTarget.sector}, fabricamos e montamos perfis com rotura de ponte térmica e poliamidas "Low Lambda" para o máximo isolamento. Extrudimos tanto para os nossos sistemas próprios de arquitetura como para sistemas de terceiros. Além disso, os nossos lacados Qualicoat Seaside e acabamentos com efeito madeira (Qualideco) garantirão a máxima resistência e estética nas suas caixilharias.` : `Centrados en el sector de ${presentationTarget.sector}, fabricamos y ensamblamos perfiles con rotura de puente térmico y poliamidas "Low Lambda" para el máximo aislamiento. Extruimos tanto para nuestros sistemas propios de arquitectura como para sistemas de terceros. Además, nuestros lacados Qualicoat Seaside y acabados con efecto madera (Qualideco) garantizarán la máxima resistencia y estética en todos sus cerramientos.`}</p>
                               )}
-                              {['Fachadas de Aluminio', 'Escaleras', 'Fabricantes de Escaleras de Aluminio'].includes(presentationTarget.sector) && (
+                              {['Fachadas de Aluminio', 'Fabricantes de Escaleras de Aluminio'].includes(presentationTarget.sector) && (
                                 <p style={{margin: 0}}>{isPt ? `Para ${presentationTarget.sector}, extrudimos ligas estruturais (6005/6083) que oferecem as propriedades mecânicas avançadas requeridas para muros cortina e estruturas portantes, sempre com acabamentos Qualideco impecáveis.` : `Para ${presentationTarget.sector}, extruimos aleaciones estructurales (6005/6083) que ofrecen las propiedades mecánicas avanzadas requeridas para muros cortina y estructuras portantes, siempre con acabados Qualideco impecables.`}</p>
                               )}
                               {['Estructuras Solares'].includes(presentationTarget.sector) && (
                                 <p style={{margin: 0}}>{isPt ? `Em Estructuras Solares, o alumínio leve e sem corrosão é vital. As nossas ligas anodizadas (Qualanod) garantirão a ${presentationTarget.name} a máxima durabilidade em plantas fotovoltaicas e trackers.` : `En Estructuras Solares, el aluminio ligero y sin corrosión es vital. Nuestras aleaciones anodizadas (Qualanod) asegurarán a ${presentationTarget.name} la máxima durabilidad en plantas fotovoltaicas y trackers.`}</p>
                               )}
-                              {['Frio Industrial', 'Plataformas', 'Fabricantes de Estanterias de Aluminio'].includes(presentationTarget.sector) && (
+                              {['Frio Industrial', 'Fabricantes de Estanterias de Aluminio'].includes(presentationTarget.sector) && (
                                 <p style={{margin: 0}}>{isPt ? `Para reduzir tempos de montagem em ${presentationTarget.sector}, na Empresa de Aluminio integramos ranhuras e encaixes diretos na matriz de extrusão, agilizando radicalmente a fabricação dos sus produtos.` : `Para reducir tiempos de montaje en ${presentationTarget.sector}, en Empresa de Aluminio integramos ranuras y encajes directos en la matriz de extrusión, agilizando radicalmente la fabricación de sus productos.`}</p>
                               )}
                               {['Fabricantes de Carrocerias'].includes(presentationTarget.sector) && (
@@ -2878,16 +2915,13 @@ const App = () => {
                               {['Sistemas de Proteccion Solar', 'Armarios de Aluminio'].includes(presentationTarget.sector) && (
                                 <p style={{margin: 0}}>{isPt ? `Oferecemos tolerâncias estritas para ${presentationTarget.sector}, ideais para pergolas e toldos, avalados por acabamentos Seaside resistentes à corrosão salina.` : `Ofrecemos tolerancias estrictas para ${presentationTarget.sector}, ideales para pergolas y toldos, avalados por acabados Seaside resistentes a la corrosión salina.`}</p>
                               )}
-                              {['Instalacion de Cubiertas'].includes(presentationTarget.sector) && (
-                                <p style={{margin: 0}}>{isPt ? `Para ${presentationTarget.sector}, proporcionamos perfilaria industrial hermética com certificações europeias e fornecimento de confiança graças à nossa cercânia logística.` : `Para ${presentationTarget.sector}, proporcionamos perfilería industrial hermética con certificaciones europeas y suministro de confianza gracias a nuestra cercanía logística.`}</p>
-                              )}
                               {['Transformacion de Chapa', 'Metal Arquitectonico y Chapa Perforada', 'PLV y Mobiliario Comercial', 'Armarios de Aluminio'].includes(presentationTarget.sector) && (
                                 <p style={{margin: 0}}>{isPt ? `Para ${presentationTarget.sector}, aplicamos tratamentos superficiais Premium (Qualicoat, Qualideco) que mantêm as suas envolventes, expositores e displays comerciais inalteráveis ao longo do tempo.` : `Para ${presentationTarget.sector}, aplicamos tratamientos superficiales Premium (Qualicoat, Qualideco) que mantienen sus envolventes, expositores y displays comerciales inalterables a lo largo del tiempo.`}</p>
                               )}
                               {['Perfiles Estructurales Aluminio'].includes(presentationTarget.sector) && (
                                 <p style={{margin: 0}}>{isPt ? `Na indústria moderna, os ${presentationTarget.sector} são o standard para a construção de maquinaria e linhas de montagem. Na Aluminios Innovations contamos com a capacidade técnica para extrudar perfis ranhurados con tolerâncias milimétricas.` : `En el sector de ${presentationTarget.sector}, proporcionamos perfiles estructurales de precisión con acabados certificados para soportar sus líneas de montaje.`}</p>
                               )}
-                              {['Proveedor de Aluminio', 'Distribucion de Aluminio y Metales'].includes(presentationTarget.sector) && (
+                              {['Distribucion de Aluminio y Metales'].includes(presentationTarget.sector) && (
                                 <p style={{margin: 0}}>{isPt ? `Como distribuidor e fornecedor de alumínio, propomos a ${presentationTarget.name} uma colaboração estratégica de extrusão. Podemos fornecer perfis e lamas sob medida com acabamentos premium anodizados e lacados com a garantia de qualidade Aluminios Innovations.` : `Como distribuidor y proveedor de aluminio, proponemos a ${presentationTarget.name} una colaboración estratégica de extrusión. Podemos suministrar perfiles y lamas a medida con acabados premium anodizados y lacados con la garantía de calidad de Aluminios Innovations.`}</p>
                               )}
                             </div>
@@ -3178,8 +3212,6 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                     <option value="Construccion Modular">Construcción Modular</option>
                     <option value="Frio Industrial">Frío Industrial</option>
                     <option value="Puertas y Ventanas">Puertas y Ventanas</option>
-                    <option value="Plataformas">Plataformas</option>
-                    <option value="Escaleras">Escaleras</option>
                     <option value="Estructuras Solares">Estructuras Solares</option>
                     <option value="Fachadas de Aluminio">Fachadas de Aluminio</option>
                     <option value="Fachadas Especiales">Fachadas Especiales</option>
@@ -3187,7 +3219,6 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                     <option value="Fabricantes de Estanterias de Aluminio">Fab. Estanterías</option>
                     <option value="Fabricantes de Carrocerias">Fab. Carrocerías</option>
                     <option value="Transformacion de Chapa">Transformación de Chapa</option>
-                    <option value="Instalacion de Cubiertas">Instalación de Cubiertas</option>
                     <option value="Sistemas de Proteccion Solar">Sistemas de Protección Solar</option>
                     <option value="Metal Arquitectonico y Chapa Perforada">Metal Arquitectónico y Chapa Perforada</option>
                     <option value="Perfiles Estructurales Aluminio">Perfiles Estructurales Aluminio</option>
@@ -3202,7 +3233,6 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                     <option value="Puertas Frigorificas">Puertas Frigoríficas</option>
                     <option value="Mosquiteras">Mosquiteras</option>
                     <option value="PLV y Mobiliario Comercial">PLV y Mobiliario Comercial</option>
-                    <option value="Proveedor de Aluminio">Proveedor de Aluminio</option>
                     <option value="Distribucion de Aluminio y Metales">Distribución de Aluminio y Metales</option>
                     <option value="Armarios de Aluminio">Armarios de Aluminio</option>
                   </select>
@@ -3613,8 +3643,6 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                         <option value="Construccion Modular">Construcción Modular</option>
                         <option value="Frio Industrial">Frío Industrial</option>
                         <option value="Puertas y Ventanas">Puertas y Ventanas</option>
-                        <option value="Plataformas">Plataformas</option>
-                        <option value="Escaleras">Escaleras</option>
                         <option value="Estructuras Solares">Estructuras Solares</option>
                         <option value="Fachadas de Aluminio">Fachadas de Aluminio</option>
                         <option value="Fachadas Especiales">Fachadas Especiales</option>
@@ -3622,12 +3650,10 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                         <option value="Fabricantes de Estanterias de Aluminio">Fabricantes de Estanterías de Aluminio</option>
                         <option value="Fabricantes de Carrocerias">Fabricantes de Carrocerías</option>
                         <option value="Transformacion de Chapa">Transformación de Chapa</option>
-                        <option value="Instalacion de Cubiertas">Instalación de Cubiertas</option>
                         <option value="Sistemas de Proteccion Solar">Sistemas de Protección Solar</option>
                         <option value="Metal Arquitectonico y Chapa Perforada">Metal Arquitectónico y Chapa Perforada</option>
                         <option value="Perfiles Estructurales Aluminio">Perfiles Estructurales Aluminio</option>
                         <option value="PLV y Mobiliario Comercial">PLV y Mobiliario Comercial</option>
-                    <option value="Proveedor de Aluminio">Proveedor de Aluminio</option>
                     <option value="Distribucion de Aluminio y Metales">Distribución de Aluminio y Metales</option>
                     <option value="Armarios de Aluminio">Armarios de Aluminio</option>
                         <option value="Pistas de Padel">Pistas de Pádel</option>
@@ -3915,8 +3941,6 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                   <option value="Construccion Modular">Construcción Modular</option>
                   <option value="Frio Industrial">Frío Industrial</option>
                   <option value="Puertas y Ventanas">Puertas y Ventanas</option>
-                  <option value="Plataformas">Plataformas</option>
-                  <option value="Escaleras">Escaleras</option>
                   <option value="Estructuras Solares">Estructuras Solares</option>
                   <option value="Fachadas de Aluminio">Fachadas de Aluminio</option>
                   <option value="Fachadas Especiales">Fachadas Especiales</option>
@@ -3924,7 +3948,6 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                   <option value="Fabricantes de Estanterias de Aluminio">Fab. Estanterías</option>
                   <option value="Fabricantes de Carrocerias">Fab. Carrocerías</option>
                   <option value="Transformacion de Chapa">Transformación de Chapa</option>
-                  <option value="Instalacion de Cubiertas">Instalación de Cubiertas</option>
                   <option value="Sistemas de Proteccion Solar">Sistemas de Protección Solar</option>
                   <option value="Metal Arquitectonico y Chapa Perforada">Metal Arquitectónico y Chapa Perforada</option>
                   <option value="Perfiles Estructurales Aluminio">Perfiles Estructurales Aluminio</option>
@@ -3938,7 +3961,6 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                   <option value="Puertas Industriales">Puertas Industriales</option>
                   <option value="Puertas Frigorificas">Puertas Frigoríficas</option>
                   <option value="Mosquiteras">Mosquiteras</option>
-                  <option value="Proveedor de Aluminio">Proveedor de Aluminio</option>
                   <option value="Distribucion de Aluminio y Metales">Distribución de Aluminio y Metales</option>
                   <option value="Armarios de Aluminio">Armarios de Aluminio</option>
                 </select>

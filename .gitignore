@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .netlify
+src/data/prospects.backup-*.json
+*.backup-*.json
+
