@@ -10319,5 +10319,312 @@
     "notes": "Taller fabricante e instalador de cerramientos y ventanas de aluminio con rotura de puente térmico en el noroeste de la Comunidad de Madrid.",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-09-16T21:30:46.517Z"
+  },
+  {
+    "id": "PROP-APPR-0398",
+    "name": "Zanzar Iberia S.L.",
+    "zone": "Comunidad Valenciana",
+    "department": "Paterna (Valencia)",
+    "cif": "B98506728",
+    "web": "https://zanzar.es",
+    "revenue": 5500000,
+    "purchasingManager": "Dpto. Compras y Aprovisionamiento (Zanzar Iberia)",
+    "phone": "+34 96 100 49 99",
+    "email": "info@zanzar.es",
+    "location": [
+      39.5075,
+      -0.4578
+    ],
+    "sector": "Mosquiteras",
+    "products": [
+      "Mosquiteras Enrollables",
+      "Mosquiteras Plisadas",
+      "Mosquiteras Correderas",
+      "Venecianas",
+      "Perfiles de Aluminio"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Filial española del grupo Zanzar SpA en Pol. Ind. Fuente del Jarro. Fabricación industrial y distribución de sistemas de mosquiteras y venecianas con perfilería técnica de aluminio.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T22:10:43.986Z"
+  },
+  {
+    "id": "PROP-APPR-0399",
+    "name": "Nevaluz Sevilla S.L.",
+    "zone": "Andalucía",
+    "department": "Écija (Sevilla)",
+    "cif": "B41359951",
+    "web": "https://nevaluz.com",
+    "revenue": 26859271,
+    "purchasingManager": "Dpto. Compras y Materias Primas (Nevaluz)",
+    "phone": "+34 955 90 40 40",
+    "email": "info@nevaluz.com",
+    "location": [
+      37.5415,
+      -5.082
+    ],
+    "sector": "Sistemas de Proteccion Solar",
+    "products": [
+      "Mosquiteras Plisadas y Enrollables",
+      "Persianas de Aluminio",
+      "Sistemas de Protección Solar",
+      "Screens"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Uno de los mayores fabricantes de mosquiteras y sistemas de protección solar de España con más de 150 empleados e instalaciones centrales en Écija.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T22:10:43.986Z"
+  },
+  {
+    "id": "PROP-APPR-0400",
+    "name": "Llaza World S.A.",
+    "zone": "Cataluña",
+    "department": "Alcover (Tarragona)",
+    "cif": "A66132184",
+    "web": "https://llaza.com",
+    "revenue": 26515522,
+    "purchasingManager": "Dpto. Compras (Llaza World)",
+    "phone": "+34 977 60 06 60",
+    "email": "info@llaza.com",
+    "location": [
+      41.2612,
+      1.1738
+    ],
+    "sector": "Sistemas de Proteccion Solar",
+    "products": [
+      "Sistemas de Toldos en Aluminio",
+      "Brazos Articulados",
+      "Protección Solar",
+      "Perfilería Extruida"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Líder internacional en diseño y fabricación de sistemas avanzados de protección solar y toldos con perfilería técnica de aluminio.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T22:10:43.986Z"
+  },
+  {
+    "id": "PROP-APPR-0401",
+    "name": "Hunter Douglas España S.A.",
+    "zone": "Comunidad de Madrid",
+    "department": "Alcobendas (Madrid)",
+    "cif": "A08082521",
+    "web": "https://www.hunterdouglas.es",
+    "revenue": 19500000,
+    "purchasingManager": "Dpto. Compras (Hunter Douglas)",
+    "phone": "+34 91 661 52 95",
+    "email": "info@hunterdouglas.es",
+    "location": [
+      40.5312,
+      -3.6425
+    ],
+    "sector": "Sistemas de Proteccion Solar",
+    "products": [
+      "Celosías de Aluminio",
+      "Persianas Venecianas",
+      "Falsos Techos Metálicos",
+      "Protección Solar Arquitectónica"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Referente internacional en arquitectura solar, celosías de aluminio para fachada, venecianas y sistemas de control solar.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T22:10:43.986Z"
+  },
+  {
+    "id": "PROP-APPR-0402",
+    "name": "Siplan Ibérica S.L.",
+    "zone": "Andalucía",
+    "department": "Mairena del Alcor (Sevilla)",
+    "cif": "B91977280",
+    "web": "https://siplan.com",
+    "revenue": 14200000,
+    "purchasingManager": "Dpto. Aprovisionamiento (Siplan)",
+    "phone": "+34 955 74 61 74",
+    "email": "siplan@siplan.com",
+    "location": [
+      37.3752,
+      -5.7485
+    ],
+    "sector": "Sistemas de Proteccion Solar",
+    "products": [
+      "Componentes de Aluminio para Toldos",
+      "Pérgolas Bioclimáticas",
+      "Sistemas de Protección Solar"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante especializado de accesorios, brazos y perfiles de aluminio extruido para sistemas de protección solar en Pol. Ind. El Gandul.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T22:10:43.986Z"
+  },
+  {
+    "id": "PROP-APPR-0403",
+    "name": "Producciones Mitjavila S.A.",
+    "zone": "Cataluña",
+    "department": "Llers (Girona)",
+    "cif": "A17451873",
+    "web": "https://mitjavila.com",
+    "revenue": 11500000,
+    "purchasingManager": "Dpto. Compras (Mitjavila)",
+    "phone": "+34 972 52 80 87",
+    "email": "mitjavila@mitjavila.com",
+    "location": [
+      42.2965,
+      2.9125
+    ],
+    "sector": "Sistemas de Proteccion Solar",
+    "products": [
+      "Piezas de Aluminio Fundido y Extruido",
+      "Sistemas de Toldos",
+      "Marquesinas y Protección Solar"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Gran factoría industrial en Llers especializada en piezas, accesorios y componentes de aluminio para toldos, marquesinas y cerramientos.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T22:10:43.986Z"
+  },
+  {
+    "id": "PROP-APPR-0404",
+    "name": "Dimensión Técnica 2012, S.L. (Samer Systems)",
+    "zone": "Comunidad Valenciana",
+    "department": "Paterna (Valencia)",
+    "cif": "B65725434",
+    "web": "https://samersystems.com",
+    "revenue": 9500000,
+    "purchasingManager": "Dpto. Compras (Samer Systems)",
+    "phone": "+34 96 134 06 44",
+    "email": "info@samersystems.com",
+    "location": [
+      39.509,
+      -0.4552
+    ],
+    "sector": "Mosquiteras",
+    "products": [
+      "Mosquiteras Enrollables",
+      "Mosquiteras Plisadas",
+      "Perfiles de Aluminio",
+      "Sistemas de Protección Solar"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante líder de mosquiteras y sistemas en el Polígono Fuente del Jarro de Paterna, especializado en extrusión y corte de perfiles de aluminio.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T22:10:43.986Z"
+  },
+  {
+    "id": "PROP-APPR-0405",
+    "name": "Industrial de Celosías S.A. (Tamiluz)",
+    "zone": "Cataluña",
+    "department": "Barberà del Vallès (Barcelona)",
+    "cif": "A08894206",
+    "web": "http://www.tamiluz.es",
+    "revenue": 4800000,
+    "purchasingManager": "Dpto. Compras (Tamiluz)",
+    "phone": "+34 93 729 45 44",
+    "email": "tamiluz@tamiluz.es",
+    "location": [
+      41.5178,
+      2.1285
+    ],
+    "sector": "Sistemas de Proteccion Solar",
+    "products": [
+      "Celosías de Aluminio Extruido",
+      "Lamas Orientables",
+      "Protección Solar Pasiva",
+      "Fachadas y Cerramientos"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante industrial de sistemas de celosías fijas y móviles con perfilería técnica de aluminio extruido.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T22:10:43.986Z"
+  },
+  {
+    "id": "PROP-APPR-0406",
+    "name": "Griesser Persianas y Estores S.L.",
+    "zone": "Cataluña",
+    "department": "La Pobla de Claramunt (Barcelona)",
+    "cif": "B64556061",
+    "web": "https://www.griesser.es",
+    "revenue": 4500000,
+    "purchasingManager": "Dpto. Compras (Griesser)",
+    "phone": "+34 93 808 61 00",
+    "email": "info@griesser.es",
+    "location": [
+      41.554,
+      1.678
+    ],
+    "sector": "Sistemas de Proteccion Solar",
+    "products": [
+      "Persianas Graduables de Aluminio",
+      "Celosías Metálicas",
+      "Estores Guiados",
+      "Sistemas de Control Solar"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Filial de la marca suiza Griesser en España. Fabricación y ensamblaje de persianas graduables, celosías y sistemas solares con perfiles de aluminio.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T22:10:43.986Z"
+  },
+  {
+    "id": "PROP-APPR-0407",
+    "name": "Industrias Durmi, S.A.",
+    "zone": "Cataluña",
+    "department": "Sant Pere de Ribes (Barcelona)",
+    "cif": "A08466187",
+    "web": "https://durmi.com",
+    "revenue": 3800000,
+    "purchasingManager": "Dpto. Compras (Durmi)",
+    "phone": "+34 93 896 33 00",
+    "email": "durmi@durmi.com",
+    "location": [
+      41.2425,
+      1.775
+    ],
+    "sector": "Sistemas de Proteccion Solar",
+    "products": [
+      "Celosías Orientables",
+      "Lamas de Aluminio Extruido",
+      "Mallorquinas",
+      "Pérgolas Bioclimáticas"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Especialistas en lamas y celosías de aluminio extruido fijas y móviles para protección solar bioclimática y cerramientos arquitectónicos.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T22:10:43.986Z"
+  },
+  {
+    "id": "PROP-APPR-0408",
+    "name": "Ideco Mosquiteras S.L.",
+    "zone": "Comunidad Valenciana",
+    "department": "Paterna (Valencia)",
+    "cif": "B40653974",
+    "web": "https://ideco-spain.es",
+    "revenue": 3200000,
+    "purchasingManager": "Dpto. Compras (Ideco)",
+    "phone": "+34 96 134 00 12",
+    "email": "info@ideco-spain.es",
+    "location": [
+      39.5065,
+      -0.459
+    ],
+    "sector": "Mosquiteras",
+    "products": [
+      "Mosquiteras Enrollables",
+      "Mosquiteras Plisadas",
+      "Perfiles de Aluminio",
+      "Accesorios"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante especializado de sistemas de mosquiteras a medida y componentes de aluminio en el Polígono Fuente del Jarro de Paterna.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T22:10:43.986Z"
   }
 ]

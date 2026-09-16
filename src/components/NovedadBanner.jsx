@@ -92,7 +92,7 @@ export const NovedadBanner = ({ onFilterNew }) => {
           <div className="novedad-minimized-info">
             <span className="novedad-pulse-dot" />
             <span>
-              <strong>✨ Novedad Comercial:</strong> Incorporadas nuevas empresas de carpintería y cerramientos RPT en Castilla y León y Madrid (+8 empresas).
+              <strong>✨ Novedad Comercial:</strong> Incorporadas nuevas empresas líderes en Mosquiteras y Protección Solar (+11 empresas como Zanzar Iberia, Nevaluz, Llaza World).
             </span>
             <span style={{ color: '#94a3b8', fontSize: '0.78rem' }}>
               ({remainingDays} {remainingDays === 1 ? 'día restante' : 'días restantes'})
@@ -167,26 +167,26 @@ export const NovedadBanner = ({ onFilterNew }) => {
               ¡Se han incorporado más empresas a la Base de Datos!
             </h3>
             <p className="novedad-text">
-              Ampliación cualificada en el sector <strong>Puertas y Ventanas</strong>: se han integrado <strong>8 nuevos fabricantes y talleres industriales</strong> de cerramientos con rotura de puente térmico (RPT) con marcado CE en <strong>Castilla y León</strong> y la <strong>Comunidad de Madrid</strong>, junto con la depuración registral y de contacto de <strong>Vicente Vila, S.L.</strong> en Alzira (Valencia).
+              Ampliación estratégica en <strong>Mosquiteras y Sistemas de Protección Solar</strong>: se ha integrado <strong>Zanzar Iberia S.L.</strong> junto al top 10 nacional de mayor facturación en sistemas y perfiles de aluminio (<em>Nevaluz, Llaza World, Hunter Douglas, Siplan, Samer Systems, Mitjavila, Tamiluz...</em>), sumado a los nuevos talleres de cerramientos RPT de Castilla y León y Madrid.
             </p>
 
-            {/* Píldoras informativas territoriales */}
+            {/* Píldoras informativas territoriales y sectoriales */}
             <div className="novedad-zones-grid">
+              <div className="novedad-zone-pill valencia">
+                <span className="pill-tag">Zanzar & Similares (+11)</span>
+                <span>Mosquiteras y Protección Solar</span>
+              </div>
               <div className="novedad-zone-pill">
                 <span className="pill-tag">Castilla y León (+4)</span>
                 <span>Valladolid, Burgos, Salamanca y Segovia</span>
               </div>
               <div className="novedad-zone-pill madrid">
-                <span className="pill-tag">Madrid (+4)</span>
-                <span>Ajalvir, Coslada, Madrid y Colmenarejo</span>
-              </div>
-              <div className="novedad-zone-pill valencia">
-                <span className="pill-tag">C. Valenciana (Verificada)</span>
-                <span>Vicente Vila S.L. (Alzira)</span>
+                <span className="pill-tag">Madrid (+5)</span>
+                <span>Alcobendas, Ajalvir, Coslada, Madrid y Colmenarejo</span>
               </div>
               <div className="novedad-zone-pill total">
                 <span className="pill-tag">CRM Total</span>
-                <span><strong>382 empresas auditadas</strong></span>
+                <span><strong>393 empresas auditadas</strong></span>
               </div>
             </div>
 
