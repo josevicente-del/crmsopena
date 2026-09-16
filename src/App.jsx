@@ -14,6 +14,8 @@ import './App.css';
 import './index.css';
 import { calculateShortestDistance } from './utils/distance';
 import AgentforceAssistant from './components/AgentforceAssistant';
+// Componente de alerta de novedad temporal (activo durante los próximos 6 días para anunciar nuevas empresas)
+import NovedadBanner from './components/NovedadBanner';
 import { findEmailWithIA, checkEmailQuality } from './utils/emailFinderEngine';
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -2129,8 +2131,8 @@ const App = () => {
       </aside>
       <main className="main-content">
         <header className="header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
-          <div>
-            <h1>{activeTab === 'prospects' && 'Base de Datos de Prospectos'}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+            <h1 style={{ margin: 0 }}>{activeTab === 'prospects' && 'Base de Datos de Prospectos'}
                 {activeTab === 'map' && 'Mapa de Clientes Potenciales'}
                 {activeTab === 'routing' && 'Planificador de Rutas Comerciales'}
                 {activeTab === 'presentation' && 'Presentación Corporativa'}
@@ -2139,6 +2141,37 @@ const App = () => {
                 {activeTab === 'agentforce' && 'Asistente de Inteligencia Artificial (Agentforce)'}
                 {activeTab === 'instructions' && 'Guía de Usuario e Instrucciones del CRM'}
             </h1>
+            {activeTab === 'prospects' && (Date.now() <= new Date('2026-09-22T23:59:59').getTime()) && (
+              <span 
+                onClick={() => {
+                  setFilterNewOnly(true);
+                  setFilterName('');
+                  setFilterSector('');
+                  setFilterZone('');
+                  setCurrentPage(1);
+                  const tableElem = document.querySelector('.prospects-table') || document.querySelector('.table-container');
+                  if (tableElem) {
+                    tableElem.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                style={{
+                  background: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)',
+                  color: 'white',
+                  fontSize: '0.74rem',
+                  fontWeight: '700',
+                  padding: '4px 11px',
+                  borderRadius: '20px',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  boxShadow: '0 2px 8px rgba(124, 58, 237, 0.35)'
+                }}
+                title="Haz clic para filtrar las nuevas empresas incorporadas (+8 empresas)"
+              >
+                <Sparkles size={13} /> Novedad (+8 empresas)
+              </span>
+            )}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             {currentUser && (
@@ -2220,6 +2253,23 @@ const App = () => {
           {/* PROSPECTS TAB */}
           {activeTab === 'prospects' && (
             <>
+              {/* Alerta de Novedad Comercial (vigente durante 6 días con cuenta regresiva hasta el 22 de septiembre) */}
+              <NovedadBanner 
+                prospects={prospects}
+                onSelectProspect={setSelectedProspect}
+                onFilterNew={() => {
+                  setFilterNewOnly(true);
+                  setFilterName('');
+                  setFilterSector('');
+                  setFilterZone('');
+                  setCurrentPage(1);
+                  const tableElem = document.querySelector('.prospects-table') || document.querySelector('.table-container');
+                  if (tableElem) {
+                    tableElem.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              />
+
               <div style={{display: 'flex', justifyContent: 'flex-end', gap: '10px', marginBottom: '15px'}}>
                 <button className="action-btn outline" onClick={() => document.getElementById('import-json-input').click()}>📤 Importar JSON</button>
                 <input 
