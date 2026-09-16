@@ -2265,8 +2265,6 @@ const App = () => {
             <>
               {/* Alerta de Novedad Comercial (vigente durante 6 días con cuenta regresiva hasta el 22 de septiembre) */}
               <NovedadBanner 
-                prospects={prospects}
-                onSelectProspect={setSelectedProspect}
                 onFilterNew={() => {
                   setFilterNewOnly(true);
                   setFilterName('');
