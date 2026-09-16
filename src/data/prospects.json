@@ -6159,28 +6159,29 @@
   },
   {
     "id": "PROP-VERIF-0015",
-    "name": "Vicente Vila S.L.",
+    "name": "Vicente Vila, S.L.",
     "zone": "Comunidad Valenciana",
-    "department": "Valencia (Valencia)",
-    "cif": "B46231940",
+    "department": "Alzira (Valencia)",
+    "cif": "B46552923",
     "web": "https://www.vicentevilasl.com",
-    "revenue": 5200000,
+    "revenue": 2800000,
     "purchasingManager": "Dpto. Compras (Vicente Vila)",
-    "phone": "+34 963 77 12 55",
-    "email": "compras@vicentevilasl.com",
+    "phone": "+34 962 40 39 61",
+    "email": "vicentevilasl@vicentevilasl.com",
     "location": [
-      39.4589,
-      -0.3921
+      39.1528,
+      -0.4357
     ],
     "sector": "Puertas y Ventanas",
     "products": [
-      "Perfiles",
-      "Ventanas RPT",
-      "Mosquiteras"
+      "Ventanas de Aluminio RPT",
+      "Puertas Correderas y Abatibles",
+      "Cerramientos Térmicos",
+      "Mallorquinas y Celosías"
     ],
     "contacted": false,
     "contactDate": null,
-    "notes": "Fabricante e instalador veterano de ventanas de aluminio, persianas y cerramientos en la Comunidad Valenciana.",
+    "notes": "Fabricante y taller industrial veterano de ventanas y cerramientos de aluminio con RPT en Alzira (Valencia). Cliente transformador directo de perfiles extruidos.",
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z"
   },
@@ -10094,5 +10095,229 @@
     "notes": "Fabricante de sistemas agrícolas y de invernadero con especialización en tubería y perfilería de aluminio para invernaderos y riego técnico. Web: https://grupochamartin.com/",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-09-16T20:51:07.644Z"
+  },
+  {
+    "id": "PROP-APPR-0390",
+    "name": "Carpintería de Aluminio M. Zamora, S.L.",
+    "zone": "Castilla y Leon",
+    "department": "Aldeamayor de San Martín (Valladolid)",
+    "cif": "B47507710",
+    "web": "https://carpinteriasmanuelzamora.com",
+    "revenue": 1250000,
+    "purchasingManager": "Dpto. Compras (Carpintería de Aluminio M. Zamora, S.L.)",
+    "phone": "+34 983 52 85 17",
+    "email": "info@carpinteriasmanuelzamora.com",
+    "location": [
+      41.5133,
+      -4.6394
+    ],
+    "sector": "Puertas y Ventanas",
+    "products": [
+      "Ventanas de Aluminio RPT",
+      "Puertas Correderas y Oscilobatientes",
+      "Cerramientos de Terrazas",
+      "Mallorquinas"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Taller industrial de carpintería de aluminio y cerramientos con marcado CE y RPT en el Pol. Ind. El Brizo (Aldeamayor de San Martín, Valladolid).",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T21:30:46.517Z"
+  },
+  {
+    "id": "PROP-APPR-0391",
+    "name": "Aluminios Barriuso, S.L.",
+    "zone": "Castilla y Leon",
+    "department": "Villalbilla de Burgos (Burgos)",
+    "cif": "B09392630",
+    "web": "https://www.aluminiosbarriuso.es",
+    "revenue": 1100000,
+    "purchasingManager": "Dpto. Compras (Aluminios Barriuso, S.L.)",
+    "phone": "+34 947 29 10 78",
+    "email": "info@aluminiosbarriuso.es",
+    "location": [
+      42.3411,
+      -3.7667
+    ],
+    "sector": "Puertas y Ventanas",
+    "products": [
+      "Ventanas de Aluminio RPT",
+      "Cerramientos de Aluminio",
+      "Puertas Practicables y Correderas",
+      "Muros Cortina y Techos"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante industrial de carpintería y cerramientos de aluminio en el Pol. Ind. Los Brezos (Villalbilla de Burgos).",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T21:30:46.517Z"
+  },
+  {
+    "id": "PROP-APPR-0392",
+    "name": "Antonio Esteban e Hijos, S.L.",
+    "zone": "Castilla y Leon",
+    "department": "Salamanca (Salamanca)",
+    "cif": "B37472420",
+    "web": "https://www.antonio-esteban.com",
+    "revenue": 1350000,
+    "purchasingManager": "Dpto. Compras (Antonio Esteban e Hijos, S.L.)",
+    "phone": "+34 923 19 11 37",
+    "email": "antonio@antonio-esteban.com",
+    "location": [
+      40.9412,
+      -5.6489
+    ],
+    "sector": "Puertas y Ventanas",
+    "products": [
+      "Ventanas de Aluminio RPT",
+      "Puertas de Aluminio",
+      "Cerramientos Térmicos",
+      "Mallorquinas"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Taller fabricante de carpintería de aluminio con marcado CE en el Polígono Industrial Montalvo II (Salamanca).",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T21:30:46.517Z"
+  },
+  {
+    "id": "PROP-APPR-0393",
+    "name": "Talleres Govi, S.L.",
+    "zone": "Castilla y Leon",
+    "department": "Vallelado (Segovia)",
+    "cif": "B40133704",
+    "web": "https://www.govi.es",
+    "revenue": 1750000,
+    "purchasingManager": "Dpto. Compras (Talleres Govi, S.L.)",
+    "phone": "+34 921 15 03 15",
+    "email": "info@govi.es",
+    "location": [
+      41.4056,
+      -4.4283
+    ],
+    "sector": "Puertas y Ventanas",
+    "products": [
+      "Ventanas de Aluminio RPT",
+      "Puertas de Aluminio",
+      "Fachadas Ligeras",
+      "Cerramientos"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante de carpintería de aluminio, ventanas térmicas y fachadas ligeras en el Pol. Ind. Los Arenales (Vallelado, Segovia).",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T21:30:46.517Z"
+  },
+  {
+    "id": "PROP-APPR-0394",
+    "name": "Aluminios de Frutos, S.A.",
+    "zone": "Comunidad de Madrid",
+    "department": "Ajalvir (Madrid)",
+    "cif": "A28682250",
+    "web": "https://www.aluminiosdefrutos.com",
+    "revenue": 3400000,
+    "purchasingManager": "Dpto. Compras (Aluminios de Frutos, S.A.)",
+    "phone": "+34 91 884 31 65",
+    "email": "compras@aluminiosdefrutos.com",
+    "location": [
+      40.5342,
+      -3.4811
+    ],
+    "sector": "Puertas y Ventanas",
+    "products": [
+      "Ventanas de Aluminio RPT",
+      "Puertas Correderas y Abatibles",
+      "Cerramientos de Aluminio",
+      "Muros Cortina"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Taller industrial de gran formato con factoría en Ajalvir (Madrid), especializado en fabricación y montaje de carpintería de aluminio de alta prestación.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T21:30:46.517Z"
+  },
+  {
+    "id": "PROP-APPR-0395",
+    "name": "Alucon 96, S.A.",
+    "zone": "Comunidad de Madrid",
+    "department": "Coslada (Madrid)",
+    "cif": "A81386062",
+    "web": "https://www.alucon96.es",
+    "revenue": 2900000,
+    "purchasingManager": "Dpto. Compras (Alucon 96, S.A.)",
+    "phone": "+34 91 874 22 42",
+    "email": "alucon96@alucon96.es",
+    "location": [
+      40.4264,
+      -3.5658
+    ],
+    "sector": "Puertas y Ventanas",
+    "products": [
+      "Ventanas de Aluminio RPT",
+      "Puertas de Entrada y Correderas",
+      "Cerramientos de Aluminio",
+      "Muros Cortina"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante industrial de cerramientos y ventanas de aluminio con sede en Coslada y centros en Arganda del Rey.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T21:30:46.517Z"
+  },
+  {
+    "id": "PROP-APPR-0396",
+    "name": "Aluminios Ciupal, S.L.",
+    "zone": "Comunidad de Madrid",
+    "department": "Madrid (Madrid)",
+    "cif": "B80935547",
+    "web": "https://www.aluminiosciupal.com",
+    "revenue": 1650000,
+    "purchasingManager": "Dpto. Compras (Aluminios Ciupal, S.L.)",
+    "phone": "+34 91 552 64 26",
+    "email": "info@aluminiosciupal.com",
+    "location": [
+      40.3985,
+      -3.6558
+    ],
+    "sector": "Puertas y Ventanas",
+    "products": [
+      "Ventanas de Aluminio RPT",
+      "Puertas Abatibles y Correderas",
+      "Cerramientos de Terrazas",
+      "Mallorquinas"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante especializado con taller propio de producción en Sierra de Meira (Madrid) y más de 40 años en carpintería y ventanas de aluminio.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T21:30:46.517Z"
+  },
+  {
+    "id": "PROP-APPR-0397",
+    "name": "Hierro y Aluminio Entero 2020, S.L. (Ventacol)",
+    "zone": "Comunidad de Madrid",
+    "department": "Colmenarejo (Madrid)",
+    "cif": "B88607825",
+    "web": "https://www.ventacol.com",
+    "revenue": 850000,
+    "purchasingManager": "Dpto. Compras (Hierro y Aluminio Entero 2020, S.L. (Ventacol))",
+    "phone": "+34 91 858 93 49",
+    "email": "info@ventacol.com",
+    "location": [
+      40.5583,
+      -4.0125
+    ],
+    "sector": "Puertas y Ventanas",
+    "products": [
+      "Ventanas de Aluminio RPT",
+      "Puertas de Aluminio",
+      "Cerramientos Acristalados",
+      "Estructuras"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Taller fabricante e instalador de cerramientos y ventanas de aluminio con rotura de puente térmico en el noroeste de la Comunidad de Madrid.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T21:30:46.517Z"
   }
 ]
