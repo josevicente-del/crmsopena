@@ -186,7 +186,7 @@ export const NovedadBanner = ({ onFilterNew }) => {
               </div>
               <div className="novedad-zone-pill total">
                 <span className="pill-tag">CRM Total</span>
-                <span><strong>390 empresas auditadas</strong></span>
+                <span><strong>388 empresas auditadas</strong></span>
               </div>
             </div>
 

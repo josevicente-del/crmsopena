@@ -7266,33 +7266,6 @@
     "id": "PROP-VERIF-0331"
   },
   {
-    "name": "La Casa de la Escalera S.C.",
-    "zone": "Comunidad de Madrid",
-    "department": "Madrid (Madrid)",
-    "cif": "B82194012",
-    "web": "https://www.lacasadelaescalera.com",
-    "revenue": 3800000,
-    "purchasingManager": "Carlos Soria (Aprovisionamiento)",
-    "phone": "+34 91 642 11 22",
-    "email": "info@lacasadelaescalera.com",
-    "location": [
-      40.4168,
-      -3.7038
-    ],
-    "sector": "Fabricantes de Escaleras de Aluminio",
-    "products": [
-      "Escaleras de Aluminio",
-      "Escaleras de Tijera",
-      "Escaleras Telescópicas"
-    ],
-    "contacted": false,
-    "contactDate": null,
-    "notes": "Fabricación y distribución técnica de escaleras de aluminio, taburetes y plataformas industriales para construcción e industria.",
-    "response": "Pendiente de primer contacto comercial",
-    "createdAt": "2026-09-03T05:18:14.835Z",
-    "id": "PROP-VERIF-0332"
-  },
-  {
     "id": "PROP-VERIF-0116",
     "name": "Edifice Façades S.A.S.",
     "zone": "Francia",
@@ -9628,33 +9601,6 @@
     "contacted": false,
     "contactDate": null,
     "notes": "Concepteur et fabricant de systèmes de façades, verrières et fermetures de bâtiment.",
-    "response": "Pendiente de primer contacto comercial",
-    "createdAt": "2026-09-15T19:12:02.965Z"
-  },
-  {
-    "id": "PROP-APPR-0373",
-    "name": "Installux Aluminium S.A.",
-    "zone": "Francia",
-    "department": "Saint-Bonnet-de-Mure / Lyon (Rhône - Dép. 69)",
-    "cif": "FR956501235",
-    "web": "https://installux-aluminium.com",
-    "revenue": 145000000,
-    "purchasingManager": "Direction des Achats (Installux)",
-    "phone": "+33 4 72 47 60 00",
-    "email": "contact@installux-aluminium.com",
-    "location": [
-      45.6917,
-      5.0253
-    ],
-    "sector": "Fachadas de Aluminio",
-    "products": [
-      "Muro Cortina",
-      "Fachadas Ligeras",
-      "Perfiles"
-    ],
-    "contacted": false,
-    "contactDate": null,
-    "notes": "Fournisseur majeur de profilés et solutions de façades pour les fabricants installateurs en France.",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-09-15T19:12:02.965Z"
   },

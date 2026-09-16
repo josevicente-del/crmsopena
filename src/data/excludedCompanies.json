@@ -28,5 +28,25 @@
     "reason": "Competencia directa",
     "excludedAt": "2026-09-17T00:16:00.000Z",
     "notes": "Eliminada de la base de datos por indicación de Dirección Comercial al poseer fundición y fabricación propia competidora."
+  },
+  {
+    "id": "PROP-APPR-0373",
+    "name": "Installux Aluminium S.A.",
+    "cif": "FR956501235",
+    "domain": "installux-aluminium.com",
+    "web": "https://installux-aluminium.com",
+    "reason": "Competencia directa (Gamista y fabricante de sistemas de perfilería de aluminio en Francia)",
+    "excludedAt": "2026-09-16T22:24:39.150Z",
+    "notes": "Eliminada por indicación de Dirección Comercial para no prospectar competidores de gamas de aluminio."
+  },
+  {
+    "id": "PROP-VERIF-0332",
+    "name": "La Casa de la Escalera S.C.",
+    "cif": "B82194012",
+    "domain": "lacasadelaescalera.com",
+    "web": "https://www.lacasadelaescalera.com",
+    "reason": "Baja definitiva por Dirección Comercial",
+    "excludedAt": "2026-09-16T22:26:34.252Z",
+    "notes": "Eliminada de la base de datos para no volver a incorporarla jamás."
   }
 ]
