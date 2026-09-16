@@ -1087,7 +1087,7 @@ const App = () => {
         sectorText = isPt
           ? `Em Estructuras Solares, o alumínio leve e sem corrosão é vital. As nossas ligas anodizadas (Qualanod) garantirão a ${target.name} a máxima durabilidade em plantas fotovoltaicas e trackers.`
           : `En Estructuras Solares, el aluminio ligero y sin corrosión es vital. Nuestras aleaciones anodizadas (Qualanod) asegurarán a ${target.name} la máxima durabilidad en plantas fotovoltaicas y trackers.`;
-      } else if (['Frio Industrial', 'Fabricantes de Estanterias de Aluminio'].includes(target.sector)) {
+      } else if (['Fabricantes de Estanterias de Aluminio'].includes(target.sector)) {
         sectorText = isPt
           ? `Para reduzir tempos de montagem em ${target.sector}, na Empresa de Aluminio integramos ranhuras e encaixes diretos na matriz de extrusão, agilizando radicalmente a fabricação dos seus produtos.`
           : `Para reducir tiempos de montaje en ${target.sector}, en Empresa de Aluminio integramos ranuras y encajes directos en la matriz de extrusión, agilizando radicalmente la fabricación de sus productos.`;
@@ -1619,7 +1619,7 @@ const App = () => {
         sectorText = isPt
           ? `Em Estructuras Solares, o alumínio leve e sem corrosão é vital. As nossas ligas anodizadas (Qualanod) garantirão a ${target.name} a máxima durabilidade em plantas fotovoltaicas e trackers.`
           : `En Estructuras Solares, el aluminio ligero y sin corrosión es vital. Nuestras aleaciones anodizadas (Qualanod) asegurarán a ${target.name} la máxima durabilidad en plantas fotovoltaicas y trackers.`;
-      } else if (['Frio Industrial', 'Fabricantes de Estanterias de Aluminio'].includes(target.sector)) {
+      } else if (['Fabricantes de Estanterias de Aluminio'].includes(target.sector)) {
         sectorText = isPt
           ? `Para reduzir tempos de montagem em ${target.sector}, na Empresa de Aluminio integramos ranhuras e encaixes diretos na matriz de extrusão, agilizando radicalmente a fabricação dos seus produtos.`
           : `Para reducir tiempos de montaje en ${target.sector}, en Empresa de Aluminio integramos ranuras y encajes directos en la matriz de extrusión, agilizando radicalmente la fabricación de sus productos.`;
@@ -2304,7 +2304,6 @@ const App = () => {
                     <option value="">Todos los sectores</option>
                     <option value="Cerramientos">Cerramientos</option>
                     <option value="Construccion Modular">Construcción Modular</option>
-                    <option value="Frio Industrial">Frío Industrial</option>
                     <option value="Puertas y Ventanas">Puertas y Ventanas</option>
                     <option value="Estructuras Solares">Estructuras Solares</option>
                     <option value="Fachadas de Aluminio">Fachadas de Aluminio</option>
@@ -2906,7 +2905,7 @@ const App = () => {
                               {['Estructuras Solares'].includes(presentationTarget.sector) && (
                                 <p style={{margin: 0}}>{isPt ? `Em Estructuras Solares, o alumínio leve e sem corrosão é vital. As nossas ligas anodizadas (Qualanod) garantirão a ${presentationTarget.name} a máxima durabilidade em plantas fotovoltaicas e trackers.` : `En Estructuras Solares, el aluminio ligero y sin corrosión es vital. Nuestras aleaciones anodizadas (Qualanod) asegurarán a ${presentationTarget.name} la máxima durabilidad en plantas fotovoltaicas y trackers.`}</p>
                               )}
-                              {['Frio Industrial', 'Fabricantes de Estanterias de Aluminio'].includes(presentationTarget.sector) && (
+                              {['Fabricantes de Estanterias de Aluminio'].includes(presentationTarget.sector) && (
                                 <p style={{margin: 0}}>{isPt ? `Para reduzir tempos de montagem em ${presentationTarget.sector}, na Empresa de Aluminio integramos ranhuras e encaixes diretos na matriz de extrusão, agilizando radicalmente a fabricação dos sus produtos.` : `Para reducir tiempos de montaje en ${presentationTarget.sector}, en Empresa de Aluminio integramos ranuras y encajes directos en la matriz de extrusión, agilizando radicalmente la fabricación de sus productos.`}</p>
                               )}
                               {['Fabricantes de Carrocerias'].includes(presentationTarget.sector) && (
@@ -3210,7 +3209,6 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                     <option value="">Todos los sectores</option>
                     <option value="Cerramientos">Cerramientos</option>
                     <option value="Construccion Modular">Construcción Modular</option>
-                    <option value="Frio Industrial">Frío Industrial</option>
                     <option value="Puertas y Ventanas">Puertas y Ventanas</option>
                     <option value="Estructuras Solares">Estructuras Solares</option>
                     <option value="Fachadas de Aluminio">Fachadas de Aluminio</option>
@@ -3641,7 +3639,6 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                       <select name="sector" defaultValue={selectedProspect.sector || ''} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)', background: 'white' }} required>
                         <option value="Cerramientos">Cerramientos</option>
                         <option value="Construccion Modular">Construcción Modular</option>
-                        <option value="Frio Industrial">Frío Industrial</option>
                         <option value="Puertas y Ventanas">Puertas y Ventanas</option>
                         <option value="Estructuras Solares">Estructuras Solares</option>
                         <option value="Fachadas de Aluminio">Fachadas de Aluminio</option>
@@ -3939,7 +3936,6 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                 <select name="sector" style={{width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)'}} required>
                   <option value="Cerramientos">Cerramientos</option>
                   <option value="Construccion Modular">Construcción Modular</option>
-                  <option value="Frio Industrial">Frío Industrial</option>
                   <option value="Puertas y Ventanas">Puertas y Ventanas</option>
                   <option value="Estructuras Solares">Estructuras Solares</option>
                   <option value="Fachadas de Aluminio">Fachadas de Aluminio</option>

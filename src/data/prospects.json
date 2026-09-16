@@ -10066,5 +10066,33 @@
     "notes": "Fabricación e instalación de pérgolas de aluminio, cerramientos para terrazas, techos móviles y carpintería metálica. Instagram: @carpinteria_brinas_s.l.",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-09-16T20:37:24.256Z"
+  },
+  {
+    "id": "PROP-APPR-0389",
+    "name": "Grupo Chamartín, S.A. (Chamsa)",
+    "zone": "Comunidad de Madrid",
+    "department": "Ciempozuelos (Madrid)",
+    "cif": "A28662005",
+    "web": "https://grupochamartin.com/",
+    "revenue": 25000000,
+    "purchasingManager": "Dpto. Compras y Aprovisionamiento (Grupo Chamartín)",
+    "phone": "+34 91 801 99 88",
+    "email": "info@grupochamartin.com",
+    "location": [
+      40.1585,
+      -3.6162
+    ],
+    "sector": "Mesas de Invernadero",
+    "products": [
+      "Tubería de Aluminio",
+      "Sistemas para Invernaderos",
+      "Mesas y Estructuras Agrícolas",
+      "Accesorios de Riego"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante de sistemas agrícolas y de invernadero con especialización en tubería y perfilería de aluminio para invernaderos y riego técnico. Web: https://grupochamartin.com/",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T20:51:07.644Z"
   }
 ]
