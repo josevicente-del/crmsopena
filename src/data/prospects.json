@@ -10350,34 +10350,6 @@
     "createdAt": "2026-09-16T22:10:43.986Z"
   },
   {
-    "id": "PROP-APPR-0399",
-    "name": "Nevaluz Sevilla S.L.",
-    "zone": "Andalucía",
-    "department": "Écija (Sevilla)",
-    "cif": "B41359951",
-    "web": "https://nevaluz.com",
-    "revenue": 26859271,
-    "purchasingManager": "Dpto. Compras y Materias Primas (Nevaluz)",
-    "phone": "+34 955 90 40 40",
-    "email": "info@nevaluz.com",
-    "location": [
-      37.5415,
-      -5.082
-    ],
-    "sector": "Sistemas de Proteccion Solar",
-    "products": [
-      "Mosquiteras Plisadas y Enrollables",
-      "Persianas de Aluminio",
-      "Sistemas de Protección Solar",
-      "Screens"
-    ],
-    "contacted": false,
-    "contactDate": null,
-    "notes": "Uno de los mayores fabricantes de mosquiteras y sistemas de protección solar de España con más de 150 empleados e instalaciones centrales en Écija.",
-    "response": "Pendiente de primer contacto comercial",
-    "createdAt": "2026-09-16T22:10:43.986Z"
-  },
-  {
     "id": "PROP-APPR-0400",
     "name": "Llaza World S.A.",
     "zone": "Cataluña",
@@ -10430,60 +10402,6 @@
     "contacted": false,
     "contactDate": null,
     "notes": "Referente internacional en arquitectura solar, celosías de aluminio para fachada, venecianas y sistemas de control solar.",
-    "response": "Pendiente de primer contacto comercial",
-    "createdAt": "2026-09-16T22:10:43.986Z"
-  },
-  {
-    "id": "PROP-APPR-0402",
-    "name": "Siplan Ibérica S.L.",
-    "zone": "Andalucía",
-    "department": "Mairena del Alcor (Sevilla)",
-    "cif": "B91977280",
-    "web": "https://siplan.com",
-    "revenue": 14200000,
-    "purchasingManager": "Dpto. Aprovisionamiento (Siplan)",
-    "phone": "+34 955 74 61 74",
-    "email": "siplan@siplan.com",
-    "location": [
-      37.3752,
-      -5.7485
-    ],
-    "sector": "Sistemas de Proteccion Solar",
-    "products": [
-      "Componentes de Aluminio para Toldos",
-      "Pérgolas Bioclimáticas",
-      "Sistemas de Protección Solar"
-    ],
-    "contacted": false,
-    "contactDate": null,
-    "notes": "Fabricante especializado de accesorios, brazos y perfiles de aluminio extruido para sistemas de protección solar en Pol. Ind. El Gandul.",
-    "response": "Pendiente de primer contacto comercial",
-    "createdAt": "2026-09-16T22:10:43.986Z"
-  },
-  {
-    "id": "PROP-APPR-0403",
-    "name": "Producciones Mitjavila S.A.",
-    "zone": "Cataluña",
-    "department": "Llers (Girona)",
-    "cif": "A17451873",
-    "web": "https://mitjavila.com",
-    "revenue": 11500000,
-    "purchasingManager": "Dpto. Compras (Mitjavila)",
-    "phone": "+34 972 52 80 87",
-    "email": "mitjavila@mitjavila.com",
-    "location": [
-      42.2965,
-      2.9125
-    ],
-    "sector": "Sistemas de Proteccion Solar",
-    "products": [
-      "Piezas de Aluminio Fundido y Extruido",
-      "Sistemas de Toldos",
-      "Marquesinas y Protección Solar"
-    ],
-    "contacted": false,
-    "contactDate": null,
-    "notes": "Gran factoría industrial en Llers especializada en piezas, accesorios y componentes de aluminio para toldos, marquesinas y cerramientos.",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-09-16T22:10:43.986Z"
   },

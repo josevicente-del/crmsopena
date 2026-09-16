@@ -17,6 +17,8 @@ const path = require('path');
 
 // Ruta principal al archivo de datos de prospectos en el CRM
 const PROSPECTS_FILE = path.join(__dirname, '..', 'data', 'prospects.json');
+// Ruta al registro de empresas excluidas y vetadas permanentemente (lista negra)
+const EXCLUDED_FILE = path.join(__dirname, '..', 'data', 'excludedCompanies.json');
 
 // Objetivo de prospección definido por zona geográfica
 const TARGET_PER_ZONE = 1200;
@@ -35,6 +37,22 @@ const EXCLUDED_EXTRUDER_KEYWORDS = [
   'sapa extrusion', 'baux', 'alugom', 'navarra extrusão', 'extrusal', 'anicolor',
   'adla', 'accelum', 'tafe', 'sopena', 'extrual'
 ];
+
+/**
+ * Carga el registro de empresas excluidas permanentemente.
+ * @returns {Array<Object>} Lista de empresas vetadas
+ */
+function loadExcludedCompanies() {
+  if (!fs.existsSync(EXCLUDED_FILE)) {
+    return [];
+  }
+  try {
+    return JSON.parse(fs.readFileSync(EXCLUDED_FILE, 'utf8'));
+  } catch (e) {
+    console.error('Error al leer excludedCompanies.json:', e);
+    return [];
+  }
+}
 
 /**
  * Normaliza un dominio web para comparaciones precisas (elimina protocolo, www y rutas).
@@ -130,12 +148,30 @@ function validateCandidate(candidate, existingProspects) {
     errors.push(`Razón social coincide con un competidor extrusor excluido: ${candidate.name}`);
   }
 
-  // 2. Verificación de coherencia web
+  // 2. Verificación estricta contra la Lista Negra permanente (excludedCompanies.json)
+  const excludedCompanies = loadExcludedCompanies();
+  for (const exc of excludedCompanies) {
+    const excCif = (exc.cif || '').toUpperCase().trim();
+    const excDomain = cleanDomain(exc.domain || exc.web);
+    const excName = (exc.name || '').toLowerCase().trim();
+
+    if (candidateCif && excCif && candidateCif === excCif) {
+      errors.push(`Empresa vetada permanentemente por CIF (${candidateCif}) en lista de exclusión. Motivo: ${exc.reason || 'Baja definitiva'}`);
+    }
+    if (candidateDomain && excDomain && (candidateDomain === excDomain || candidateDomain.includes(excDomain) || excDomain.includes(candidateDomain))) {
+      errors.push(`Dominio web (${candidateDomain}) figura en la lista de exclusión permanente. Motivo: ${exc.reason || 'Baja definitiva'}`);
+    }
+    if (candidateName && excName && (candidateName.includes(excName) || excName.includes(candidateName))) {
+      errors.push(`Razón social (${candidate.name}) coincide con empresa en lista de exclusión permanente. Motivo: ${exc.reason || 'Baja definitiva'}`);
+    }
+  }
+
+  // 3. Verificación de coherencia web
   if (!candidateDomain || candidateDomain.length < 4) {
     errors.push(`Dominio web no válido o inexistente: ${candidate.web}`);
   }
 
-  // 3. Comprobación contra duplicados en la base de datos actual
+  // 4. Comprobación contra duplicados en la base de datos actual
   for (const existing of existingProspects) {
     const exDomain = cleanDomain(existing.web);
     const exName = (existing.name || '').toLowerCase().trim();
@@ -224,10 +260,48 @@ function incorporateApprovedProspects(approvedCandidates) {
   };
 }
 
+/**
+ * Registra formalmente una empresa en la lista de exclusión permanente (lista negra).
+ * @param {Object} companyData - Datos de la empresa (id, name, cif, web, etc.)
+ * @param {string} reason - Motivo de la exclusión (ej. "Competencia directa", "Eliminada por usuario")
+ * @returns {boolean} true si se registró o ya existía
+ */
+function excludeCompany(companyData, reason = 'Excluida por Dirección Comercial') {
+  const currentExcluded = loadExcludedCompanies();
+  const cifNorm = (companyData.cif || '').toUpperCase().trim();
+  const domainNorm = cleanDomain(companyData.web || companyData.domain);
+  const nameNorm = (companyData.name || '').toLowerCase().trim();
+
+  const exists = currentExcluded.some(e => 
+    (cifNorm && (e.cif || '').toUpperCase().trim() === cifNorm) ||
+    (domainNorm && cleanDomain(e.domain || e.web) === domainNorm) ||
+    (nameNorm && (e.name || '').toLowerCase().trim() === nameNorm)
+  );
+
+  if (!exists) {
+    currentExcluded.push({
+      id: companyData.id || `EXC-${Date.now()}`,
+      name: companyData.name || 'Sin Nombre',
+      cif: companyData.cif || 'No indicado',
+      domain: domainNorm,
+      web: companyData.web || '',
+      reason: reason,
+      excludedAt: new Date().toISOString(),
+      notes: companyData.notes || `Registrada como excluida para evitar reincorporaciones automáticas.`
+    });
+    fs.writeFileSync(EXCLUDED_FILE, JSON.stringify(currentExcluded, null, 2), 'utf8');
+    return true;
+  }
+  return false;
+}
+
 module.exports = {
   auditZones,
   validateCandidate,
   incorporateApprovedProspects,
   cleanDomain,
-  cleanPhone
+  cleanPhone,
+  loadExcludedCompanies,
+  excludeCompany
 };
+

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "PROP-APPR-0399",
+    "name": "Nevaluz Sevilla S.L.",
+    "cif": "B41359951",
+    "domain": "nevaluz.com",
+    "web": "https://nevaluz.com",
+    "reason": "Competencia directa",
+    "excludedAt": "2026-09-17T00:16:00.000Z",
+    "notes": "Eliminada de la base de datos por indicación de Dirección Comercial al ser fabricante competidor de sistemas."
+  },
+  {
+    "id": "PROP-APPR-0402",
+    "name": "Siplan Ibérica S.L.",
+    "cif": "B91977280",
+    "domain": "siplan.com",
+    "web": "https://siplan.com",
+    "reason": "Competencia directa",
+    "excludedAt": "2026-09-17T00:16:00.000Z",
+    "notes": "Eliminada de la base de datos por indicación de Dirección Comercial al ser fabricante competidor de sistemas y accesorios."
+  },
+  {
+    "id": "PROP-APPR-0403",
+    "name": "Producciones Mitjavila S.A.",
+    "cif": "A17451873",
+    "domain": "mitjavila.com",
+    "web": "https://mitjavila.com",
+    "reason": "Competencia directa",
+    "excludedAt": "2026-09-17T00:16:00.000Z",
+    "notes": "Eliminada de la base de datos por indicación de Dirección Comercial al poseer fundición y fabricación propia competidora."
+  }
+]

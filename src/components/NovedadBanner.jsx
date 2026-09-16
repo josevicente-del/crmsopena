@@ -92,7 +92,7 @@ export const NovedadBanner = ({ onFilterNew }) => {
           <div className="novedad-minimized-info">
             <span className="novedad-pulse-dot" />
             <span>
-              <strong>✨ Novedad Comercial:</strong> Incorporadas nuevas empresas líderes en Mosquiteras y Protección Solar (+11 empresas como Zanzar Iberia, Nevaluz, Llaza World).
+              <strong>✨ Novedad Comercial:</strong> Incorporadas nuevas empresas líderes en Mosquiteras y Protección Solar (+8 empresas como Zanzar Iberia, Llaza World, Samer Systems).
             </span>
             <span style={{ color: '#94a3b8', fontSize: '0.78rem' }}>
               ({remainingDays} {remainingDays === 1 ? 'día restante' : 'días restantes'})
@@ -167,13 +167,13 @@ export const NovedadBanner = ({ onFilterNew }) => {
               ¡Se han incorporado más empresas a la Base de Datos!
             </h3>
             <p className="novedad-text">
-              Ampliación estratégica en <strong>Mosquiteras y Sistemas de Protección Solar</strong>: se ha integrado <strong>Zanzar Iberia S.L.</strong> junto al top 10 nacional de mayor facturación en sistemas y perfiles de aluminio (<em>Nevaluz, Llaza World, Hunter Douglas, Siplan, Samer Systems, Mitjavila, Tamiluz...</em>), sumado a los nuevos talleres de cerramientos RPT de Castilla y León y Madrid.
+              Ampliación estratégica en <strong>Mosquiteras y Sistemas de Protección Solar</strong>: se ha integrado <strong>Zanzar Iberia S.L.</strong> junto a firmas destacadas del sector en sistemas y perfiles de aluminio (<em>Llaza World, Hunter Douglas, Samer Systems, Tamiluz, Griesser, Durmi, Ideco...</em>), sumado a los nuevos talleres de cerramientos RPT de Castilla y León y Madrid.
             </p>
 
             {/* Píldoras informativas territoriales y sectoriales */}
             <div className="novedad-zones-grid">
               <div className="novedad-zone-pill valencia">
-                <span className="pill-tag">Zanzar & Similares (+11)</span>
+                <span className="pill-tag">Zanzar & Similares (+8)</span>
                 <span>Mosquiteras y Protección Solar</span>
               </div>
               <div className="novedad-zone-pill">
@@ -186,7 +186,7 @@ export const NovedadBanner = ({ onFilterNew }) => {
               </div>
               <div className="novedad-zone-pill total">
                 <span className="pill-tag">CRM Total</span>
-                <span><strong>393 empresas auditadas</strong></span>
+                <span><strong>390 empresas auditadas</strong></span>
               </div>
             </div>
 

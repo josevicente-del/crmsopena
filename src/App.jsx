@@ -10,6 +10,8 @@ import html2canvas from 'html2canvas';
 // jsPDF: genera el archivo PDF con soporte de links activos
 import { jsPDF } from 'jspdf';
 import rawProspects from './data/prospects.json';
+// Registro centralizado de empresas permanentemente excluidas (competencia directa y bajas comerciales)
+import excludedCompaniesData from './data/excludedCompanies.json';
 import './App.css';
 import './index.css';
 import { calculateShortestDistance } from './utils/distance';
@@ -283,6 +285,71 @@ const App = () => {
     }
   };
   
+  // Función utilitaria para normalizar dominios web
+  const cleanWebDomain = (url) => {
+    if (!url) return '';
+    return url.toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0].trim();
+  };
+
+  // Función global para verificar si una empresa figura en la lista negra o historial de borrados
+  const checkIsCompanyExcluded = (company, customDeletedList = null) => {
+    if (!company) return false;
+    const name = (company.name || '').toLowerCase().trim();
+    const cif = (company.cif || '').toUpperCase().trim();
+    const domain = cleanWebDomain(company.web || company.domain);
+
+    // 1. Verificación contra el registro centralizado excludedCompanies.json
+    if (Array.isArray(excludedCompaniesData)) {
+      for (const exc of excludedCompaniesData) {
+        const excCif = (exc.cif || '').toUpperCase().trim();
+        const excDomain = cleanWebDomain(exc.domain || exc.web);
+        const excName = (exc.name || '').toLowerCase().trim();
+
+        if (cif && excCif && cif === excCif) {
+          return { ...exc, reason: exc.reason || 'Competencia directa / Exclusión estratégica' };
+        }
+        if (domain && excDomain && (domain === excDomain || domain.includes(excDomain) || excDomain.includes(domain))) {
+          return { ...exc, reason: exc.reason || 'Dominio vetado en lista de exclusión' };
+        }
+        if (name && excName && (name.includes(excName) || excName.includes(name))) {
+          return { ...exc, reason: exc.reason || 'Razón social vetada en lista de exclusión' };
+        }
+      }
+    }
+
+    // 2. Verificación contra el historial de eliminadas en LocalStorage
+    const deletedList = customDeletedList || (() => {
+      try {
+        const saved = localStorage.getItem('aluminio_crm_deleted');
+        return saved ? JSON.parse(saved) : [];
+      } catch { return []; }
+    })();
+
+    if (Array.isArray(deletedList)) {
+      for (const del of deletedList) {
+        const delId = typeof del === 'object' ? del.id : del;
+        const delName = typeof del === 'object' ? (del.name || '').toLowerCase().trim() : '';
+        const delCif = typeof del === 'object' ? (del.cif || '').toUpperCase().trim() : '';
+        const delDomain = cleanWebDomain(typeof del === 'object' ? (del.web || del.domain) : '');
+
+        if (company.id && delId && company.id === delId) {
+          return { name: delName || name, reason: 'Eliminada previamente de la base de datos' };
+        }
+        if (cif && delCif && cif === delCif) {
+          return { name: delName || name, reason: 'CIF eliminado previamente de la base de datos' };
+        }
+        if (domain && delDomain && (domain === delDomain || domain.includes(delDomain))) {
+          return { name: delName || name, reason: 'Dominio web eliminado previamente' };
+        }
+        if (name && delName && (name === delName || name.includes(delName) || delName.includes(name))) {
+          return { name: delName || name, reason: 'Empresa eliminada previamente de la base de datos' };
+        }
+      }
+    }
+
+    return false;
+  };
+
   const [prospects, setProspects] = useState(() => {
     try {
       // Limpiar versiones antiguas masivas que excedan la cuota de LocalStorage
@@ -304,6 +371,7 @@ const App = () => {
       const sanitize = (list) => {
         return list
           .filter(p => {
+            // Filtrado contra lista de competidores de extrusión base
             if (p.web) {
               const matchesForbidden = forbiddenDomains.some(domain => p.web.includes(domain));
               if (matchesForbidden) return false;
@@ -311,6 +379,10 @@ const App = () => {
             if (p.name) {
               const matchesName = forbiddenNames.some(name => p.name.toLowerCase().includes(name.toLowerCase()));
               if (matchesName) return false;
+            }
+            // Filtrado estricto contra registro centralizado de exclusiones y bajas
+            if (checkIsCompanyExcluded(p, deletedRecords)) {
+              return false;
             }
             return true;
           })
@@ -343,11 +415,11 @@ const App = () => {
       }
 
       const rawIds = new Set(rawProspects.map(p => p.id));
-      // Filtrar empresas añadidas que no estén repetidas en la base fija ni borradas
-      const validAdded = addedRecords.filter(p => p && p.id && !rawIds.has(p.id) && !deletedIds.has(p.id));
+      // Filtrar empresas añadidas que no estén repetidas en la base fija, ni borradas, ni en lista de exclusión
+      const validAdded = addedRecords.filter(p => p && p.id && !rawIds.has(p.id) && !deletedIds.has(p.id) && !checkIsCompanyExcluded(p, deletedRecords));
 
-      // Combinar la base fija original (no borrada) con las empresas añadidas definitivamente
-      const combined = [...validAdded, ...rawProspects.filter(p => !deletedIds.has(p.id))];
+      // Combinar la base fija original (no borrada ni excluida) con las empresas añadidas válidas
+      const combined = sanitize([...validAdded, ...rawProspects.filter(p => !deletedIds.has(p.id))]);
 
       const savedMods = localStorage.getItem('aluminio_crm_modifications');
       if (savedMods) {
@@ -787,7 +859,7 @@ const App = () => {
   const handleDeleteProspect = (prospectId) => {
     const prospect = prospects.find(p => p.id === prospectId);
     const name = prospect ? prospect.name : 'esta empresa';
-    if (window.confirm(`⚠️ ¿Estás seguro de que deseas eliminar permanentemente a "${name}" de la base de datos?\nEsta acción no se puede deshacer.`)) {
+    if (window.confirm(`⚠️ ¿Estás seguro de que deseas eliminar permanentemente a "${name}" de la base de datos?\nEsta acción anotará la empresa en la lista de exclusión para no volver a incorporarla jamás.`)) {
       // Leer historial de borrados enriquecido
       let deletedRecords = [];
       try {
@@ -797,15 +869,21 @@ const App = () => {
       } catch (e) {
         console.error('Error parsing deleted list during delete:', e);
       }
-      // Comprobar si ya existe en la lista (por ID o formato legacy string)
+      // Comprobar si ya existe en la lista (por ID, CIF o nombre)
       const alreadyDeleted = deletedRecords.some(r =>
-        typeof r === 'object' ? r.id === prospectId : r === prospectId
+        typeof r === 'object' 
+          ? (r.id === prospectId || (prospect?.cif && r.cif && r.cif === prospect.cif)) 
+          : r === prospectId
       );
-      if (!alreadyDeleted) {
-        // Guardar registro enriquecido con nombre y fecha de borrado
+      if (!alreadyDeleted && prospect) {
+        // Guardar registro enriquecido con nombre, CIF, web y motivo de exclusión
         deletedRecords.push({
-          id: prospectId,
-          name: name,
+          id: prospect.id,
+          name: prospect.name,
+          cif: prospect.cif || '',
+          web: prospect.web || '',
+          domain: cleanWebDomain(prospect.web),
+          reason: 'Eliminada por usuario de la base de datos (Exclusión permanente)',
           deletedAt: new Date().toISOString()
         });
         localStorage.setItem('aluminio_crm_deleted', JSON.stringify(deletedRecords));
@@ -832,22 +910,21 @@ const App = () => {
   const [showAddCompanyModal, setShowAddCompanyModal] = useState(false);
   const handleAddCompany = (formData) => {
     const companyName = formData.get('name');
-    // Buscar si esta empresa (por nombre similar) fue borrada anteriormente
-    let wasDeletedRecord = null;
-    try {
-      const deletedSaved = localStorage.getItem('aluminio_crm_deleted');
-      const deletedRecords = deletedSaved ? JSON.parse(deletedSaved) : [];
-      if (Array.isArray(deletedRecords)) {
-        // Comparación insensible a mayúsculas y espacios extra
-        const nameNorm = companyName.trim().toLowerCase();
-        wasDeletedRecord = deletedRecords.find(r => {
-          const rName = typeof r === 'object' ? (r.name || '').trim().toLowerCase() : '';
-          return rName === nameNorm;
-        }) || null;
-      }
-    } catch (e) {
-      console.error('Error checking deleted history:', e);
+    const companyCif = formData.get('cif') || '';
+    const companyWeb = formData.get('web') || '';
+
+    // Comprobación estricta contra lista de exclusión (competencia y bajas previas)
+    const exclusionMatch = checkIsCompanyExcluded({
+      name: companyName,
+      cif: companyCif,
+      web: companyWeb
+    });
+
+    if (exclusionMatch) {
+      alert(`⚠️ No se puede incorporar "${companyName}": figura en la lista de exclusión permanente para no ser reincorporada.\nMotivo: ${exclusionMatch.reason || 'Baja previa'}`);
+      return;
     }
+
     const newCompany = {
       id: 'PROP-MANUAL-' + Date.now(),
       name: companyName,
@@ -877,9 +954,8 @@ const App = () => {
       packaging: '',
       createdAt: new Date().toISOString(),
       source: 'Creación Manual',
-      // Flag de reincorporación si fue borrada anteriormente
-      wasDeleted: wasDeletedRecord ? true : false,
-      previouslyDeletedAt: wasDeletedRecord ? (typeof wasDeletedRecord === 'object' ? wasDeletedRecord.deletedAt : null) : null
+      wasDeleted: false,
+      previouslyDeletedAt: null
     };
     setProspects([newCompany, ...prospects]);
     setShowAddCompanyModal(false);
@@ -914,7 +990,7 @@ const App = () => {
           return;
         }
 
-        if (!window.confirm(`¿Deseas importar ${validLeads.length} prospectos? Se sobrescribirán los datos repetidos (con el mismo ID).`)) {
+        if (!window.confirm(`¿Deseas importar ${validLeads.length} prospectos? Se sobrescribirán los datos repetidos (con el mismo ID) y se omitirán las empresas en lista de exclusión.`)) {
           return;
         }
 
@@ -922,8 +998,15 @@ const App = () => {
           const currentMap = new Map(prev.map(p => [p.id, p]));
           let updatedCount = 0;
           let addedCount = 0;
+          let excludedSkippedCount = 0;
 
           validLeads.forEach(lead => {
+            // Omitir automáticamente si está en lista de exclusión
+            if (checkIsCompanyExcluded(lead)) {
+              excludedSkippedCount++;
+              return;
+            }
+
             let cleanLead = { ...lead };
             if (!cleanLead.location || !Array.isArray(cleanLead.location) || cleanLead.location.length !== 2) {
               cleanLead.location = [40, -4];
@@ -948,7 +1031,8 @@ const App = () => {
           });
 
           const merged = Array.from(currentMap.values());
-          alert(`🎉 Importación completada con éxito:\n- ${updatedCount} registros existentes actualizados (sobrescritos).\n- ${addedCount} registros nuevos añadidos.`);
+          const skipMsg = excludedSkippedCount > 0 ? `\n- ⚠️ ${excludedSkippedCount} empresas omitidas por figurar en la lista de exclusión permanente / competencia.` : '';
+          alert(`🎉 Importación completada con éxito:\n- ${updatedCount} registros existentes actualizados.\n- ${addedCount} registros nuevos añadidos.${skipMsg}`);
           return merged;
         });
 
