@@ -9927,5 +9927,144 @@
     "notes": "Fábrica de toldos y pérgolas bioclimáticas de aluminio en Leganés (Madrid). Web y actividad verificada.",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-09-15T21:04:10.652Z"
+  },
+  {
+    "id": "PROP-APPR-0384",
+    "name": "Carpintería de Aluminio Dabega S.L.",
+    "zone": "Comunidad de Madrid",
+    "department": "Ajalvir (Madrid)",
+    "cif": "B84065663",
+    "web": "https://dabega.es",
+    "revenue": 1400000,
+    "purchasingManager": "Dpto. Compras (Dabega S.L.)",
+    "phone": "+34 91 628 28 16",
+    "email": "info@dabega.es",
+    "location": [
+      40.5342,
+      -3.4812
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Muro Cortina MC50 RPT",
+      "Ventanas de Aluminio",
+      "Fachadas Ligeras",
+      "Cerramientos Térmicos"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Especialistas en fachadas ligeras, muros cortina MC50 RPT y ventanas de aluminio de altas prestaciones. Instagram: @ventanasdealuminiodabega.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T20:37:24.256Z"
+  },
+  {
+    "id": "PROP-APPR-0385",
+    "name": "EspaEner (Espacios Energéticos Autónomos S.L.)",
+    "zone": "Cataluña",
+    "department": "Castellar del Vallès (Barcelona)",
+    "cif": "B22525158",
+    "web": "https://espaener.com/",
+    "revenue": 2100000,
+    "purchasingManager": "Dpto. Compras y Proyectos (EspaEner)",
+    "phone": "+34 609 524 772",
+    "email": "info@espaener.com",
+    "location": [
+      41.6163,
+      2.0864
+    ],
+    "sector": "Estructuras Solares",
+    "products": [
+      "Estructuras Solares",
+      "Marquesinas Fotovoltaicas",
+      "Perfiles de Soporte",
+      "Carports"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Ingeniería y fabricación de estructuras solares de aluminio, marquesinas fotovoltaicas y soportes técnicos. Instagram: @espaener.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T20:37:24.256Z"
+  },
+  {
+    "id": "PROP-APPR-0386",
+    "name": "Cerramientos Beirutti",
+    "zone": "Comunidad de Madrid",
+    "department": "Madrid",
+    "cif": "Pendiente (Taller Autónomo)",
+    "web": "https://cerramientosbeirutti.mystrikingly.com/",
+    "revenue": 450000,
+    "purchasingManager": "Dpto. Compras (Cerramientos Beirutti)",
+    "phone": "+34 651 906 453",
+    "email": "beiruttiinformacion@gmail.com",
+    "location": [
+      40.4168,
+      -3.7038
+    ],
+    "sector": "Cerramientos",
+    "products": [
+      "Cerramientos de Aluminio",
+      "Marquesinas",
+      "Pérgolas",
+      "Paneles Sándwich"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Taller especializado en cerramientos de aluminio, marquesinas minimalistas y pérgolas con panel sándwich. Instagram: @cerramientosbeirutti.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T20:37:24.256Z"
+  },
+  {
+    "id": "PROP-APPR-0387",
+    "name": "Fusión Energía Solar (Nuevo Círculo S.L.)",
+    "zone": "Asturias",
+    "department": "Riosa (Asturias)",
+    "cif": "B33404336",
+    "web": "https://fusionenergiasolar.es/",
+    "revenue": 980000,
+    "purchasingManager": "Dpto. Compras (Fusión Energía Solar)",
+    "phone": "+34 985 55 22 96",
+    "email": "comercial@fusionenergiasolar.es",
+    "location": [
+      43.2325,
+      -5.8894
+    ],
+    "sector": "Estructuras Solares",
+    "products": [
+      "Estructuras Solares",
+      "Soportes Fotovoltaicos",
+      "Perfiles de Fijación"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Diseño y fabricación de estructuras de aluminio y acero inoxidable para soporte de paneles solares fotovoltaicos. Instagram: @fusionenergiasolar.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T20:37:24.256Z"
+  },
+  {
+    "id": "PROP-APPR-0388",
+    "name": "Aluminios Briñas (ALUBRI 2002 S.L.)",
+    "zone": "Comunidad Valenciana",
+    "department": "Dolores (Alicante)",
+    "cif": "B42624502",
+    "web": "https://www.aluminiosbrinas.com/",
+    "revenue": 850000,
+    "purchasingManager": "Dpto. Compras (Aluminios Briñas)",
+    "phone": "+34 966 794 057",
+    "email": "info@aluminiosbrinas.com",
+    "location": [
+      38.1158,
+      -0.7712
+    ],
+    "sector": "Sistemas de Proteccion Solar",
+    "products": [
+      "Pérgolas de Aluminio",
+      "Cortinas de Cristal",
+      "Techos Móviles",
+      "Cerramientos"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricación e instalación de pérgolas de aluminio, cerramientos para terrazas, techos móviles y carpintería metálica. Instagram: @carpinteria_brinas_s.l.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-16T20:37:24.256Z"
   }
 ]
