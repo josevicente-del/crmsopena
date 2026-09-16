@@ -62,18 +62,19 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
   // --- ZONAS PERMITIDAS Y ACCESIBLES PARA EL AGENTE DE PROSPECCIÓN ---
   const availableSearchZones = useMemo(() => {
     const allKnownZones = [
-      'Portugal',
-      'Pais Vasco',
-      'Castilla y Leon',
-      'Cantabria',
-      'Galicia',
-      'Asturias',
       'Comunidad Valenciana',
       'Comunidad de Madrid',
+      'Castilla y Leon',
       'Castilla-La Mancha',
-      'Francia',
       'Cataluña',
-      'Andalucia'
+      'Andalucia',
+      'Galicia',
+      'Asturias',
+      'Cantabria',
+      'Pais Vasco',
+      'Portugal',
+      'Francia',
+      'Argelia'
     ];
     if (!userAllowedZones || userAllowedZones.length === 0 || userAllowedZones.includes('ALL')) {
       return allKnownZones;
@@ -662,6 +663,21 @@ ccastro@empresa-aluminio.com | +34 610 240 017`;
       return res;
     }
 
+    if (q.includes('valencia') || q.includes('valenciana') || (activeZone === 'Comunidad Valenciana' && (q.includes('prospecto') || q.includes('pendiente') || q.includes('empresa') || q.includes('lead')))) {
+      const valLeads = prospects.filter(p => p.zone === 'Comunidad Valenciana');
+      const valUncontacted = valLeads.filter(p => !p.contacted);
+      let res = `He analizado la **Comunidad Valenciana** (entorno directo de nuestra planta de extrusión en Náquera): contamos con **${valLeads.length}** empresas registradas, de las cuales **${valUncontacted.length}** están pendientes de contacto comercial.\n\n`;
+      if (valUncontacted.length > 0) {
+        res += 'Los prospectos comerciales prioritarios en la Comunidad Valenciana son:\n';
+        valUncontacted.slice(0, 4).forEach(c => {
+          res += `- **${c.name}** (${c.sector}) en ${c.department || 'Valencia'} | Facturación: *${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(c.revenue || 0)}*\n`;
+        });
+      } else {
+        res += 'Todos los clientes de la Comunidad Valenciana han sido contactados.';
+      }
+      return res;
+    }
+
     if (q.includes('portugal') || (activeZone === 'Portugal' && (q.includes('prospecto') || q.includes('pendiente') || q.includes('empresa')))) {
       const ptLeads = prospects.filter(p => p.zone === 'Portugal');
       const ptUncontacted = ptLeads.filter(p => !p.contacted);
@@ -1014,12 +1030,11 @@ ccastro@empresa-aluminio.com | +34 610 240 017`;
             }}
           >
             <option value="">Todas las zonas</option>
-            <option value="Portugal">Portugal (Norte/Centro)</option>
-            <option value="Pais Vasco">País Vasco</option>
-            <option value="Castilla y Leon">Castilla y León</option>
-            <option value="Cantabria">Cantabria</option>
-            <option value="Galicia">Galicia</option>
-            <option value="Asturias">Asturias</option>
+            {availableSearchZones.map(zone => (
+              <option key={zone} value={zone}>
+                {zone === 'Portugal' ? 'Portugal (Norte/Centro)' : zone === 'Castilla y Leon' ? 'Castilla y León' : zone === 'Pais Vasco' ? 'País Vasco' : zone === 'Andalucia' ? 'Andalucía' : zone}
+              </option>
+            ))}
           </select>
         </div>
       </div>
@@ -1706,7 +1721,6 @@ ccastro@empresa-aluminio.com | +34 610 240 017`;
                 <option value="Estructuras Solares">Estructuras Solares</option>
                 <option value="Fabricantes de Carrocerias">Fabricación de Carrocerías</option>
                 <option value="Cerramientos">Cerramientos</option>
-                <option value="Frio Industrial">Frío Industrial</option>
                 <option value="Transformacion de Chapa">Transformación de Chapa</option>
                 <option value="Construccion Modular">Construcción Modular</option>
                 <option value="Fachadas de Aluminio">Fachadas de Aluminio</option>
@@ -1715,7 +1729,8 @@ ccastro@empresa-aluminio.com | +34 610 240 017`;
                 <option value="Perfiles Estructurales Aluminio">Perfiles Estructurales de Aluminio</option>
                 <option value="Puertas y Ventanas">Puertas y Ventanas</option>
                 <option value="Sistemas de Proteccion Solar">Sistemas de Protección Solar</option>
-                <option value="Proveedor de Aluminio">Proveedor de Aluminio</option>
+                <option value="Mesas de Invernadero">Mesas de Invernadero</option>
+                <option value="Fabricantes de Escaleras de Aluminio">Fabricantes de Escaleras de Aluminio</option>
               </select>
             </div>
 

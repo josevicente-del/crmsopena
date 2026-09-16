@@ -388,12 +388,12 @@ const App = () => {
     },
     ccastro: {
       username: 'ccastro',
-      name: 'Carlos Castro',
-      role: 'Comercial Noroeste y Portugal',
+      name: 'Carmen Castro',
+      role: 'Project Manager Comercial',
       email: 'ccastro@gruposopena.com',
-      phone: '+34 600 111 222',
-      whatsapp: '34600111222',
-      zones: ['Asturias', 'Castilla y Leon', 'Portugal', 'Pais Vasco']
+      phone: '+34 610 240 017',
+      whatsapp: '34610240017',
+      zones: ['ALL']
     },
     // Configuración de usuario comercial: Alfredo Domingo
     adomingo: {
@@ -419,7 +419,17 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState(() => {
     const saved = localStorage.getItem('sopena_user_session');
     if (saved) {
-      try { return JSON.parse(saved); } catch (e) {}
+      try { 
+        const parsed = JSON.parse(saved);
+        if (parsed && parsed.username === 'ccastro') {
+          parsed.name = 'Carmen Castro';
+          parsed.phone = '+34 610 240 017';
+          parsed.whatsapp = '34610240017';
+          parsed.zones = ['ALL'];
+          localStorage.setItem('sopena_user_session', JSON.stringify(parsed));
+        }
+        return parsed;
+      } catch (e) {}
     }
     // Usuario por defecto si ya estaba autenticado previamente
     if (localStorage.getItem('aluminio_auth') === 'true') {
@@ -3245,12 +3255,18 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                   <label>Zona</label>
                   <select value={filterZone} onChange={e => setFilterZone(e.target.value)}>
                     <option value="">Todas las zonas</option>
-                    <option value="Portugal">Portugal</option>
-                    <option value="Pais Vasco">País Vasco</option>
+                    <option value="Comunidad Valenciana">Comunidad Valenciana</option>
+                    <option value="Comunidad de Madrid">Comunidad de Madrid</option>
                     <option value="Castilla y Leon">Castilla y León</option>
-                    <option value="Cantabria">Cantabria</option>
+                    <option value="Castilla-La Mancha">Castilla-La Mancha</option>
+                    <option value="Cataluña">Cataluña</option>
+                    <option value="Andalucia">Andalucía</option>
                     <option value="Galicia">Galicia</option>
                     <option value="Asturias">Asturias</option>
+                    <option value="Cantabria">Cantabria</option>
+                    <option value="Pais Vasco">País Vasco</option>
+                    <option value="Portugal">Portugal</option>
+                    <option value="Francia">Francia</option>
                   </select>
                 </div>
                 <div className="filter-group">
@@ -4030,12 +4046,18 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
               <div className="form-group">
                 <label>Zona / País</label>
                 <select name="zone" style={{width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)'}} required>
-                  <option value="Portugal">Portugal</option>
-                  <option value="Pais Vasco">País Vasco</option>
+                  <option value="Comunidad Valenciana">Comunidad Valenciana</option>
+                  <option value="Comunidad de Madrid">Comunidad de Madrid</option>
                   <option value="Castilla y Leon">Castilla y León</option>
-                  <option value="Cantabria">Cantabria</option>
+                  <option value="Castilla-La Mancha">Castilla-La Mancha</option>
+                  <option value="Cataluña">Cataluña</option>
+                  <option value="Andalucia">Andalucía</option>
                   <option value="Galicia">Galicia</option>
                   <option value="Asturias">Asturias</option>
+                  <option value="Cantabria">Cantabria</option>
+                  <option value="Pais Vasco">País Vasco</option>
+                  <option value="Portugal">Portugal</option>
+                  <option value="Francia">Francia</option>
                   <option value="Otra">Otra</option>
                 </select>
               </div>
