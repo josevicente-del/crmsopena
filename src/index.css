@@ -118,10 +118,12 @@ body {
   padding: 2rem;
 }
 
-/* Filter Bar */
+/* Filter Bar con CSS Grid fluido */
 .filter-bar {
-  display: flex;
-  gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  align-items: flex-end;
   margin-bottom: 2rem;
   background: var(--card-bg);
   padding: 1.5rem;
@@ -554,6 +556,250 @@ tr:hover {
 
 .kpi-badge .count.success {
   background: var(--success);
+}
+
+/* ==========================================================================
+   DISEÑO FLUIDO Y ADAPTABLE: CSS GRID Y MEDIA QUERIES (DESKTOP, TABLET, MOBILE)
+   ========================================================================== */
+
+/* Botones de navegación táctil para móvil/tablet */
+.mobile-hamburger-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--sopena-blue-dark);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.mobile-hamburger-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.mobile-close-btn {
+  display: none;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.mobile-close-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Fondo oscuro al desplegar el menú en pantallas táctiles */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 998;
+  animation: fadeInOverlay 0.25s ease-out;
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Tablas con scroll táctil suave y contenedores fluidos */
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+}
+
+/* Cuadrículas de modales fluidas con auto-fit */
+.modal-grid-fluid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Barra de acciones de exportación / adición fluida */
+.action-bar-fluid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+/* --------------------------------------------------------------------------
+   MEDIA QUERY: TABLETS Y PANTALLAS MEDIANAS (<= 1024px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .header {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .content-scroll {
+    padding: 1.5rem;
+  }
+
+  .filter-bar {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    padding: 1.2rem;
+    gap: 12px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   MEDIA QUERY: TABLETS VERTICALES Y SMARTPHONES (<= 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .mobile-hamburger-btn {
+    display: inline-flex;
+  }
+
+  .mobile-close-btn {
+    display: inline-flex;
+  }
+
+  .sidebar-overlay {
+    display: block;
+  }
+
+  /* Sidebar pasa de posición estática a panel flotante off-canvas */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 290px;
+    height: 100vh;
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 10px 0 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .header {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .header > div:first-child {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .header h1 {
+    font-size: 1.2rem;
+  }
+
+  .header > div:last-child {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .kpi-container {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .kpi-badge {
+    padding: 5px 10px;
+    font-size: 0.78rem;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .content-scroll {
+    padding: 1rem;
+  }
+
+  /* Filtros en smartphone se adaptan a 1 o 2 columnas según pantalla */
+  .filter-bar {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 12px;
+  }
+
+  .action-bar-fluid {
+    justify-content: stretch;
+  }
+
+  .action-bar-fluid button {
+    flex: 1 1 calc(50% - 10px);
+    text-align: center;
+  }
+
+  /* Pipeline Kanban con desplazamiento táctil horizontal optimizado */
+  .pipeline-container {
+    gap: 12px !important;
+  }
+
+  /* Modales ocupan el 95% de la pantalla en smartphone */
+  .modal-card,
+  .modal-overlay > div {
+    width: 95% !important;
+    max-width: 95% !important;
+    padding: 1.2rem !important;
+  }
+
+  /* Mapa interactivo responsive */
+  .map-container {
+    height: 320px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   MEDIA QUERY: SMARTPHONES PEQUEÑOS (<= 480px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.05rem;
+  }
+
+  .action-bar-fluid button {
+    flex: 1 1 100%;
+  }
+
+  .kpi-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .kpi-badge {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .filter-group input, 
+  .filter-group select {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    padding: 0.7rem 0.5rem;
+    font-size: 0.82rem;
+  }
 }
 
 

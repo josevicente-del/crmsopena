@@ -48,5 +48,15 @@
     "reason": "Baja definitiva por Dirección Comercial",
     "excludedAt": "2026-09-16T22:26:34.252Z",
     "notes": "Eliminada de la base de datos para no volver a incorporarla jamás."
+  },
+  {
+    "id": "PROP-EXC-GALISUR",
+    "name": "Galisur S.L.",
+    "cif": "B41065418",
+    "domain": "galisur.es",
+    "web": "https://www.galisur.es",
+    "reason": "Competencia directa (Fabricante y distribuidor de perfiles y sistemas de aluminio)",
+    "excludedAt": "2026-09-29T21:20:00.000Z",
+    "notes": "Eliminada y excluida permanentemente por indicación de Dirección Comercial al ser fabricante y distribuidor competidor de perfiles de aluminio en Andalucía."
   }
 ]

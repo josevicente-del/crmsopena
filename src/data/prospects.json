@@ -10490,5 +10490,426 @@
     "notes": "Fabricante especializado de sistemas de mosquiteras a medida y componentes de aluminio en el Polígono Fuente del Jarro de Paterna.",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-09-16T22:10:43.986Z"
+  },
+  {
+    "id": "PROP-ALUMAN-0409",
+    "name": "Grupo Aluman (Aluman Sistemas S.L.U.)",
+    "zone": "Galicia",
+    "department": "Arteixo (A Coruña)",
+    "cif": "B15042286",
+    "web": "https://www.grupoaluman.com/es/",
+    "revenue": 126000000,
+    "purchasingManager": "Dpto. Compras (Grupo Aluman)",
+    "phone": "+34 981 60 27 11",
+    "email": "compras@grupoaluman.com",
+    "location": [
+      43.3242,
+      -8.5085
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Muros Cortina",
+      "Fachadas Modulares",
+      "Carpintería de Aluminio",
+      "Perfiles Arquitectónicos",
+      "Proyectos Contract"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Gran grupo multinacional y referente en diseño, ingeniería y fabricación de envolventes, fachadas singulares de aluminio y proyectos contract con sede en el Pol. Ind. de Sabón (Arteixo).",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:00:00.000Z"
+  },
+  {
+    "id": "PROP-DREYSER-0410",
+    "name": "Dreyser Multiservicios S.L.",
+    "zone": "Comunidad de Madrid",
+    "department": "Madrid (Madrid)",
+    "cif": "B45732112",
+    "web": "https://dreyser.es/",
+    "revenue": 2400000,
+    "purchasingManager": "Dpto. Técnico y Compras (Dreyser)",
+    "phone": "+34 911 16 41 06",
+    "email": "dreyser@dreyser.es",
+    "location": [
+      40.4789,
+      -3.7088
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Mantenimiento de Fachadas",
+      "Muros Cortina",
+      "Cerramientos de Aluminio",
+      "Rehabilitación Arquitectónica"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Empresa especializada en ingeniería técnica, mantenimiento, cerramientos y rehabilitación integral de muros cortina y fachadas de aluminio en Madrid.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:00:00.000Z"
+  },
+  {
+    "id": "PROP-GARCIAFAURA-0411",
+    "name": "Garcia Faura, S.L.",
+    "zone": "Cataluña",
+    "department": "Gavà (Barcelona)",
+    "cif": "B58753005",
+    "web": "https://www.garciafaura.com",
+    "revenue": 38287000,
+    "purchasingManager": "Dpto. Compras y Técnico (Garcia Faura)",
+    "phone": "+34 93 662 14 41",
+    "email": "info@garciafaura.com",
+    "location": [
+      41.3061,
+      2.0012
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Muros Cortina",
+      "Fachadas Modulares",
+      "Carpintería de Aluminio",
+      "Envolventes Arquitectónicas"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Especialistas de referencia en arquitectura de aluminio, fachadas modulares y cerramientos singulares con sede en Gavà (Barcelona). Validado en Instagram (@garciafaura) con actividad reciente.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:10:00.000Z"
+  },
+  {
+    "id": "PROP-AXIAL-0413",
+    "name": "Axial Structural Solutions (Axial Sistemas Solares S.L.)",
+    "zone": "Comunidad Valenciana",
+    "department": "Paterna (Valencia)",
+    "cif": "B98086671",
+    "web": "https://www.axialstructural.com",
+    "revenue": 165082000,
+    "purchasingManager": "Dpto. Compras y Suministros (Axial)",
+    "phone": "+34 901 23 38 14",
+    "email": "info@axialstructural.com",
+    "location": [
+      39.5165,
+      -0.4518
+    ],
+    "sector": "Estructuras Solares",
+    "products": [
+      "Estructuras Solares",
+      "Perfiles de Aluminio",
+      "Seguidores Solares (Trackers)",
+      "Sistemas Fotovoltaicos Fijos"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Líder tecnológico en diseño y fabricación de seguidores solares (Titan) y estructuras fotovoltaicas en Paterna (Valencia). Grupo Alonso. Verificado en LinkedIn con actividad reciente.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:20:00.000Z"
+  },
+  {
+    "id": "PROP-ACYF-0414",
+    "name": "ACYF Group (Alturas Cubiertas y Fachadas S.L.)",
+    "zone": "Aragon",
+    "department": "Zaragoza (Zaragoza)",
+    "cif": "B99400061",
+    "web": "https://acyfgroup.com",
+    "revenue": 14500000,
+    "purchasingManager": "Dpto. Técnico y Compras (ACYF)",
+    "phone": "+34 976 50 53 24",
+    "email": "central.acyf@acyfgroup.com",
+    "location": [
+      41.7167,
+      -0.8667
+    ],
+    "sector": "Fachadas Especiales",
+    "products": [
+      "Fachadas Modulares Industrializadas",
+      "Envolventes Arquitectónicas",
+      "Estructuras Fotovoltaicas",
+      "Mecanizados y Plegados"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Holding especializado en cerramientos industriales, fachadas modulares (Kover Siglo XXI) y envolventes en Zaragoza con delegaciones en Madrid y Sevilla. Verificado en LinkedIn con actividad reciente.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:20:00.000Z"
+  },
+  {
+    "id": "PROP-UXAMA-0415",
+    "name": "Fachadas Singulares Uxama S.L.",
+    "zone": "Pais Vasco",
+    "department": "Amorebieta-Etxano (Bizkaia)",
+    "cif": "B95548301",
+    "web": "https://www.uxama.com",
+    "revenue": 12800000,
+    "purchasingManager": "Dpto. Técnico y Compras (Uxama)",
+    "phone": "+34 944 57 37 37",
+    "email": "uxama@uxama.com",
+    "location": [
+      43.2185,
+      -2.7342
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Muros Cortina",
+      "Fachadas Singulares",
+      "Estructuras Metálicas",
+      "Envolventes Arquitectónicas"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Ingeniería y ejecución especializada de muros cortina, envolventes y fachadas singulares de alta complejidad técnica con sede en Amorebieta-Etxano (Bizkaia). Verificado en LinkedIn con actividad reciente.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:30:00.000Z"
+  },
+  {
+    "id": "PROP-HIDALMIRA-0416",
+    "name": "Hidalmira S.L. (Grupo Hidalmira)",
+    "zone": "Comunidad de Madrid",
+    "department": "Fuenlabrada (Madrid)",
+    "cif": "B82531338",
+    "web": "https://hidalmira.com",
+    "revenue": 9200000,
+    "purchasingManager": "Dpto. Compras y Oficina Técnica (Hidalmira)",
+    "phone": "+34 91 642 16 11",
+    "email": "hidalmira@hidalmira.com",
+    "location": [
+      40.2825,
+      -3.7914
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Muros Cortina",
+      "Fachadas Ventiladas",
+      "Carpintería de Aluminio",
+      "Envolventes Singulares"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Especialistas de referencia en Madrid en diseño, fabricación y montaje de muros cortina, fachadas ventiladas y cerramientos de aluminio de alta gama. Verificado en LinkedIn con actividad reciente.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:38:00.000Z"
+  },
+  {
+    "id": "PROP-FERRARI-0417",
+    "name": "Aluminios Ferrari S.L.",
+    "zone": "Comunidad Valenciana",
+    "department": "Alcoy (Alicante)",
+    "cif": "B53331665",
+    "web": "https://aluminiosferrari.com",
+    "revenue": 11400000,
+    "purchasingManager": "Dpto. Técnico y Compras (Aluminios Ferrari)",
+    "phone": "+34 96 552 43 11",
+    "email": "info@aluminiosferrari.com",
+    "location": [
+      38.7054,
+      -0.4743
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Muros Cortina",
+      "Carpintería de Aluminio Industrializada",
+      "Fachadas Modulares",
+      "Mecanizado de Perfilería"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Gran transformador y fabricante de carpintería y fachadas de aluminio en la Comunidad Valenciana, con planta de mecanizado integral y corte de precisión. Verificado en LinkedIn con actividad reciente.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:38:00.000Z"
+  },
+  {
+    "id": "PROP-PRAUSA-0418",
+    "name": "Prausa Estructuras S.L.",
+    "zone": "Castilla-La Mancha",
+    "department": "Quintanar de la Orden (Toledo)",
+    "cif": "B45388311",
+    "web": "https://prausa.com",
+    "revenue": 24800000,
+    "purchasingManager": "Dpto. Compras y Suministros (Prausa)",
+    "phone": "+34 925 56 41 20",
+    "email": "info@prausa.com",
+    "location": [
+      39.5912,
+      -3.0456
+    ],
+    "sector": "Estructuras Solares",
+    "products": [
+      "Estructuras Solares Fijas",
+      "Sistemas Fotovoltaicos Sobrecubierta",
+      "Perfiles de Aluminio Estructural",
+      "Herrajes y Fijaciones Fotovoltaicas"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante especializado en estructuras metálicas y de aluminio para proyectos solares fotovoltaicos, marquesinas y sobrecubiertas industriales con sede en Toledo. Verificado en LinkedIn con actividad reciente.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:40:00.000Z"
+  },
+  {
+    "id": "PROP-SOLARSTEEL-0419",
+    "name": "Gonvarri Solar Steel (Solar Steel Gonvarri Industries S.L.)",
+    "zone": "Comunidad de Madrid",
+    "department": "Madrid (Madrid)",
+    "cif": "B85987172",
+    "web": "https://www.solar-steel.com",
+    "revenue": 285000000,
+    "purchasingManager": "Dpto. Compras y Aprovisionamiento (Solar Steel)",
+    "phone": "+34 91 379 19 00",
+    "email": "info@solar-steel.com",
+    "location": [
+      40.4531,
+      -3.6883
+    ],
+    "sector": "Estructuras Solares",
+    "products": [
+      "Seguidores Solares (Trackers)",
+      "Estructuras Fijas Fotovoltaicas",
+      "Perfiles Estructurales de Soporte",
+      "Componentes de Fijación y Guiado"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "División de energía solar del grupo Gonvarri. Líder global en ingeniería y suministro de seguidores solares (trackers) y estructuras fijas para plantas fotovoltaicas utility-scale. Verificado en LinkedIn con actividad reciente.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:40:00.000Z"
+  },
+  {
+    "id": "PROP-GRAVENT-0420",
+    "name": "Gravent Ventilación y Protección Solar S.L.",
+    "zone": "Cataluña",
+    "department": "Lliçà de Vall (Barcelona)",
+    "cif": "B61218579",
+    "web": "https://gravent.es",
+    "revenue": 6400000,
+    "purchasingManager": "Dpto. Técnico y Compras (Gravent)",
+    "phone": "+34 93 843 93 00",
+    "email": "gravent@gravent.es",
+    "location": [
+      41.5908,
+      2.2386
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Celosías de Aluminio Extruido",
+      "Lamas Bioclimáticas Orientables",
+      "Sistemas de Ventilación Industrial",
+      "Muros Cortina y Protección Solar"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Especialistas en ingeniería y montaje de sistemas de protección solar arquitectónica, celosías de extrusión y aireación natural en envolventes de edificios. Verificado en LinkedIn con actividad reciente.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:42:00.000Z"
+  },
+  {
+    "id": "PROP-SOLVEN-0421",
+    "name": "Solven Sistemas de Cerramientos S.L.",
+    "zone": "Castilla-La Mancha",
+    "department": "Madridejos (Toledo)",
+    "cif": "B45327244",
+    "web": "https://www.solven.es",
+    "revenue": 15800000,
+    "purchasingManager": "Dpto. Compras y Logística (Solven)",
+    "phone": "+34 925 46 05 50",
+    "email": "info@solven.es",
+    "location": [
+      39.4678,
+      -3.5306
+    ],
+    "sector": "Cerramientos y Carpinteria de Aluminio",
+    "products": [
+      "Ventanas y Balconeras de Aluminio",
+      "Sistemas de Correderas Elevables",
+      "Puertas y Cerramientos Monoblock",
+      "Perfilería de Rotura de Puente Térmico (RPT)"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Importante fabricante industrial de sistemas de carpintería de aluminio y cerramientos con alta capacidad productiva en Castilla-La Mancha y distribución nacional. Verificado en LinkedIn con actividad reciente.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:42:00.000Z"
+  },
+  {
+    "id": "PROP-HIDALFE-0422",
+    "name": "Hidalfe S.L. (Muros Cortina y Fachadas)",
+    "zone": "Comunidad de Madrid",
+    "department": "Humanes de Madrid (Madrid)",
+    "cif": "B82647704",
+    "web": "https://www.hidalfe.es",
+    "revenue": 7800000,
+    "purchasingManager": "Dpto. Técnico y Compras (Hidalfe)",
+    "phone": "+34 91 604 18 20",
+    "email": "hidalfe@hidalfe.es",
+    "location": [
+      40.2528,
+      -3.8294
+    ],
+    "sector": "Fachadas de Aluminio",
+    "products": [
+      "Muros Cortina Modulares",
+      "Lucernarios y Bóvedas de Aluminio",
+      "Fachadas Estructurales de Vidrio y Aluminio",
+      "Carpintería de Gran Formato"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Especialistas consolidados en ingeniería de muros cortina modulares, lucernarios y cerramientos acristalados de gran formato con sede en Madrid. Verificado en LinkedIn con actividad reciente.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:46:00.000Z"
+  },
+  {
+    "id": "PROP-UVISAN-0423",
+    "name": "Uvisan Fachadas y Cubiertas S.L.",
+    "zone": "Comunidad de Madrid",
+    "department": "Pinto (Madrid)",
+    "cif": "B86490655",
+    "web": "https://uvisan.com",
+    "revenue": 9600000,
+    "purchasingManager": "Dpto. Compras y Proyectos (Uvisan)",
+    "phone": "+34 91 692 84 10",
+    "email": "info@uvisan.com",
+    "location": [
+      40.2415,
+      -3.6997
+    ],
+    "sector": "Fachadas Especiales",
+    "products": [
+      "Fachadas Modulares Singulares",
+      "Muros Cortina Industrializados",
+      "Envolventes Arquitectónicas",
+      "Subestructuras de Perfilería de Aluminio"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Ingeniería e instalación de fachadas singulares y envolventes metálicas de alta complejidad técnica para edificios singulares y corporativos en Pinto (Madrid). Verificado en LinkedIn con actividad reciente.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:46:00.000Z"
+  },
+  {
+    "id": "PROP-FENSTER-0424",
+    "name": "Fenster (Fabricación de Cerramientos S.L.)",
+    "zone": "Cataluña",
+    "department": "Sant Cugat del Vallès (Barcelona)",
+    "cif": "B60287237",
+    "web": "https://www.fenster.es",
+    "revenue": 14200000,
+    "purchasingManager": "Dpto. Técnico y Compras (Fenster)",
+    "phone": "+34 93 589 44 22",
+    "email": "info@fenster.es",
+    "location": [
+      41.4725,
+      2.0862
+    ],
+    "sector": "Cerramientos y Carpinteria de Aluminio",
+    "products": [
+      "Muros Cortina",
+      "Carpintería de Aluminio Minimalista",
+      "Grandes Correderas Elevables",
+      "Fachadas Acristaladas Singulares"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante e instalador de referencia en Barcelona especializado en soluciones integrales de carpintería de aluminio de alta gama y muros cortina. Verificado en LinkedIn con actividad reciente.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-09-29T21:48:00.000Z"
   }
 ]

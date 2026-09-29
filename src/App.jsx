@@ -1,7 +1,7 @@
 // Importamos los hooks de React (React no se importa directamente porque no se usa en el alcance)
 import { useState, useEffect, useMemo, useRef } from 'react';
 // Importamos únicamente los iconos de lucide-react que se utilizan en la aplicación
-import { MapPin, Building2, Briefcase, FileText, CheckCircle, Navigation, Sparkles, Mic, MicOff, Database, Mail, Download, Smartphone, Info } from 'lucide-react';
+import { MapPin, Building2, Briefcase, FileText, CheckCircle, Navigation, Sparkles, Mic, MicOff, Database, Mail, Download, Smartphone, Info, Menu, X } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -394,6 +394,11 @@ const App = () => {
             if (!clean.products || !Array.isArray(clean.products)) clean.products = [];
             if (!clean.tasks || !Array.isArray(clean.tasks)) clean.tasks = [];
             if (!clean.history || !Array.isArray(clean.history)) clean.history = [];
+            // Todas las empresas deben figurar en la etapa "Lead" al no haber contacto comercial previo
+            clean.pipelineStage = clean.pipelineStage && clean.pipelineStage !== 'Contactado' ? clean.pipelineStage : 'Lead';
+            if (clean.pipelineStage === 'Lead') {
+              clean.contacted = false;
+            }
             return clean;
           });
       };
@@ -525,6 +530,8 @@ const App = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordPolicyError, setPasswordPolicyError] = useState('');
   const [showProfileDrawer, setShowProfileDrawer] = useState(false);
+  // Estado para visualización adaptable del menú en móviles y tablets
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Zonas permitidas para el usuario autenticado activo
   const userAllowedZones = useMemo(() => {
@@ -913,7 +920,7 @@ const App = () => {
     const companyCif = formData.get('cif') || '';
     const companyWeb = formData.get('web') || '';
 
-    // Comprobación estricta contra lista de exclusión (competencia y bajas previas)
+    // Comprobación estricta contra lista de exclusión y borrados previos
     const exclusionMatch = checkIsCompanyExcluded({
       name: companyName,
       cif: companyCif,
@@ -921,8 +928,37 @@ const App = () => {
     });
 
     if (exclusionMatch) {
-      alert(`⚠️ No se puede incorporar "${companyName}": figura en la lista de exclusión permanente para no ser reincorporada.\nMotivo: ${exclusionMatch.reason || 'Baja previa'}`);
-      return;
+      // Si la empresa proviene de un borrado previo por un operador
+      const isPriorDeletion = (exclusionMatch.reason || '').toLowerCase().includes('eliminada');
+      if (isPriorDeletion) {
+        const confirmReincorporate = window.confirm(
+          `⚠️ ATENCIÓN AL OPERADOR:\n\nLa empresa "${companyName}" fue eliminada previamente de la base de datos (${exclusionMatch.reason}).\n\n¿Deseas validar expresamente su reincorporación y darla de alta nuevamente?`
+        );
+        if (!confirmReincorporate) {
+          return;
+        }
+        // Si el operador valida la reincorporación, retirarla del historial de borradas en LocalStorage
+        try {
+          const savedDeleted = localStorage.getItem('aluminio_crm_deleted');
+          if (savedDeleted) {
+            const parsedDeleted = JSON.parse(savedDeleted);
+            if (Array.isArray(parsedDeleted)) {
+              const cleanedDeleted = parsedDeleted.filter(del => {
+                const dName = typeof del === 'object' ? (del.name || '').toLowerCase() : '';
+                const dCif = typeof del === 'object' ? (del.cif || '').toUpperCase() : '';
+                return dName !== companyName.toLowerCase() && (!companyCif || dCif !== companyCif.toUpperCase());
+              });
+              localStorage.setItem('aluminio_crm_deleted', JSON.stringify(cleanedDeleted));
+            }
+          }
+        } catch (e) {
+          console.error('Error al actualizar registro de borradas tras validación de operador:', e);
+        }
+      } else {
+        // Veto comercial estratégico o competencia directa (AEA/gamistas)
+        alert(`⛔ No se puede incorporar "${companyName}": figura en la lista de exclusión estratégica no autorizada.\nMotivo: ${exclusionMatch.reason}`);
+        return;
+      }
     }
 
     const newCompany = {
@@ -1162,6 +1198,7 @@ const App = () => {
     const target = presentationTarget;
     const isPt = target && target.zone === 'Portugal';
     const clientName = target ? target.name : 'Excelencia en Extrusión';
+    const salesperson = getActiveSalesperson();
     
     // Títulos y fechas adaptados al idioma del prospecto
     const titleText = isPt ? `Soluções de Alumínio para ${clientName}` : `Soluciones de Aluminio para ${clientName}`;
@@ -1224,12 +1261,12 @@ const App = () => {
           <h4 style="margin-top: 0; color: #047857; font-size: 1.2rem; margin-bottom: 15px;">${isPt ? 'Documentação Técnica Interativa:' : 'Documentación Técnica Interactiva:'}</h4>
           <div style="display: flex; flex-direction: column; gap: 12px;">
             \${includeArchitectureLink ? \`
-              <a href="https://www.empresa-aluminio.com/architectural.php?lang=es" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #0f172a; background: white; padding: 12px 15px; border-radius: 6px; border: 1px solid #a7f3d0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-weight: bold; transition: all 0.2s ease;">
+              <a href="https://www.gruposopena.com/architectural.php?lang=es" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #0f172a; background: white; padding: 12px 15px; border-radius: 6px; border: 1px solid #a7f3d0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-weight: bold; transition: all 0.2s ease;">
                 <span style="font-size: 1.5rem;">🏛️</span> \${isPt ? 'Catálogo de Sistemas de Arquitetura' : 'Catálogo de Sistemas de Arquitectura'} <span style="color: #10b981; margin-left: auto;">\${isPt ? 'Aceder catálogo →' : 'Acceder catálogo →'}</span>
               </a>
             \` : ''}
             \${includeIndustrialLink ? \`
-              <a href="https://www.empresa-aluminio.com/series.php?lang=es&cat=1&id=54" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #0f172a; background: white; padding: 12px 15px; border-radius: 6px; border: 1px solid #a7f3d0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-weight: bold; transition: all 0.2s ease;">
+              <a href="https://www.gruposopena.com/series.php?lang=es&cat=1&id=54" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #0f172a; background: white; padding: 12px 15px; border-radius: 6px; border: 1px solid #a7f3d0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-weight: bold; transition: all 0.2s ease;">
                 <span style="font-size: 1.5rem;">🏭</span> \${isPt ? 'Catálogo de Perfis Industriais' : 'Catálogo de Perfiles Industriales'} <span style="color: #10b981; margin-left: auto;">\${isPt ? 'Aceder catálogo →' : 'Acceder catálogo →'}</span>
               </a>
             \` : ''}
@@ -1480,10 +1517,10 @@ const App = () => {
   <div class="container">
     <header>
       <div class="logo-container">
-        <img src="https://empresa-aluminio.com/images/global/logo/grupo-sopena-sistemas.png" alt="Logotipo Grupo de Aluminio">
+        <img src="/sopena_sistemas_logo.png" alt="Logotipo Grupo Sopeña Sistemas">
       </div>
       <div class="header-info">
-        <strong>Aluminios Innovations, S.L.</strong><br>
+        <strong>SOPENA INNOVATIONS, S.L.</strong><br>
         Pol. Ind. Los Vientos, C/ Garbí, 9<br>
         46119 Náquera, Valencia (\${isPt ? 'Espanha' : 'España'})<br>
         +34 96 145 20 50 | empresa-aluminio.com
@@ -1499,8 +1536,10 @@ const App = () => {
             <p><strong>\${isPt ? 'A/C:' : 'A/A:'}</strong> \${target.purchasingManager} 
             \${target.purchasingPhone ? \`| 📞 \${target.purchasingPhone}\` : ''}
             \${target.email ? \`| ✉️ \${target.email}\` : ''}</p>
-          \` : ''}
-          <p><strong>De:</strong> Carmen Castro</p>
+          \` : \`
+            <p><strong>\${isPt ? 'A/C:' : 'A/A:'}</strong> \${isPt ? 'Direção de Compras / Gabinete Técnico' : 'Dirección de Compras / Departamento Técnico'}</p>
+          \`}
+          <p><strong>De:</strong> \${salesperson.name} (\${salesperson.role})</p>
           <p><strong>\${isPt ? 'Data:' : 'Fecha:'}</strong> \${dateStr}</p>
         </div>
       </div>
@@ -1540,15 +1579,17 @@ const App = () => {
       <div class="footer-section">
         <div class="signature-info">
           <p style="margin-bottom: 15px;">\${isPt ? 'Com os melhores cumprimentos,' : 'Atentamente,'}</p>
-          <p style="font-weight: bold; font-size: 1.1rem; color: var(--sopena-blue-dark); margin: 0;">Carmen Castro</p>
-          <p style="font-size: 0.9rem; margin: 0; font-weight: 500;">PROJECT MANAGER - GRUPO SOPENA</p>
+          <p style="font-weight: bold; font-size: 1.1rem; color: var(--sopena-blue-dark); margin: 0;">\${salesperson.name}</p>
+          <p style="font-size: 0.9rem; margin: 0; font-weight: 500;">\${salesperson.role.toUpperCase()} - GRUPO SOPENA</p>
           <p style="font-size: 0.85rem; margin: 5px 0 0 0; color: var(--text-secondary);">
-            📞 +34 610 240 017 | ✉️ <a href="mailto:ccastro@empresa-aluminio.com">ccastro@empresa-aluminio.com</a>
+            📞 \${salesperson.phone} | ✉️ <a href="mailto:\${salesperson.email}">\${salesperson.email}</a>
           </p>
           <div style="margin-top: 15px; display: flex; gap: 8px;">
-            <a href="https://wa.me/34610240017?text=Hola%20Carmen,%20recibi%20su%20propuesta" class="social-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">
-              WhatsApp
-            </a>
+            \${salesperson.whatsapp ? \`
+              <a href="https://wa.me/\${salesperson.whatsapp}?text=\${encodeURIComponent(isPt ? 'Olá, recebi a vossa proposta' : 'Hola, recibí su propuesta')}" class="social-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">
+                WhatsApp
+              </a>
+            \` : ''}
             <a href="https://www.instagram.com/gruposopena/" class="social-btn instagram-btn" target="_blank" rel="noopener noreferrer">
               Instagram
             </a>
@@ -1596,10 +1637,11 @@ const App = () => {
     }
     setIsExportingPDF(true);
     try {
-      // Nombre del fichero basado en la empresa destinataria
-      const targetName = presentationTarget ? presentationTarget.name : 'Presentacion_Aluminio';
+      // Nombre del fichero basado en la empresa destinataria o versión general
+      const isDossier = presentationType === 'detallada';
+      const targetName = presentationTarget ? presentationTarget.name : (isDossier ? 'Dossier_Corporativo_B2B' : 'Presentacion_Corporativa_General');
       const safeName = targetName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '_');
-      const fileName = `Propuesta_Empresa de Aluminio_${safeName}.pdf`;
+      const fileName = `Grupo_Sopena_${isDossier ? 'Dossier' : 'Carta'}_${safeName}.pdf`;
 
       // --- 1. Capturar el DOM como imagen de alta resolución ---
       const canvas = await html2canvas(a4El, {
@@ -1696,6 +1738,7 @@ const App = () => {
     const target = presentationTarget;
     const isPt = target && target.zone === 'Portugal';
     const clientName = target ? target.name : 'Excelencia en Extrusión';
+    const salesperson = getActiveSalesperson();
     
     // Títulos y fechas adaptados al idioma del prospecto
     const titleText = isPt ? `Soluções de Alumínio para ${clientName}` : `Soluciones de Aluminio para ${clientName}`;
@@ -1751,7 +1794,7 @@ const App = () => {
               <img src="https://empresa-aluminio.com/images/global/logo/grupo-sopena-sistemas.png" alt="Grupo de Aluminio Logo" style="height: 35px; width: auto; display: block;" />
             </div>
             <div style="font-size: 0.8rem; line-height: 1.4; opacity: 0.9; text-align: right; margin-left: 20px; color: #ffffff;">
-              <strong>Aluminios Innovations, S.L.</strong><br/>
+              <strong>SOPENA INNOVATIONS, S.L.</strong><br/>
               Náquera, Valencia<br/>
               empresa-aluminio.com
             </div>
@@ -1764,7 +1807,7 @@ const App = () => {
             </h2>
             
             <div style="background: #f1f5f9; padding: 15px; border-radius: 6px; border-left: 4px solid #f59e0b; margin-bottom: 35px; font-size: 0.9rem; color: #475569;">
-              ${target ? `<strong>${isPt ? 'A/C:' : 'A/A:'}</strong> ${target.purchasingManager}<br/>` : ''}
+              ${target ? `<strong>${isPt ? 'A/C:' : 'A/A:'}</strong> ${target.purchasingManager}<br/>` : `<strong>${isPt ? 'A/C:' : 'A/A:'}</strong> ${isPt ? 'Direção de Compras / Gabinete Técnico' : 'Dirección de Compras / Departamento Técnico'}<br/>`}
               <strong>${isPt ? 'Data:' : 'Fecha:'}</strong> ${dateStr}
             </div>
             <h3 style="color: #f59e0b; font-size: 1.1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; margin-top: 0; margin-bottom: 12px; font-weight: bold; text-transform: uppercase;">
@@ -1785,15 +1828,16 @@ const App = () => {
             ` : ''}
             <div style="border-top: 1px solid #e2e8f0; padding-top: 20px; font-size: 0.95rem; line-height: 1.6; color: #334155;">
               <p style="margin-bottom: 12px;">${isPt ? 'Com os melhores cumprimentos,' : 'Atentamente,'}</p>
-              <strong style="color: #072b66; font-size: 1.05rem;">Carmen Castro</strong><br/>
-              <span style="font-size: 0.85rem; color: #475569; font-weight: 500;">PROJECT MANAGER - GRUPO SOPENA</span>
+              <strong style="color: #072b66; font-size: 1.05rem;">${salesperson.name}</strong><br/>
+              <span style="font-size: 0.85rem; color: #475569; font-weight: 500;">${salesperson.role.toUpperCase()} - GRUPO SOPENA</span><br/>
+              <span style="font-size: 0.85rem; color: #64748b;">📞 ${salesperson.phone} | ✉️ <a href="mailto:${salesperson.email}" style="color: #0a3d91; text-decoration: none;">${salesperson.email}</a></span>
             </div>
           </div>
         </div>
       </div>
     `;
     const blobHtml = new Blob([emailHtml], { type: 'text/html' });
-    const plainText = `${titleText}\n\nDe: Carmen Castro\n${isPt ? 'Data:' : 'Fecha:'} ${dateStr}\n\n${isPt ? 'Quem Somos' : 'Quiénes Somos'}\n...`;
+    const plainText = `${titleText}\n\nDe: ${salesperson.name} (${salesperson.role})\n📞 ${salesperson.phone} | ✉️ ${salesperson.email}\n${isPt ? 'Data:' : 'Fecha:'} ${dateStr}\n\n${isPt ? 'Quem Somos' : 'Quiénes Somos'}\n...`;
     const blobText = new Blob([plainText], { type: 'text/plain' });
     try {
       await navigator.clipboard.write([
@@ -1825,6 +1869,62 @@ const App = () => {
   const presentationTarget = useMemo(() => prospects.find(p => p.id === presentationTargetId) || null, [presentationTargetId, prospects]);
   const [includeArchitectureLink, setIncludeArchitectureLink] = useState(false);
   const [includeIndustrialLink, setIncludeIndustrialLink] = useState(false);
+
+  // Estados para asignación de comercial en la Presentación Corporativa
+  // 'auto': según la zona del cliente seleccionado
+  // 'ccastro' | 'adomingo' | 'karim': comercial específico
+  // 'custom': comercial genérico configurable con campos libres
+  const [selectedSalespersonId, setSelectedSalespersonId] = useState('auto');
+  const [customSalesperson, setCustomSalesperson] = useState({
+    name: 'Atención Comercial Grupo Sopeña',
+    role: 'Departamento Comercial',
+    email: 'comercial@gruposopena.com',
+    phone: '+34 96 145 20 50',
+    whatsapp: '34961452050'
+  });
+
+  // Determinar comercial por defecto según la zona geográfica del prospecto
+  const getSalespersonByZone = (zone) => {
+    if (!zone) return SOPENA_USERS.ccastro;
+    const z = zone.toLowerCase();
+    if (z.includes('valenciana') || z.includes('madrid') || z.includes('mancha')) {
+      return SOPENA_USERS.adomingo;
+    }
+    if (z.includes('francia') || z.includes('france')) {
+      return SOPENA_USERS.karim;
+    }
+    // Portugal, Galicia, Asturias, Castilla y León, etc. corresponden a Carmen Castro / Noroeste
+    return SOPENA_USERS.ccastro;
+  };
+
+  // Obtener el comercial activo a mostrar en la presentación
+  const getActiveSalesperson = () => {
+    const isAdmin = currentUser && currentUser.role === 'Superadministrador';
+    
+    // Si no es Superadministrador, se asigna automáticamente por la zona del cliente o por su propio usuario
+    if (!isAdmin) {
+      if (presentationTarget && presentationTarget.zone) {
+        return getSalespersonByZone(presentationTarget.zone);
+      }
+      return currentUser && currentUser.username !== 'admin' ? currentUser : SOPENA_USERS.ccastro;
+    }
+
+    // Modo Superadministrador:
+    if (selectedSalespersonId === 'auto') {
+      return getSalespersonByZone(presentationTarget?.zone);
+    }
+    if (selectedSalespersonId === 'custom') {
+      return {
+        username: 'custom',
+        name: customSalesperson.name || 'Representante Comercial',
+        role: customSalesperson.role || 'Departamento Comercial',
+        email: customSalesperson.email || 'comercial@gruposopena.com',
+        phone: customSalesperson.phone || '+34 96 145 20 50',
+        whatsapp: (customSalesperson.whatsapp || customSalesperson.phone || '').replace(/[^0-9]/g, '')
+      };
+    }
+    return SOPENA_USERS[selectedSalespersonId] || SOPENA_USERS.ccastro;
+  };
   
   // ==========================================
   // CONFIGURACIÓN DUAL Y LOGOS PARA CARPINTERÍAS
@@ -1832,18 +1932,20 @@ const App = () => {
   const [presentationType, setPresentationType] = useState('corta'); // 'corta' | 'detallada'
 
   // Indica si un prospecto califica para la presentación detallada (dossier)
+  // Ahora permite también la versión general/genérica (target === null o undefined)
   const canShowDetailedPresentation = (target) => {
-    if (!target) return false;
+    if (!target) return true; // Versión General permitida tanto para Corta como para Detallada (Dossier)
     const sector = (target.sector || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     return (
       sector === 'puertas y ventanas' ||
       sector === 'cerramientos' ||
       sector === 'sistemas de proteccion solar' ||
-      sector === 'fachadas de aluminio'
+      sector === 'fachadas de aluminio' ||
+      sector === 'distribucion de aluminio y metales'
     );
   };
 
-  // Asegura que el tipo de presentación vuelva a 'corta' si el sector no permite la propuesta detallada
+  // Asegura que el tipo de presentación vuelva a 'corta' si el sector seleccionado no permite la propuesta detallada
   useEffect(() => {
     if (presentationTarget && !canShowDetailedPresentation(presentationTarget)) {
       setPresentationType('corta');
@@ -2188,36 +2290,60 @@ const App = () => {
   const isPt = presentationTarget && presentationTarget.zone === 'Portugal';
   return (
     <div className="app-container">
-      <aside className="sidebar">
-        <div className="brand">
-          <div className="brand-icon">
-            <Building2 size={24} />
+      {/* Overlay de fondo para cerrar el menú en móviles/tablets al pulsar fuera */}
+      {isMobileMenuOpen && (
+        <div 
+          className="sidebar-overlay" 
+          onClick={() => setIsMobileMenuOpen(false)}
+          title="Cerrar menú"
+        />
+      )}
+      <aside className={`sidebar ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', width: '100%' }}>
+          <div className="brand" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px', flex: 1 }}>
+            <div style={{ background: '#ffffff', padding: '6px 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', boxSizing: 'border-box', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+              <img 
+                src="/sopena_sistemas_logo.png" 
+                alt="Logo Sopeña Sistemas" 
+                style={{ maxHeight: '38px', maxWidth: '100%', objectFit: 'contain' }} 
+              />
+            </div>
+            <span style={{ fontSize: '1.05rem', fontWeight: 800, letterSpacing: '-0.3px', color: '#ffffff', marginTop: '4px' }}>
+              CRM SOPENA INNOVATIONS
+            </span>
           </div>
-          CRM de la Empresa de Aluminio
+          <button 
+            type="button" 
+            className="mobile-close-btn" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-label="Cerrar menú"
+          >
+            <X size={22} />
+          </button>
         </div>
         <ul className="nav-links">
-          <li className={`nav-link ${activeTab === 'prospects' ? 'active' : ''}`} onClick={() => setActiveTab('prospects')}>
+          <li className={`nav-link ${activeTab === 'prospects' ? 'active' : ''}`} onClick={() => { setActiveTab('prospects'); setIsMobileMenuOpen(false); }}>
             <Briefcase size={20} /> Base de Datos
           </li>
-          <li className={`nav-link ${activeTab === 'map' ? 'active' : ''}`} onClick={() => setActiveTab('map')}>
+          <li className={`nav-link ${activeTab === 'map' ? 'active' : ''}`} onClick={() => { setActiveTab('map'); setIsMobileMenuOpen(false); }}>
             <MapPin size={20} /> Mapa Interactivo
           </li>
-          <li className={`nav-link ${activeTab === 'routing' ? 'active' : ''}`} onClick={() => setActiveTab('routing')}>
+          <li className={`nav-link ${activeTab === 'routing' ? 'active' : ''}`} onClick={() => { setActiveTab('routing'); setIsMobileMenuOpen(false); }}>
             <Navigation size={20} /> Calculadora de Rutas
           </li>
-          <li className={`nav-link ${activeTab === 'presentation' ? 'active' : ''}`} onClick={() => setActiveTab('presentation')}>
+          <li className={`nav-link ${activeTab === 'presentation' ? 'active' : ''}`} onClick={() => { setActiveTab('presentation'); setIsMobileMenuOpen(false); }}>
             <FileText size={20} /> Presentación
           </li>
-          <li className={`nav-link ${activeTab === 'tasks' ? 'active' : ''}`} onClick={() => setActiveTab('tasks')}>
+          <li className={`nav-link ${activeTab === 'tasks' ? 'active' : ''}`} onClick={() => { setActiveTab('tasks'); setIsMobileMenuOpen(false); }}>
             <CheckCircle size={20} /> Tareas Pendientes
           </li>
-          <li className={`nav-link ${activeTab === 'pipeline' ? 'active' : ''}`} onClick={() => setActiveTab('pipeline')}>
+          <li className={`nav-link ${activeTab === 'pipeline' ? 'active' : ''}`} onClick={() => { setActiveTab('pipeline'); setIsMobileMenuOpen(false); }}>
             <Briefcase size={20} /> Pipeline de Ventas
           </li>
-          <li className={`nav-link ${activeTab === 'agentforce' ? 'active' : ''}`} onClick={() => setActiveTab('agentforce')} style={{ background: activeTab === 'agentforce' ? 'linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(79, 70, 229, 0.15) 100%)' : 'transparent', color: activeTab === 'agentforce' ? '#a78bfa' : '' }}>
+          <li className={`nav-link ${activeTab === 'agentforce' ? 'active' : ''}`} onClick={() => { setActiveTab('agentforce'); setIsMobileMenuOpen(false); }} style={{ background: activeTab === 'agentforce' ? 'linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(79, 70, 229, 0.15) 100%)' : 'transparent', color: activeTab === 'agentforce' ? '#a78bfa' : '' }}>
             <Sparkles size={20} style={{ color: '#a78bfa' }} /> Asistente IA (Agentforce)
           </li>
-          <li className={`nav-link ${activeTab === 'instructions' ? 'active' : ''}`} onClick={() => setActiveTab('instructions')} style={{ background: activeTab === 'instructions' ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.15) 100%)' : 'transparent', color: activeTab === 'instructions' ? '#34d399' : '' }}>
+          <li className={`nav-link ${activeTab === 'instructions' ? 'active' : ''}`} onClick={() => { setActiveTab('instructions'); setIsMobileMenuOpen(false); }} style={{ background: activeTab === 'instructions' ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.15) 100%)' : 'transparent', color: activeTab === 'instructions' ? '#34d399' : '' }}>
             <Info size={20} style={{ color: '#34d399' }} /> Guía de Usuario
           </li>
           <li className="nav-link" onClick={handleLogout} style={{marginTop: 'auto', borderTop: '1px solid rgba(255,255,255,0.1)', borderRadius: '0', paddingTop: '20px'}}>🚪 Cerrar Sesión</li>
@@ -2226,6 +2352,15 @@ const App = () => {
       <main className="main-content">
         <header className="header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+            <button 
+              type="button" 
+              className="mobile-hamburger-btn" 
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Abrir navegación"
+              title="Abrir Menú"
+            >
+              <Menu size={24} />
+            </button>
             <h1 style={{ margin: 0 }}>{activeTab === 'prospects' && 'Base de Datos de Prospectos'}
                 {activeTab === 'map' && 'Mapa de Clientes Potenciales'}
                 {activeTab === 'routing' && 'Planificador de Rutas Comerciales'}
@@ -2362,7 +2497,7 @@ const App = () => {
                 }}
               />
 
-              <div style={{display: 'flex', justifyContent: 'flex-end', gap: '10px', marginBottom: '15px'}}>
+              <div className="action-bar-fluid" style={{marginBottom: '15px'}}>
                 <button className="action-btn outline" onClick={() => document.getElementById('import-json-input').click()}>📤 Importar JSON</button>
                 <input 
                   type="file" 
@@ -2862,10 +2997,39 @@ const App = () => {
                   <select value={presentationTargetId} onChange={e => setPresentationTargetId(e.target.value)}>
                     <option value="">-- Versión General --</option>
                     {prospects.map(p => (
-                      <option key={p.id} value={p.id}>{p.name} ({p.sector})</option>
+                      <option key={p.id} value={p.id}>{p.name} ({p.sector}) - {p.zone}</option>
                     ))}
                   </select>
                 </div>
+
+                {/* SELECTOR DE COMERCIAL / REPRESENTANTE */}
+                {currentUser && currentUser.role === 'Superadministrador' ? (
+                  <div className="filter-group" style={{maxWidth: '320px', background: '#f8fafc', padding: '10px 14px', borderRadius: '8px', border: '1px solid #cbd5e1'}}>
+                    <label style={{fontWeight: '700', color: 'var(--sopena-blue-dark)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px'}}>
+                      👔 Comercial asignado (Admin):
+                    </label>
+                    <select 
+                      value={selectedSalespersonId} 
+                      onChange={e => setSelectedSalespersonId(e.target.value)}
+                      style={{width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #94a3b8', fontSize: '0.88rem', fontWeight: '600'}}
+                    >
+                      <option value="auto">
+                        🔄 Automático según zona ({presentationTarget ? `${presentationTarget.zone} → ${getSalespersonByZone(presentationTarget.zone).name}` : 'General → Carmen Castro'})
+                      </option>
+                      <option value="ccastro">Carmen Castro (Project Manager / Noroeste y Portugal)</option>
+                      <option value="adomingo">Alfredo Domingo (Comercial Senior / Levante y Centro)</option>
+                      <option value="karim">Karim Kharkhor (Comercial Francia)</option>
+                      <option value="custom">✏️ Comercial Personalizado / Genérico...</option>
+                    </select>
+                  </div>
+                ) : (
+                  <div className="filter-group" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#f0fdf4', padding: '8px 12px', borderRadius: '8px', border: '1px solid #bbf7d0'}}>
+                    <span style={{fontSize: '0.75rem', color: '#166534', fontWeight: 'bold'}}>COMERCIAL DE ZONA:</span>
+                    <span style={{fontSize: '0.9rem', color: '#14532d', fontWeight: '700'}}>
+                      👤 {getActiveSalesperson().name} ({getActiveSalesperson().role})
+                    </span>
+                  </div>
+                )}
                 
                 {/* Selector de Tipo de Presentación */}
                 <div className="filter-group" style={{maxWidth: '300px'}}>
@@ -2886,14 +3050,14 @@ const App = () => {
                         if (isDetailedAllowed) {
                           setPresentationType('detallada');
                         } else {
-                          alert('La presentación detallada (dossier corporativo) solo está disponible para los sectores de: Puertas y Ventanas, Cerramientos, Sistemas de Protección Solar y Fachadas de Aluminio.');
+                          alert('La presentación detallada (dossier corporativo) está optimizada para la Versión General o para sectores de: Puertas y Ventanas, Cerramientos, Sistemas de Protección Solar, Fachadas de Aluminio y Distribución de Aluminio.');
                         }
                       }}
                       style={{
                         opacity: canShowDetailedPresentation(presentationTarget) ? 1 : 0.5,
                         cursor: canShowDetailedPresentation(presentationTarget) ? 'pointer' : 'not-allowed'
                       }}
-                      title={!canShowDetailedPresentation(presentationTarget) ? 'Solo disponible para sectores de carpintería y aluminio' : ''}
+                      title={!canShowDetailedPresentation(presentationTarget) ? 'Disponible en Versión General y para sectores de carpintería y aluminio' : 'Ver propuesta técnica detallada (Dossier)'}
                     >
                       Detallada (Dossier)
                     </button>
@@ -2952,6 +3116,75 @@ const App = () => {
                   </button>
                 </div>
               </div>
+
+              {/* PANEL DE CONFIGURACIÓN DE COMERCIAL GENÉRICO / PERSONALIZADO (SOLO ADMIN CUANDO 'custom' ESTÁ ACTIVO) */}
+              {currentUser && currentUser.role === 'Superadministrador' && selectedSalespersonId === 'custom' && (
+                <div className="card no-print" style={{gridColumn: '1 / -1', background: '#f8fafc', border: '2px dashed var(--sopena-blue)', borderRadius: '12px', padding: '20px', marginBottom: '-0.5rem'}}>
+                  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '15px', flexWrap: 'wrap', gap: '10px'}}>
+                    <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+                      <span style={{fontSize: '1.4rem'}}>✏️</span>
+                      <div>
+                        <h4 style={{margin: 0, color: 'var(--sopena-blue-dark)', fontSize: '1.05rem'}}>Datos del Comercial / Representante Genérico</h4>
+                        <p style={{margin: '2px 0 0 0', fontSize: '0.85rem', color: '#64748b'}}>Estos datos aparecerán reflejados al final de la presentación, en la exportación HTML y en el PDF.</p>
+                      </div>
+                    </div>
+                    <span style={{background: '#dbeafe', color: '#1e40af', padding: '4px 10px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 'bold'}}>
+                      Modo Personalizado Activo
+                    </span>
+                  </div>
+                  <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '15px'}}>
+                    <div>
+                      <label style={{display: 'block', fontSize: '0.82rem', fontWeight: 'bold', color: '#334155', marginBottom: '5px'}}>
+                        👤 Nombre Completo:
+                      </label>
+                      <input 
+                        type="text" 
+                        value={customSalesperson.name} 
+                        onChange={e => setCustomSalesperson({...customSalesperson, name: e.target.value})}
+                        placeholder="Ej. Juan Pérez"
+                        style={{width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.9rem'}}
+                      />
+                    </div>
+                    <div>
+                      <label style={{display: 'block', fontSize: '0.82rem', fontWeight: 'bold', color: '#334155', marginBottom: '5px'}}>
+                        💼 Cargo / Puesto:
+                      </label>
+                      <input 
+                        type="text" 
+                        value={customSalesperson.role} 
+                        onChange={e => setCustomSalesperson({...customSalesperson, role: e.target.value})}
+                        placeholder="Ej. Delegado Comercial"
+                        style={{width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.9rem'}}
+                      />
+                    </div>
+                    <div>
+                      <label style={{display: 'block', fontSize: '0.82rem', fontWeight: 'bold', color: '#334155', marginBottom: '5px'}}>
+                        ✉️ Email de Contacto:
+                      </label>
+                      <input 
+                        type="email" 
+                        value={customSalesperson.email} 
+                        onChange={e => setCustomSalesperson({...customSalesperson, email: e.target.value})}
+                        placeholder="Ej. comercial@gruposopena.com"
+                        style={{width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.9rem'}}
+                      />
+                    </div>
+                    <div>
+                      <label style={{display: 'block', fontSize: '0.82rem', fontWeight: 'bold', color: '#334155', marginBottom: '5px'}}>
+                        📞 Teléfono de Contacto:
+                      </label>
+                      <input 
+                        type="text" 
+                        value={customSalesperson.phone} 
+                        onChange={e => setCustomSalesperson({...customSalesperson, phone: e.target.value, whatsapp: e.target.value.replace(/[^0-9]/g, '')})}
+                        placeholder="Ej. +34 96 145 20 50"
+                        style={{width: '100%', padding: '8px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.9rem'}}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div style={{gridColumn: '1 / -1'}} className="a4-container">
                 <div className="a4-page" style={{padding: 0, overflow: 'hidden', position: 'relative', height: 'auto', minHeight: '297mm'}}>
                   
@@ -2959,13 +3192,13 @@ const App = () => {
                   <div style={{background: 'linear-gradient(135deg, var(--sopena-blue-dark) 0%, var(--sopena-blue) 100%)', padding: '40px 50px', color: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px'}}>
                     <div style={{display: 'flex', alignItems: 'center', gap: '20px'}}>
                       <div style={{background: 'white', padding: '10px 20px', borderRadius: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)'}}>
-                        <img src="https://empresa-aluminio.com/images/global/logo/grupo-sopena-sistemas.png" alt="Logotipo Grupo de Aluminio" style={{height: '50px', objectFit: 'contain'}} />
+                        <img src="/sopena_sistemas_logo.png" alt="Logotipo Sopena Sistemas" style={{height: '50px', objectFit: 'contain'}} />
                       </div>
                       {/* Mostrar logotipo dinámico del cliente si está relacionado con carpintería */}
                       {presentationTarget && isCarpinteriaRelated(presentationTarget) && renderClientLogo(presentationTarget.name)}
                     </div>
                     <div style={{textAlign: 'right', fontSize: '0.85rem', lineHeight: '1.4', opacity: 0.9}}>
-                      <strong>Aluminios Innovations, S.L.</strong><br/>
+                      <strong>SOPENA INNOVATIONS, S.L.</strong><br/>
                       Pol. Ind. Los Vientos, C/ Garbí, 9<br/>
                       46119 Náquera, Valencia {isPt ? 'Espanha' : 'España'}<br/>
                       +34 96 145 20 50 | empresa-aluminio.com
@@ -2991,13 +3224,29 @@ const App = () => {
                               <strong>📍 Dirección:</strong> {presentationTarget.address || 'Polígono de Pocomaco, 1ª Avda. 26'}, {presentationTarget.city || 'A Coruña'} ({presentationTarget.zone})
                             </p>
                           )}
-                          <p style={{margin: '0 0 8px 0', color: 'var(--text-secondary)'}}><strong>De:</strong> Carmen Castro</p>
+                          <p style={{margin: '0 0 8px 0', color: 'var(--text-secondary)'}}><strong>De:</strong> {getActiveSalesperson().name} ({getActiveSalesperson().role})</p>
                           <p style={{margin: 0, color: 'var(--text-secondary)'}}><strong>{isPt ? 'Data:' : 'Fecha:'}</strong> {new Date().toLocaleDateString(isPt ? 'pt-PT' : 'es-ES')}</p>
                         </div>
                       </div>
                     ) : (
                       <div style={{marginBottom: '40px'}}>
-                        <h2 style={{color: 'var(--sopena-blue-dark)', fontSize: '2.2rem', marginTop: 0, marginBottom: '15px', fontWeight: '800', letterSpacing: '-0.5px'}}>{isPt ? 'Soluções de Alumínio' : 'Soluciones de Aluminio'}</h2>
+                        <div style={{display: 'inline-block', background: 'rgba(10, 61, 145, 0.08)', color: 'var(--sopena-blue)', padding: '4px 12px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px'}}>
+                          📄 {presentationType === 'detallada' ? 'Dossier Corporativo e Industrial B2B' : 'Carta de Presentación Corporativa'}
+                        </div>
+                        <h2 style={{color: 'var(--sopena-blue-dark)', fontSize: '2.2rem', marginTop: 0, marginBottom: '15px', fontWeight: '800', letterSpacing: '-0.5px'}}>
+                          {isPt ? 'Soluções Industriais em Extrusão de Alumínio' : 'Soluciones Industriales en Extrusión de Aluminio'}
+                        </h2>
+                        <div style={{background: '#f8fafc', padding: '18px 24px', borderRadius: '8px', borderLeft: '4px solid var(--sopena-accent)', display: 'inline-block', minWidth: '350px'}}>
+                          <p style={{margin: '0 0 8px 0', color: 'var(--text-secondary)'}}>
+                            <strong>{isPt ? 'A/C:' : 'A/A:'}</strong> {isPt ? 'Direção de Compras / Gabinete Técnico' : 'Dirección de Compras / Departamento Técnico'}
+                          </p>
+                          <p style={{margin: '0 0 8px 0', color: 'var(--text-secondary)'}}>
+                            <strong>De:</strong> {getActiveSalesperson().name} ({getActiveSalesperson().role})
+                          </p>
+                          <p style={{margin: 0, color: 'var(--text-secondary)'}}>
+                            <strong>{isPt ? 'Data:' : 'Fecha:'}</strong> {new Date().toLocaleDateString(isPt ? 'pt-PT' : 'es-ES')}
+                          </p>
+                        </div>
                       </div>
                     )}
 
@@ -3078,17 +3327,33 @@ const App = () => {
                           </h3>
                           <p style={{ whiteSpace: 'pre-line', marginBottom: '20px' }}>
                             {isPt ? (
-                              `Estimados companheiros da ${presentationTarget ? presentationTarget.name : 'Mapeal'},
+                              presentationTarget ? (
+                                `Estimados companheiros da ${presentationTarget.name},
 
-Me dirijo a vocês na minha qualidade de Project Manager do Grupo de Aluminio para a zona Noroeste de Espanha e Portugal. Conheço em primeira mão a vossa liderança no fornecimento e distribuição de perfilaria e acessórios de alumínio. O vosso compromisso com a qualidade e a capacidade de oferecer soluções à medida à rede de serralharias e carpintarias metálicas da região coincide plenamente com os valores da nossa empresa.
+Me dirijo a vocês na minha qualidade de ${getActiveSalesperson().role} do Grupo Sopeña. Conheço em primeira mão a vossa liderança no fornecimento e distribuição de perfilaria e acessórios de alumínio. O vosso compromisso com a qualidade e a capacidade de oferecer soluções à medida à rede de serralharias e carpintarias metálicas da região coincide plenamente com os valores da nossa empresa.
 
-A Aluminios Innovations conta com uma trajetória de mais de 75 anos na vanguarda da extrusão e tratamento de superfícies de alumínio na Península Ibérica. Especializamo-nos no desenvolvimento de sistemas próprios de arquitetura com marcação CE e ensaios oficiais de alta performance. Dispomos de armazém regulador próprio para garantir um fornecimento ágil e estável, eliminando as incertezas de stock no mercado.`
+A SOPENA INNOVATIONS, S.L. conta com uma trajetória de mais de 75 anos na vanguarda da extrusão e tratamento de superfícies de alumínio na Península Ibérica. Especializamo-nos no desenvolvimento de sistemas próprios de arquitetura com marcação CE e ensaios oficiais de alta performance. Dispomos de armazém regulador próprio para garantir um fornecimento ágil e estável, eliminando as incertezas de stock no mercado.`
+                              ) : (
+                                `Estimada Direção Técnica e Responsáveis de Compras,
+
+Apresento-me na qualidade de ${getActiveSalesperson().role} do Grupo Sopeña para lhe apresentar a nossa capacidade industrial em extrusão e acabamento de perfis de alumínio. O nosso compromisso com a máxima qualidade e precisão dimensional coincide com as necessidades das empresas mais exigentes do setor.
+
+A SOPENA INNOVATIONS, S.L. conta com uma trajetória de mais de 75 anos na vanguarda da extrusão e tratamento de superfícies de alumínio na Península Ibérica. Especializamo-nos no desenvolvimento de perfilaria à medida, sistemas próprios de arquitetura com marcação CE e ensaios oficiais de alta performance. Dispomos de armazém regulador próprio para garantir um fornecimento ágil e estável, eliminando as incertezas de stock e prazos no mercado.`
+                              )
                             ) : (
-                              `Estimados compañeros de ${presentationTarget ? presentationTarget.name : 'Mapeal'},
+                              presentationTarget ? (
+                                `Estimados compañeros de ${presentationTarget.name},
 
-Me dirijo a ustedes en mi calidad de Project Manager de Grupo de Aluminio para la zona Noroeste de España y Portugal. Conozco de primera mano el liderazgo de ${presentationTarget ? presentationTarget.name : 'Mapeal'} en el suministro y distribución de perfilería y accesorios de aluminio. Su compromiso con la calidad y la capacidad de ofrecer soluciones a medida a la red de carpinterías metálicas coincide plenamente con los valores fundacionales de nuestra compañía.
+Me dirijo a ustedes en mi calidad de ${getActiveSalesperson().role} de Grupo Sopeña. Conozco de primera mano el liderazgo de ${presentationTarget.name} en el suministro y distribución de perfilería y accesorios de aluminio. Su compromiso con la calidad y la capacidad de ofrecer soluciones a medida a la red de carpinterías metálicas coincide plenamente con los valores fundacionales de nuestra compañía.
 
-Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardia de la extrusión y el tratamiento de superficies de aluminio en España. A lo largo de esta historia, nos hemos especializado en el desarrollo de sistemas propios de carpintería y fachadas (con ensayos oficiales y marcado CE) de altísimas prestaciones térmicas y acústicas. Contamos con un almacén regulador propio y una sólida capacidad productiva que nos permite garantizar un suministro ágil, estable y directo a nuestros colaboradores, eliminando las incertidumbres de stock que tanto afectan al sector en la actualidad.`
+SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vanguardia de la extrusión y el tratamiento de superficies de aluminio en España. A lo largo de esta historia, nos hemos especializado en el desarrollo de sistemas propios de carpintería y fachadas (con ensayos oficiales y marcado CE) de altísimas prestaciones térmicas y acústicas. Contamos con un almacén regulador propio y una sólida capacidad productiva que nos permite garantizar un suministro ágil, estable y directo a nuestros colaboradores, eliminando las incertidumbres de stock que tanto afectan al sector en la actualidad.`
+                              ) : (
+                                `Estimada Dirección Técnica y Responsables de Compras,
+
+Me dirijo a ustedes en mi calidad de ${getActiveSalesperson().role} de Grupo Sopeña para presentarles formalmente nuestra capacidad industrial en extrusión y tratamiento de superficies de perfiles de aluminio. Nuestro compromiso fundacional con la calidad técnica y la fiabilidad logística responde a las exigencias más estrictas de los fabricantes y distribuidores industriales de la Península Ibérica y Europa.
+
+SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vanguardia de la extrusión de aluminio en España. A lo largo de esta historia, nos hemos especializado en el desarrollo de matricería a medida y perfiles de altísimas prestaciones térmicas, acústicas y mecánicas (con ensayos oficiales y marcado CE). Disponemos de almacén regulador propio y una sólida capacidad productiva autónoma que nos permite garantizar un suministro ágil, estable y directo, eliminando las incertidumbres de stock e importación que tanto afectan al tejido industrial.`
+                              )
                             )}
                           </p>
                           
@@ -3260,12 +3525,12 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                         <h4 style={{marginTop: 0, color: '#047857', fontSize: '1.2rem', marginBottom: '15px'}}>{isPt ? 'Documentação Técnica Anexa:' : 'Documentación Técnica Adjunta:'}</h4>
                         <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
                           {includeArchitectureLink && (
-                            <a href="https://www.empresa-aluminio.com/architectural.php?lang=es" target="_blank" rel="noopener noreferrer" style={{display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'var(--sopena-blue-dark)', background: 'white', padding: '12px 15px', borderRadius: '6px', border: '1px solid #a7f3d0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', fontWeight: 'bold'}}>
+                            <a href="https://www.gruposopena.com/architectural.php?lang=es" target="_blank" rel="noopener noreferrer" style={{display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'var(--sopena-blue-dark)', background: 'white', padding: '12px 15px', borderRadius: '6px', border: '1px solid #a7f3d0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', fontWeight: 'bold'}}>
                               <span style={{fontSize: '1.5rem'}}>🏛️</span> {isPt ? 'Catálogo de Sistemas de Arquitetura' : 'Catálogo de Sistemas de Arquitectura'} <span style={{color: '#10b981', marginLeft: 'auto'}}>{isPt ? 'Ver online \u2192' : 'Ver online \u2192'}</span>
                             </a>
                           )}
                           {includeIndustrialLink && (
-                            <a href="https://www.empresa-aluminio.com/series.php?lang=es&cat=1&id=54" target="_blank" rel="noopener noreferrer" style={{display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'var(--sopena-blue-dark)', background: 'white', padding: '12px 15px', borderRadius: '6px', border: '1px solid #a7f3d0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', fontWeight: 'bold'}}>
+                            <a href="https://www.gruposopena.com/series.php?lang=es&cat=1&id=54" target="_blank" rel="noopener noreferrer" style={{display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'var(--sopena-blue-dark)', background: 'white', padding: '12px 15px', borderRadius: '6px', border: '1px solid #a7f3d0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', fontWeight: 'bold'}}>
                               <span style={{fontSize: '1.5rem'}}>🏭</span> {isPt ? 'Catálogo de Perfis Industriais' : 'Catálogo de Perfiles Industriales'} <span style={{color: '#10b981', marginLeft: 'auto'}}>{isPt ? 'Ver online \u2192' : 'Ver online \u2192'}</span>
                             </a>
                           )}
@@ -3275,16 +3540,18 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                     <div style={{marginTop: '40px', paddingTop: '30px', borderTop: '2px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end'}}>
                       <div style={{lineHeight: '1.6', color: '#334155'}}>
                         <p style={{margin: '0 0 15px 0'}}>{isPt ? 'Com os melhores cumprimentos,' : 'Atentamente,'}</p>
-                        <p style={{margin: 0, fontWeight: 'bold', fontSize: '1.1rem', color: 'var(--sopena-blue-dark)'}}>Carmen Castro</p>
-                        <p style={{margin: 0, fontSize: '0.9rem'}}>PROJECT MANAGER - GRUPO SOPENA - ZONA NOROESTE DE ESPAÑA Y PORTUGAL</p>
+                        <p style={{margin: 0, fontWeight: 'bold', fontSize: '1.1rem', color: 'var(--sopena-blue-dark)'}}>{getActiveSalesperson().name}</p>
+                        <p style={{margin: 0, fontSize: '0.9rem'}}>{getActiveSalesperson().role.toUpperCase()} - GRUPO SOPENA</p>
                         <p style={{margin: '5px 0 0 0', fontSize: '0.9rem', color: 'var(--text-secondary)'}}>
-                          📞 +34 610 240 017 | ✉️ <a href="mailto:ccastro@empresa-aluminio.com" style={{color: 'var(--sopena-blue)', textDecoration: 'none'}}>ccastro@empresa-aluminio.com</a>
+                          📞 {getActiveSalesperson().phone} | ✉️ <a href={`mailto:${getActiveSalesperson().email}`} style={{color: 'var(--sopena-blue)', textDecoration: 'none'}}>{getActiveSalesperson().email}</a>
                         </p>
                         <div className="no-print" style={{marginTop: '10px', display: 'flex', gap: '10px', flexWrap: 'wrap'}}>
-                          <a href="https://wa.me/34610240017?text=Hola%20Carmen,%20me%20gustar%C3%ADa%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer" style={{display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#25D366', color: 'white', padding: '6px 12px', borderRadius: '4px', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 'bold'}}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                            Contactar por WhatsApp
-                          </a>
+                          {getActiveSalesperson().whatsapp && (
+                            <a href={`https://wa.me/${getActiveSalesperson().whatsapp}?text=${encodeURIComponent(isPt ? 'Olá, gostaria de fazer uma consulta sobre a proposta' : 'Hola, me gustaría hacer una consulta sobre la propuesta')}`} target="_blank" rel="noopener noreferrer" style={{display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#25D366', color: 'white', padding: '6px 12px', borderRadius: '4px', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 'bold'}}>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                              Contactar por WhatsApp
+                            </a>
+                          )}
                           <a href="https://www.instagram.com/gruposopena/" target="_blank" rel="noopener noreferrer" style={{display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)', color: 'white', padding: '6px 12px', borderRadius: '4px', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 'bold'}}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                             Instagram
@@ -3398,10 +3665,10 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
                   <div key={stage} style={{flex: '0 0 300px', background: '#f1f5f9', borderRadius: '12px', padding: '15px', display: 'flex', flexDirection: 'column'}}>
                     <h3 style={{margin: '0 0 15px 0', paddingBottom: '10px', borderBottom: '2px solid var(--sopena-blue)', color: 'var(--sopena-blue-dark)', display: 'flex', justifyContent: 'space-between'}}>
                        {stage} 
-                       <span style={{background: 'var(--sopena-blue)', color: 'white', borderRadius: '50%', padding: '2px 8px', fontSize: '0.8rem'}}>{pipelineProspects.filter(p => (p.pipelineStage || (p.contacted ? 'Contactado' : 'Lead')) === stage).length}</span>
+                       <span style={{background: 'var(--sopena-blue)', color: 'white', borderRadius: '50%', padding: '2px 8px', fontSize: '0.8rem'}}>{pipelineProspects.filter(p => (p.pipelineStage || 'Lead') === stage).length}</span>
                     </h3>
                     <div style={{flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '10px', paddingRight: '5px'}}>
-                      {pipelineProspects.filter(p => (p.pipelineStage || (p.contacted ? 'Contactado' : 'Lead')) === stage).map(p => (
+                      {pipelineProspects.filter(p => (p.pipelineStage || 'Lead') === stage).map(p => (
                         <div key={p.id} style={{background: 'white', padding: '15px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', borderLeft: `4px solid ${stage.includes('Ganado') ? '#10b981' : stage.includes('Perdido') ? '#ef4444' : 'var(--sopena-blue)'}`, position: 'relative'}}>
                           <button onClick={() => handleDeleteProspect(p.id)} style={{position: 'absolute', top: '10px', right: '10px', background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '1.2rem', padding: 0}} title="Borrar Empresa">🗑️</button>
                           <h4 style={{margin: '0 0 5px 0', color: '#1e293b', paddingRight: '20px'}}>{p.name}</h4>
@@ -4542,7 +4809,7 @@ Aluminios Innovations atesora una trayectoria de más de 75 años a la vanguardi
               Recordatorio de Copia de Seguridad
             </h2>
             <p style={{ margin: '0 0 24px 0', color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.5' }}>
-              Para garantizar la seguridad de tus datos comerciales, se recomienda exportar periódicamente la base de datos de prospectos de CRM de la Empresa de Aluminio tanto en formato **Excel (CSV)** como en **JSON**.
+              Para garantizar la seguridad de tus datos comerciales, se recomienda exportar periódicamente la base de datos de prospectos de CRM SOPENA INNOVATIONS tanto en formato **Excel (CSV)** como en **JSON**.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
               <button 

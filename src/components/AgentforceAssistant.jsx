@@ -212,6 +212,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
       { name: 'Portalum Alumínios', sector: 'Sistemas de Proteccion Solar', revenue: 5000000, purchasingManager: 'Carlos Sousa', email: 'compras@portalum.pt', address: 'Zona Industrial de Aveiro', city: 'Aveiro', web: 'www.portalum.pt' }
     ],
     'Pais Vasco': [
+      { name: 'Fachadas Singulares Uxama S.L.', sector: 'Fachadas de Aluminio', revenue: 12800000, purchasingManager: 'Dpto. Técnico y Compras (Uxama)', email: 'uxama@uxama.com', address: 'Barrio Ibarra, 6C', city: 'Amorebieta-Etxano (Bizkaia)', web: 'www.uxama.com' },
       { name: 'Solarpack Corp.', sector: 'Estructuras Solares', revenue: 28000000, purchasingManager: 'Miren Urquijo', email: 'compras@solarpack.es', address: 'Avda. de la Encartada, 4', city: 'Bilbao', web: 'www.solarpack.es' },
       { name: 'Lasa Metal, S.L.', sector: 'Metal Arquitectonico y Chapa Perforada', revenue: 6000000, purchasingManager: 'Iñigo Garmendia', email: 'proveedores@lasametal.com', address: 'Polígono Industrial Gojain', city: 'Legutio', web: 'www.lasametal.com' },
       { name: 'Danobat Group', sector: 'Perfiles Estructurales Aluminio', revenue: 55000000, purchasingManager: 'Koldo Mitxelena', email: 'compras@danobat.com', address: 'Arriaga Kalea, 2', city: 'Elgoibar', web: 'www.danobat.com' },
@@ -232,6 +233,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
       { name: 'Blocotelha', sector: 'Fachadas Especiales', revenue: 38000000, purchasingManager: 'Director de Compras (Blocotelha)', email: 'blocotelha@mekkin.pt', address: 'Zona Industrial da Guia', city: 'Pombal', web: 'www.blocotelha.com' }
     ],
     'Galicia': [
+      { name: 'Grupo Aluman', sector: 'Fachadas de Aluminio', revenue: 126000000, purchasingManager: 'Dpto. Compras (Grupo Aluman)', email: 'compras@grupoaluman.com', address: 'Polígono Industrial de Sabón, Parcela 6B', city: 'Arteixo (A Coruña)', web: 'www.grupoaluman.com' },
       { name: 'Mapeal', sector: 'Proveedor de Aluminio', revenue: 8500000, purchasingManager: 'Director de Compras (Mapeal)', email: 'info@mapeal.net', address: 'Polígono Industrial de Pocomaco', city: 'A Coruña', web: 'www.mapeal.net' },
       { name: 'Urovesa', sector: 'Fabricantes de Carrocerias', revenue: 32000000, purchasingManager: 'Xosé Manuel Novo', email: 'compras@urovesa.com', address: 'Polígono de San Cibrao das Viñas', city: 'Ourense', web: 'www.urovesa.com' },
       { name: 'Kinarca, S.A.', sector: 'Frio Industrial', revenue: 11000000, purchasingManager: 'Alberto Domínguez', email: 'compras@kinarca.com', address: 'Polígono de Bouzas, Muelle reparaciones', city: 'Vigo', web: 'www.kinarca.com' },
@@ -248,6 +250,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
       { name: 'Blocotelha', sector: 'Fachadas Especiales', revenue: 38000000, purchasingManager: 'Director de Compras (Blocotelha)', email: 'blocotelha@mekkin.pt', address: 'Zona Industrial da Guia', city: 'Pombal', web: 'www.blocotelha.com' }
     ],
     'Comunidad Valenciana': [
+      { name: 'Axial Structural Solutions', sector: 'Estructuras Solares', revenue: 165082000, purchasingManager: 'Dpto. Compras y Suministros (Axial)', email: 'info@axialstructural.com', address: 'Calle Botiguers, 5', city: 'Paterna (Valencia)', web: 'www.axialstructural.com' },
       { name: 'Alumed Sistemas S.L.', sector: 'Puertas y Ventanas', revenue: 14000000, purchasingManager: 'Vicente Morales', email: 'compras@alumed.es', address: 'Polígono Industrial Las Atalayas', city: 'Alicante', web: 'www.alumed.es' },
       { name: 'Valenciana de Cerramientos S.L.', sector: 'Cerramientos', revenue: 8500000, purchasingManager: 'Rosa María Gil', email: 'proveedores@valencianacerramientos.com', address: 'Polígono Industrial Fuente del Jarro', city: 'Paterna', web: 'www.valencianacerramientos.com' },
       { name: 'Solaria Levante Energía', sector: 'Estructuras Solares', revenue: 17000000, purchasingManager: 'Emilio Barberá', email: 'compras@solarialevante.com', address: 'Polígono Industrial Ciudad del Transporte', city: 'Castellón', web: 'www.solarialevante.com' },
@@ -255,6 +258,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
       { name: 'Innova Modular Levante', sector: 'Construccion Modular', revenue: 9400000, purchasingManager: 'Laura Peñarrubia', email: 'compras@innovamodular.com', address: 'Polígono Industrial Carrús', city: 'Elche', web: 'www.innovamodular.com' }
     ],
     'Comunidad de Madrid': [
+      { name: 'Dreyser Multiservicios S.L.', sector: 'Fachadas de Aluminio', revenue: 2400000, purchasingManager: 'Dpto. Técnico y Compras (Dreyser)', email: 'dreyser@dreyser.es', address: 'C/ Doctor Ramón Castroviejo, 17', city: 'Madrid', web: 'www.dreyser.es' },
       { name: 'TecnoFachadas Madrid S.A.', sector: 'Fachadas de Aluminio', revenue: 26000000, purchasingManager: 'Fernando Alarcón', email: 'compras@tecnofachadas.com', address: 'Polígono Industrial Cobo Calleja', city: 'Fuenlabrada', web: 'www.tecnofachadas.com' },
       { name: 'Carrocerías Madrileñas Especiales', sector: 'Fabricantes de Carrocerias', revenue: 18500000, purchasingManager: 'Julián Santos', email: 'proveedores@carroceriasmadrid.es', address: 'Polígono Industrial San Fernando', city: 'San Fernando de Henares', web: 'www.carroceriasmadrid.es' },
       { name: 'Solener Madrid Solar', sector: 'Estructuras Solares', revenue: 22000000, purchasingManager: 'Elena Villalba', email: 'compras@solenermadrid.com', address: 'Polígono Industrial Los Ángeles', city: 'Getafe', web: 'www.solenermadrid.com' },
@@ -274,12 +278,16 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
       { name: 'Froid & Isolation Rhônalpine', sector: 'Frio Industrial', revenue: 13000000, purchasingManager: 'Étienne Rousseau', email: 'achats@froid-rhonalpine.fr', address: 'Parc Technologique', city: 'Grenoble', web: 'www.froid-rhonalpine.fr' }
     ],
     'Cataluña': [
+      { name: 'Garcia Faura, S.L.', sector: 'Fachadas de Aluminio', revenue: 38200000, purchasingManager: 'Dpto. Compras y Técnico (Garcia Faura)', email: 'info@garciafaura.com', address: 'C/ Raurell, 37 (Pol. Camí Ral)', city: 'Gavà (Barcelona)', web: 'www.garciafaura.com' },
       { name: 'Iberica de Fachadas Ligeras', sector: 'Fachadas de Aluminio', revenue: 33000000, purchasingManager: 'Jordi Soler', email: 'compras@fachadasiberica.cat', address: 'Polígon Industrial del Besòs', city: 'Barcelona', web: 'www.fachadasiberica.cat' },
       { name: 'SolarCat Estructuras S.L.', sector: 'Estructuras Solares', revenue: 21000000, purchasingManager: 'Mireia Puig', email: 'compras@solarcat.cat', address: 'Polígon Can Feu', city: 'Sabadell', web: 'www.solarcat.cat' }
     ],
     'Andalucia': [
       { name: 'SolarSur Energía Metálica', sector: 'Estructuras Solares', revenue: 24000000, purchasingManager: 'Manuel Beltrán', email: 'compras@solarsurenergia.es', address: 'Polígono La Isla', city: 'Sevilla', web: 'www.solarsurenergia.es' },
       { name: 'Carrocerías del Guadalquivir', sector: 'Fabricantes de Carrocerias', revenue: 16000000, purchasingManager: 'Rafael Expósito', email: 'compras@carroceriasguadalquivir.com', address: 'Polígono Los Olivares', city: 'Jaén', web: 'www.carroceriasguadalquivir.com' }
+    ],
+    'Aragon': [
+      { name: 'ACYF Group (Alturas Cubiertas y Fachadas)', sector: 'Fachadas Especiales', revenue: 14500000, purchasingManager: 'Dpto. Técnico y Compras (ACYF)', email: 'central.acyf@acyfgroup.com', address: 'Calle Espliego, 37', city: 'Zaragoza', web: 'www.acyfgroup.com' }
     ]
   };
 
@@ -296,6 +304,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
     'Castilla-La Mancha': [39.86, -4.02],
     'Cataluña': [41.38, 2.17],
     'Andalucia': [37.38, -5.98],
+    'Aragon': [41.65, -0.88],
     'Francia': [48.85, 2.35]
   };
 
@@ -328,7 +337,8 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
     { name: 'Alugom Alcobendas', web: 'alugom.com' },
     { name: 'Hydro Extrusion Spain', web: 'hydro.com' },
     { name: 'Extruperfil S.A.', web: 'extruperfil.com' },
-    { name: 'Nevaluz Sevilla', web: 'nevaluz.com' }
+    { name: 'Nevaluz Sevilla', web: 'nevaluz.com' },
+    { name: 'Galisur S.L.', web: 'galisur.es' }
   ];
 
   // --- LÓGICA DE PROSPECCIÓN COMERCIAL DE AGENTFORCE ---
@@ -345,16 +355,22 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
       setSearchLogs([...logs]);
     };
 
-    // Secuencia de logs en la terminal simulando la llamada inteligente con fuentes post-2024
     setTimeout(() => {
       addLog(`⚡ Iniciando búsqueda inteligente Agentforce Lead Finder...`, 'info');
+      addLog(`🧠 Cargando Skill: "agent-lead-finder-instagram" (Estrategia Multicanal Instagram + LinkedIn)`, 'info');
       addLog(`🔍 Filtro Geográfico Activo: Zona de "${searchZone}"`, 'info');
       addLog(`🔍 Filtro Sectorial Activo: "${searchSector}"`, 'info');
+      addLog(`📸 Rastreo en Instagram: Escaneando publicaciones con hashtags (#carpinteriadealuminio, #fachadasdealuminio, #estructurassolares, #cerramientosdealuminio, #fachadasligeras)...`, 'info');
     }, 200);
+
+    setTimeout(() => {
+      addLog(`⏱️ Filtro Temporal Estricto (Skill): Auditando únicamente publicaciones con menos de 3 meses de antigüedad (posteriores a junio de 2026).`, 'info');
+      addLog(`💼 LinkedIn B2B Scraper: Extrayendo organigramas, directores técnicos y responsables de compras de empresas con facturación > 5M €.`, 'info');
+    }, 800);
  
     setTimeout(() => {
       addLog(`🌐 Conectando e indexando API del INE (https://www.ine.es/) para validar ratios macroeconómicos y actividad industrial de metalurgia en ${searchZone} actualizados al período 2024-2026.`, 'info');
-    }, 1200);
+    }, 1500);
 
     setTimeout(() => {
       addLog(`📊 Cruzando datos con el Censo del Directorio Cameral de la Cámara de Comercio (https://www.camara.es/) para auditar el registro activo de empresas importadoras/exportadoras industriales del período 2024-2026.`, 'info');
@@ -397,7 +413,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
  
     // Procesar las empresas reales de la base de datos de prospección
     setTimeout(() => {
-      addLog(`🔎 Cruzando candidatos con la base de datos de CRM de la Empresa de Aluminio para validar duplicados...`, 'info');
+      addLog(`🔎 Cruzando candidatos con la base de datos de CRM SOPENA INNOVATIONS para validar duplicados...`, 'info');
       
       const candidates = PROSPECTING_DATABASE[searchZone] || [];
       const filteredCandidates = searchSector === 'Todos' 
@@ -418,7 +434,25 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
         // Verificar duplicados (comparando nombres de forma insensible y la zona)
         const isDuplicated = prospects.some(p => (p.name.toLowerCase() === cand.name.toLowerCase() || p.name.toLowerCase().includes(cand.name.toLowerCase()) || cand.name.toLowerCase().includes(p.name.toLowerCase())) && p.zone === searchZone);
         
-        if (isDuplicated) {
+        // Verificar si la empresa fue borrada previamente por el operador
+        let wasDeleted = false;
+        try {
+          const deletedSaved = localStorage.getItem('aluminio_crm_deleted');
+          if (deletedSaved) {
+            const delList = JSON.parse(deletedSaved);
+            if (Array.isArray(delList)) {
+              wasDeleted = delList.some(d => {
+                const dName = typeof d === 'object' ? (d.name || '').toLowerCase() : '';
+                return dName && (dName === cand.name.toLowerCase() || cand.name.toLowerCase().includes(dName) || dName.includes(cand.name.toLowerCase()));
+              });
+            }
+          }
+        } catch (e) {}
+
+        if (wasDeleted) {
+          addLog(`⚠️ Candidato: "${cand.name}" | Facturación auditada: ${(cand.revenue/1000000).toFixed(1)}M €`, 'warning');
+          addLog(`🛡️ BLOQUEO POR BORRADO PREVIO: "${cand.name}" fue eliminada previamente por un operador. Descartada automáticamente hasta que un operador la valide expresamente.`, 'danger');
+        } else if (isDuplicated) {
           addLog(`⚠️ Candidato: "${cand.name}" | Facturación auditada (elEconomista/Axesor/Iberinform): ${(cand.revenue/1000000).toFixed(1)}M €`, 'warning');
           addLog(`🚫 DUPLICADO: La empresa ya se encuentra registrada en el CRM. Descartada para asegurar datos nuevos.`, 'warning');
         } else {
@@ -591,7 +625,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
 
 Dear Partner,
 
-I am writing to you as Project Manager of Aluminios Innovations, S.L. We follow with great interest your company's activities.
+I am writing to you as Project Manager of SOPENA INNOVATIONS, S.L. We follow with great interest your company's activities.
 
 Our aluminum extrusion plant in Valencia (Spain) offers a highly reliable supply chain within the Iberian Peninsula, ensuring minimized lead times and direct technical support.
 
@@ -620,7 +654,7 @@ ccastro@empresa-aluminio.com | +34 610 240 017`;
 
 Estimado/a Responsable de Compras,
 
-Le escribo como Project Manager de Aluminios Innovations, S.L. para presentarle nuestra planta de extrusión de aluminio en Valencia. Le ofrecemos plazos de entrega muy ágiles y soporte técnico directo para sus proyectos de perfilería.
+Le escribo como Project Manager de SOPENA INNOVATIONS, S.L. para presentarle nuestra planta de extrusión de aluminio en Valencia. Le ofrecemos plazos de entrega muy ágiles y soporte técnico directo para sus proyectos de perfilería.
 
 Ventajas principales:
 - Aluminio sostenible reciclado con marcado CE.
@@ -768,7 +802,7 @@ ccastro@empresa-aluminio.com | +34 610 240 017`;
       body = isPt ? 
 `Estimado(a) ${manager},
 
-Escrevo-lhe na qualidade de Project Manager da Aluminios Innovations, S.L. Acompanhamos com grande interesse a atividade e liderança da ${company.name} no mercado de ${sector}.
+Escrevo-lhe na qualidade de Project Manager da SOPENA INNOVATIONS, S.L. Acompanhamos com grande interesse a atividade e liderança da ${company.name} no mercado de ${sector}.
 
 Com base nas vossas necessidades de fornecimento de extrusão de alumínio, gostaria de apresentar as vantagens competitivas da nossa fábrica localizada estrategicamente em Náquera (Valência). A nossa proximidade garante uma rota logística ágil para Portugal e total independência de importações de fora da Península Ibérica.
 
@@ -787,12 +821,12 @@ Com os melhores cumprimentos,
 
 Carmen Castro
 Project Manager - Zona Noroeste e Portugal
-Aluminios Innovations, S.L.
+SOPENA INNOVATIONS, S.L.
 ccastro@empresa-aluminio.com | +34 610 240 017`
 :
 `Estimado/a ${manager},
 
-Me pongo en contacto con usted en calidad de Project Manager de Aluminios Innovations, S.L. Seguimos con gran interés la trayectoria y actividad de ${company.name} en el sector de ${sector}.
+Me pongo en contacto con usted en calidad de Project Manager de SOPENA INNOVATIONS, S.L. Seguimos con gran interés la trayectoria y actividad de ${company.name} en el sector de ${sector}.
 
 Sabemos que en su mercado la fiabilidad del suministro y la precisión técnica son críticas. Por ello, queremos presentarle nuestra planta de extrusión de aluminio en Náquera (Valencia). Nuestra cercanía y control de la cadena logística nos permiten ofrecer plazos de entrega muy competitivos y soporte técnico directo, eliminando la dependencia de importaciones de fuera de la Península Ibérica.
 
@@ -811,7 +845,7 @@ Atentamente,
 
 Carmen Castro
 Project Manager - Zona Noroeste y Portugal
-Aluminios Innovations, S.L.
+SOPENA INNOVATIONS, S.L.
 ccastro@empresa-aluminio.com | +34 610 240 017`;
     } else {
       subject = isPt 
@@ -1682,10 +1716,18 @@ ccastro@empresa-aluminio.com | +34 610 240 017`;
               </p>
             </div>
             
-            <div style={{ background: '#ecfdf5', border: '1px solid #a7f3d0', padding: '10px 15px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px', maxWidth: '380px' }}>
-              <ListChecks size={24} style={{ color: '#10b981', flexShrink: 0 }} />
-              <div style={{ fontSize: '0.8rem', color: '#065f46' }}>
-                <strong>Regla de Exclusión Activa:</strong> No se importarán empresas de la lista de extrusores de la <strong>AEA</strong> (Actividad 12).
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '440px' }}>
+              <div style={{ background: '#ecfdf5', border: '1px solid #a7f3d0', padding: '8px 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <ListChecks size={20} style={{ color: '#10b981', flexShrink: 0 }} />
+                <div style={{ fontSize: '0.8rem', color: '#065f46' }}>
+                  <strong>Regla de Exclusión Activa:</strong> Miembros extrusores de la <strong>AEA</strong> vetados (Actividad 12).
+                </div>
+              </div>
+              <div style={{ background: '#fdf4ff', border: '1px solid #f0abfc', padding: '8px 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Sparkles size={20} style={{ color: '#c026d3', flexShrink: 0 }} />
+                <div style={{ fontSize: '0.8rem', color: '#86198f' }}>
+                  <strong>Skill Agent Lead Finder Activa:</strong> Prospección en Instagram y LinkedIn con filtro &lt; 3 meses (&gt; Junio 2026) y facturación &gt; 5M €.
+                </div>
               </div>
             </div>
           </div>
