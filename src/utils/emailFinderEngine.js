@@ -40,7 +40,7 @@ const VERIFIED_EMAILS_WHITELIST = new Set([
   'hidalmira@hidalmira.com',
   'info@aluminiosferrari.com',
   'info@prausa.com',
-  'info@solar-steel.com',
+  'info@gsolarsteel.com',
   'gravent@gravent.es',
   'info@solven.es',
   'hidalfe@hidalfe.es',

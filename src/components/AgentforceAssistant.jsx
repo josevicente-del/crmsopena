@@ -486,7 +486,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
             tasks: [
               {
                 id: Date.now() + index + 10,
-                text: `📞 Primer contacto comercial: presentar catálogo y capacidades Grupo Sopeña para el sector ${cand.sector}`,
+                text: `📞 Primer contacto comercial: presentar catálogo y capacidades Grupo Sopena para el sector ${cand.sector}`,
                 date: new Date().toISOString(),
                 completed: false
               }
@@ -635,8 +635,8 @@ Key advantages we bring:
 - Dedicated engineering team for custom matrix development.
 
 You can review our online interactive catalogs here:
-- Architectural Systems Catalog: https://www.empresa-aluminio.com/architectural.php?lang=es
-- Industrial Profiles Catalog: https://www.empresa-aluminio.com/series.php?lang=es&cat=1&id=54
+- Architectural Systems Catalog: https://www.gruposopena.com/architectural.php?lang=es
+- Industrial Profiles Catalog: https://www.gruposopena.com/series.php?lang=es&cat=1&id=54
 
 Would you be available for a brief call next Tuesday at 10:00 AM?
 
@@ -644,7 +644,7 @@ Best regards,
 
 Carmen Castro
 Project Manager - Aluminios Innovations
-ccastro@empresa-aluminio.com | +34 610 240 017`;
+ccastro@gruposopena.com | +34 610 240 017`;
         setGeneratedEmail(englishEmail);
         return '📝 He traducido profesionalmente el borrador al **inglés** y he actualizado el editor del Redactor Inteligente de la derecha.';
       }
@@ -660,15 +660,15 @@ Ventajas principales:
 - Aluminio sostenible reciclado con marcado CE.
 - Acabados Qualicoat Seaside y Qualanod de alta durabilidad.
 - Catálogos interactivos:
-  * Arquitectura: https://www.empresa-aluminio.com/architectural.php?lang=es
-  * Perfiles Industriales: https://www.empresa-aluminio.com/series.php?lang=es&cat=1&id=54
+  * Arquitectura: https://www.gruposopena.com/architectural.php?lang=es
+  * Perfiles Industriales: https://www.gruposopena.com/series.php?lang=es&cat=1&id=54
 
 ¿Le vendría bien una llamada corta el próximo martes a las 10:00 para valorar una oferta piloto?
 
 Atentamente,
 
 Carmen Castro
-ccastro@empresa-aluminio.com | +34 610 240 017`;
+ccastro@gruposopena.com | +34 610 240 017`;
         setGeneratedEmail(shortEmail);
         return '📝 He simplificado y resumido el borrador actual para que sea más corto y directo. He actualizado el editor de la derecha.';
       }
@@ -812,8 +812,8 @@ Destaques da nossa capacidade industrial para a ${company.name}:
 - Matrizes Sob Medida: Equipa técnica dedicada ao desenvolvimento de perfilaria personalizada com tolerâncias estritas.
 
 Convidamos a explorar a nossa documentação técnica interativa:
-- Catálogo de Sistemas de Arquitetura (Muros cortina, caixilharia): https://www.empresa-aluminio.com/architectural.php?lang=es
-- Catálogo de Perfis Industriais (Soluções sob medida): https://www.empresa-aluminio.com/series.php?lang=es&cat=1&id=54
+- Catálogo de Sistemas de Arquitetura (Muros cortina, caixilharia): https://www.gruposopena.com/architectural.php?lang=es
+- Catálogo de Perfis Industriais (Soluções sob medida): https://www.gruposopena.com/series.php?lang=es&cat=1&id=54
 
 Terá disponibilidade para uma breve chamada telefónica ou reunião por Teams na próxima terça-feira às 10:00 para avaliarmos uma cotação piloto para os vossos perfis atuais?
 
@@ -822,7 +822,7 @@ Com os melhores cumprimentos,
 Carmen Castro
 Project Manager - Zona Noroeste e Portugal
 SOPENA INNOVATIONS, S.L.
-ccastro@empresa-aluminio.com | +34 610 240 017`
+ccastro@gruposopena.com | +34 610 240 017`
 :
 `Estimado/a ${manager},
 
@@ -836,8 +836,8 @@ Ventajas clave que aportamos a ${company.name}:
 - Capacidad de Mecanizado y Ensamblaje: Desarrollo de perfiles a medida con tolerancias mínimas para un acople óptimo en sus líneas de producción.
 
 Le invito a consultar nuestros catálogos técnicos e interactivos directamente a través de los siguientes enlaces oficiales:
-- Catálogo de Sistemas de Arquitectura: https://www.empresa-aluminio.com/architectural.php?lang=es
-- Catálogo de Perfiles Industriales: https://www.empresa-aluminio.com/series.php?lang=es&cat=1&id=54
+- Catálogo de Sistemas de Arquitectura: https://www.gruposopena.com/architectural.php?lang=es
+- Catálogo de Perfiles Industriales: https://www.gruposopena.com/series.php?lang=es&cat=1&id=54
 
 ¿Dispondría de 5 minutos para una breve llamada o reunión por Teams el próximo martes a las 10:00 para valorar cómo podemos optimizar el coste de su perfilería actual?
 
@@ -846,7 +846,7 @@ Atentamente,
 Carmen Castro
 Project Manager - Zona Noroeste y Portugal
 SOPENA INNOVATIONS, S.L.
-ccastro@empresa-aluminio.com | +34 610 240 017`;
+ccastro@gruposopena.com | +34 610 240 017`;
     } else {
       subject = isPt 
         ? `Seguimento comercial e apoio técnico - Aluminios Innovations / ${company.name}`
@@ -860,8 +860,8 @@ Entro em contacto consigo para dar seguimento ao nosso contacto recente e saber 
 Recordo que nos focamos em prazos de entrega reduzidos para Portugal, com ligas de alumínio reciclado sustentável e tratamentos superficiais certificados (Qualanod/Qualicoat Seaside).
 
 Pode aceder aos nossos catálogos oficiais aqui:
-- Sistemas de Arquitetura: https://www.empresa-aluminio.com/architectural.php?lang=es
-- Perfis Industriais: https://www.empresa-aluminio.com/series.php?lang=es&cat=1&id=54
+- Sistemas de Arquitetura: https://www.gruposopena.com/architectural.php?lang=es
+- Perfis Industriais: https://www.gruposopena.com/series.php?lang=es&cat=1&id=54
 
 Gostaria de agendar uma breve chamada de 5 minutos esta semana para analisarmos as vossas necessidades de perfilaria?
 
@@ -869,7 +869,7 @@ Melhores cumprimentos,
 
 Carmen Castro
 Project Manager
-ccastro@empresa-aluminio.com | +34 610 240 017`
+ccastro@gruposopena.com | +34 610 240 017`
 :
 `Hola, ${manager}.
 
@@ -878,8 +878,8 @@ Me pongo en contacto de nuevo con usted para conocer si en ${company.name} tiene
 Le recuerdo que en Empresa de Aluminio fabricamos matriz y extruimos soluciones a medida con tocho de aluminio reciclado y acabados certificados de alta calidad, garantizando un suministro ágil y sin dependencias externas.
 
 Puede ver las gamas y especificaciones en nuestros catálogos oficiales en línea:
-- Catálogo de Sistemas de Arquitectura: https://www.empresa-aluminio.com/architectural.php?lang=es
-- Catálogo de Perfiles Industriales: https://www.empresa-aluminio.com/series.php?lang=es&cat=1&id=54
+- Catálogo de Sistemas de Arquitectura: https://www.gruposopena.com/architectural.php?lang=es
+- Catálogo de Perfiles Industriales: https://www.gruposopena.com/series.php?lang=es&cat=1&id=54
 
 ¿Tendría disponibilidad para una breve llamada de 5 minutos esta semana para comentar opciones y valorar una propuesta económica personalizada?
 
@@ -887,7 +887,7 @@ Un saludo cordial,
 
 Carmen Castro
 Project Manager
-ccastro@empresa-aluminio.com | +34 610 240 017`;
+ccastro@gruposopena.com | +34 610 240 017`;
     }
 
     setGeneratedEmail(`Asunto: ${subject}\n\n${body}`);
@@ -948,8 +948,8 @@ ccastro@empresa-aluminio.com | +34 610 240 017`;
       pitch = `Presentar la propuesta comercial como un socio estratégico para complementar su stock de perfiles de aluminio y accesorios. Destacar que no somos competencia directa ya que nosotros extruimos perfiles a medida y podemos fabricar matrices exclusivas según sus especificaciones, facilitando el suministro continuo y plazos rápidos sin dependencia de importaciones lejanas.`;
       products = ['Perfiles', 'Chapas de Aluminio', 'Accesorios'];
       catalogs = [
-        { name: 'Catálogo de Perfiles Industriales', url: 'https://www.empresa-aluminio.com/series.php?lang=es&cat=1&id=54' },
-        { name: 'Catálogo de Sistemas de Arquitectura', url: 'https://www.empresa-aluminio.com/architectural.php?lang=es' }
+        { name: 'Catálogo de Perfiles Industriales', url: 'https://www.gruposopena.com/series.php?lang=es&cat=1&id=54' },
+        { name: 'Catálogo de Sistemas de Arquitectura', url: 'https://www.gruposopena.com/architectural.php?lang=es' }
       ];
       objections = [
         { obj: '¿Tienen capacidad de distribución directa?', arg: 'Sí, disponemos de una red de distribución propia y podemos entregar directamente en sus almacenes con total puntualidad y trazabilidad.' },
@@ -963,7 +963,7 @@ ccastro@empresa-aluminio.com | +34 610 240 017`;
       pitch = `Destacar nuestra capacidad industrial especializada para extruir perfiles de aluminio estructural de gran formato para seguidores solares (parques fotovoltaicos). Enfatizar la aleación 6005A/6082 T6 y el marcado CE que es indispensable para proyectos solares europeos.`;
       products = ['Perfiles Ranurados', 'Estructuras para Paneles', 'Perfiles de Gran Formato'];
       catalogs = [
-        { name: 'Catálogo de Perfiles Industriales', url: 'https://www.empresa-aluminio.com/series.php?lang=es&cat=1&id=54' }
+        { name: 'Catálogo de Perfiles Industriales', url: 'https://www.gruposopena.com/series.php?lang=es&cat=1&id=54' }
       ];
       objections = [
         { obj: '¿Soportan cargas de viento extremas?', arg: 'Sí, todas nuestras aleaciones estructurales cumplen con el Eurocódigo 9 y disponemos de marcado CE para estructuras de aluminio.' },
@@ -977,7 +977,7 @@ ccastro@empresa-aluminio.com | +34 610 240 017`;
       pitch = `Enfocar la propuesta en nuestros sistemas de arquitectura y perfilería para carpintería de aluminio. Resaltar los acabados de alta calidad con sello Qualicoat Seaside (especial para zonas costeras, ideal para Portugal y el Cantábrico) y Qualanod (anodizado de alta durabilidad).`;
       products = ['Rotura Puente Térmico', 'Sistemas de Muro Cortina', 'Perfiles de Carpintería'];
       catalogs = [
-        { name: 'Catálogo de Sistemas de Arquitectura', url: 'https://www.empresa-aluminio.com/architectural.php?lang=es' }
+        { name: 'Catálogo de Sistemas de Arquitectura', url: 'https://www.gruposopena.com/architectural.php?lang=es' }
       ];
       objections = [
         { obj: 'Garantía del lacado en ambientes marinos', arg: 'Nuestros acabados cuentan con la certificación Qualicoat Seaside, que asegura resistencia a la corrosión filiforme en zonas de costa (hasta 10 años de garantía certificada).' },
@@ -992,8 +992,8 @@ ccastro@empresa-aluminio.com | +34 610 240 017`;
       pitch = `Presentar a Empresa de Aluminio como un partner de extrusión flexible de aluminio a medida para aplicaciones industriales. Destacar el tocho de aluminio reciclado de alta calidad, que reduce la huella de carbono de los productos de nuestros clientes, y nuestra capacidad de mecanizado posterior.`;
       products = ['Perfiles Industriales a Medida', 'Chapas de Aluminio', 'Mecanizado de Precisión'];
       catalogs = [
-        { name: 'Catálogo de Perfiles Industriales', url: 'https://www.empresa-aluminio.com/series.php?lang=es&cat=1&id=54' },
-        { name: 'Catálogo de Sistemas de Arquitectura', url: 'https://www.empresa-aluminio.com/architectural.php?lang=es' }
+        { name: 'Catálogo de Perfiles Industriales', url: 'https://www.gruposopena.com/series.php?lang=es&cat=1&id=54' },
+        { name: 'Catálogo de Sistemas de Arquitectura', url: 'https://www.gruposopena.com/architectural.php?lang=es' }
       ];
       objections = [
         { obj: 'Pedido mínimo para perfiles a medida (matrices nuevas)', arg: 'El pedido mínimo para extrusiones personalizadas es muy flexible (normalmente a partir de 500 kg a 1000 kg dependiendo de la sección).' },

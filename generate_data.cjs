@@ -2,7 +2,7 @@ const fs = require('fs');
 const { execSync } = require('child_process');
 const path = require('path');
 
-// Generador de Base de Datos B2B Grupo Sopeña (v3.0)
+// Generador de Base de Datos B2B Grupo Sopena (v3.0)
 // Utiliza la clasificación sectorial y de productos fijada previamente:
 // Sectores: Carpintería de Aluminio, Fachadas y Envolventes, Perfilería y Cerramientos, Transformación y Mecanizado, Energía Solar y Fotovoltaica, Puertas y Ventanas Industriales, Estructuras Metálicas, etc.
 // Productos: Perfiles, Lamas, Fachadas Ligeras, Paneles Composite, Cerramientos, Cortinas de Cristal, Sistemas Fotovoltaicos, Estructuras Solares, Ventanas RPT, Puertas Industriales, Mosquiteras, Envolventes Térmicas, Rotura Puente Térmico, Muro Cortina, Chapas de Aluminio, Accesorios, Perfiles Ranurados.

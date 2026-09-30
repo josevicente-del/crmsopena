@@ -449,12 +449,12 @@ const App = () => {
     }
   });
   // ==========================================
-  // CONFIGURACIÓN DE USUARIOS GRUPO SOPEÑA
+  // CONFIGURACIÓN DE USUARIOS GRUPO SOPENA
   // ==========================================
   const SOPENA_USERS = useMemo(() => ({
     admin: {
       username: 'admin',
-      name: 'Superadministrador Grupo Sopeña',
+      name: 'Superadministrador Grupo Sopena',
       role: 'Superadministrador',
       email: 'admin@gruposopena.com',
       phone: '+34 900 000 000',
@@ -1517,13 +1517,13 @@ const App = () => {
   <div class="container">
     <header>
       <div class="logo-container">
-        <img src="/sopena_sistemas_logo.png" alt="Logotipo Grupo Sopeña Sistemas">
+        <img src="/sopena_sistemas_logo.png" alt="Logotipo Grupo Sopena Sistemas">
       </div>
       <div class="header-info">
         <strong>SOPENA INNOVATIONS, S.L.</strong><br>
         Pol. Ind. Los Vientos, C/ Garbí, 9<br>
         46119 Náquera, Valencia (\${isPt ? 'Espanha' : 'España'})<br>
-        +34 96 145 20 50 | empresa-aluminio.com
+        +34 96 145 20 50 | <a href="https://www.gruposopena.com/" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">gruposopena.com</a>
       </div>
     </header>
     <div class="content">
@@ -1791,12 +1791,12 @@ const App = () => {
           <!-- Encabezado de email -->
           <div style="background: linear-gradient(135deg, #072b66 0%, #0a3d91 100%); padding: 30px; color: #ffffff; text-align: left; display: flex; justify-content: space-between; align-items: center;">
             <div style="background: #ffffff; padding: 8px 15px; border-radius: 6px; display: inline-block;">
-              <img src="https://empresa-aluminio.com/images/global/logo/grupo-sopena-sistemas.png" alt="Grupo de Aluminio Logo" style="height: 35px; width: auto; display: block;" />
+              <img src="/sopena_sistemas_logo.png" alt="Grupo Sopena Sistemas Logo" style="height: 35px; width: auto; display: block;" />
             </div>
             <div style="font-size: 0.8rem; line-height: 1.4; opacity: 0.9; text-align: right; margin-left: 20px; color: #ffffff;">
               <strong>SOPENA INNOVATIONS, S.L.</strong><br/>
               Náquera, Valencia<br/>
-              empresa-aluminio.com
+              <a href="https://www.gruposopena.com/" target="_blank" rel="noopener noreferrer" style="color: #ffffff; text-decoration: underline;">gruposopena.com</a>
             </div>
           </div>
           
@@ -1876,7 +1876,7 @@ const App = () => {
   // 'custom': comercial genérico configurable con campos libres
   const [selectedSalespersonId, setSelectedSalespersonId] = useState('auto');
   const [customSalesperson, setCustomSalesperson] = useState({
-    name: 'Atención Comercial Grupo Sopeña',
+    name: 'Atención Comercial Grupo Sopena',
     role: 'Departamento Comercial',
     email: 'comercial@gruposopena.com',
     phone: '+34 96 145 20 50',
@@ -2139,7 +2139,7 @@ const App = () => {
       <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', background: 'var(--bg-color)', fontFamily: 'Inter, sans-serif', padding: '20px'}}>
         <div style={{background: 'white', padding: '2.5rem', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.12)', width: '100%', maxWidth: '440px', textAlign: 'center'}}>
           <div style={{background: 'linear-gradient(135deg, #072b66 0%, #1e1b4b 100%)', color: 'white', width: '64px', height: '64px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 'bold', margin: '0 auto 1.2rem auto', boxShadow: '0 4px 12px rgba(7, 43, 102, 0.3)'}}>GS</div>
-          <h2 style={{color: 'var(--sopena-blue-dark)', margin: '0 0 0.2rem 0', fontSize: '1.5rem', fontWeight: 800}}>Grupo Sopeña</h2>
+          <h2 style={{color: 'var(--sopena-blue-dark)', margin: '0 0 0.2rem 0', fontSize: '1.5rem', fontWeight: 800}}>Grupo Sopena</h2>
           <p style={{color: 'var(--text-secondary)', margin: '0 0 1.5rem 0', fontSize: '0.9rem'}}>CRM Corporativo con Segmentación Geográfica</p>
 
           {/* Sugerencias rápidas de usuarios autorizados */}
@@ -2304,7 +2304,7 @@ const App = () => {
             <div style={{ background: '#ffffff', padding: '6px 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', boxSizing: 'border-box', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
               <img 
                 src="/sopena_sistemas_logo.png" 
-                alt="Logo Sopeña Sistemas" 
+                alt="Logo Sopena Sistemas" 
                 style={{ maxHeight: '38px', maxWidth: '100%', objectFit: 'contain' }} 
               />
             </div>
@@ -3201,7 +3201,7 @@ const App = () => {
                       <strong>SOPENA INNOVATIONS, S.L.</strong><br/>
                       Pol. Ind. Los Vientos, C/ Garbí, 9<br/>
                       46119 Náquera, Valencia {isPt ? 'Espanha' : 'España'}<br/>
-                      +34 96 145 20 50 | empresa-aluminio.com
+                      +34 96 145 20 50 | <a href="https://www.gruposopena.com/" target="_blank" rel="noopener noreferrer" style={{color: 'inherit', textDecoration: 'underline'}}>gruposopena.com</a>
                     </div>
                   </div>
                   {/* CONTENT AREA */}
@@ -3330,13 +3330,13 @@ const App = () => {
                               presentationTarget ? (
                                 `Estimados companheiros da ${presentationTarget.name},
 
-Me dirijo a vocês na minha qualidade de ${getActiveSalesperson().role} do Grupo Sopeña. Conheço em primeira mão a vossa liderança no fornecimento e distribuição de perfilaria e acessórios de alumínio. O vosso compromisso com a qualidade e a capacidade de oferecer soluções à medida à rede de serralharias e carpintarias metálicas da região coincide plenamente com os valores da nossa empresa.
+Me dirijo a vocês na minha qualidade de ${getActiveSalesperson().role} do Grupo Sopena. Conheço em primeira mão a vossa liderança no fornecimento e distribuição de perfilaria e acessórios de alumínio. O vosso compromisso com a qualidade e a capacidade de oferecer soluções à medida à rede de serralharias e carpintarias metálicas da região coincide plenamente com os valores da nossa empresa.
 
 A SOPENA INNOVATIONS, S.L. conta com uma trajetória de mais de 75 anos na vanguarda da extrusão e tratamento de superfícies de alumínio na Península Ibérica. Especializamo-nos no desenvolvimento de sistemas próprios de arquitetura com marcação CE e ensaios oficiais de alta performance. Dispomos de armazém regulador próprio para garantir um fornecimento ágil e estável, eliminando as incertezas de stock no mercado.`
                               ) : (
                                 `Estimada Direção Técnica e Responsáveis de Compras,
 
-Apresento-me na qualidade de ${getActiveSalesperson().role} do Grupo Sopeña para lhe apresentar a nossa capacidade industrial em extrusão e acabamento de perfis de alumínio. O nosso compromisso com a máxima qualidade e precisão dimensional coincide com as necessidades das empresas mais exigentes do setor.
+Apresento-me na qualidade de ${getActiveSalesperson().role} do Grupo Sopena para lhe apresentar a nossa capacidade industrial em extrusão e acabamento de perfis de alumínio. O nosso compromisso com a máxima qualidade e precisão dimensional coincide com as necessidades das empresas mais exigentes do setor.
 
 A SOPENA INNOVATIONS, S.L. conta com uma trajetória de mais de 75 anos na vanguarda da extrusão e tratamento de superfícies de alumínio na Península Ibérica. Especializamo-nos no desenvolvimento de perfilaria à medida, sistemas próprios de arquitetura com marcação CE e ensaios oficiais de alta performance. Dispomos de armazém regulador próprio para garantir um fornecimento ágil e estável, eliminando as incertezas de stock e prazos no mercado.`
                               )
@@ -3344,13 +3344,13 @@ A SOPENA INNOVATIONS, S.L. conta com uma trajetória de mais de 75 anos na vangu
                               presentationTarget ? (
                                 `Estimados compañeros de ${presentationTarget.name},
 
-Me dirijo a ustedes en mi calidad de ${getActiveSalesperson().role} de Grupo Sopeña. Conozco de primera mano el liderazgo de ${presentationTarget.name} en el suministro y distribución de perfilería y accesorios de aluminio. Su compromiso con la calidad y la capacidad de ofrecer soluciones a medida a la red de carpinterías metálicas coincide plenamente con los valores fundacionales de nuestra compañía.
+Me dirijo a ustedes en mi calidad de ${getActiveSalesperson().role} de Grupo Sopena. Conozco de primera mano el liderazgo de ${presentationTarget.name} en el suministro y distribución de perfilería y accesorios de aluminio. Su compromiso con la calidad y la capacidad de ofrecer soluciones a medida a la red de carpinterías metálicas coincide plenamente con los valores fundacionales de nuestra compañía.
 
 SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vanguardia de la extrusión y el tratamiento de superficies de aluminio en España. A lo largo de esta historia, nos hemos especializado en el desarrollo de sistemas propios de carpintería y fachadas (con ensayos oficiales y marcado CE) de altísimas prestaciones térmicas y acústicas. Contamos con un almacén regulador propio y una sólida capacidad productiva que nos permite garantizar un suministro ágil, estable y directo a nuestros colaboradores, eliminando las incertidumbres de stock que tanto afectan al sector en la actualidad.`
                               ) : (
                                 `Estimada Dirección Técnica y Responsables de Compras,
 
-Me dirijo a ustedes en mi calidad de ${getActiveSalesperson().role} de Grupo Sopeña para presentarles formalmente nuestra capacidad industrial en extrusión y tratamiento de superficies de perfiles de aluminio. Nuestro compromiso fundacional con la calidad técnica y la fiabilidad logística responde a las exigencias más estrictas de los fabricantes y distribuidores industriales de la Península Ibérica y Europa.
+Me dirijo a ustedes en mi calidad de ${getActiveSalesperson().role} de Grupo Sopena para presentarles formalmente nuestra capacidad industrial en extrusión y tratamiento de superficies de perfiles de aluminio. Nuestro compromiso fundacional con la calidad técnica y la fiabilidad logística responde a las exigencias más estrictas de los fabricantes y distribuidores industriales de la Península Ibérica y Europa.
 
 SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vanguardia de la extrusión de aluminio en España. A lo largo de esta historia, nos hemos especializado en el desarrollo de matricería a medida y perfiles de altísimas prestaciones térmicas, acústicas y mecánicas (con ensayos oficiales y marcado CE). Disponemos de almacén regulador propio y una sólida capacidad productiva autónoma que nos permite garantizar un suministro ágil, estable y directo, eliminando las incertidumbres de stock e importación que tanto afectan al tejido industrial.`
                               )
@@ -3456,7 +3456,7 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                               <span className="dossier-fabril-icon">🛡️</span>
                               <div>
                                 <h4 className="dossier-fabril-title">Anodizado del Aluminio</h4>
-                                <p className="dossier-fabril-desc">Endurecimiento superficial electroquímico para protección costera y salina (Qualanod).</p>
+                                <p className="dossier-fabril-desc">Tratamiento electroquímico para proteger aluminio en ambientes marinos, costeros y de alta salinidad.</p>
                               </div>
                             </div>
                           </div>
@@ -4654,7 +4654,7 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
             <div className="print-report" style={{width: '100%', fontFamily: 'Inter, sans-serif', color: '#1e293b'}}>
               <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '3px solid var(--sopena-blue)', paddingBottom: '15px', marginBottom: '20px'}}>
                 <div style={{background: 'white', padding: '5px 10px', borderRadius: '4px'}}>
-                  <img src="https://empresa-aluminio.com/images/global/logo/grupo-sopena-sistemas.png" alt="Logotipo Empresa de Aluminio" style={{height: '45px', objectFit: 'contain'}} />
+                  <img src="/sopena_sistemas_logo.png" alt="Logotipo Grupo Sopena Sistemas" style={{height: '45px', objectFit: 'contain'}} />
                 </div>
                 <div style={{textAlign: 'right'}}>
                   <h2 style={{margin: 0, color: 'var(--sopena-blue-dark)', fontSize: '1.5rem', fontWeight: 800}}>Reporte de Actividad Comercial</h2>

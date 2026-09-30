@@ -24,7 +24,7 @@ const EXCLUDED_FILE = path.join(__dirname, '..', 'data', 'excludedCompanies.json
 const TARGET_PER_ZONE = 1200;
 
 // Lista negra de dominios de empresas competidoras directas en extrusión de aluminio
-// (Grupo Sopeña no prospecta competidores de extrusión, sino clientes transformadores e instaladores)
+// (Grupo Sopena no prospecta competidores de extrusión, sino clientes transformadores e instaladores)
 const EXCLUDED_EXTRUDER_DOMAINS = [
   'cortizo.com', 'extrugasa.com', 'exlabesa.com', 'extoledo.com', 'alueuropa.com',
   'hydro.com', 'baux.es', 'alugom.com', 'navarra.pt', 'extrusal.pt', 'anicolor.pt',
