@@ -2845,41 +2845,43 @@ const App = () => {
                           {(() => {
                             const email = p.email;
                             const quality = checkEmailQuality(email, p.name);
-                            if (quality === 'none' || quality === 'invalid') {
+                            const isExplicitlyUnverified = p.emailVerified === false;
+
+                            // Si explícitamente no está verificado o es placeholder / inválido / sin email -> EN ROJO EN EL CRM
+                            if (isExplicitlyUnverified || quality === 'none' || quality === 'invalid' || quality === 'placeholder') {
                               return (
                                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-                                  <span style={{fontSize: '0.8rem', color: '#f59e0b', fontWeight: 600}} title="Sin email verificado">⚠️ Sin email</span>
+                                  <span 
+                                    style={{
+                                      fontSize: '0.8rem', 
+                                      color: '#ef4444', 
+                                      fontWeight: '700',
+                                      background: 'rgba(239, 68, 68, 0.1)',
+                                      padding: '2px 6px',
+                                      borderRadius: '4px',
+                                      border: '1px solid rgba(239, 68, 68, 0.25)'
+                                    }} 
+                                    title="Email no verificado o pendiente de confirmación en el CRM"
+                                  >
+                                    ⚠️ {email || 'Sin email verificado'}
+                                  </span>
                                   <button 
                                     type="button" 
                                     onClick={(e) => { e.stopPropagation(); startSingleEmailScan(p); }} 
                                     style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px 4px', fontSize: '0.95rem', borderRadius: '4px', display: 'flex', alignItems: 'center' }} 
-                                    title="Buscar email real con Agentforce IA"
+                                    title="Buscar y verificar email con Agentforce IA"
                                   >
                                     🧙‍♂️
                                   </button>
                                 </span>
                               );
                             }
-                            if (quality === 'placeholder') {
-                              return (
-                                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-                                  <span style={{fontSize: '0.8rem', color: '#ef4444'}} title="Email autogenerado / no verificado">⚠️ {email}</span>
-                                  <button 
-                                    type="button" 
-                                    onClick={(e) => { e.stopPropagation(); startSingleEmailScan(p); }} 
-                                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px 4px', fontSize: '0.95rem', borderRadius: '4px', display: 'flex', alignItems: 'center' }} 
-                                    title="Buscar email real con Agentforce IA"
-                                  >
-                                    🧙‍♂️
-                                  </button>
-                                </span>
-                              );
-                            }
-                            if (quality === 'verified_purchasing') {
+                            
+                            if (quality === 'verified_purchasing' || p.emailVerifiedType === 'compras') {
                               return <a href={`mailto:${email}`} style={{fontSize: '0.8rem', color: '#10b981', textDecoration: 'none', fontWeight: 600}} title="Email de compras verificado">✅ {email}</a>;
                             }
                             // verified_generic
-                            return <a href={`mailto:${email}`} style={{fontSize: '0.8rem', color: 'var(--sopena-blue)', textDecoration: 'none'}} title="Email genérico de la empresa">✉️ {email}</a>;
+                            return <a href={`mailto:${email}`} style={{fontSize: '0.8rem', color: 'var(--sopena-blue)', textDecoration: 'none'}} title="Email de contacto verificado">✉️ {email}</a>;
                           })()}
                         </td>
                         <td>

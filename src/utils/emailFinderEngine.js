@@ -57,8 +57,8 @@ const VERIFIED_EMAILS_WHITELIST = new Set([
 export const checkEmailQuality = (email, companyName) => {
   if (!email || email === 'No disponible' || email.trim() === '') return 'none';
   
-  // Validación básica RFC5322
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  // 1. Validación Sintáctica Estricta solicitada por el usuario
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailRegex.test(email)) return 'invalid';
 
   // Si está en la lista de correos verificados explícitos, saltar comprobación de autogenerado
