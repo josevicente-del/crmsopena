@@ -1,0 +1,738 @@
+[
+  {
+    "id": "PROP-CAMARA-0235",
+    "name": "Alucer Cerramientos S.L.",
+    "revenue": 4200000,
+    "oldEmail": "info@alucer.es",
+    "newEmail": "compras@alucer.es",
+    "mx": "mail.alucer.es"
+  },
+  {
+    "id": "PROP-CAMARA-0244",
+    "name": "Alumida S.L.",
+    "revenue": 4200000,
+    "oldEmail": "info@alumida.com",
+    "newEmail": "compras@alumida.com",
+    "mx": "mail.capicor.com"
+  },
+  {
+    "id": "PROP-CAMARA-0281",
+    "name": "Induvent Carpintería Metálica S.L.",
+    "revenue": 4200000,
+    "oldEmail": "info@induvent.net",
+    "newEmail": "compras@induvent.net",
+    "mx": "N/A"
+  },
+  {
+    "id": "PROP-CAMARA-0288",
+    "name": "Ventanas Txingudi S.L.",
+    "revenue": 4200000,
+    "oldEmail": "info@ventanastxingudi.com",
+    "newEmail": "compras@ventanastxingudi.com",
+    "mx": "ventanastxingudi.com"
+  },
+  {
+    "id": "PROP-VERIF-0060",
+    "name": "Aluminios Martínez Asturias S.L.",
+    "revenue": 4100000,
+    "oldEmail": "info@aluminiosmartinez.com",
+    "newEmail": "compras@aluminiosmartinez.com",
+    "mx": "mx2.cosmomedia.es"
+  },
+  {
+    "id": "PROP-CAMARA-0267",
+    "name": "Alcaventanas S.L.",
+    "revenue": 4100000,
+    "oldEmail": "info@alcaventanas.es",
+    "newEmail": "compras@alcaventanas.es",
+    "mx": "mail.alcaventanas.es"
+  },
+  {
+    "id": "PROP-CAMARA-0277",
+    "name": "Oxicom Metálicas S.L.",
+    "revenue": 4100000,
+    "oldEmail": "info@oxicommetalicas.com",
+    "newEmail": "compras@oxicommetalicas.com",
+    "mx": "oxicommetalicas.com"
+  },
+  {
+    "id": "PROP-CAMARA-0311",
+    "name": "Atechnor Cerramientos S.L.",
+    "revenue": 4100000,
+    "oldEmail": "info@atechnor.net",
+    "newEmail": "compras@atechnor.net",
+    "mx": "mail2.deviservi.com"
+  },
+  {
+    "id": "PROP-VERIF-0140",
+    "name": "Hermanos Almansa S.L.",
+    "revenue": 3900000,
+    "oldEmail": "info@hnos-almansa.es",
+    "newEmail": "compras@hnos-almansa.es",
+    "mx": "mx1.hostinger.com"
+  },
+  {
+    "id": "PROP-CAMARA-0262",
+    "name": "Cercaolid Mallas y Paneles S.L.",
+    "revenue": 3900000,
+    "oldEmail": "info@cercaolid.es",
+    "newEmail": "compras@cercaolid.es",
+    "mx": "mail.despachotres.com"
+  },
+  {
+    "id": "PROP-CAMARA-0284",
+    "name": "Sicalum Ventanas S.L.",
+    "revenue": 3900000,
+    "oldEmail": "info@sicalum.com",
+    "newEmail": "compras@sicalum.com",
+    "mx": "mail.sicalum.com"
+  },
+  {
+    "id": "PROP-CAMARA-0236",
+    "name": "Metales Madrid (Carpintería Metálica Madrid S.L.)",
+    "revenue": 3800000,
+    "oldEmail": "info@metalesmadrid.es",
+    "newEmail": "compras@metalesmadrid.es",
+    "mx": "mx1.hostinger.com"
+  },
+  {
+    "id": "PROP-CAMARA-0255",
+    "name": "Tecnalum S.L.",
+    "revenue": 3800000,
+    "oldEmail": "info@tecnalum.com",
+    "newEmail": "compras@tecnalum.com",
+    "mx": "N/A"
+  },
+  {
+    "id": "PROP-CAMARA-0260",
+    "name": "Arsenio García e Hijos S.L.",
+    "revenue": 3800000,
+    "oldEmail": "info@arseniogarciaehijos.es",
+    "newEmail": "compras@arseniogarciaehijos.es",
+    "mx": "poolmx.dsmail.es"
+  },
+  {
+    "id": "PROP-CAMARA-0269",
+    "name": "Aluminios Bernal S.L.",
+    "revenue": 3800000,
+    "oldEmail": "info@aluminiosbernal.com",
+    "newEmail": "compras@aluminiosbernal.com",
+    "mx": "mail.aluminiosbernal.com"
+  },
+  {
+    "id": "PROP-CAMARA-0275",
+    "name": "Puertas Toledo S.L.",
+    "revenue": 3800000,
+    "oldEmail": "info@puertastoledo.com",
+    "newEmail": "compras@puertastoledo.com",
+    "mx": "mx0.mail.ovh.net"
+  },
+  {
+    "id": "PROP-CAMARA-0287",
+    "name": "FABRI Carpintería S.L.",
+    "revenue": 3800000,
+    "oldEmail": "info@fabrisl.com",
+    "newEmail": "compras@fabrisl.com",
+    "mx": "mail.fabrisl.com"
+  },
+  {
+    "id": "PROP-CAMARA-0237",
+    "name": "Aluminios Villalba S.L.",
+    "revenue": 3800000,
+    "oldEmail": "info@aluminiosvillalba.com",
+    "newEmail": "compras@aluminiosvillalba.com",
+    "mx": "mx01.dondominio.com"
+  },
+  {
+    "id": "PROP-VERIF-0331",
+    "name": "Persum Escaleras Profesionales S.L.",
+    "revenue": 3800000,
+    "oldEmail": "info@persum.es",
+    "newEmail": "compras@persum.es",
+    "mx": "SMTP.GOOGLE.COM"
+  },
+  {
+    "id": "PROP-VERIF-0022",
+    "name": "Prowalum S.L.",
+    "revenue": 3700000,
+    "oldEmail": "info@prowalum.com",
+    "newEmail": "compras@prowalum.com",
+    "mx": "mx.serviciodecorreo.es"
+  },
+  {
+    "id": "PROP-VERIF-0070",
+    "name": "Camarglass S.L.",
+    "revenue": 3700000,
+    "oldEmail": "info@camarglass.com",
+    "newEmail": "compras@camarglass.com",
+    "mx": "mail.camarglass.com"
+  },
+  {
+    "id": "PROP-CAMARA-0254",
+    "name": "Hermanos Guerrero Carpintería Metálica S.L.",
+    "revenue": 3600000,
+    "oldEmail": "info@hermanosguerrero.es",
+    "newEmail": "compras@hermanosguerrero.es",
+    "mx": "mx01.ionos.es"
+  },
+  {
+    "id": "PROP-CAMARA-0261",
+    "name": "Cecrisal S.L.",
+    "revenue": 3600000,
+    "oldEmail": "info@cecrisal.es",
+    "newEmail": "compras@cecrisal.es",
+    "mx": "mx3.cosmomedia.es"
+  },
+  {
+    "id": "PROP-CAMARA-0280",
+    "name": "Devergara Aluminios S.L.",
+    "revenue": 3600000,
+    "oldEmail": "info@devergara.es",
+    "newEmail": "compras@devergara.es",
+    "mx": "mail.devergara.es"
+  },
+  {
+    "id": "PROP-CAMARA-0285",
+    "name": "Ventanas IKAN S.L.",
+    "revenue": 3600000,
+    "oldEmail": "info@ikan.es",
+    "newEmail": "compras@ikan.es",
+    "mx": "ASPMX.L.GOOGLE.COM"
+  },
+  {
+    "id": "PROP-CAMARA-0312",
+    "name": "Sistemas y Estructuras HR S.L.",
+    "revenue": 3600000,
+    "oldEmail": "info@cerramientosaluminiomadrid.es",
+    "newEmail": "compras@cerramientosaluminiomadrid.es",
+    "mx": "mx2.cosmomedia.es"
+  },
+  {
+    "id": "PROP-VERIF-0043",
+    "name": "Inalpe Cerramientos S.L.",
+    "revenue": 3500000,
+    "oldEmail": "info@inalpe.com",
+    "newEmail": "compras@inalpe.com",
+    "mx": "inalpe-com.mail.protection.outlook.com"
+  },
+  {
+    "id": "PROP-VERIF-0001",
+    "name": "Ancesa Carpintería Metálica S.L.",
+    "revenue": 3500000,
+    "oldEmail": "info@ancesa.com",
+    "newEmail": "compras@ancesa.com",
+    "mx": "ancesa.com"
+  },
+  {
+    "id": "PROP-CAMARA-0257",
+    "name": "Alumartínez Andalucía S.L.",
+    "revenue": 3500000,
+    "oldEmail": "info@alumartinez.com",
+    "newEmail": "compras@alumartinez.com",
+    "mx": "mx0.mail.ovh.net"
+  },
+  {
+    "id": "PROP-CAMARA-0265",
+    "name": "Carpintería Lalín S.L.",
+    "revenue": 3500000,
+    "oldEmail": "info@carpinterialalin.es",
+    "newEmail": "compras@carpinterialalin.es",
+    "mx": "mx.serviciodecorreo.es"
+  },
+  {
+    "id": "PROP-CAMARA-0256",
+    "name": "Aluminios Alcarreños S.L.",
+    "revenue": 3500000,
+    "oldEmail": "info@aluminiosalcarrenos.es",
+    "newEmail": "compras@aluminiosalcarrenos.es",
+    "mx": "mx.serviciodecorreo.es"
+  },
+  {
+    "id": "PROP-VERIF-0342",
+    "name": "Marchante PVC y Aluminio S.L.",
+    "revenue": 3500000,
+    "oldEmail": "info@marchantepvc.com",
+    "newEmail": "compras@marchantepvc.com",
+    "mx": "mx.serviciodecorreo.es"
+  },
+  {
+    "id": "PROP-VERIF-0032",
+    "name": "Talleres Naser S.L.",
+    "revenue": 3400000,
+    "oldEmail": "info@talleresnaser.es",
+    "newEmail": "compras@talleresnaser.es",
+    "mx": "mx.serviciodecorreo.es"
+  },
+  {
+    "id": "PROP-VERIF-0046",
+    "name": "Aluminios Monleón S.L.",
+    "revenue": 3400000,
+    "oldEmail": "info@aluminiosmonleon.com",
+    "newEmail": "compras@aluminiosmonleon.com",
+    "mx": "mx00.ionos.es"
+  },
+  {
+    "id": "PROP-CAMARA-0247",
+    "name": "Aluminios Jada S.L.",
+    "revenue": 3400000,
+    "oldEmail": "info@aluminiosjada.com",
+    "newEmail": "compras@aluminiosjada.com",
+    "mx": "mail.aluminiosjada.com"
+  },
+  {
+    "id": "PROP-CAMARA-0273",
+    "name": "Toledo Ventanas S.L.",
+    "revenue": 3400000,
+    "oldEmail": "info@toledoventanas.com",
+    "newEmail": "compras@toledoventanas.com",
+    "mx": "mail.toledoventanas.com"
+  },
+  {
+    "id": "PROP-CAMARA-0292",
+    "name": "Aluar Montajes S.L.",
+    "revenue": 3400000,
+    "oldEmail": "info@aluarmontajes.com",
+    "newEmail": "compras@aluarmontajes.com",
+    "mx": "mx00.ionos.es"
+  },
+  {
+    "id": "PROP-CAMARA-0310",
+    "name": "Aluminios Gorase S.L.",
+    "revenue": 3400000,
+    "oldEmail": "info@aluminiosgorase.com",
+    "newEmail": "compras@aluminiosgorase.com",
+    "mx": "mx.zoho.eu"
+  },
+  {
+    "id": "PROP-CAMARA-0253",
+    "name": "Cárdenas Cerramientos S.L.",
+    "revenue": 3300000,
+    "oldEmail": "info@cardenassl.com",
+    "newEmail": "compras@cardenassl.com",
+    "mx": "mail.cardenassl.com"
+  },
+  {
+    "id": "PROP-CAMARA-0279",
+    "name": "Hermanos Molina Aluminios S.L.",
+    "revenue": 3300000,
+    "oldEmail": "info@hermanosmolina.com",
+    "newEmail": "compras@hermanosmolina.com",
+    "mx": "hermanosmolina.com"
+  },
+  {
+    "id": "PROP-CAMARA-0286",
+    "name": "Ventanas Urumea S.L.",
+    "revenue": 3300000,
+    "oldEmail": "info@ventanasurumea.com",
+    "newEmail": "compras@ventanasurumea.com",
+    "mx": "mx1.mail.ovh.net"
+  },
+  {
+    "id": "PROP-CAMARA-0315",
+    "name": "Instahogar S.L.",
+    "revenue": 3300000,
+    "oldEmail": "info@instalacionesdealuminio.com",
+    "newEmail": "compras@instalacionesdealuminio.com",
+    "mx": "mail.instalacionesdealuminio.com"
+  },
+  {
+    "id": "PROP-VERIF-0348",
+    "name": "Metálicas Ferroal S.L.",
+    "revenue": 3300000,
+    "oldEmail": "info@ferroal.net",
+    "newEmail": "compras@ferroal.net",
+    "mx": "mail.ferroal.net"
+  },
+  {
+    "id": "PROP-VERIF-0059",
+    "name": "Aluminios Valsan S.L.",
+    "revenue": 3200000,
+    "oldEmail": "info@aluminiosvalsan.com",
+    "newEmail": "compras@aluminiosvalsan.com",
+    "mx": "aluminiosvalsan.com"
+  },
+  {
+    "id": "PROP-CAMARA-0245",
+    "name": "Cristalería Levantina S.L.",
+    "revenue": 3200000,
+    "oldEmail": "info@cristalerialevantina.com",
+    "newEmail": "compras@cristalerialevantina.com",
+    "mx": "N/A"
+  },
+  {
+    "id": "PROP-CAMARA-0249",
+    "name": "Aluminios Jovi S.L.",
+    "revenue": 3200000,
+    "oldEmail": "info@aluminiosjovi.com",
+    "newEmail": "compras@aluminiosjovi.com",
+    "mx": "mail.aluminiosjovi.com"
+  },
+  {
+    "id": "PROP-CAMARA-0270",
+    "name": "Aluminios Tecnoal S.L.",
+    "revenue": 3200000,
+    "oldEmail": "info@aluminiostecnoal.com",
+    "newEmail": "compras@aluminiostecnoal.com",
+    "mx": "aluminiostecnoal.com"
+  },
+  {
+    "id": "PROP-CAMARA-0271",
+    "name": "Aluminios Azpeitia S.L.",
+    "revenue": 3200000,
+    "oldEmail": "info@aluminiosazpeitia.com",
+    "newEmail": "compras@aluminiosazpeitia.com",
+    "mx": "aluminiosazpeitia-com.mail.protection.outlook.com"
+  },
+  {
+    "id": "PROP-CAMARA-0248",
+    "name": "Ventanas Vamin S.L.",
+    "revenue": 3200000,
+    "oldEmail": "info@ventanasvamin.com",
+    "newEmail": "compras@ventanasvamin.com",
+    "mx": "aspmx.l.google.com"
+  },
+  {
+    "id": "PROP-VERIF-0050",
+    "name": "Suteal S.L.",
+    "revenue": 3100000,
+    "oldEmail": "info@suteal.com",
+    "newEmail": "compras@suteal.com",
+    "mx": "suteal-com.mail.protection.outlook.com"
+  },
+  {
+    "id": "PROP-VERIF-0095",
+    "name": "Aluminios Galiot S.L.",
+    "revenue": 3100000,
+    "oldEmail": "info@aluminiosgaliot.com",
+    "newEmail": "compras@aluminiosgaliot.com",
+    "mx": "mx1.hostinger.com"
+  },
+  {
+    "id": "PROP-CAMARA-0290",
+    "name": "AM Carpintería de Aluminio S.L.",
+    "revenue": 3100000,
+    "oldEmail": "info@amaluminio.com",
+    "newEmail": "compras@amaluminio.com",
+    "mx": "mx.serviciodecorreo.es"
+  },
+  {
+    "id": "PROP-CAMARA-0316",
+    "name": "J2 Aluminio y PVC S.L.",
+    "revenue": 3100000,
+    "oldEmail": "info@j2aluminioypvc.com",
+    "newEmail": "compras@j2aluminioypvc.com",
+    "mx": "mail.j2aluminioypvc.com"
+  },
+  {
+    "id": "PROP-VERIF-0021",
+    "name": "Hermanos Enríquez Carpintería S.L.",
+    "revenue": 2900000,
+    "oldEmail": "info@carpinteriadealuminioenmadrid.com",
+    "newEmail": "compras@carpinteriadealuminioenmadrid.com",
+    "mx": "mail.carpinteriadealuminioenmadrid.com"
+  },
+  {
+    "id": "PROP-VERIF-0062",
+    "name": "Aluminer Cerramientos S.L.",
+    "revenue": 2900000,
+    "oldEmail": "info@aluminer.com",
+    "newEmail": "compras@aluminer.com",
+    "mx": "aluminer.com"
+  },
+  {
+    "id": "PROP-CAMARA-0274",
+    "name": "Aluminio en Toledo S.L.",
+    "revenue": 2900000,
+    "oldEmail": "info@aluminioentoledo.com",
+    "newEmail": "compras@aluminioentoledo.com",
+    "mx": "N/A"
+  },
+  {
+    "id": "PROP-CAMARA-0291",
+    "name": "Carpintería Alegría S.L.",
+    "revenue": 2900000,
+    "oldEmail": "info@carpinteriaalegria.com",
+    "newEmail": "compras@carpinteriaalegria.com",
+    "mx": "mx1.hostinger.com"
+  },
+  {
+    "id": "PROP-VERIF-0033",
+    "name": "Vicanut Cerramientos S.L.",
+    "revenue": 2800000,
+    "oldEmail": "info@vicanut.es",
+    "newEmail": "compras@vicanut.es",
+    "mx": "mail.vicanut.es"
+  },
+  {
+    "id": "PROP-CAMARA-0263",
+    "name": "Aludolid Carpintería S.L.",
+    "revenue": 2800000,
+    "oldEmail": "info@aludolid.com",
+    "newEmail": "compras@aludolid.com",
+    "mx": "mx00.ionos.es"
+  },
+  {
+    "id": "PROP-CAMARA-0278",
+    "name": "Talleres Albalate S.L.",
+    "revenue": 2800000,
+    "oldEmail": "info@talleresalbalate.com",
+    "newEmail": "compras@talleresalbalate.com",
+    "mx": "poolmx.dsmail.es"
+  },
+  {
+    "id": "PROP-CAMARA-0314",
+    "name": "AMS Cerramientos S.L.",
+    "revenue": 2800000,
+    "oldEmail": "info@amscerramientos.es",
+    "newEmail": "compras@amscerramientos.es",
+    "mx": "amscerramientos.es"
+  },
+  {
+    "id": "PROP-VERIF-0335",
+    "name": "Aluminios Herrero S.L.",
+    "revenue": 2800000,
+    "oldEmail": "info@aluminiosherrero.es",
+    "newEmail": "compras@aluminiosherrero.es",
+    "mx": "in.proximediaspain.es"
+  },
+  {
+    "id": "PROP-VERIF-0338",
+    "name": "Aluminios Ordax S.L.",
+    "revenue": 2800000,
+    "oldEmail": "info@aluminiosordax.com",
+    "newEmail": "compras@aluminiosordax.com",
+    "mx": "mail.aluminiosordax.com"
+  },
+  {
+    "id": "PROP-CAMARA-0250",
+    "name": "Ventanas Dmartos S.L.",
+    "revenue": 2700000,
+    "oldEmail": "info@ventanasdmartos.com",
+    "newEmail": "compras@ventanasdmartos.com",
+    "mx": "mail.ventanasdmartos.com"
+  },
+  {
+    "id": "PROP-VERIF-0039",
+    "name": "Carpintería Metal Albacete S.L.",
+    "revenue": 2700000,
+    "oldEmail": "info@carpinteriametalalbacete.com",
+    "newEmail": "compras@carpinteriametalalbacete.com",
+    "mx": "mail.carpinteriametalalbacete.com"
+  },
+  {
+    "id": "PROP-CAMARA-0259",
+    "name": "Maycometal S.L.",
+    "revenue": 2700000,
+    "oldEmail": "info@maycometal.es",
+    "newEmail": "compras@maycometal.es",
+    "mx": "mx00.ionos.es"
+  },
+  {
+    "id": "PROP-VERIF-0345",
+    "name": "Creaciones Romero Cerramientos S.L.",
+    "revenue": 2700000,
+    "oldEmail": "contacto@creacionesromero.com",
+    "newEmail": "compras@creacionesromero.com",
+    "mx": "mx01.ionos.es"
+  },
+  {
+    "id": "PROP-CAMARA-0276",
+    "name": "Carpintería de Aluminio Martín Canales S.L.",
+    "revenue": 2600000,
+    "oldEmail": "info@aluminiosmartincanales.com",
+    "newEmail": "compras@aluminiosmartincanales.com",
+    "mx": "mx01.ionos.es"
+  },
+  {
+    "id": "PROP-VERIF-0337",
+    "name": "Aluminios García Moncloa S.L.",
+    "revenue": 2600000,
+    "oldEmail": "info@aluminiosgarciamoncloa.com",
+    "newEmail": "compras@aluminiosgarciamoncloa.com",
+    "mx": "mail.aluminiosgarciamoncloa.com"
+  },
+  {
+    "id": "PROP-CAMARA-0282",
+    "name": "D-Metal Ventanas S.L.",
+    "revenue": 2500000,
+    "oldEmail": "info@d-metal.es",
+    "newEmail": "compras@d-metal.es",
+    "mx": "mail.d-metal.es"
+  },
+  {
+    "id": "PROP-VERIF-0346",
+    "name": "Martín Jiménez Cerramientos S.L.",
+    "revenue": 2500000,
+    "oldEmail": "info@martin-jimenez.es",
+    "newEmail": "compras@martin-jimenez.es",
+    "mx": "mx.martin-jimenez.es"
+  },
+  {
+    "id": "PROP-VERIF-0341",
+    "name": "Metálicas Fernández S.L.",
+    "revenue": 2400000,
+    "oldEmail": "info@metalicasfernandez.com",
+    "newEmail": "compras@metalicasfernandez.com",
+    "mx": "mail.metalicasfernandez.com"
+  },
+  {
+    "id": "PROP-VERIF-0350",
+    "name": "Cerrajería Dugaval S.L.",
+    "revenue": 2400000,
+    "oldEmail": "info@cerrajeriavaldemoro.com",
+    "newEmail": "compras@cerrajeriavaldemoro.com",
+    "mx": "N/A"
+  },
+  {
+    "id": "PROP-VERIF-0344",
+    "name": "Puertas Automáticas La Mancha S.L.",
+    "revenue": 2300000,
+    "oldEmail": "info@puertaslamancha.com",
+    "newEmail": "compras@puertaslamancha.com",
+    "mx": "mx.serviciodecorreo.es"
+  },
+  {
+    "id": "PROP-VERIF-0038",
+    "name": "Carpintería Metálica C&G S.L.",
+    "revenue": 2100000,
+    "oldEmail": "info@carpinteria-de-aluminio-c-g.es",
+    "newEmail": "compras@carpinteria-de-aluminio-c-g.es",
+    "mx": "imap.mail.webnode.com"
+  },
+  {
+    "id": "PROP-VERIF-0349",
+    "name": "Carpintería Metálica Lara S.L.",
+    "revenue": 2100000,
+    "oldEmail": "info@carpinteriametalicalara.com",
+    "newEmail": "compras@carpinteriametalicalara.com",
+    "mx": "mx00.ionos.es"
+  },
+  {
+    "id": "PROP-VERIF-0339",
+    "name": "Carpintería Romoli S.L.",
+    "revenue": 1900000,
+    "oldEmail": "contacto@romoli.es",
+    "newEmail": "compras@romoli.es",
+    "mx": "mx01.ionos.es"
+  },
+  {
+    "id": "PROP-VERIF-0355",
+    "name": "Andamios Ibéricos del Sur S.L. (Iberandamios)",
+    "revenue": 3800000,
+    "oldEmail": "info@iberandamios.com",
+    "newEmail": "compras@iberandamios.com",
+    "mx": "mail.iberandamios.com"
+  },
+  {
+    "id": "PROP-APPR-0358",
+    "name": "Dekovent Proyectos y Envolventes S.L.",
+    "revenue": 3200000,
+    "oldEmail": "info@dekovent.es",
+    "newEmail": "compras@dekovent.es",
+    "mx": "dekovent-es.mail.protection.outlook.com"
+  },
+  {
+    "id": "PROP-APPR-0378",
+    "name": "Krea Façade Engineering (Krea Ingeniería y Consultoría S.L.)",
+    "revenue": 1850000,
+    "oldEmail": "info@kreaingenieria.com",
+    "newEmail": "compras@kreaingenieria.com",
+    "mx": "mail.kreaingenieria.com"
+  },
+  {
+    "id": "PROP-APPR-0379",
+    "name": "Masarea Modular (Jocai Enterprise S.L.)",
+    "revenue": 2800000,
+    "oldEmail": "info@masarea.com",
+    "newEmail": "compras@masarea.com",
+    "mx": "masarea-com.mail.protection.outlook.com"
+  },
+  {
+    "id": "PROP-APPR-0381",
+    "name": "Moodul Casas Modulares (Moodul Viviendas Industrializadas S.L.)",
+    "revenue": 3200000,
+    "oldEmail": "info@moodul.es",
+    "newEmail": "compras@moodul.es",
+    "mx": "ASPMX.L.GOOGLE.COM"
+  },
+  {
+    "id": "PROP-APPR-0383",
+    "name": "Sutoldo S.L.",
+    "revenue": 3500000,
+    "oldEmail": "info@sutoldo.com",
+    "newEmail": "compras@sutoldo.com",
+    "mx": "mx1.hostinger.com"
+  },
+  {
+    "id": "PROP-APPR-0384",
+    "name": "Carpintería de Aluminio Dabega S.L.",
+    "revenue": 1400000,
+    "oldEmail": "info@dabega.es",
+    "newEmail": "compras@dabega.es",
+    "mx": "dabega.es"
+  },
+  {
+    "id": "PROP-APPR-0385",
+    "name": "EspaEner (Espacios Energéticos Autónomos S.L.)",
+    "revenue": 2100000,
+    "oldEmail": "info@espaener.com",
+    "newEmail": "compras@espaener.com",
+    "mx": "mail.nominalia.com"
+  },
+  {
+    "id": "PROP-APPR-0388",
+    "name": "Aluminios Briñas (ALUBRI 2002 S.L.)",
+    "revenue": 850000,
+    "oldEmail": "info@aluminiosbrinas.com",
+    "newEmail": "compras@aluminiosbrinas.com",
+    "mx": "mail.aluminiosbrinas.com"
+  },
+  {
+    "id": "PROP-APPR-0390",
+    "name": "Carpintería de Aluminio M. Zamora, S.L.",
+    "revenue": 1250000,
+    "oldEmail": "info@carpinteriasmanuelzamora.com",
+    "newEmail": "compras@carpinteriasmanuelzamora.com",
+    "mx": "mail.carpinteriasmanuelzamora.com"
+  },
+  {
+    "id": "PROP-APPR-0391",
+    "name": "Aluminios Barriuso, S.L.",
+    "revenue": 1100000,
+    "oldEmail": "info@aluminiosbarriuso.es",
+    "newEmail": "compras@aluminiosbarriuso.es",
+    "mx": "mail.aluminiosbarriuso.es"
+  },
+  {
+    "id": "PROP-APPR-0393",
+    "name": "Talleres Govi, S.L.",
+    "revenue": 1750000,
+    "oldEmail": "info@govi.es",
+    "newEmail": "compras@govi.es",
+    "mx": "mail.govi.es"
+  },
+  {
+    "id": "PROP-APPR-0396",
+    "name": "Aluminios Ciupal, S.L.",
+    "revenue": 1650000,
+    "oldEmail": "info@aluminiosciupal.com",
+    "newEmail": "compras@aluminiosciupal.com",
+    "mx": "mail.aluminiosciupal.com"
+  },
+  {
+    "id": "PROP-APPR-0397",
+    "name": "Hierro y Aluminio Entero 2020, S.L. (Ventacol)",
+    "revenue": 850000,
+    "oldEmail": "info@ventacol.com",
+    "newEmail": "compras@ventacol.com",
+    "mx": "ventacol.com"
+  },
+  {
+    "id": "PROP-APPR-0408",
+    "name": "Ideco Mosquiteras S.L.",
+    "revenue": 3200000,
+    "oldEmail": "info@ideco-spain.es",
+    "newEmail": "compras@ideco-spain.es",
+    "mx": "ideco-spain.es"
+  }
+]

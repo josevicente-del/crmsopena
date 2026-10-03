@@ -1,0 +1,322 @@
+[
+  {
+    "id": "PROP-EMPRESITE-0305",
+    "name": "Kallan Doors S.L.",
+    "revenue": 8500000,
+    "oldEmail": "info@kallandoors.com",
+    "newEmail": "compras@kallandoors.com",
+    "mx": "kallandoors-com.mail.protection.outlook.com"
+  },
+  {
+    "id": "PROP-EMPRESITE-0308",
+    "name": "IPAT Ibérica S.L.",
+    "revenue": 8500000,
+    "oldEmail": "info@ipat.es",
+    "newEmail": "compras@ipat.es",
+    "mx": "mx00.ionos.es"
+  },
+  {
+    "id": "PROP-METAL-0241",
+    "name": "Comercial de Aluminio y Metales S.L. (COMAL)",
+    "revenue": 8500000,
+    "oldEmail": "info@comal.es",
+    "newEmail": "compras@comal.es",
+    "mx": "comal-es.mail.protection.outlook.com"
+  },
+  {
+    "id": "PROP-DISTRIB-0320",
+    "name": "ALDAL S.L. (Aluminios de Andalucía y Levante)",
+    "revenue": 8500000,
+    "oldEmail": "info@aldalsl.es",
+    "newEmail": "compras@aldalsl.es",
+    "mx": "mail.aldalsl.es"
+  },
+  {
+    "id": "PROP-PADEL-0222",
+    "name": "PadelMagic S.L.",
+    "revenue": 8400000,
+    "oldEmail": "contacto@padelmagic.es",
+    "newEmail": "compras@padelmagic.es",
+    "mx": "aspmx.l.google.com"
+  },
+  {
+    "id": "PROP-METAL-0240",
+    "name": "Rayter S.L.",
+    "revenue": 7800000,
+    "oldEmail": "info@rayter.es",
+    "newEmail": "compras@rayter.es",
+    "mx": "rayter-es.mail.protection.outlook.com"
+  },
+  {
+    "id": "PROP-EMPRESITE-0306",
+    "name": "Sitab System S.L.",
+    "revenue": 7500000,
+    "oldEmail": "info@sitab.es",
+    "newEmail": "compras@sitab.es",
+    "mx": "sitab-es.mail.protection.outlook.com"
+  },
+  {
+    "id": "PROP-DISTRIB-0321",
+    "name": "Mercaluminio S.L.",
+    "revenue": 7000000,
+    "oldEmail": "info@mercaluminio.com",
+    "newEmail": "compras@mercaluminio.com",
+    "mx": "mail.mercaluminio.com"
+  },
+  {
+    "id": "PROP-CAMARA-0252",
+    "name": "Macrisal S.L.",
+    "revenue": 6800000,
+    "oldEmail": "info@macrisal.com",
+    "newEmail": "compras@macrisal.com",
+    "mx": "mx01.ionos.es"
+  },
+  {
+    "id": "PROP-CAMARA-0309",
+    "name": "Industrias Calvo S.A.",
+    "revenue": 6800000,
+    "oldEmail": "info@industriascalvo.com",
+    "newEmail": "compras@industriascalvo.com",
+    "mx": "mail.industriascalvo.com"
+  },
+  {
+    "id": "PROP-APPR-0366",
+    "name": "Fachadas e Ingeniería Manchega S.L. (Faimursa)",
+    "revenue": 6800000,
+    "oldEmail": "info@faimursa.es",
+    "newEmail": "compras@faimursa.es",
+    "mx": "MX Corporativo"
+  },
+  {
+    "id": "PROP-APPR-0363",
+    "name": "Alumuro Montajes y Envolventes S.L.",
+    "revenue": 6400000,
+    "oldEmail": "info@alumuro.com",
+    "newEmail": "compras@alumuro.com",
+    "mx": "alumuro.com"
+  },
+  {
+    "id": "PROP-CNAE-0218",
+    "name": "ROGROUP Aluminio S.L.",
+    "revenue": 6200000,
+    "oldEmail": "info@rogroup.es",
+    "newEmail": "compras@rogroup.es",
+    "mx": "rogroup.es"
+  },
+  {
+    "id": "PROP-APPR-0382",
+    "name": "Grupo Toldero Sol España S.A.",
+    "revenue": 6200000,
+    "oldEmail": "info@grupotoldero.com",
+    "newEmail": "compras@grupotoldero.com",
+    "mx": "mx01.ionos.es"
+  },
+  {
+    "id": "PROP-CAMARA-0272",
+    "name": "Pertisa (Perfiles y Tubos de Aluminio S.L.)",
+    "revenue": 5800000,
+    "oldEmail": "info@pertisa.com",
+    "newEmail": "compras@pertisa.com",
+    "mx": "MX Corporativo"
+  },
+  {
+    "id": "PROP-APPR-0370",
+    "name": "Puertas Frigoríficas La Mancha S.L.",
+    "revenue": 5700000,
+    "oldEmail": "info@frigorificaslamancha.es",
+    "newEmail": "compras@frigorificaslamancha.es",
+    "mx": "MX Corporativo"
+  },
+  {
+    "id": "PROP-CAMARA-0268",
+    "name": "Exdeal Paneles de Aluminio S.L.",
+    "revenue": 5600000,
+    "oldEmail": "info@exdeal.es",
+    "newEmail": "compras@exdeal.es",
+    "mx": "mail.exdeal.es"
+  },
+  {
+    "id": "PROP-APPR-0398",
+    "name": "Zanzar Iberia S.L.",
+    "revenue": 5500000,
+    "oldEmail": "info@zanzar.es",
+    "newEmail": "compras@zanzar.es",
+    "mx": "correo.markha.io"
+  },
+  {
+    "id": "PROP-CNAE-0219",
+    "name": "Quinapa S.L.",
+    "revenue": 5400000,
+    "oldEmail": "info@quinapa.com",
+    "newEmail": "compras@quinapa.com",
+    "mx": "mail.quinapa.com"
+  },
+  {
+    "id": "PROP-CAMARA-0313",
+    "name": "R. Rubio S.A.",
+    "revenue": 5400000,
+    "oldEmail": "info@rrubiosa.com",
+    "newEmail": "compras@rrubiosa.com",
+    "mx": "mx.rrubiosa.com"
+  },
+  {
+    "id": "PROP-CAMARA-0251",
+    "name": "Noumetall Sistemes S.L.",
+    "revenue": 5200000,
+    "oldEmail": "info@noumetall.com",
+    "newEmail": "compras@noumetall.com",
+    "mx": "aspmx.l.google.com"
+  },
+  {
+    "id": "PROP-CAMARA-0266",
+    "name": "Arteal Carpintería S.L.",
+    "revenue": 5200000,
+    "oldEmail": "info@arteal.gal",
+    "newEmail": "compras@arteal.gal",
+    "mx": "MX Corporativo"
+  },
+  {
+    "id": "PROP-CAMARA-0318",
+    "name": "Soman PVC y Aluminio S.L.",
+    "revenue": 5200000,
+    "oldEmail": "info@somanpvc.com",
+    "newEmail": "compras@somanpvc.com",
+    "mx": "mail.somanpvc.com"
+  },
+  {
+    "id": "PROP-CAMARA-0233",
+    "name": "Leiholan Orio S.L.",
+    "revenue": 5100000,
+    "oldEmail": "info@leiholan.com",
+    "newEmail": "compras@leiholan.com",
+    "mx": "mail.nominalia.com"
+  },
+  {
+    "id": "PROP-CAMARA-0258",
+    "name": "Grupo Garrido Metálicas S.L.",
+    "revenue": 5100000,
+    "oldEmail": "info@grupogarrido.net",
+    "newEmail": "compras@grupogarrido.net",
+    "mx": "smtp.rzone.de"
+  },
+  {
+    "id": "PROP-VERIF-0353",
+    "name": "Escaleras Alhama S.L. (Escalera Europea)",
+    "revenue": 5100000,
+    "oldEmail": "info@escalera-europea.com",
+    "newEmail": "compras@escalera-europea.com",
+    "mx": "cp80.webempresa.eu"
+  },
+  {
+    "id": "PROP-APPR-0364",
+    "name": "Eurocode 9 Fachadas Ligeras S.L.",
+    "revenue": 5100000,
+    "oldEmail": "info@eurocode9.es",
+    "newEmail": "compras@eurocode9.es",
+    "mx": "MX Corporativo"
+  },
+  {
+    "id": "PROP-APPR-0357",
+    "name": "Carrocerías Subiela S.L.",
+    "revenue": 4850000,
+    "oldEmail": "info@subiela.es",
+    "newEmail": "compras@subiela.es",
+    "mx": "mx.minikube.com"
+  },
+  {
+    "id": "PROP-CNAE-0220",
+    "name": "Luminosos Mera S.L.",
+    "revenue": 4800000,
+    "oldEmail": "info@luminososmera.com",
+    "newEmail": "compras@luminososmera.com",
+    "mx": "mail.luminososmera.com"
+  },
+  {
+    "id": "PROP-METAL-0243",
+    "name": "Siwell Soluciones Metálicas S.L.",
+    "revenue": 4800000,
+    "oldEmail": "info@siwell.es",
+    "newEmail": "compras@siwell.es",
+    "mx": "mx.serviciodecorreo.es"
+  },
+  {
+    "id": "PROP-CAMARA-0264",
+    "name": "Alumcor Galicia S.L.",
+    "revenue": 4800000,
+    "oldEmail": "info@alumcorgalicia.com",
+    "newEmail": "compras@alumcorgalicia.com",
+    "mx": "mx.alumcorgalicia.com"
+  },
+  {
+    "id": "PROP-CAMARA-0283",
+    "name": "Nortermic Cerramientos S.L.",
+    "revenue": 4700000,
+    "oldEmail": "info@nortermic.com",
+    "newEmail": "compras@nortermic.com",
+    "mx": "f3.dsxare.net"
+  },
+  {
+    "id": "PROP-CAMARA-0234",
+    "name": "MaxMetal CR S.L.",
+    "revenue": 4600000,
+    "oldEmail": "info@maxmetalcr.com",
+    "newEmail": "compras@maxmetalcr.com",
+    "mx": "maxmetalcr.com"
+  },
+  {
+    "id": "PROP-CAMARA-0289",
+    "name": "AMG Sistemas de Aluminio S.L.",
+    "revenue": 4600000,
+    "oldEmail": "info@amgsistemas.com",
+    "newEmail": "compras@amgsistemas.com",
+    "mx": "MX Corporativo"
+  },
+  {
+    "id": "PROP-CAMARA-0317",
+    "name": "Tecnovent (Vento La Mancha S.L.)",
+    "revenue": 4600000,
+    "oldEmail": "info@tecnovent.es",
+    "newEmail": "compras@tecnovent.es",
+    "mx": "mail.tecnovent.es"
+  },
+  {
+    "id": "PROP-VERIF-0141",
+    "name": "Alumdec S.L.",
+    "revenue": 4500000,
+    "oldEmail": "info@alumdec.com",
+    "newEmail": "compras@alumdec.com",
+    "mx": "mx01.ionos.es"
+  },
+  {
+    "id": "PROP-APPR-0406",
+    "name": "Griesser Persianas y Estores S.L.",
+    "revenue": 4500000,
+    "oldEmail": "info@griesser.es",
+    "newEmail": "compras@griesser.es",
+    "mx": "griesser-es.mail.protection.outlook.com"
+  },
+  {
+    "id": "PROP-VERIF-0123",
+    "name": "Novo-Glass S.L.",
+    "revenue": 4400000,
+    "oldEmail": "info@novo-glass.es",
+    "newEmail": "compras@novo-glass.es",
+    "mx": "mx.serviciodecorreo.es"
+  },
+  {
+    "id": "PROP-APPR-0365",
+    "name": "Mamparas y Divisiones Mampromar S.L.",
+    "revenue": 4300000,
+    "oldEmail": "info@mampromar.com",
+    "newEmail": "compras@mampromar.com",
+    "mx": "MX Corporativo"
+  },
+  {
+    "id": "PROP-VERIF-0045",
+    "name": "Aluminios Castilla León S.L.",
+    "revenue": 4200000,
+    "oldEmail": "info@aluminioscastillaleon.com",
+    "newEmail": "compras@aluminioscastillaleon.com",
+    "mx": "mx01.ionos.es"
+  }
+]

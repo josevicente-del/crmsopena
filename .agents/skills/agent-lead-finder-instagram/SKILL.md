@@ -11,7 +11,13 @@ Esta skill define el procedimiento estricto para la búsqueda, cualificación, v
 ## 1. Fuentes de Prospección
 - **Instagram:** Descubrimiento mediante proyectos reales, fotos de obras, cerramientos, muros cortina y etiquetado industrial.
 - **LinkedIn:** Verificación de organigrama, responsables de compras/técnicos y plantilla.
-- **Fuentes Financieras y Mercantiles:** eInforma, Axesor, Iberinform, elEconomista y Registro Mercantil para auditoría de facturación y solvencia.
+- **Directorios y Patronales Sectoriales:**
+  - **Novoperfil (novoperfil.com):** Directorio nacional y portal de referencia en carpintería, cerramientos y fachadas de aluminio.
+  - **FEMVAL (femval.es):** Censo industrial de la Federación Empresarial Metalúrgica Valenciana.
+  - **AECIM (aecim.org):** Registro sectorial de empresas del metal, muros cortina y cerramientos de la Comunidad de Madrid.
+- **Fuentes Financieras y Mercantiles B2B:**
+  - **Axesor (axesor.es):** Auditoría mercantil, scoring de solvencia y filtro estricto de facturación > 5.000.000 €.
+  - **eInforma, Iberinform, elEconomista y Registro Mercantil:** Contraste de balances, administradores y evolución del negocio.
 
 ## 2. Restricción Temporal Estricta
 - **Antigüedad máxima:** Publicaciones con **menos de 3 meses de antigüedad** (a partir de junio de 2026).

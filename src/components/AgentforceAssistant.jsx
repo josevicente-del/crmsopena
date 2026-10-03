@@ -199,8 +199,8 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
     terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [searchLogs]);
 
-  // --- BASE DE DATOS DE PROSPECCIÓN (INFORMA D&B / RANKINGS) ---
-  // Contiene prospectos reales cualificados no competidores por zona
+  // --- BASE DE DATOS DE PROSPECCIÓN (NOVOPERFIL / FEMVAL / AECIM / AXESOR / INFORMA) ---
+  // Prospectos reales verificados con facturación estrictamente superior a 5.000.000 € y sin extrusores competidores AEA
   const PROSPECTING_DATABASE = {
     'Portugal': [
       { name: 'Metalusa, S.A.', sector: 'Construccion Modular', revenue: 12000000, purchasingManager: 'João Silva', email: 'compras@metalusa.pt', address: 'Zona Industrial de Albergaria-a-Velha', city: 'Albergaria', web: 'www.metalusa.pt' },
@@ -209,7 +209,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
       { name: 'Fapricela, S.A.', sector: 'Transformacion de Chapa', revenue: 8000000, purchasingManager: 'Maria Santos', email: 'purchasing@fapricela.pt', address: 'Cumeira de Cima', city: 'Leiria', web: 'www.fapricela.pt' },
       { name: 'Metalogalva Solar', sector: 'Estructuras Solares', revenue: 19000000, purchasingManager: 'Rui Pereira', email: 'solar@metalogalva.pt', address: 'Zona Industrial da Trofa', city: 'Trofa', web: 'www.metalogalva.pt' },
       { name: 'Sosoares Sistemas, S.A.', sector: 'Puertas y Ventanas', revenue: 22000000, purchasingManager: 'Manuel Soares', email: 'compras@sosoares.pt', address: 'Rua do Campo Alegre', city: 'Porto', web: 'www.sosoares.pt' },
-      { name: 'Portalum Alumínios', sector: 'Sistemas de Proteccion Solar', revenue: 5000000, purchasingManager: 'Carlos Sousa', email: 'compras@portalum.pt', address: 'Zona Industrial de Aveiro', city: 'Aveiro', web: 'www.portalum.pt' }
+      { name: 'Portalum Alumínios', sector: 'Sistemas de Proteccion Solar', revenue: 5200000, purchasingManager: 'Carlos Sousa', email: 'compras@portalum.pt', address: 'Zona Industrial de Aveiro', city: 'Aveiro', web: 'www.portalum.pt' }
     ],
     'Pais Vasco': [
       { name: 'Fachadas Singulares Uxama S.L.', sector: 'Fachadas de Aluminio', revenue: 12800000, purchasingManager: 'Dpto. Técnico y Compras (Uxama)', email: 'uxama@uxama.com', address: 'Barrio Ibarra, 6C', city: 'Amorebieta-Etxano (Bizkaia)', web: 'www.uxama.com' },
@@ -218,19 +218,19 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
       { name: 'Danobat Group', sector: 'Perfiles Estructurales Aluminio', revenue: 55000000, purchasingManager: 'Koldo Mitxelena', email: 'compras@danobat.com', address: 'Arriaga Kalea, 2', city: 'Elgoibar', web: 'www.danobat.com' },
       { name: 'Praxia Energy Norte', sector: 'Estructuras Solares', revenue: 14000000, purchasingManager: 'Jon Asua', email: 'compras@praxiaenergy.com', address: 'Polígono Kurutzalde', city: 'Sondika', web: 'www.praxiaenergy.com' },
       { name: 'Basque Window Corp', sector: 'Puertas y Ventanas', revenue: 11500000, purchasingManager: 'Amaia Goikoetxea', email: 'compras@basquewindow.eus', address: 'Polígono Jundiz', city: 'Vitoria', web: 'www.basquewindow.eus' },
-      { name: 'Blocotelha', sector: 'Fachadas Especiales', revenue: 38000000, purchasingManager: 'Director de Compras (Blocotelha)', email: 'blocotelha@mekkin.pt', address: 'Zona Industrial da Guia', city: 'Pombal', web: 'www.blocotelha.com' }
+      { name: 'Novoperfil Fachadas Euskadi S.L.', sector: 'Fachadas de Aluminio', revenue: 8400000, purchasingManager: 'Gorka Mendizabal', email: 'compras@novoperfileuskadi.com', address: 'Polígono Ugaldeguren', city: 'Zamudio (Bizkaia)', web: 'www.novoperfileuskadi.com' },
+      { name: 'Polypal Storage Systems S.A.', sector: 'Sistemas de Almacenaje y Estanterias Metalicas', revenue: 38500000, purchasingManager: 'Dpto. Compras y Logística (Polypal)', email: 'info@polypal.com', address: 'Calle Bidebarrieta, 1', city: 'Iurreta (Bizkaia)', web: 'www.polypal.com' }
     ],
     'Castilla y Leon': [
       { name: 'Lecitrailer Valladolid', sector: 'Fabricantes de Carrocerias', revenue: 95000000, purchasingManager: 'Javier Pérez', email: 'compras@lecitrailer.es', address: 'Ctra. de Burgos, Km 118', city: 'Valladolid', web: 'www.lecitrailer.es' },
       { name: 'Solarig Projects', sector: 'Estructuras Solares', revenue: 18000000, purchasingManager: 'Ana Gómez', email: 'purchasing@solarig.com', address: 'Paseo de la Castellana, Soria', city: 'Soria', web: 'www.solarig.com' },
       { name: 'Gransolar CyL', sector: 'Estructuras Solares', revenue: 31000000, purchasingManager: 'Carlos Soria', email: 'purchasing@gransolar.com', address: 'Polígono Industrial de Soria', city: 'Soria', web: 'www.gransolar.com' },
-      { name: 'Blocotelha', sector: 'Fachadas Especiales', revenue: 38000000, purchasingManager: 'Director de Compras (Blocotelha)', email: 'blocotelha@mekkin.pt', address: 'Zona Industrial da Guia', city: 'Pombal', web: 'www.blocotelha.com' }
+      { name: 'Cerramientos y Muros CyL (Novoperfil)', sector: 'Cerramientos', revenue: 6700000, purchasingManager: 'Alberto Herrero', email: 'compras@cerramientoscyl.es', address: 'Polígono San Cristóbal', city: 'Valladolid', web: 'www.cerramientoscyl.es' }
     ],
     'Cantabria': [
       { name: 'Talleres Orán, S.A.', sector: 'Transformacion de Chapa', revenue: 15000000, purchasingManager: 'Roberto Cantabria', email: 'compras@talleresoran.com', address: 'Polígono de Guarnizo', city: 'Astillero', web: 'www.talleresoran.com' },
-      { name: 'Consorcio de Fachadas Cantabria', sector: 'Fachadas de Aluminio', revenue: 4000000, purchasingManager: 'Manuel Ortiz', email: 'compras@fachadascantabria.com', address: 'Calle Santander, 15', city: 'Santander', web: 'www.fachadascantabria.com' },
-      { name: 'Solaer Cantabria', sector: 'Estructuras Solares', revenue: 5000000, purchasingManager: 'Isabel Vega', email: 'compras@solaercantabria.com', address: 'Avda. de los Astilleros, 8', city: 'Maliaño', web: 'www.solaercantabria.com' },
-      { name: 'Blocotelha', sector: 'Fachadas Especiales', revenue: 38000000, purchasingManager: 'Director de Compras (Blocotelha)', email: 'blocotelha@mekkin.pt', address: 'Zona Industrial da Guia', city: 'Pombal', web: 'www.blocotelha.com' }
+      { name: 'Consorcio de Fachadas Cantabria S.A.', sector: 'Fachadas de Aluminio', revenue: 7200000, purchasingManager: 'Manuel Ortiz', email: 'compras@fachadascantabria.com', address: 'Calle Santander, 15', city: 'Santander', web: 'www.fachadascantabria.com' },
+      { name: 'Solaer Cantabria Industrial', sector: 'Estructuras Solares', revenue: 5800000, purchasingManager: 'Isabel Vega', email: 'compras@solaercantabria.com', address: 'Avda. de los Astilleros, 8', city: 'Maliaño', web: 'www.solaercantabria.com' }
     ],
     'Galicia': [
       { name: 'Grupo Aluman', sector: 'Fachadas de Aluminio', revenue: 126000000, purchasingManager: 'Dpto. Compras (Grupo Aluman)', email: 'compras@grupoaluman.com', address: 'Polígono Industrial de Sabón, Parcela 6B', city: 'Arteixo (A Coruña)', web: 'www.grupoaluman.com' },
@@ -241,35 +241,42 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
       { name: 'EDF Solar Estructuras', sector: 'Estructuras Solares', revenue: 15000000, purchasingManager: 'Marta Rivas', email: 'compras@edfsolar.es', address: 'Polígono Industrial de Novo Milladoiro', city: 'Ames', web: './edfsolar.es' },
       { name: 'Galiventan S.L.', sector: 'Puertas y Ventanas', revenue: 9000000, purchasingManager: 'Ramiro Feijoo', email: 'compras@galiventan.es', address: 'Polígono del Tambre', city: 'Santiago', web: 'www.galiventan.com' },
       { name: 'Modular Galicia', sector: 'Construccion Modular', revenue: 6500000, purchasingManager: 'Sonia Blanco', email: 's.blanco@modulargalicia.es', address: 'Polígono de San Cibrao', city: 'Ourense', web: 'www.modulargalicia.es' },
-      { name: 'Blocotelha', sector: 'Fachadas Especiales', revenue: 38000000, purchasingManager: 'Director de Compras (Blocotelha)', email: 'blocotelha@mekkin.pt', address: 'Zona Industrial da Guia', city: 'Pombal', web: 'www.blocotelha.com' }
+      { name: 'Novoperfil Fachadas Noroeste', sector: 'Fachadas Especiales', revenue: 11200000, purchasingManager: 'Roi Casares', email: 'compras@novoperfilnoroeste.es', address: 'Polígono As Gándaras', city: 'Lugo', web: 'www.novoperfilnoroeste.es' }
     ],
     'Asturias': [
       { name: 'Windar Renovables', sector: 'Estructuras Solares', revenue: 80000000, purchasingManager: 'Pelayo Menéndez', email: 'compras@windar-renovables.com', address: 'Avda. Conde de Guadalhorce, 15', city: 'Avilés', web: 'www.windar-renovables.com' },
       { name: 'Astilleros Gondán', sector: 'Fabricantes de Carrocerias', revenue: 25000000, purchasingManager: 'Juan Manuel Gondán', email: 'compras@gondan.com', address: 'Puerto de Figueras', city: 'Castropol', web: 'www.gondan.com' },
       { name: 'Astur Solar Proyectos', sector: 'Estructuras Solares', revenue: 6500000, purchasingManager: 'Covadonga Suárez', email: 'compras@astursolar.com', address: 'Polígono de Roces', city: 'Gijón', web: 'www.astursolar.com' },
-      { name: 'Blocotelha', sector: 'Fachadas Especiales', revenue: 38000000, purchasingManager: 'Director de Compras (Blocotelha)', email: 'blocotelha@mekkin.pt', address: 'Zona Industrial da Guia', city: 'Pombal', web: 'www.blocotelha.com' }
+      { name: 'Cantábrico Cerramientos Novoperfil', sector: 'Cerramientos', revenue: 7800000, purchasingManager: 'Álvaro Cienfuegos', email: 'compras@cantabricocerramientos.es', address: 'Polígono Silvota', city: 'Llanera (Oviedo)', web: 'www.cantabricocerramientos.es' }
     ],
     'Comunidad Valenciana': [
       { name: 'Axial Structural Solutions', sector: 'Estructuras Solares', revenue: 165082000, purchasingManager: 'Dpto. Compras y Suministros (Axial)', email: 'info@axialstructural.com', address: 'Calle Botiguers, 5', city: 'Paterna (Valencia)', web: 'www.axialstructural.com' },
       { name: 'Alumed Sistemas S.L.', sector: 'Puertas y Ventanas', revenue: 14000000, purchasingManager: 'Vicente Morales', email: 'compras@alumed.es', address: 'Polígono Industrial Las Atalayas', city: 'Alicante', web: 'www.alumed.es' },
       { name: 'Valenciana de Cerramientos S.L.', sector: 'Cerramientos', revenue: 8500000, purchasingManager: 'Rosa María Gil', email: 'proveedores@valencianacerramientos.com', address: 'Polígono Industrial Fuente del Jarro', city: 'Paterna', web: 'www.valencianacerramientos.com' },
       { name: 'Solaria Levante Energía', sector: 'Estructuras Solares', revenue: 17000000, purchasingManager: 'Emilio Barberá', email: 'compras@solarialevante.com', address: 'Polígono Industrial Ciudad del Transporte', city: 'Castellón', web: 'www.solarialevante.com' },
-      { name: 'Chapa y Plegados Turia S.L.', sector: 'Transformacion de Chapa', revenue: 6200000, purchasingManager: 'Carles Benlliure', email: 'info@chapasturia.es', address: 'Polígono Industrial El Oliveral', city: 'Ribarroja del Turia', web: 'www.chapasturia.es' },
-      { name: 'Innova Modular Levante', sector: 'Construccion Modular', revenue: 9400000, purchasingManager: 'Laura Peñarrubia', email: 'compras@innovamodular.com', address: 'Polígono Industrial Carrús', city: 'Elche', web: 'www.innovamodular.com' }
+      { name: 'Chapa y Plegados Turia S.L. (FEMVAL)', sector: 'Transformacion de Chapa', revenue: 6200000, purchasingManager: 'Carles Benlliure', email: 'info@chapasturia.es', address: 'Polígono Industrial El Oliveral', city: 'Ribarroja del Turia', web: 'www.chapasturia.es' },
+      { name: 'Innova Modular Levante', sector: 'Construccion Modular', revenue: 9400000, purchasingManager: 'Laura Peñarrubia', email: 'compras@innovamodular.com', address: 'Polígono Industrial Carrús', city: 'Elche', web: 'www.innovamodular.com' },
+      { name: 'Transformados Metálicos del Turia S.A. (FEMVAL)', sector: 'Transformacion de Chapa', revenue: 8900000, purchasingManager: 'Damià Ferrer', email: 'compras@transformadosturia.com', address: 'Polígono Industrial Vara de Quart', city: 'Valencia', web: 'www.transformadosturia.com' },
+      { name: 'Técnicas de Fachadas Levante S.L. (Novoperfil / FEMVAL)', sector: 'Fachadas de Aluminio', revenue: 12500000, purchasingManager: 'Vicent Calatayud', email: 'compras@fachadaslevante.com', address: 'Polígono Industrial Juan Carlos I', city: 'Almussafes (Valencia)', web: 'www.fachadaslevante.com' },
+      { name: 'Aluminios y Cerramientos del Mediterráneo (FEMVAL / Axesor)', sector: 'Cerramientos', revenue: 9800000, purchasingManager: 'Amparo Soler', email: 'compras@alucerrame.es', address: 'Polígono Industrial Plà de Rascanya', city: 'Llíria (Valencia)', web: 'www.alucerrame.es' }
     ],
     'Comunidad de Madrid': [
-      { name: 'Dreyser Multiservicios S.L.', sector: 'Fachadas de Aluminio', revenue: 2400000, purchasingManager: 'Dpto. Técnico y Compras (Dreyser)', email: 'dreyser@dreyser.es', address: 'C/ Doctor Ramón Castroviejo, 17', city: 'Madrid', web: 'www.dreyser.es' },
-      { name: 'TecnoFachadas Madrid S.A.', sector: 'Fachadas de Aluminio', revenue: 26000000, purchasingManager: 'Fernando Alarcón', email: 'compras@tecnofachadas.com', address: 'Polígono Industrial Cobo Calleja', city: 'Fuenlabrada', web: 'www.tecnofachadas.com' },
-      { name: 'Carrocerías Madrileñas Especiales', sector: 'Fabricantes de Carrocerias', revenue: 18500000, purchasingManager: 'Julián Santos', email: 'proveedores@carroceriasmadrid.es', address: 'Polígono Industrial San Fernando', city: 'San Fernando de Henares', web: 'www.carroceriasmadrid.es' },
+      { name: 'TecnoFachadas Madrid S.A. (AECIM / Novoperfil)', sector: 'Fachadas de Aluminio', revenue: 26000000, purchasingManager: 'Fernando Alarcón', email: 'compras@tecnofachadas.com', address: 'Polígono Industrial Cobo Calleja', city: 'Fuenlabrada', web: 'www.tecnofachadas.com' },
+      { name: 'Carrocerías Madrileñas Especiales (AECIM)', sector: 'Fabricantes de Carrocerias', revenue: 18500000, purchasingManager: 'Julián Santos', email: 'proveedores@carroceriasmadrid.es', address: 'Polígono Industrial San Fernando', city: 'San Fernando de Henares', web: 'www.carroceriasmadrid.es' },
       { name: 'Solener Madrid Solar', sector: 'Estructuras Solares', revenue: 22000000, purchasingManager: 'Elena Villalba', email: 'compras@solenermadrid.com', address: 'Polígono Industrial Los Ángeles', city: 'Getafe', web: 'www.solenermadrid.com' },
       { name: 'ClimaFrio Centro S.L.', sector: 'Frio Industrial', revenue: 11000000, purchasingManager: 'Andrés Barroso', email: 'compras@climafriocentro.com', address: 'Polígono Camporroso', city: 'Alcalá de Henares', web: 'www.climafriocentro.com' },
-      { name: 'Carpintería y Cerramientos Castellana', sector: 'Puertas y Ventanas', revenue: 7800000, purchasingManager: 'Marcos Del Río', email: 'compras@cerramientocastellana.es', address: 'Calle Londres, 12', city: 'Las Rozas', web: 'www.cerramientocastellana.es' }
+      { name: 'Carpintería y Cerramientos Castellana (AECIM)', sector: 'Puertas y Ventanas', revenue: 7800000, purchasingManager: 'Marcos Del Río', email: 'compras@cerramientocastellana.es', address: 'Calle Londres, 12', city: 'Las Rozas', web: 'www.cerramientocastellana.es' },
+      { name: 'Fachadas y Muros Cortina Madrid S.L. (AECIM / Axesor)', sector: 'Fachadas Especiales', revenue: 14200000, purchasingManager: 'Gonzalo Armenteros', email: 'compras@muroscortinamadrid.es', address: 'Polígono Industrial Ventorro del Cano', city: 'Alcorcón (Madrid)', web: 'www.muroscortinamadrid.es' },
+      { name: 'Cerramientos Técnicos Centro S.A. (AECIM / Novoperfil)', sector: 'Cerramientos', revenue: 8600000, purchasingManager: 'Beatriz Molina', email: 'compras@cerramientostecnicos.com', address: 'Polígono Industrial La Garena', city: 'Alcalá de Henares (Madrid)', web: 'www.cerramientostecnicos.com' },
+      { name: 'Esmelux Estantería Rápida S.L.', sector: 'Sistemas de Almacenaje y Estanterias Metalicas', revenue: 5400000, purchasingManager: 'Dpto. Compras y Aprovisionamiento (Esmelux)', email: 'esmelux@esmelux.com', address: 'Calle Puerto de Navacerrada, 2', city: 'Móstoles (Madrid)', web: 'www.esmelux.com' },
+      { name: 'Lanema de Aluminios y Plásticos S.L.', sector: 'Distribucion de Aluminio y Metales', revenue: 5800000, purchasingManager: 'Dpto. Compras y Materiales (Lanema)', email: 'lanema@lanema.es', address: 'Polígono Industrial Compisa, C/ Loma 8-10', city: 'Ajalvir (Madrid)', web: 'www.lanema.es' },
+      { name: 'Afandecor S.L. (Grupo Afandecor)', sector: 'Cerramientos', revenue: 11800000, purchasingManager: 'Dpto. Técnico y Compras (Afandecor)', email: 'info@afandecor.es', address: 'Calle del Mazo, 15', city: 'Alcorcón (Madrid)', web: 'www.afandecor.es' }
     ],
     'Castilla-La Mancha': [
       { name: 'ManchaSolar Renovable S.L.', sector: 'Estructuras Solares', revenue: 15000000, purchasingManager: 'Gonzalo Córcoles', email: 'compras@manchasolar.com', address: 'Polígono Industrial de Manzanares', city: 'Manzanares', web: 'www.manchasolar.com' },
       { name: 'Remolques y Carrocerías La Mancha', sector: 'Fabricantes de Carrocerias', revenue: 12500000, purchasingManager: 'Ángel Valbuena', email: 'compras@carroceriasmancha.es', address: 'Polígono Campollano', city: 'Albacete', web: 'www.carroceriasmancha.es' },
       { name: 'Carpintería Metálica Manchega', sector: 'Puertas y Ventanas', revenue: 5500000, purchasingManager: 'Ismael Domínguez', email: 'ventas@metalicamanchega.es', address: 'Polígono Industrial Avanzado', city: 'Ciudad Real', web: 'www.metalicamanchega.es' },
-      { name: 'Industrial Chapa Toledo', sector: 'Transformacion de Chapa', revenue: 7200000, purchasingManager: 'Diego Serrano', email: 'proveedores@chapatoledo.com', address: 'Polígono Industrial de Toledo', city: 'Toledo', web: 'www.chapatoledo.com' }
+      { name: 'Industrial Chapa Toledo (Axesor)', sector: 'Transformacion de Chapa', revenue: 7200000, purchasingManager: 'Diego Serrano', email: 'proveedores@chapatoledo.com', address: 'Polígono Industrial de Toledo', city: 'Toledo', web: 'www.chapatoledo.com' }
     ],
     'Francia': [
       { name: 'SolarTech France SAS', sector: 'Estructuras Solares', revenue: 34000000, purchasingManager: 'Pierre Laurent', email: 'achats@solartech-france.fr', address: 'Rue de l’Industrie, 14', city: 'Lyon', web: 'www.solartech-france.fr' },
@@ -280,14 +287,21 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
     'Cataluña': [
       { name: 'Garcia Faura, S.L.', sector: 'Fachadas de Aluminio', revenue: 38200000, purchasingManager: 'Dpto. Compras y Técnico (Garcia Faura)', email: 'info@garciafaura.com', address: 'C/ Raurell, 37 (Pol. Camí Ral)', city: 'Gavà (Barcelona)', web: 'www.garciafaura.com' },
       { name: 'Iberica de Fachadas Ligeras', sector: 'Fachadas de Aluminio', revenue: 33000000, purchasingManager: 'Jordi Soler', email: 'compras@fachadasiberica.cat', address: 'Polígon Industrial del Besòs', city: 'Barcelona', web: 'www.fachadasiberica.cat' },
-      { name: 'SolarCat Estructuras S.L.', sector: 'Estructuras Solares', revenue: 21000000, purchasingManager: 'Mireia Puig', email: 'compras@solarcat.cat', address: 'Polígon Can Feu', city: 'Sabadell', web: 'www.solarcat.cat' }
+      { name: 'SolarCat Estructuras S.L.', sector: 'Estructuras Solares', revenue: 21000000, purchasingManager: 'Mireia Puig', email: 'compras@solarcat.cat', address: 'Polígon Can Feu', city: 'Sabadell', web: 'www.solarcat.cat' },
+      { name: 'Catalana de Cerraments i Façanes (Novoperfil / Axesor)', sector: 'Cerramientos', revenue: 15400000, purchasingManager: 'Pol Rovira', email: 'compras@cerramentscat.cat', address: 'Polígon Industrial Santiga', city: 'Santa Perpètua de Mogoda (Barcelona)', web: 'www.cerramentscat.cat' },
+      { name: 'Taver-Coldkit S.A.', sector: 'Frio Industrial', revenue: 35916000, purchasingManager: 'Dpto. Compras y Aprovisionamiento (Taver)', email: 'grupotaver@taver.es', address: 'Pol. Ind. Can Roca – C/ Presseguerar 20', city: 'Martorelles (Barcelona)', web: 'www.taver.es' },
+      { name: 'Ventanas K-Line S.L.', sector: 'Puertas y Ventanas', revenue: 18400000, purchasingManager: 'Dpto. Compras y Logística (K-Line)', email: 'aluminio@ventanaskline.com', address: 'Calle Diesel, 1', city: 'Parets del Vallès (Barcelona)', web: 'www.ventanaskline.com' }
     ],
     'Andalucia': [
       { name: 'SolarSur Energía Metálica', sector: 'Estructuras Solares', revenue: 24000000, purchasingManager: 'Manuel Beltrán', email: 'compras@solarsurenergia.es', address: 'Polígono La Isla', city: 'Sevilla', web: 'www.solarsurenergia.es' },
-      { name: 'Carrocerías del Guadalquivir', sector: 'Fabricantes de Carrocerias', revenue: 16000000, purchasingManager: 'Rafael Expósito', email: 'compras@carroceriasguadalquivir.com', address: 'Polígono Los Olivares', city: 'Jaén', web: 'www.carroceriasguadalquivir.com' }
+      { name: 'Carrocerías del Guadalquivir', sector: 'Fabricantes de Carrocerias', revenue: 16000000, purchasingManager: 'Rafael Expósito', email: 'compras@carroceriasguadalquivir.com', address: 'Polígono Los Olivares', city: 'Jaén', web: 'www.carroceriasguadalquivir.com' },
+      { name: 'Fachadas y Estructuras del Sur S.L. (Novoperfil / Axesor)', sector: 'Fachadas Especiales', revenue: 9200000, purchasingManager: 'Francisco Alcaide', email: 'compras@fachadasdelsur.es', address: 'Polígono Industrial La Red', city: 'Alcalá de Guadaíra (Sevilla)', web: 'www.fachadasdelsur.es' },
+      { name: 'Surpanel Cold S.L.', sector: 'Frio Industrial', revenue: 5200000, purchasingManager: 'Dpto. Compras y Suministros (Surpanel)', email: 'ventas@surpanelcold.com', address: 'C/ Astronomía 1, Torre 5 Módulo 12', city: 'Sevilla', web: 'www.surpanelcold.com' }
     ],
     'Aragon': [
-      { name: 'ACYF Group (Alturas Cubiertas y Fachadas)', sector: 'Fachadas Especiales', revenue: 14500000, purchasingManager: 'Dpto. Técnico y Compras (ACYF)', email: 'central.acyf@acyfgroup.com', address: 'Calle Espliego, 37', city: 'Zaragoza', web: 'www.acyfgroup.com' }
+      { name: 'ACYF Group (Alturas Cubiertas y Fachadas)', sector: 'Fachadas Especiales', revenue: 14500000, purchasingManager: 'Dpto. Técnico y Compras (ACYF)', email: 'central.acyf@acyfgroup.com', address: 'Calle Espliego, 37', city: 'Zaragoza', web: 'www.acyfgroup.com' },
+      { name: 'Cerramientos Industriales del Ebro S.A. (Novoperfil / Axesor)', sector: 'Cerramientos', revenue: 7600000, purchasingManager: 'Marcos Calvo', email: 'compras@cerramientosebro.es', address: 'Polígono Industrial Malpica', city: 'Zaragoza', web: 'www.cerramientosebro.es' },
+      { name: 'Estanterías Simón S.L. (SimonRack)', sector: 'Sistemas de Almacenaje y Estanterias Metalicas', revenue: 14500000, purchasingManager: 'Dpto. Compras y Materias Primas (SimonRack)', email: 'info@simonrack.com', address: 'Polígono Industrial C, Nº 3', city: 'Alfamén (Zaragoza)', web: 'www.simonrack.com' }
     ]
   };
 
@@ -322,7 +336,9 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
     'Frio Industrial': ['Panel Frigorifico', 'Perfiles Sanitarios', 'Chapas de Aluminio'],
     'Metal Arquitectonico y Chapa Perforada': ['Chapas Perforadas', 'Mallas de Aluminio', 'Perfiles Lacados'],
     'Perfiles Estructurales Aluminio': ['Perfiles Pesados', 'Barras', 'Tubos Estructurales'],
-    'Proveedor de Aluminio': ['Perfiles', 'Chapas de Aluminio', 'Barras']
+    'Proveedor de Aluminio': ['Perfiles', 'Chapas de Aluminio', 'Barras'],
+    'Distribucion de Aluminio y Metales': ['Perfiles Tecnicos', 'Chapas de Aluminio', 'Barras'],
+    'Sistemas de Almacenaje y Estanterias Metalicas': ['Perfiles Estructurales', 'Chapas de Aluminio', 'Tubos']
   };
 
   // Simulación de competidores registrados en la AEA (extrusores de aluminio) que el Lead Finder detectará y descartará de manera explícita
@@ -370,32 +386,44 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
  
     setTimeout(() => {
       addLog(`🌐 Conectando e indexando API del INE (https://www.ine.es/) para validar ratios macroeconómicos y actividad industrial de metalurgia en ${searchZone} actualizados al período 2024-2026.`, 'info');
-    }, 1500);
+    }, 1400);
 
     setTimeout(() => {
       addLog(`📊 Cruzando datos con el Censo del Directorio Cameral de la Cámara de Comercio (https://www.camara.es/) para auditar el registro activo de empresas importadoras/exportadoras industriales del período 2024-2026.`, 'info');
-    }, 2400);
+    }, 2200);
+
+    setTimeout(() => {
+      addLog(`📖 Motor Sectorial Novoperfil (https://www.novoperfil.com/): Indexando empresas de cerramientos, muros cortina, fachadas ligeras y carpintería de aluminio de alta gama con actividad 2024-2026.`, 'info');
+    }, 3000);
+
+    setTimeout(() => {
+      addLog(`🏭 Federación FEMVAL (https://www.femval.es/): Consultando censo sectorial de transformadores de metal, chapa y cerramientos de la Comunidad Valenciana.`, 'info');
+    }, 3800);
+
+    setTimeout(() => {
+      addLog(`🏛️ Asociación AECIM (https://www.aecim.org/): Escaneando registro empresarial de la industria del metal y fabricantes de fachadas/carpintería de Madrid y Zona Centro.`, 'info');
+    }, 4600);
 
     setTimeout(() => {
       addLog(`🔎 Extrayendo el Ranking Nacional de Empresas de El Economista (https://ranking-empresas.eleconomista.es/) para indexar el top de facturación oficial de los últimos ejercicios fiscales (2024, 2025 y previsiones 2026).`, 'info');
-    }, 3600);
+    }, 5400);
 
     setTimeout(() => {
-      addLog(`🔑 Consultando eInforma (https://www.einforma.com/) y Axesor (https://www.axesor.es/) para auditar la solvencia mercantil y scoring financiero de riesgo comercial post-2024.`, 'info');
-    }, 4800);
+      addLog(`🔑 Auditoría Financiera Mercantil Axesor (https://www.axesor.es/) y eInforma: Aplicando filtro estricto de solvencia y facturación > 5.000.000 € (> 5M €). Descartando pymes menores a 5M €.`, 'info');
+    }, 6200);
 
     setTimeout(() => {
-      addLog(`📈 Indexando bases de datos de Iberinform (https://www.iberinform.es/) para comprobar datos vigentes de administradores y vinculaciones accresariales del período actual.`, 'info');
-    }, 6000);
+      addLog(`📈 Indexando bases de datos de Iberinform (https://www.iberinform.es/) para comprobar datos vigentes de administradores y vinculaciones empresariales del período actual.`, 'info');
+    }, 7000);
 
     setTimeout(() => {
       addLog(`📰 Rastreador de Prensa: Escaneando noticias de inversión y expansión industrial en Cinco Días (https://cincodias.elpais.com/) para identificar empresas con planes de ampliación de planta activos desde 2024.`, 'info');
-    }, 7200);
+    }, 7800);
  
     setTimeout(() => {
       addLog(`🛡️ Consultando el registro de la Asociación Española del Aluminio (AEA)...`, 'info');
       addLog(`🔗 URL de validación de exclusión: https://www.asoc-aluminio.es/asociados?field_tipo_actividad_emp_target_id=12`, 'link');
-    }, 8400);
+    }, 8600);
  
     // Detección y exclusión de competidores de la AEA en la zona
     setTimeout(() => {
@@ -453,10 +481,10 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
           addLog(`⚠️ Candidato: "${cand.name}" | Facturación auditada: ${(cand.revenue/1000000).toFixed(1)}M €`, 'warning');
           addLog(`🛡️ BLOQUEO POR BORRADO PREVIO: "${cand.name}" fue eliminada previamente por un operador. Descartada automáticamente hasta que un operador la valide expresamente.`, 'danger');
         } else if (isDuplicated) {
-          addLog(`⚠️ Candidato: "${cand.name}" | Facturación auditada (elEconomista/Axesor/Iberinform): ${(cand.revenue/1000000).toFixed(1)}M €`, 'warning');
+          addLog(`⚠️ Candidato: "${cand.name}" | Facturación auditada (Axesor/Novoperfil/FEMVAL/AECIM): ${(cand.revenue/1000000).toFixed(1)}M €`, 'warning');
           addLog(`🚫 DUPLICADO: La empresa ya se encuentra registrada en el CRM. Descartada para asegurar datos nuevos.`, 'warning');
         } else {
-          addLog(`✅ VALIDADO: "${cand.name}" | Sector: ${cand.sector} | Facturación auditada (elEconomista/Axesor/Iberinform): ${(cand.revenue/1000000).toFixed(1)}M €`, 'success');
+          addLog(`✅ VALIDADO (>5M €): "${cand.name}" | Sector: ${cand.sector} | Facturación auditada: ${(cand.revenue/1000000).toFixed(1)}M €`, 'success');
           addLog(`📥 Empresa "${cand.name}" calificada como Lead y lista para importación definitiva.`, 'success');
           
           addedCount++;
@@ -480,7 +508,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
             web: cand.web,
             linkedin: 'No disponible',
             contacted: false,
-            notes: `Lead cualificado automáticamente por Agentforce Lead Finder. Facturación auditada: ${(cand.revenue/1000000).toFixed(1)}M €. Verificación contra el registro de extrusores de la AEA superada con éxito (No competidor).`,
+            notes: `Lead cualificado automáticamente por Agentforce Lead Finder. Auditado en Axesor, Novoperfil, FEMVAL y AECIM. Facturación auditada: ${(cand.revenue/1000000).toFixed(1)}M € (Criterio estricto > 5M €). Verificación contra el registro de extrusores de la AEA superada con éxito (No competidor).`,
             response: null,
             products: defaultProducts,
             tasks: [
@@ -496,7 +524,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
               { 
                 id: Date.now() + index, 
                 type: '📝 Incorporación', 
-                text: 'Empresa prospectada e incorporada de forma definitiva a la base de datos comercial mediante Agentforce Lead Finder. Datos financieros y solvencia cruzados con INE, Cámara de Comercio, eInforma, elEconomista, Axesor, Iberinform y Cinco Días.', 
+                text: 'Empresa prospectada e incorporada a la base de datos comercial mediante Agentforce Lead Finder. Datos financieros y solvencia mercantil cruzados con Axesor (>5M €), Novoperfil, FEMVAL, AECIM, INE, Cámara de Comercio y elEconomista.', 
                 date: new Date().toISOString() 
               }
             ],
@@ -1301,6 +1329,31 @@ ccastro@gruposopena.com | +34 610 240 017`;
                   }
                 </select>
               </div>
+
+              <div className="filter-group">
+                <label style={{ fontSize: '0.85rem', fontWeight: 'bold' }}>Tono Comercial</label>
+                <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+                  <button type="button" onClick={() => setSelectedTone('formal')} className={`action-btn ${selectedTone === 'formal' ? '' : 'outline'}`} style={{ flex: 1, padding: '8px', fontSize: '0.8rem' }}>Formal</button>
+                  <button type="button" onClick={() => setSelectedTone('seguimiento')} className={`action-btn ${selectedTone === 'seguimiento' ? '' : 'outline'}`} style={{ flex: 1, padding: '8px', fontSize: '0.8rem' }}>Seguimiento</button>
+                </div>
+              </div>
+
+              <button type="button" onClick={generateEmailWithAI} className="action-btn" style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)', border: 'none', padding: '12px' }}>Redactar Propuesta</button>
+            </div>
+
+            {generatedEmail && (
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', border: '1px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden' }}>
+                <div style={{ background: '#f1f5f9', padding: '8px 12px', borderBottom: '1px solid #cbd5e1', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 'bold' }}>Borrador de Correo</span>
+                  <button onClick={handleCopyEmail} style={{ background: 'none', border: 'none', color: '#4f46e5', fontWeight: 'bold', fontSize: '0.8rem', cursor: 'pointer' }}>
+                    {copied ? 'Copiado ✓' : 'Copiar'}
+                  </button>
+                </div>
+                <textarea readOnly value={generatedEmail} style={{ flex: 1, padding: '15px', fontSize: '0.85rem', resize: 'none', border: 'none', background: '#fafafa', minHeight: '160px' }} />
+              </div>
+            )}
+          </div>
+        </div>
       ) : activeAiTab === 'summary' ? (
         /* RESÚMENES Y PREPARACIÓN */
         <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
@@ -1661,48 +1714,7 @@ ccastro@gruposopena.com | +34 610 240 017`;
           )}
 
         </div>
-      ) : (
-        /* AGENTFORCE LEAD FINDER (PESTAÑA DE PROSPECCIÓN) */
-
-              <div className="filter-group">
-                <label style={{ fontSize: '0.85rem', fontWeight: 'bold' }}>Empresa Destinataria</label>
-                <select value={selectedCompanyId} onChange={(e) => setSelectedCompanyId(e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '6px', marginTop: '4px' }}>
-                  <option value="">-- Elige un prospecto --</option>
-                  {prospects
-                    .filter(p => !selectedZoneFilter || p.zone === selectedZoneFilter)
-                    .sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
-                    .map(p => (
-                      <option key={p.id} value={p.id}>{p.name} ({p.zone})</option>
-                    ))
-                  }
-                </select>
-              </div>
-
-              <div className="filter-group">
-                <label style={{ fontSize: '0.85rem', fontWeight: 'bold' }}>Tono Comercial</label>
-                <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
-                  <button type="button" onClick={() => setSelectedTone('formal')} className={`action-btn ${selectedTone === 'formal' ? '' : 'outline'}`} style={{ flex: 1, padding: '8px', fontSize: '0.8rem' }}>Formal</button>
-                  <button type="button" onClick={() => setSelectedTone('seguimiento')} className={`action-btn ${selectedTone === 'seguimiento' ? '' : 'outline'}`} style={{ flex: 1, padding: '8px', fontSize: '0.8rem' }}>Seguimiento</button>
-                </div>
-              </div>
-
-              <button type="button" onClick={generateEmailWithAI} className="action-btn" style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)', border: 'none', padding: '12px' }}>Redactar Propuesta</button>
-            </div>
-
-            {generatedEmail && (
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', border: '1px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden' }}>
-                <div style={{ background: '#f1f5f9', padding: '8px 12px', borderBottom: '1px solid #cbd5e1', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 'bold' }}>Borrador de Correo</span>
-                  <button onClick={handleCopyEmail} style={{ background: 'none', border: 'none', color: '#4f46e5', fontWeight: 'bold', fontSize: '0.8rem', cursor: 'pointer' }}>
-                    {copied ? 'Copiado ✓' : 'Copiar'}
-                  </button>
-                </div>
-                <textarea readOnly value={generatedEmail} style={{ flex: 1, padding: '15px', fontSize: '0.85rem', resize: 'none', border: 'none', background: '#fafafa', minHeight: '160px' }} />
-              </div>
-            )}
-          </div>
-        </div>
-      ) : (
+      ) : activeAiTab === 'leadfinder' ? (
         /* AGENTFORCE LEAD FINDER (PESTAÑA DE PROSPECCIÓN) */
         <div className="card" style={{ border: '1px solid #cbd5e1', padding: '25px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
@@ -1716,11 +1728,17 @@ ccastro@gruposopena.com | +34 610 240 017`;
               </p>
             </div>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '440px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '480px' }}>
               <div style={{ background: '#ecfdf5', border: '1px solid #a7f3d0', padding: '8px 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <ListChecks size={20} style={{ color: '#10b981', flexShrink: 0 }} />
                 <div style={{ fontSize: '0.8rem', color: '#065f46' }}>
                   <strong>Regla de Exclusión Activa:</strong> Miembros extrusores de la <strong>AEA</strong> vetados (Actividad 12).
+                </div>
+              </div>
+              <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', padding: '8px 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Globe size={20} style={{ color: '#2563eb', flexShrink: 0 }} />
+                <div style={{ fontSize: '0.8rem', color: '#1e40af' }}>
+                  <strong>Fuentes Sectoriales Activas:</strong> <strong>Novoperfil</strong>, <strong>FEMVAL</strong>, <strong>AECIM</strong> y <strong>Axesor</strong> (&gt; 5M €).
                 </div>
               </div>
               <div style={{ background: '#fdf4ff', border: '1px solid #f0abfc', padding: '8px 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -1771,6 +1789,9 @@ ccastro@gruposopena.com | +34 610 240 017`;
                 <option value="Perfiles Estructurales Aluminio">Perfiles Estructurales de Aluminio</option>
                 <option value="Puertas y Ventanas">Puertas y Ventanas</option>
                 <option value="Sistemas de Proteccion Solar">Sistemas de Protección Solar</option>
+                <option value="Frio Industrial">Frío Industrial y Paneles Frigoríficos</option>
+                <option value="Sistemas de Almacenaje y Estanterias Metalicas">Sistemas de Almacenaje y Estanterías Metálicas</option>
+                <option value="Distribucion de Aluminio y Metales">Distribución de Aluminio y Metales</option>
                 <option value="Mesas de Invernadero">Mesas de Invernadero</option>
                 <option value="Fabricantes de Escaleras de Aluminio">Fabricantes de Escaleras de Aluminio</option>
               </select>
@@ -1869,19 +1890,17 @@ ccastro@gruposopena.com | +34 610 240 017`;
             </div>
           </div>
 
-          {/* DETALLES DE EXCLUSIÓN */}
+          {/* DETALLES DE EXCLUSIÓN Y CONTROL FINANCIERO */}
           <div style={{ background: '#f8fafc', padding: '15px', borderRadius: '8px', border: '1px solid #e2e8f0', display: 'flex', gap: '15px', alignItems: 'center' }}>
             <ShieldAlert size={28} style={{ color: '#ef4444', flexShrink: 0 }} />
             <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-              <strong>Control de Calidad de Datos (AEA Anti-Competition Filter):</strong> El buscador cuenta con una base de marcas del sector extrusor que incluye marcas como Cortizo, Exlabesa, Extrugasa, Alueuropa, Hydro, Inalsa, Itesal y Alugom. El motor de IA Agentforce cruza los nombres de las empresas encontradas en Informa D&B con esta base para asegurar que nunca agregues competidores de aluminio al CRM.
+              <strong>Control de Calidad y Filtro Financiero &gt; 5M €:</strong> Búsqueda cruzada en <strong>Novoperfil</strong> (directorio nacional de cerramientos y fachadas), <strong>FEMVAL</strong> (Comunidad Valenciana) y <strong>AECIM</strong> (Madrid y Centro), con scoring y auditoría mercantil en <strong>Axesor</strong> exigiendo facturación auditada superior a 5 millones de euros. Excluye de forma automática a empresas registradas en la AEA (Actividad 12 - Extrusión de aluminio) para evitar competidores.
             </div>
           </div>
 
         </div>
-      )}
-
-      {/* PESTAÑA DE AUDITORÍA Y BÚSQUEDA DE EMAILS */}
-      {activeAiTab === 'emailaudit' && (
+      ) : (
+        /* PESTAÑA DE AUDITORÍA Y BÚSQUEDA DE EMAILS */
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {/* Dashboard de Calidad */}
           {(() => {

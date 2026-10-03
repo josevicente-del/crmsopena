@@ -24,17 +24,17 @@ import './NovedadBanner.css';
  * ============================================================================
  */
 
-// Fecha de expiración: 22 de septiembre de 2026 a las 23:59:59 CET (6 días desde el alta)
-const NOVEDAD_EXPIRATION_TIMESTAMP = new Date('2026-09-22T23:59:59').getTime();
+// Fecha de expiración: 10 de octubre de 2026 a las 23:59:59 CET (7 días de vigencia para esta versión)
+const NOVEDAD_EXPIRATION_TIMESTAMP = new Date('2026-10-10T23:59:59').getTime();
 
-// Claves de sessionStorage para recordar si el usuario minimizó o cerró el aviso en la sesión
-const SESSION_STORAGE_KEY_DISMISSED = 'crm_novedad_banner_dismissed_v1';
-const SESSION_STORAGE_KEY_MINIMIZED = 'crm_novedad_banner_minimized_v1';
+// Claves de sessionStorage para recordar si el usuario minimizó o cerró el aviso en la sesión (v2.4)
+const SESSION_STORAGE_KEY_DISMISSED = 'crm_novedad_banner_dismissed_v2_4';
+const SESSION_STORAGE_KEY_MINIMIZED = 'crm_novedad_banner_minimized_v2_4';
 
 export const NovedadBanner = ({ onFilterNew }) => {
-  // Estado que calcula si el aviso sigue dentro de los 6 días de vigencia
+  // Estado que calcula si el aviso sigue dentro de los días de vigencia
   const [isActive, setIsActive] = useState(true);
-  const [remainingDays, setRemainingDays] = useState(6);
+  const [remainingDays, setRemainingDays] = useState(7);
   
   // Estado para descartar el aviso en la sesión actual
   const [isDismissed, setIsDismissed] = useState(() => {
@@ -66,7 +66,7 @@ export const NovedadBanner = ({ onFilterNew }) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Si han pasado los 6 días o el usuario lo descartó, no se renderiza
+  // Si han pasado los días o el usuario lo descartó, no se renderiza
   if (!isActive || isDismissed) {
     return null;
   }
@@ -92,7 +92,7 @@ export const NovedadBanner = ({ onFilterNew }) => {
           <div className="novedad-minimized-info">
             <span className="novedad-pulse-dot" />
             <span>
-              <strong>✨ Novedad Comercial:</strong> Incorporadas nuevas empresas líderes en Mosquiteras y Protección Solar (+8 empresas como Zanzar Iberia, Llaza World, Samer Systems).
+              <strong>✨ Novedades Versión 2.4:</strong> Incorporadas nuevas firmas líderes en Estructuras Solares Fotovoltaicas y Escaleras de Aluminio (Mecasolar, Rolser, Stansol Group, Pegasolar).
             </span>
             <span style={{ color: '#94a3b8', fontSize: '0.78rem' }}>
               ({remainingDays} {remainingDays === 1 ? 'día restante' : 'días restantes'})
@@ -130,11 +130,11 @@ export const NovedadBanner = ({ onFilterNew }) => {
           <div className="novedad-badges-group">
             <span className="novedad-badge-main">
               <span className="novedad-pulse-dot" />
-              Novedad Comercial
+              Novedades Versión 2.4
             </span>
             <span className="novedad-timer-badge">
               <Clock size={13} style={{ color: '#38bdf8' }} />
-              Aviso activo durante los próximos <strong>{remainingDays} {remainingDays === 1 ? 'día' : 'días'}</strong> (hasta el 22 de septiembre)
+              Aviso activo durante los próximos <strong>{remainingDays} {remainingDays === 1 ? 'día' : 'días'}</strong> (hasta el 10 de octubre)
             </span>
           </div>
 
@@ -164,29 +164,29 @@ export const NovedadBanner = ({ onFilterNew }) => {
           
           <div className="novedad-info">
             <h3 className="novedad-title">
-              ¡Se han incorporado más empresas a la Base de Datos!
+              ¡Nuevas Empresas Estratégicas y Actualizaciones en la Base de Datos!
             </h3>
             <p className="novedad-text">
-              Ampliación estratégica en <strong>Mosquiteras y Sistemas de Protección Solar</strong>: se ha integrado <strong>Zanzar Iberia S.L.</strong> junto a firmas destacadas del sector en sistemas y perfiles de aluminio (<em>Llaza World, Hunter Douglas, Samer Systems, Tamiluz, Griesser, Durmi, Ideco...</em>), sumado a los nuevos talleres de cerramientos RPT de Castilla y León y Madrid.
+              Expansión en sectores de alto valor añadido en extrusión: <strong>Estructuras Solares Fotovoltaicas</strong> y <strong>Escaleras y Sistemas Industriales</strong>. Se incorporan <strong>Mecasolar (Mecanizados Solares S.L.)</strong> (18.5M€), <strong>Rolser S.A.</strong> (14.1M€), <strong>Stansol Group (Stansol Energy S.L.)</strong> (11.5M€) y <strong>Pegasolar Energy</strong>. Además, se han auditado las integraciones de <em>INSO Estructuras Solares, Braux Solar, Grup Anudal y ESLA Plataformas</em>.
             </p>
 
             {/* Píldoras informativas territoriales y sectoriales */}
             <div className="novedad-zones-grid">
               <div className="novedad-zone-pill valencia">
-                <span className="pill-tag">Zanzar & Similares (+8)</span>
-                <span>Mosquiteras y Protección Solar</span>
-              </div>
-              <div className="novedad-zone-pill">
-                <span className="pill-tag">Castilla y León (+4)</span>
-                <span>Valladolid, Burgos, Salamanca y Segovia</span>
+                <span className="pill-tag">Solar & Escaleras</span>
+                <span>Mecasolar, Rolser, Stansol, Pegasolar</span>
               </div>
               <div className="novedad-zone-pill madrid">
-                <span className="pill-tag">Madrid (+5)</span>
-                <span>Alcobendas, Ajalvir, Coslada, Madrid y Colmenarejo</span>
+                <span className="pill-tag">Flujos Agénticos</span>
+                <span>Recordatorio de contacto a 7 días en Tareas</span>
+              </div>
+              <div className="novedad-zone-pill">
+                <span className="pill-tag">Georutas</span>
+                <span>Corrección de coordenadas y geolocalización</span>
               </div>
               <div className="novedad-zone-pill total">
                 <span className="pill-tag">CRM Total</span>
-                <span><strong>388 empresas auditadas</strong></span>
+                <span><strong>454 empresas auditadas</strong></span>
               </div>
             </div>
 

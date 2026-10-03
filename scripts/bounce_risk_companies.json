@@ -1,0 +1,86 @@
+[
+  {
+    "id": "PROP-VERIF-0142",
+    "name": "Crismonal Ventanas S.L.",
+    "email": "compras@crismonal.com",
+    "domain": "crismonal.com",
+    "reason": "Dominio sin MX ni IP activa (Rebote asegurado)"
+  },
+  {
+    "id": "PROP-CAMARA-0272",
+    "name": "Pertisa (Perfiles y Tubos de Aluminio S.L.)",
+    "email": "compras@pertisa.com",
+    "domain": "pertisa.com",
+    "reason": "Dominio sin MX ni IP activa (Rebote asegurado)"
+  },
+  {
+    "id": "PROP-CAMARA-0274",
+    "name": "Aluminio en Toledo S.L.",
+    "email": "compras@aluminioentoledo.com",
+    "domain": "aluminioentoledo.com",
+    "reason": "Dominio sin MX ni IP activa (Rebote asegurado)"
+  },
+  {
+    "id": "PROP-APPR-0365",
+    "name": "Mamparas y Divisiones Mampromar S.L.",
+    "email": "compras@mampromar.com",
+    "domain": "mampromar.com",
+    "reason": "Dominio sin MX ni IP activa (Rebote asegurado)"
+  },
+  {
+    "id": "PROP-APPR-0366",
+    "name": "Fachadas e Ingeniería Manchega S.L. (Faimursa)",
+    "email": "compras@faimursa.es",
+    "domain": "faimursa.es",
+    "reason": "Dominio sin MX ni IP activa (Rebote asegurado)"
+  },
+  {
+    "id": "PROP-APPR-0370",
+    "name": "Puertas Frigoríficas La Mancha S.L.",
+    "email": "compras@frigorificaslamancha.es",
+    "domain": "frigorificaslamancha.es",
+    "reason": "Dominio sin MX ni IP activa (Rebote asegurado)"
+  },
+  {
+    "id": "PROP-APPR-0375",
+    "name": "Façades et Baies du Nord S.A.S.",
+    "email": "contact@facadesdunord.fr",
+    "domain": "facadesdunord.fr",
+    "reason": "Dominio sin MX ni IP activa (Rebote asegurado)"
+  },
+  {
+    "id": "PROP-APPR-0376",
+    "name": "Miroiterie Duchaillu Provence S.A.S.",
+    "email": "contact@duchaillu-alu.fr",
+    "domain": "duchaillu-alu.fr",
+    "reason": "Dominio sin MX ni IP activa (Rebote asegurado)"
+  },
+  {
+    "id": "PROP-APPR-0377",
+    "name": "Aquitaine Façades S.A.S.",
+    "email": "contact@aquitaine-facades.fr",
+    "domain": "aquitaine-facades.fr",
+    "reason": "Dominio sin MX ni IP activa (Rebote asegurado)"
+  },
+  {
+    "id": "PROP-HIDALMIRA-0416",
+    "name": "Hidalmira S.L. (Grupo Hidalmira)",
+    "email": "hidalmira@hidalmira.com",
+    "domain": "hidalmira.com",
+    "reason": "Dominio sin MX ni IP activa (Rebote asegurado)"
+  },
+  {
+    "id": "PROP-FERRARI-0417",
+    "name": "Aluminios Ferrari S.L.",
+    "email": "compras@aluminiosferrari.es",
+    "domain": "aluminiosferrari.es",
+    "reason": "Dominio sin MX ni IP activa (Rebote asegurado)"
+  },
+  {
+    "id": "PROP-HIDALFE-0422",
+    "name": "Hidalfe S.L. (Muros Cortina y Fachadas)",
+    "email": "hidalfe@hidalfe.es",
+    "domain": "hidalfe.es",
+    "reason": "Dominio sin MX ni IP activa (Rebote asegurado)"
+  }
+]

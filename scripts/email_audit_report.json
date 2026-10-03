@@ -1,0 +1,186 @@
+{
+  "totalChecked": 403,
+  "validMxCount": 379,
+  "syntaxErrorsCount": 0,
+  "syntaxErrors": [],
+  "noMxCount": 24,
+  "noMxDomains": [
+    {
+      "id": "PROP-VERIF-0142",
+      "name": "Crismonal Ventanas S.L.",
+      "email": "compras@crismonal.com",
+      "domain": "crismonal.com",
+      "error": "ENOTFOUND"
+    },
+    {
+      "id": "PROP-VERIF-0056",
+      "name": "Mundoaluminio Salamanca S.L.",
+      "email": "compras@mundoaluminio.es",
+      "domain": "mundoaluminio.es",
+      "error": "ENODATA"
+    },
+    {
+      "id": "PROP-VERIF-0065",
+      "name": "Metálicas Parme S.L.",
+      "email": "compras@metalicasparme.es",
+      "domain": "metalicasparme.es",
+      "error": "ENODATA"
+    },
+    {
+      "id": "PROP-VERIF-0034",
+      "name": "Aluminios Arlos S.L.",
+      "email": "compras@aluminiosarlos.com",
+      "domain": "aluminiosarlos.com",
+      "error": "ENODATA"
+    },
+    {
+      "id": "PROP-VERIF-0113",
+      "name": "Kawneer France S.A.S.",
+      "email": "compras@kawneer.fr",
+      "domain": "kawneer.fr",
+      "error": "ENODATA"
+    },
+    {
+      "id": "PROP-CAMARA-0272",
+      "name": "Pertisa (Perfiles y Tubos de Aluminio S.L.)",
+      "email": "compras@pertisa.com",
+      "domain": "pertisa.com",
+      "error": "ESERVFAIL"
+    },
+    {
+      "id": "PROP-CAMARA-0266",
+      "name": "Arteal Carpintería S.L.",
+      "email": "compras@arteal.gal",
+      "domain": "arteal.gal",
+      "error": "ENODATA"
+    },
+    {
+      "id": "PROP-VERIF-0058",
+      "name": "Aluminios Tascón S.L.",
+      "email": "compras@aluminiostascon.es",
+      "domain": "aluminiostascon.es",
+      "error": "ENODATA"
+    },
+    {
+      "id": "PROP-CAMARA-0289",
+      "name": "AMG Sistemas de Aluminio S.L.",
+      "email": "compras@amgsistemas.com",
+      "domain": "amgsistemas.com",
+      "error": "ENODATA"
+    },
+    {
+      "id": "PROP-CAMARA-0281",
+      "name": "Induvent Carpintería Metálica S.L.",
+      "email": "compras@induvent.net",
+      "domain": "induvent.net",
+      "error": "ENODATA"
+    },
+    {
+      "id": "PROP-CAMARA-0255",
+      "name": "Tecnalum S.L.",
+      "email": "compras@tecnalum.com",
+      "domain": "tecnalum.com",
+      "error": "ENODATA"
+    },
+    {
+      "id": "PROP-CAMARA-0245",
+      "name": "Cristalería Levantina S.L.",
+      "email": "compras@cristalerialevantina.com",
+      "domain": "cristalerialevantina.com",
+      "error": "ENODATA"
+    },
+    {
+      "id": "PROP-CAMARA-0274",
+      "name": "Aluminio en Toledo S.L.",
+      "email": "compras@aluminioentoledo.com",
+      "domain": "aluminioentoledo.com",
+      "error": "ENODATA"
+    },
+    {
+      "id": "PROP-VERIF-0350",
+      "name": "Cerrajería Dugaval S.L.",
+      "email": "compras@cerrajeriavaldemoro.com",
+      "domain": "cerrajeriavaldemoro.com",
+      "error": "ENODATA"
+    },
+    {
+      "id": "PROP-APPR-0364",
+      "name": "Eurocode 9 Fachadas Ligeras S.L.",
+      "email": "compras@eurocode9.es",
+      "domain": "eurocode9.es",
+      "error": "ENOTFOUND"
+    },
+    {
+      "id": "PROP-APPR-0365",
+      "name": "Mamparas y Divisiones Mampromar S.L.",
+      "email": "compras@mampromar.com",
+      "domain": "mampromar.com",
+      "error": "ENOTFOUND"
+    },
+    {
+      "id": "PROP-APPR-0366",
+      "name": "Fachadas e Ingeniería Manchega S.L. (Faimursa)",
+      "email": "compras@faimursa.es",
+      "domain": "faimursa.es",
+      "error": "ENOTFOUND"
+    },
+    {
+      "id": "PROP-APPR-0370",
+      "name": "Puertas Frigoríficas La Mancha S.L.",
+      "email": "compras@frigorificaslamancha.es",
+      "domain": "frigorificaslamancha.es",
+      "error": "ENOTFOUND"
+    },
+    {
+      "id": "PROP-APPR-0375",
+      "name": "Façades et Baies du Nord S.A.S.",
+      "email": "contact@facadesdunord.fr",
+      "domain": "facadesdunord.fr",
+      "error": "ENOTFOUND"
+    },
+    {
+      "id": "PROP-APPR-0376",
+      "name": "Miroiterie Duchaillu Provence S.A.S.",
+      "email": "contact@duchaillu-alu.fr",
+      "domain": "duchaillu-alu.fr",
+      "error": "ENOTFOUND"
+    },
+    {
+      "id": "PROP-APPR-0377",
+      "name": "Aquitaine Façades S.A.S.",
+      "email": "contact@aquitaine-facades.fr",
+      "domain": "aquitaine-facades.fr",
+      "error": "ENOTFOUND"
+    },
+    {
+      "id": "PROP-HIDALMIRA-0416",
+      "name": "Hidalmira S.L. (Grupo Hidalmira)",
+      "email": "hidalmira@hidalmira.com",
+      "domain": "hidalmira.com",
+      "error": "ENOTFOUND"
+    },
+    {
+      "id": "PROP-FERRARI-0417",
+      "name": "Aluminios Ferrari S.L.",
+      "email": "compras@aluminiosferrari.es",
+      "domain": "aluminiosferrari.es",
+      "error": "ENOTFOUND"
+    },
+    {
+      "id": "PROP-HIDALFE-0422",
+      "name": "Hidalfe S.L. (Muros Cortina y Fachadas)",
+      "email": "hidalfe@hidalfe.es",
+      "domain": "hidalfe.es",
+      "error": "ENOTFOUND"
+    }
+  ],
+  "duplicateEmailsCount": 1,
+  "duplicateEmails": [
+    {
+      "id": "PROP-GARCIAFAURA-0411",
+      "name": "Garcia Faura, S.L.",
+      "email": "compras@garciafaura.com"
+    }
+  ],
+  "uniqueDomainsCount": 401
+}
