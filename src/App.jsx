@@ -2,7 +2,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 // Importamos únicamente los iconos de lucide-react que se utilizan en la aplicación
 import { MapPin, Building2, Briefcase, FileText, CheckCircle, Navigation, Sparkles, Mic, MicOff, Database, Mail, Download, Smartphone, Info, Menu, X } from 'lucide-react';
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 // html2canvas: captura el DOM renderizado para exportar a PDF interactivo
@@ -36,7 +36,67 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
     Math.sin(dLon/2) * Math.sin(dLon/2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
   return R * c;
-}
+};
+
+// Componente para ajustar dinámicamente la vista del mapa según los puntos seleccionados y forzar invalidateSize
+const MapAutoBounds = ({ points, defaultCenter = [40.4168, -3.7038], defaultZoom = 6 }) => {
+  const map = useMap();
+  useEffect(() => {
+    // Forzar redibujado de las dimensiones del contenedor de Leaflet
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [map]);
+
+  useEffect(() => {
+    if (!points || points.length === 0) {
+      map.setView(defaultCenter, defaultZoom);
+      return;
+    }
+    const validCoords = points.filter(p => Array.isArray(p) && p.length === 2 && !isNaN(p[0]) && !isNaN(p[1]));
+    if (validCoords.length === 0) return;
+
+    if (validCoords.length === 1) {
+      map.setView(validCoords[0], 12);
+    } else {
+      const bounds = L.latLngBounds(validCoords);
+      map.fitBounds(bounds, { padding: [40, 40], maxZoom: 14 });
+    }
+  }, [points, map, defaultCenter, defaultZoom]);
+
+  return null;
+};
+
+// Función para crear iconos de chincheta numerados o destacados para la ruta
+const createRoutePinIcon = (index, isSelected = true) => {
+  const bg = isSelected ? '#2563eb' : '#94a3b8';
+  const label = typeof index === 'number' ? index + 1 : '📍';
+  return L.divIcon({
+    className: 'custom-route-marker',
+    html: `<div style="
+      background: ${bg};
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ffffff;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.35);
+      font-weight: bold;
+      font-size: 12px;
+      position: absolute;
+      top: -28px;
+      left: -14px;
+    "><span style="transform: rotate(45deg);">${label}</span></div>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28]
+  });
+};
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => localStorage.getItem('aluminio_auth') === 'true');
   const [username, setUsername] = useState('');
@@ -3112,23 +3172,144 @@ const App = () => {
                   </div>
                 )}
               </div>
-              <div className="card map-container" style={{gridColumn: '2 / -1', padding: 0, height: '500px'}}>
-                <MapContainer center={[42.0, -4.0]} zoom={6} style={{ height: '100%', width: '100%' }}>
+              <div className="card map-container" style={{gridColumn: '2 / -1', padding: 0, height: '520px', minHeight: '520px', position: 'relative'}}>
+                <MapContainer center={[40.4168, -3.7038]} zoom={6} style={{ height: '100%', width: '100%' }}>
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  {routeClients.map(p => (
-                    <Marker key={`route-${p.id}`} position={p.location}>
-                      <Popup>{p.name}</Popup>
+                  
+                  {/* Autoencuadre automático para redibujar el mapa y centrar las empresas activas */}
+                  <MapAutoBounds 
+                    points={
+                      routeClients.length > 0 
+                        ? routeClients.map(c => c.location)
+                        : routingSortedProspects.slice(0, 100).map(p => p.location)
+                    } 
+                  />
+
+                  {/* 1. Marcadores de todos los prospectos disponibles según el filtro (tenues/grises si no están en la ruta) */}
+                  {routingSortedProspects.slice(0, 120).map(p => {
+                    const isSelected = !!routeClients.find(c => c.id === p.id);
+                    if (isSelected) return null; // Los seleccionados se dibujan encima con su número
+                    return (
+                      <Marker 
+                        key={`avail-${p.id}`} 
+                        position={p.location}
+                        icon={createRoutePinIcon(null, false)}
+                      >
+                        <Popup>
+                          <div style={{ padding: '4px' }}>
+                            <strong style={{ fontSize: '0.92rem', color: '#1e293b' }}>{p.name}</strong>
+                            <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '3px' }}>
+                              📍 {p.zone} {p.department && `• ${p.department}`}
+                            </div>
+                            <div style={{ fontSize: '0.78rem', color: '#0369a1', marginTop: '2px', fontWeight: 600 }}>
+                              🏭 {p.sector}
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => handleToggleRouteClient(p)}
+                              style={{
+                                marginTop: '8px',
+                                width: '100%',
+                                padding: '6px 10px',
+                                background: '#2563eb',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '6px',
+                                cursor: 'pointer',
+                                fontSize: '0.8rem',
+                                fontWeight: 'bold'
+                              }}
+                            >
+                              ➕ Añadir a la Ruta
+                            </button>
+                          </div>
+                        </Popup>
+                      </Marker>
+                    );
+                  })}
+
+                  {/* 2. Marcadores de las empresas añadidas a la ruta (azules numeradas en orden de parada) */}
+                  {routeClients.map((p, idx) => (
+                    <Marker 
+                      key={`route-${p.id}`} 
+                      position={p.location}
+                      icon={createRoutePinIcon(idx, true)}
+                    >
+                      <Popup>
+                        <div style={{ padding: '4px' }}>
+                          <div style={{ fontSize: '0.72rem', background: '#dbeafe', color: '#1e40af', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold', display: 'inline-block', marginBottom: '4px' }}>
+                            Parada #{idx + 1}
+                          </div>
+                          <div style={{ fontWeight: 'bold', fontSize: '0.92rem', color: '#0f172a' }}>{p.name}</div>
+                          <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '2px' }}>
+                            📍 {p.zone} {p.department && `• ${p.department}`}
+                          </div>
+                          {p.phone && (
+                            <div style={{ fontSize: '0.78rem', color: '#334155', marginTop: '2px' }}>
+                              📞 {p.phone}
+                            </div>
+                          )}
+                          <button
+                            type="button"
+                            onClick={() => handleToggleRouteClient(p)}
+                            style={{
+                              marginTop: '8px',
+                              width: '100%',
+                              padding: '6px 10px',
+                              background: '#ef4444',
+                              color: 'white',
+                              border: 'none',
+                              borderRadius: '6px',
+                              cursor: 'pointer',
+                              fontSize: '0.8rem',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            ✕ Quitar de la Ruta
+                          </button>
+                        </div>
+                      </Popup>
                     </Marker>
                   ))}
+
+                  {/* 3. Trazado visual de la ruta comercial interconectada */}
                   {routeClients.length > 1 && (
                     <Polyline
                       positions={routeClients.map(c => c.location)}
-                      color="var(--sopena-blue)"
-                      weight={4}
-                      dashArray="10, 10"
+                      color="#2563eb"
+                      weight={5}
+                      opacity={0.85}
+                      dashArray="8, 8"
                     />
                   )}
                 </MapContainer>
+                
+                {/* Leyenda interactiva en la esquina inferior del mapa */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: '12px',
+                  right: '12px',
+                  zIndex: 1000,
+                  background: 'rgba(255, 255, 255, 0.95)',
+                  padding: '8px 12px',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  fontSize: '0.76rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4px',
+                  backdropFilter: 'blur(4px)',
+                  border: '1px solid rgba(0,0,0,0.08)'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#2563eb', display: 'inline-block' }}></span>
+                    <span><strong>Paradas de la ruta</strong> ({routeClients.length})</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#94a3b8', display: 'inline-block' }}></span>
+                    <span>Empresas disponibles ({Math.min(120, routingSortedProspects.length)})</span>
+                  </div>
+                </div>
               </div>
             </div>
           )}
