@@ -1570,7 +1570,7 @@
     "revenue": 26923175,
     "purchasingManager": "Dpto. Compras (Aluminios Meco S.L.)",
     "phone": "+34 91 886 10 20",
-    "email": "pvc@aluminiosmecopvc.com",
+    "email": "atencionalcliente@aluminiosmecopvc.com",
     "location": [
       40.4011,
       -3.7031
@@ -1586,9 +1586,9 @@
     "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
-    "emailVerified": false,
-    "emailVerifiedType": "respaldo",
-    "emailableStatus": "undeliverable"
+    "emailVerified": true,
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "deliverable"
   },
   {
     "id": "PROP-VERIF-0122",
