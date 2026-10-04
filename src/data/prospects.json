@@ -25,8 +25,9 @@
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0185",
-    "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerified": false,
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "undeliverable"
   },
   {
     "name": "Thyssenkrupp Materials Ibérica S.A.",
@@ -56,7 +57,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-DISTRIB-0319",
     "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "risky"
   },
   {
     "name": "Tvitec System Glass S.L.",
@@ -85,7 +87,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-CAMARA-0246",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "id": "PROP-VERIF-0105",
@@ -114,7 +117,8 @@
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "risky"
   },
   {
     "name": "Gaviota Simbac S.L.",
@@ -125,7 +129,7 @@
     "revenue": 85000000,
     "purchasingManager": "Dpto. Compras (Gaviota)",
     "phone": "+34 965 47 42 00",
-    "email": "a.pino@gaviotagroup.com",
+    "email": "info@gaviotagroup.com",
     "location": [
       38.5385,
       -0.8164
@@ -143,7 +147,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-CAMARA-0231",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "name": "Sunclear SAS",
@@ -172,7 +177,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-DISTRIB-0326",
     "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "risky"
   },
   {
     "name": "Alucoil S.A.",
@@ -201,7 +207,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0160",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "name": "Tisvol Semirremolques de Aluminio S.A.",
@@ -230,7 +237,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0179",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "name": "STACBOND (Sistemas Técnicos del Accesorio)",
@@ -259,7 +267,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0159",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "name": "Benito Urban Equipamiento S.L.",
@@ -288,7 +297,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0183",
     "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "risky"
   },
   {
     "name": "Bancolor Baux S.L.",
@@ -317,7 +327,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0154",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "name": "Alu-Stock S.A.",
@@ -346,7 +357,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0170",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "name": "Puertas Roper S.A.",
@@ -375,7 +387,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0156",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "name": "Dynamobel S.A. (Mamparas y Divisiones)",
@@ -404,7 +417,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0202",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "name": "Reynolds European SAS",
@@ -433,7 +447,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-DISTRIB-0327",
     "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "risky"
   },
   {
     "name": "Inasus S.L.",
