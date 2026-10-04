@@ -1689,7 +1689,7 @@
     "revenue": 26067264,
     "purchasingManager": "Dpto. Compras (Indusmetal)",
     "phone": "+34 957 38 40 10",
-    "email": "compras@indusmetaltorres.com",
+    "email": "webmaster@indusmetaltorres.es",
     "location": [
       37.6492,
       -4.6975
@@ -1706,9 +1706,9 @@
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-EMPRESITE-0296",
-    "emailVerified": false,
-    "emailVerifiedType": "actual_verificado",
-    "emailableStatus": "undeliverable"
+    "emailVerified": true,
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "deliverable"
   },
   {
     "id": "PROP-VERIF-0129",
