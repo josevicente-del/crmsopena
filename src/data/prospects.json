@@ -1180,7 +1180,7 @@
     "revenue": 28619388,
     "purchasingManager": "Dpto. Compras (Decoaluminio S.L.)",
     "phone": "+34 952 34 20 50",
-    "email": "compras@decoaluminio.com",
+    "email": "decoaluminio@decoaluminio.com",
     "location": [
       37.3768,
       -5.9833
@@ -1196,9 +1196,9 @@
     "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
-    "emailVerified": false,
-    "emailVerifiedType": "actual_verificado",
-    "emailableStatus": "undeliverable"
+    "emailVerified": true,
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "deliverable"
   },
   {
     "id": "PROP-VERIF-0069",
