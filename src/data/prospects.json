@@ -1000,7 +1000,7 @@
     "revenue": 29652442,
     "purchasingManager": "Dpto. Compras (CAVEAL Cerramientos)",
     "phone": "+34 960 09 96 35",
-    "email": "presupuestos@caveal.es",
+    "email": "caveal2010sl@gmail.com",
     "location": [
       39.4611,
       -0.3804
@@ -1016,9 +1016,9 @@
     "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
-    "emailVerified": false,
-    "emailVerifiedType": "respaldo",
-    "emailableStatus": "undeliverable"
+    "emailVerified": true,
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "deliverable"
   },
   {
     "id": "PROP-VERIF-0136",
