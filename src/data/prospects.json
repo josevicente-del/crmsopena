@@ -3842,36 +3842,6 @@
     "emailableStatus": "risky"
   },
   {
-    "name": "Nazan Aluminium S.L.",
-    "zone": "Andalucia",
-    "department": "Dos Hermanas (Sevilla)",
-    "cif": "B91718240",
-    "web": "https://nazan.es",
-    "revenue": 16000000,
-    "purchasingManager": "Dpto. Compras (Nazan)",
-    "phone": "+34 954 72 10 20",
-    "email": "info@nazan.es",
-    "location": [
-      37.2829,
-      -5.9209
-    ],
-    "sector": "Puertas y Ventanas",
-    "products": [
-      "Ventanas RPT",
-      "Perfiles",
-      "Accesorios"
-    ],
-    "contacted": false,
-    "contactDate": null,
-    "notes": "Mediana/gran empresa (>65 trabajadores) en Empresite. Fabricante industrial de ventanas y cerramientos de aluminio de alta eficiencia energética. [Email enriquecido: buzón directo compras nazan.es verificado MX Microsoft 365]",
-    "response": "Pendiente de primer contacto comercial",
-    "createdAt": "2026-06-01T00:00:00.000Z",
-    "id": "PROP-EMPRESITE-0297",
-    "emailVerified": true,
-    "emailVerifiedType": "contacto",
-    "emailableStatus": "risky"
-  },
-  {
     "name": "SND Métal SAS",
     "zone": "Francia",
     "department": "Le Bourget (Sena-Saint Denis, París)",
