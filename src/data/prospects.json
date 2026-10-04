@@ -5848,7 +5848,9 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-DISTRIB-0320",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "id": "PROP-VERIF-0072",
@@ -5876,8 +5878,10 @@
     "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
-    "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerified": false,
+    "emailVerifiedType": "contacto",
+    "safetyMailsStatus": "undeliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "name": "PadelMagic S.L.",
@@ -5906,7 +5910,9 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-PADEL-0222",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "id": "PROP-VERIF-0008",
@@ -5935,7 +5941,9 @@
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "name": "Mosquistop (OH Mosquistop S.L.)",
@@ -5963,8 +5971,10 @@
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0187",
-    "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerified": false,
+    "emailVerifiedType": "actual_verificado",
+    "safetyMailsStatus": "undeliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "name": "Rayter S.L.",
@@ -5993,7 +6003,9 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-METAL-0240",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "id": "PROP-VERIF-0026",
@@ -6022,7 +6034,9 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "id": "PROP-VERIF-0085",
@@ -6051,7 +6065,9 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "safetyMailsStatus": "risky",
+    "safetyMailsAdvice": "Baja entregabilidad"
   },
   {
     "id": "PROP-VERIF-0083",
@@ -6080,7 +6096,9 @@
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "name": "Sitab System S.L.",
@@ -6109,7 +6127,9 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-EMPRESITE-0306",
     "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerifiedType": "actual_verificado",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "id": "PROP-VERIF-0100",
@@ -6138,7 +6158,9 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "safetyMailsStatus": "risky",
+    "safetyMailsAdvice": "Riesgo"
   },
   {
     "id": "PROP-VERIF-0018",
@@ -6167,7 +6189,9 @@
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerifiedType": "actual_verificado",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "name": "Persum Escaleras y Andamios S.L.",
@@ -6196,7 +6220,9 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0178",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "id": "PROP-VERIF-0114",
@@ -6224,8 +6250,10 @@
     "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
-    "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerified": false,
+    "emailVerifiedType": "actual_verificado",
+    "safetyMailsStatus": "undeliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "name": "Mercaluminio S.L.",
@@ -6254,7 +6282,9 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-DISTRIB-0321",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "name": "Lusedi Lda",
@@ -6352,7 +6382,7 @@
     "revenue": 6800000,
     "purchasingManager": "Dpto. Compras (Sucroal)",
     "phone": "+34 961 70 12 30",
-    "email": "lrm@reynalco.com",
+    "email": "reynalco@reynalco.com",
     "location": [
       39.4479,
       -0.3745
@@ -6370,7 +6400,9 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0150",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Válido"
   },
   {
     "name": "Macrisal S.L.",
@@ -6399,7 +6431,9 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-CAMARA-0252",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "name": "Industrias Calvo S.A.",
@@ -6410,7 +6444,7 @@
     "revenue": 6800000,
     "purchasingManager": "Dpto. Compras (Industrias Calvo)",
     "phone": "+34 91 792 10 20",
-    "email": "demo@divi.express",
+    "email": "sucovimadrid@gmail.com",
     "location": [
       40.35,
       -3.7
@@ -6428,7 +6462,9 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-CAMARA-0309",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Válido"
   },
   {
     "name": "ROGROUP Aluminio S.L.",
@@ -6486,7 +6522,9 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0164",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Válido"
   },
   {
     "id": "PROP-VERIF-0138",
@@ -6515,7 +6553,9 @@
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Válido"
   },
   {
     "name": "Pertisa (Perfiles y Tubos de Aluminio S.L.)",
@@ -6573,7 +6613,9 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "name": "Exdeal Paneles de Aluminio S.L.",
@@ -6602,7 +6644,9 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-CAMARA-0268",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "name": "Arcama Escaleras y Taburetes S.L.",
@@ -6660,7 +6704,9 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "safetyMailsStatus": "risky",
+    "safetyMailsAdvice": "Riesgo"
   },
   {
     "id": "PROP-VERIF-0067",
@@ -6689,7 +6735,9 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Válido"
   },
   {
     "name": "Quinapa S.L.",
@@ -6718,7 +6766,9 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-CNAE-0219",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "name": "R. Rubio S.A.",
@@ -6776,7 +6826,9 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Desconocido"
   },
   {
     "id": "PROP-VERIF-0015",
@@ -6806,7 +6858,9 @@
     "response": "",
     "createdAt": "2026-09-16T21:34:40.181Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Válido"
   },
   {
     "name": "Noumetall Sistemes S.L.",
