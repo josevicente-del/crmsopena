@@ -191,17 +191,24 @@ async function scrapeSubstitutesFromWeb(companyWeb) {
 }
 
 /**
- * Procesa un lote de empresas auditando con Emailable y scrapeando sustitutos
- * @param {number} maxToAudit - Límite de empresas a auditar con Emailable (respetando los créditos disponibles)
+ * Procesa empresas auditando con Emailable y scrapeando sustitutos
+ * @param {number} maxToAudit - Límite de empresas a auditar en esta tanda
+ * @param {boolean} onlyPending - Si es true, solo audita empresas que aún no tengan emailableStatus
  */
-export async function runEmailableAuditor(maxToAudit = 50) {
+export async function runEmailableAuditor(maxToAudit = 50, onlyPending = true) {
   const filePath = 'src/data/prospects.json';
   const rawData = fs.readFileSync(filePath, 'utf-8');
   const prospects = JSON.parse(rawData);
 
+  // Filtrar lista a auditar
+  const targetList = onlyPending 
+    ? prospects.filter(p => !p.emailableStatus)
+    : prospects;
+
   console.log(`================================================================`);
   console.log(`AUDITORIA Y REEMPLAZO CON EMAILABLE Y SCRAPER WEB`);
-  console.log(`Empresas a auditar: ${maxToAudit} de ${prospects.length}`);
+  console.log(`Empresas pendientes disponibles: ${targetList.length} de ${prospects.length}`);
+  console.log(`Lote a procesar en esta tanda: ${Math.min(maxToAudit, targetList.length)}`);
   console.log(`================================================================`);
 
   let countDeliverable = 0;
@@ -210,11 +217,13 @@ export async function runEmailableAuditor(maxToAudit = 50) {
   let countSubstituted = 0;
   let countMarkedRed = 0;
 
-  for (let i = 0; i < Math.min(maxToAudit, prospects.length); i++) {
-    const p = prospects[i];
+  const toProcess = targetList.slice(0, maxToAudit);
+
+  for (let i = 0; i < toProcess.length; i++) {
+    const p = toProcess[i];
     const currentEmail = (p.email || '').trim().toLowerCase();
 
-    console.log(`[${i + 1}/${maxToAudit}] Auditando: ${p.name} | ${currentEmail}`);
+    console.log(`[${i + 1}/${toProcess.length}] Auditando: ${p.name} | ${currentEmail}`);
     
     // Paso 1: Comprobar con Emailable
     const check = await verifyWithEmailable(currentEmail);

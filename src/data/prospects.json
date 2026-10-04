@@ -477,7 +477,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0161",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "name": "Padel Galis S.L.",
@@ -506,7 +507,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0199",
     "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "risky"
   },
   {
     "name": "García Faura S.L. (Arquitectura en Aluminio)",
@@ -535,7 +537,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-CAMARA-0230",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "name": "Kimak Systems & Design S.L.U.",
@@ -564,7 +567,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-EMPRESITE-0293",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "risky"
   },
   {
     "name": "Aalco Metales S.A. (Amari Metals)",
@@ -575,7 +579,7 @@
     "revenue": 42000000,
     "purchasingManager": "Dpto. Compras (Aalco Metales)",
     "phone": "+34 937 70 47 90",
-    "email": "mmontserrat@saviat.net",
+    "email": "aalco@aalco.es",
     "location": [
       41.5173,
       1.9015
@@ -593,7 +597,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0152",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "name": "Araven Mobiliario y Hostelería S.L.",
@@ -622,7 +627,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0209",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "risky"
   },
   {
     "name": "Isopractic S.L.",
@@ -651,7 +657,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-EMPRESITE-0295",
     "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "risky"
   },
   {
     "name": "Isopan Ibérica S.L.",
@@ -680,7 +687,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-EMPRESITE-0294",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "name": "Alsimet S.A.",
@@ -709,7 +717,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0162",
     "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "risky"
   },
   {
     "name": "Novagric Invernaderos de Aluminio",
@@ -738,7 +747,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0182",
     "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "risky"
   },
   {
     "name": "Carandini Iluminación S.A.",
@@ -767,7 +777,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0210",
     "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "risky"
   },
   {
     "name": "Persax S.A. (Persianas y Protección Solar)",
@@ -796,7 +807,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0180",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "risky"
   },
   {
     "name": "Balat Módulos Prefabricados S.L.",
@@ -825,7 +837,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0204",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "id": "PROP-VERIF-0028",
@@ -854,7 +867,8 @@
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "id": "PROP-VERIF-0012",
@@ -883,7 +897,8 @@
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "name": "Kendu In-Store Visual Solutions S.L.",
@@ -912,7 +927,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0208",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "unknown"
   },
   {
     "id": "PROP-VERIF-0040",
@@ -941,7 +957,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "id": "PROP-VERIF-0121",
@@ -970,7 +987,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "id": "PROP-VERIF-0004",
@@ -998,8 +1016,9 @@
     "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
-    "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerified": false,
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "undeliverable"
   },
   {
     "id": "PROP-VERIF-0136",
@@ -1028,7 +1047,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "id": "PROP-VERIF-0087",
@@ -1057,7 +1077,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "risky"
   },
   {
     "id": "PROP-VERIF-0119",
@@ -1086,7 +1107,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "name": "La Viuda Persianas y Cerramientos",
@@ -1115,7 +1137,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0181",
     "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "risky"
   },
   {
     "name": "IASO Piscinas y Cubiertas S.L.",
@@ -1144,7 +1167,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0205",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "id": "PROP-VERIF-0092",
@@ -1172,8 +1196,9 @@
     "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
-    "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerified": false,
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "undeliverable"
   },
   {
     "id": "PROP-VERIF-0069",
@@ -1202,7 +1227,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "id": "PROP-VERIF-0002",
@@ -1231,7 +1257,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "name": "Infraca (Infraca Doors S.L.)",
@@ -1260,7 +1287,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0149",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "name": "MejorSet Padel Courts S.L.",
@@ -1289,7 +1317,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0201",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "name": "Alumisan S.A.",
@@ -1318,7 +1347,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-CAMARA-0232",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "deliverable"
   },
   {
     "id": "PROP-VERIF-0127",
@@ -1347,7 +1377,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "id": "PROP-VERIF-0137",
@@ -1376,7 +1407,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "id": "PROP-VERIF-0117",
@@ -1405,7 +1437,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "id": "PROP-VERIF-0118",
@@ -1434,7 +1467,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "risky"
   },
   {
     "id": "PROP-VERIF-0005",
@@ -1462,8 +1496,9 @@
     "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
-    "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerified": false,
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "undeliverable"
   },
   {
     "id": "PROP-VERIF-0128",
@@ -1475,7 +1510,7 @@
     "revenue": 27088465,
     "purchasingManager": "Dpto. Compras (Venku Cerramientos S.L.)",
     "phone": "+34 959 18 20 40",
-    "email": "info@venku.es",
+    "email": "venku@venku.es",
     "location": [
       37.2416,
       -6.9446
@@ -1492,7 +1527,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "id": "PROP-VERIF-0042",
@@ -1521,7 +1557,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "id": "PROP-VERIF-0134",
@@ -1549,8 +1586,9 @@
     "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
-    "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerified": false,
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "undeliverable"
   },
   {
     "id": "PROP-VERIF-0122",
@@ -1579,7 +1617,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "deliverable"
   },
   {
     "name": "Multipanel S.L.",
@@ -1608,7 +1647,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0153",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "id": "PROP-VERIF-0125",
@@ -1637,7 +1677,8 @@
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo"
+    "emailVerifiedType": "respaldo",
+    "emailableStatus": "deliverable"
   },
   {
     "name": "Indusmetal Torres S.L.",
@@ -1665,8 +1706,9 @@
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-EMPRESITE-0296",
-    "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerified": false,
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "undeliverable"
   },
   {
     "id": "PROP-VERIF-0129",
@@ -1694,8 +1736,9 @@
     "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
-    "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerified": false,
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "undeliverable"
   },
   {
     "id": "PROP-VERIF-0131",
@@ -1723,8 +1766,9 @@
     "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
-    "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerified": false,
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "undeliverable"
   },
   {
     "id": "PROP-VERIF-0097",
@@ -1753,7 +1797,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "deliverable"
   },
   {
     "id": "PROP-VERIF-0132",
@@ -1782,7 +1827,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "id": "PROP-VERIF-0049",
@@ -1811,7 +1857,8 @@
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "id": "PROP-VERIF-0081",
@@ -1839,8 +1886,9 @@
     "notes": "Empresa con actividad real y web verificada HTTP 200 OK.",
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
-    "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerified": false,
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "undeliverable"
   },
   {
     "id": "PROP-VERIF-0029",
@@ -1869,7 +1917,8 @@
     "response": "",
     "createdAt": "2026-06-01T00:00:00.000Z",
     "emailVerified": true,
-    "emailVerifiedType": "contacto"
+    "emailVerifiedType": "contacto",
+    "emailableStatus": "risky"
   },
   {
     "name": "Broncesval S.L.",
@@ -1899,7 +1948,8 @@
     "createdAt": "2026-06-01T00:00:00.000Z",
     "id": "PROP-VERIF-0196",
     "emailVerified": true,
-    "emailVerifiedType": "actual_verificado"
+    "emailVerifiedType": "actual_verificado",
+    "emailableStatus": "risky"
   },
   {
     "id": "PROP-VERIF-0014",
