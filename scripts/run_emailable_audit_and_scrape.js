@@ -32,8 +32,32 @@ const IGNORE_EMAILS = ['ejemplo@', 'example@', 'usuario@', 'test@', 'sentry@', '
 
 /**
  * Comprueba un email mediante la API de Emailable
+/**
+ * Obtiene los créditos disponibles en Emailable
+ * @returns {Promise<number>}
+ */
+function getAvailableCredits() {
+  return new Promise((resolve) => {
+    const url = `https://api.emailable.com/v1/account?api_key=${API_KEY}`;
+    https.get(url, { timeout: 8000 }, (res) => {
+      let body = '';
+      res.on('data', chunk => { body += chunk; });
+      res.on('end', () => {
+        try {
+          const data = JSON.parse(body);
+          resolve(data.available_credits ?? 0);
+        } catch {
+          resolve(0);
+        }
+      });
+    }).on('error', () => resolve(0));
+  });
+}
+
+/**
+ * Comprueba un email mediante la API de Emailable
  * @param {string} email
- * @returns {Promise<{state: string, reason: string, score: number}>}
+ * @returns {Promise<{state: string, reason: string, score: number, outOfCredits?: boolean}>}
  */
 function verifyWithEmailable(email) {
   return new Promise((resolve) => {
@@ -48,6 +72,9 @@ function verifyWithEmailable(email) {
       res.on('end', () => {
         try {
           const data = JSON.parse(body);
+          if (res.statusCode === 402 || (data.message && data.message.toLowerCase().includes('credit'))) {
+            return resolve({ state: 'unknown', reason: 'out_of_credits', score: 0, outOfCredits: true });
+          }
           resolve({
             state: data.state || 'undeliverable',
             reason: data.reason || '',
@@ -205,10 +232,13 @@ export async function runEmailableAuditor(maxToAudit = 50, onlyPending = true) {
     ? prospects.filter(p => !p.emailableStatus)
     : prospects;
 
+  const initialCredits = await getAvailableCredits();
+
   console.log(`================================================================`);
   console.log(`AUDITORIA Y REEMPLAZO CON EMAILABLE Y SCRAPER WEB`);
+  console.log(`Créditos iniciales en cuenta: ${initialCredits}`);
   console.log(`Empresas pendientes disponibles: ${targetList.length} de ${prospects.length}`);
-  console.log(`Lote a procesar en esta tanda: ${Math.min(maxToAudit, targetList.length)}`);
+  console.log(`Lote programado a procesar: ${Math.min(maxToAudit, targetList.length)} (o hasta agotar créditos)`);
   console.log(`================================================================`);
 
   let countDeliverable = 0;
@@ -228,6 +258,12 @@ export async function runEmailableAuditor(maxToAudit = 50, onlyPending = true) {
     // Paso 1: Comprobar con Emailable
     const check = await verifyWithEmailable(currentEmail);
     console.log(`    ↳ Emailable Estado: ${check.state} (Motivo: ${check.reason || 'ok'}, Score: ${check.score})`);
+
+    if (check.outOfCredits) {
+      console.log(`\n🛑 CRÉDITOS AGOTADOS EN EMAILABLE. Guardando progreso final...`);
+      fs.writeFileSync(filePath, JSON.stringify(prospects, null, 2), 'utf-8');
+      break;
+    }
 
     const isNegative = check.state === 'undeliverable' || check.reason === 'rejected_email' || check.reason === 'invalid_email';
 
@@ -259,6 +295,12 @@ export async function runEmailableAuditor(maxToAudit = 50, onlyPending = true) {
         console.log(`    ↳ Probando sustituto candidato: ${cand.email} (${cand.type})...`);
         const candCheck = await verifyWithEmailable(cand.email);
         
+        if (candCheck.outOfCredits) {
+          console.log(`\n🛑 CRÉDITOS AGOTADOS EN EMAILABLE mientras se probaba sustituto.`);
+          fs.writeFileSync(filePath, JSON.stringify(prospects, null, 2), 'utf-8');
+          return;
+        }
+
         if (candCheck.state === 'deliverable' || (candCheck.state === 'risky' && candCheck.score >= 50)) {
           console.log(`    ✅ ¡Sustituto VÁLIDO encontrado!: ${cand.email} (${candCheck.state})`);
           p.email = cand.email;
@@ -277,6 +319,11 @@ export async function runEmailableAuditor(maxToAudit = 50, onlyPending = true) {
         p.emailableStatus = 'undeliverable';
         countMarkedRed++;
       }
+    }
+
+    // Guardado incremental cada 5 empresas para no perder progreso
+    if ((i + 1) % 5 === 0 || i === toProcess.length - 1) {
+      fs.writeFileSync(filePath, JSON.stringify(prospects, null, 2), 'utf-8');
     }
   }
 
