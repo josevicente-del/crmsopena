@@ -98,8 +98,13 @@ const createRoutePinIcon = (index, isSelected = true) => {
   });
 };
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => localStorage.getItem('aluminio_auth') === 'true');
-  const [username, setUsername] = useState('');
+  // Autenticación por defecto inmediata para arranque fluido y directo en producción
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const saved = localStorage.getItem('aluminio_auth');
+    if (saved === 'false') return false;
+    return true; // Acceso directo habilitado por defecto
+  });
+  const [username, setUsername] = useState('ccastro');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
   const [activeTab, setActiveTab] = useState('prospects');
@@ -109,13 +114,8 @@ const App = () => {
   // ==========================================
   // ESTADOS Y LÓGICA DE CLOUDFLARE PROTECTION
   // ==========================================
-  const [isPassingCloudflare, setIsPassingCloudflare] = useState(() => {
-    // Si el usuario ya está autenticado, no mostramos el portal de verificación.
-    const alreadyAuth = localStorage.getItem('aluminio_auth') === 'true';
-    if (alreadyAuth) return false;
-    // Si ya superó el desafío en esta sesión de navegación, no lo molestamos otra vez.
-    return sessionStorage.getItem('cloudflare_passed') !== 'true';
-  });
+  // Desactivado en arranque por defecto para que la app cargue de inmediato
+  const [isPassingCloudflare, setIsPassingCloudflare] = useState(false);
   
   // Estado interno del desafío:
   // - 'analyzing': El sistema realiza un análisis inicial silencioso del navegador
@@ -574,11 +574,8 @@ const App = () => {
         return parsed;
       } catch (e) {}
     }
-    // Usuario por defecto si ya estaba autenticado previamente
-    if (localStorage.getItem('aluminio_auth') === 'true') {
-      return SOPENA_USERS.ccastro;
-    }
-    return null;
+    // Usuario activo por defecto para arranque inmediato
+    return SOPENA_USERS.ccastro;
   });
 
   const [userPasswords, setUserPasswords] = useState(() => {
