@@ -14180,7 +14180,17 @@
     "emailVerified": true,
     "emailVerifiedType": "contacto",
     "bouncerStatus": "deliverable",
-    "notes": "Registrado y verificado por el usuario"
+    "notes": "Registrado y verificado por el usuario",
+    "zone": "Castilla y Leon",
+    "location": [
+      40.9429,
+      -4.1088
+    ],
+    "revenue": 5500000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-CUSTOM-0479",
@@ -14194,7 +14204,17 @@
     "emailVerified": true,
     "emailVerifiedType": "contacto",
     "bouncerStatus": "deliverable",
-    "notes": "Registrado y verificado por el usuario"
+    "notes": "Registrado y verificado por el usuario",
+    "zone": "Comunidad Valenciana",
+    "location": [
+      38.3452,
+      -0.481
+    ],
+    "revenue": 5500000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-CUSTOM-0480",
@@ -14208,7 +14228,17 @@
     "emailVerified": true,
     "emailVerifiedType": "contacto",
     "bouncerStatus": "deliverable",
-    "notes": "Registrado y verificado por el usuario"
+    "notes": "Registrado y verificado por el usuario",
+    "zone": "Andalucia",
+    "location": [
+      37.2614,
+      -6.9447
+    ],
+    "revenue": 5500000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-CUSTOM-0481",
@@ -14222,7 +14252,17 @@
     "emailVerified": true,
     "emailVerifiedType": "contacto",
     "bouncerStatus": "deliverable",
-    "notes": "Registrado y verificado por el usuario"
+    "notes": "Registrado y verificado por el usuario",
+    "zone": "Castilla-La Mancha",
+    "location": [
+      40.0704,
+      -2.1374
+    ],
+    "revenue": 5500000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-CUSTOM-0482",
@@ -14236,7 +14276,17 @@
     "emailVerified": true,
     "emailVerifiedType": "contacto",
     "bouncerStatus": "deliverable",
-    "notes": "Registrado y verificado por el usuario"
+    "notes": "Registrado y verificado por el usuario",
+    "zone": "Castilla y Leon",
+    "location": [
+      42.5987,
+      -5.5671
+    ],
+    "revenue": 5500000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-PADEL-0483",
@@ -14251,7 +14301,17 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Fabricante de pistas de pádel con estructura de aluminio. Facturación >30M € (Pádel Pro Show)"
+    "notes": "Fabricante de pistas de pádel con estructura de aluminio. Facturación >30M € (Pádel Pro Show)",
+    "zone": "Comunidad de Madrid",
+    "location": [
+      40.4168,
+      -3.7038
+    ],
+    "revenue": 30000000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-PADEL-0484",
@@ -14266,7 +14326,17 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Ingeniería y estructuras de aluminio para pádel. Facturación >6M € (Pádel Pro Show)"
+    "notes": "Ingeniería y estructuras de aluminio para pádel. Facturación >6M € (Pádel Pro Show)",
+    "zone": "Comunidad Valenciana",
+    "location": [
+      39.4699,
+      -0.3763
+    ],
+    "revenue": 6000000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-PADEL-0485",
@@ -14281,7 +14351,17 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Fabricación cerramientos y pistas deportivas de aluminio. Facturación >7M €"
+    "notes": "Fabricación cerramientos y pistas deportivas de aluminio. Facturación >7M €",
+    "zone": "Asturias",
+    "location": [
+      43.3619,
+      -5.8494
+    ],
+    "revenue": 7000000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-SOLAR-0486",
@@ -14296,7 +14376,17 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Fabricante exclusivo de perfiles y fijaciones de aluminio para proyectos solares. Facturación >8M € (GENERA)"
+    "notes": "Fabricante exclusivo de perfiles y fijaciones de aluminio para proyectos solares. Facturación >8M € (GENERA)",
+    "zone": "Asturias",
+    "location": [
+      43.3619,
+      -5.8494
+    ],
+    "revenue": 8000000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-ASEFAVE-0487",
@@ -14311,7 +14401,17 @@
     "emailVerifiedType": "compras",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Fabricante de cerramientos y muros cortina de aluminio. Facturación >12M € (ASEFAVE Grupo 1)"
+    "notes": "Fabricante de cerramientos y muros cortina de aluminio. Facturación >12M € (ASEFAVE Grupo 1)",
+    "zone": "Comunidad Valenciana",
+    "location": [
+      38.3452,
+      -0.481
+    ],
+    "revenue": 12000000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-ASEFAVE-0488",
@@ -14326,7 +14426,17 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Fabricación automatizada de cerramientos de aluminio. Facturación 6M-10M € (ASEFAVE Grupo 1)"
+    "notes": "Fabricación automatizada de cerramientos de aluminio. Facturación 6M-10M € (ASEFAVE Grupo 1)",
+    "zone": "Cantabria",
+    "location": [
+      43.4623,
+      -3.8099
+    ],
+    "revenue": 6000000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-VETECO-0490",
@@ -14341,7 +14451,17 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Fabricación de sistemas de perfiles y accesorios de aluminio. Facturación >5M € (Expositor VETECO)"
+    "notes": "Fabricación de sistemas de perfiles y accesorios de aluminio. Facturación >5M € (Expositor VETECO)",
+    "zone": "Cataluña",
+    "location": [
+      41.3879,
+      2.1699
+    ],
+    "revenue": 5000000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-PADEL-0492",
@@ -14356,7 +14476,17 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Fabricación y exportación de pistas de pádel y cubiertas modulares. Facturación 6M-30M €"
+    "notes": "Fabricación y exportación de pistas de pádel y cubiertas modulares. Facturación 6M-30M €",
+    "zone": "Extremadura",
+    "location": [
+      38.8794,
+      -6.9706
+    ],
+    "revenue": 6000000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-SOLAR-0493",
@@ -14371,7 +14501,17 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Diseño y fabricación de soportes y perfiles de aluminio para energía solar. Facturación >6M € (GENERA)"
+    "notes": "Diseño y fabricación de soportes y perfiles de aluminio para energía solar. Facturación >6M € (GENERA)",
+    "zone": "Andalucia",
+    "location": [
+      37.1773,
+      -3.5986
+    ],
+    "revenue": 6000000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-CARROC-0494",
@@ -14386,7 +14526,17 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Fabricación de componentes de aluminio para laterales y furgones de carga. Facturación >5M € (CNAE 2920)"
+    "notes": "Fabricación de componentes de aluminio para laterales y furgones de carga. Facturación >5M € (CNAE 2920)",
+    "zone": "Galicia",
+    "location": [
+      43.0097,
+      -7.556
+    ],
+    "revenue": 5000000,
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   },
   {
     "id": "PROP-GENERA-0495",
@@ -14403,6 +14553,15 @@
     "bouncerStatus": "deliverable",
     "notes": "Fabricante internacional de fijaciones y perfiles de aluminio estructural. Expositor en GENERA (IFEMA). Facturación >130M €.",
     "createdAt": "2026-10-05T07:50:00.000Z",
-    "revenue": 135000000
+    "revenue": 135000000,
+    "zone": "Navarra",
+    "location": [
+      42.465,
+      -2.4456
+    ],
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio"
+    ]
   }
 ]

@@ -448,6 +448,9 @@ const App = () => {
           })
           .map(p => {
             let clean = { ...p };
+            if (!clean.name) clean.name = 'Empresa sin nombre';
+            if (!clean.zone) clean.zone = clean.provincia || 'Otras';
+            if (typeof clean.revenue !== 'number' || isNaN(clean.revenue)) clean.revenue = 5000000;
             if (!clean.location || !Array.isArray(clean.location) || clean.location.length !== 2 || isNaN(clean.location[0]) || isNaN(clean.location[1])) {
               clean.location = [40, -4];
             }
@@ -872,9 +875,13 @@ const App = () => {
         return matchName && matchZone;
       })
       .sort((a, b) => {
-        const zoneCompare = a.zone.localeCompare(b.zone, 'es', { sensitivity: 'base' });
+        const zoneA = a.zone || '';
+        const zoneB = b.zone || '';
+        const zoneCompare = zoneA.localeCompare(zoneB, 'es', { sensitivity: 'base' });
         if (zoneCompare !== 0) return zoneCompare;
-        return a.name.localeCompare(b.name, 'es', { sensitivity: 'base' });
+        const nameA = a.name || '';
+        const nameB = b.name || '';
+        return nameA.localeCompare(nameB, 'es', { sensitivity: 'base' });
       });
   }, [userProspects, routingFilterName, routingFilterZone]);
   const handleSaveCrm = (id, data) => {
