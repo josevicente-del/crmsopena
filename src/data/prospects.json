@@ -14563,5 +14563,155 @@
       "Perfiles de Aluminio",
       "Carpintería de Aluminio"
     ]
+  },
+  {
+    "id": "PROP-CUSTOM-0496",
+    "name": "Mediterraneo Aluminio Teknico Murcia 2016 S.L.",
+    "cif": "B73948309",
+    "email": "info@mediterraneoaluminio.com",
+    "web": "https://mediterraneoaluminio.com/",
+    "phone": "+34 968 88 90 01",
+    "provincia": "Murcia",
+    "zone": "Murcia",
+    "location": [
+      37.9542,
+      -1.1895
+    ],
+    "revenue": 5500000,
+    "sector": "Fabricación y carpintería de aluminio y cerramientos técnicos",
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio",
+      "Muros Cortina"
+    ],
+    "emailVerified": true,
+    "emailVerifiedType": "contacto",
+    "directMxStatus": "deliverable",
+    "bouncerStatus": "deliverable",
+    "notes": "Fabricante de carpintería y cerramientos de aluminio en Polígono Industrial Oeste (Murcia). Verificado y activo.",
+    "contacted": false,
+    "contactDate": null,
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-10-12T20:45:00.000Z"
+  },
+  {
+    "id": "PROP-CUSTOM-0497",
+    "name": "Carpintería Eurometal S.L.",
+    "cif": "B73145773",
+    "email": "info@eurometalmurcia.es",
+    "web": "https://eurometalmurcia.es/",
+    "phone": "+34 968 85 04 40",
+    "provincia": "Murcia",
+    "zone": "Murcia",
+    "location": [
+      38.0538,
+      -1.2115
+    ],
+    "revenue": 5200000,
+    "sector": "Carpintería metálica y cerramientos de aluminio",
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio",
+      "Fachadas"
+    ],
+    "emailVerified": true,
+    "emailVerifiedType": "contacto",
+    "directMxStatus": "deliverable",
+    "bouncerStatus": "deliverable",
+    "notes": "Especialista en carpintería de aluminio en Polígono La Polvorista, Molina de Segura (Murcia). Verificado y activo.",
+    "contacted": false,
+    "contactDate": null,
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-10-12T20:45:00.000Z"
+  },
+  {
+    "id": "PROP-CUSTOM-0498",
+    "name": "Alvidur 2005 S.L. (Alvidur)",
+    "cif": "B09765488",
+    "email": "info@alvidur.com",
+    "web": "https://alvidur.com/",
+    "phone": "+34 958 78 12 65",
+    "provincia": "Granada",
+    "zone": "Andalucia",
+    "location": [
+      36.9881,
+      -3.5684
+    ],
+    "revenue": 5000000,
+    "sector": "Fabricación de carpintería metálica, aluminio y cerramientos",
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería de Aluminio",
+      "Vidrio y Cerramientos"
+    ],
+    "emailVerified": true,
+    "emailVerifiedType": "contacto",
+    "directMxStatus": "deliverable",
+    "bouncerStatus": "deliverable",
+    "notes": "Fabricación e instalación de carpintería de aluminio en Polígono Industrial San Blas, Dúrcal (Granada). Verificado y activo.",
+    "contacted": false,
+    "contactDate": null,
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-10-12T20:45:00.000Z"
+  },
+  {
+    "id": "PROP-CUSTOM-0499",
+    "name": "Andemoy Granada S.L.",
+    "cif": "B18858571",
+    "email": "info@andemoy.com",
+    "web": "https://andemoy.com/",
+    "phone": "+34 958 57 10 25",
+    "provincia": "Granada",
+    "zone": "Andalucia",
+    "location": [
+      37.1488,
+      -3.6453
+    ],
+    "revenue": 5100000,
+    "sector": "Carpintería metálica y transformación de aluminio",
+    "products": [
+      "Perfiles de Aluminio",
+      "Carpintería Metálica",
+      "Estructuras"
+    ],
+    "emailVerified": true,
+    "emailVerifiedType": "contacto",
+    "directMxStatus": "deliverable",
+    "bouncerStatus": "deliverable",
+    "notes": "Líder en carpintería metálica y cerramientos de aluminio en Churriana de la Vega (Granada). Verificado y activo.",
+    "contacted": false,
+    "contactDate": null,
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-10-12T20:45:00.000Z"
+  },
+  {
+    "id": "PROP-CUSTOM-0500",
+    "name": "Talleres Metálicos Gutiérrez S.L.",
+    "cif": "B19704212",
+    "email": "info@talleresmetalicosgutierrez.com",
+    "web": "https://www.talleresmetalicosgutierrez.com/",
+    "phone": "+34 661 48 98 15",
+    "provincia": "Granada",
+    "zone": "Andalucia",
+    "location": [
+      37.2346,
+      -3.6872
+    ],
+    "revenue": 5300000,
+    "sector": "Estructuras metálicas y cerramientos de aluminio",
+    "products": [
+      "Perfiles de Aluminio",
+      "Estructuras Metálicas",
+      "Carpintería de Aluminio"
+    ],
+    "emailVerified": true,
+    "emailVerifiedType": "contacto",
+    "directMxStatus": "deliverable",
+    "bouncerStatus": "deliverable",
+    "notes": "Talleres especializados en cerramientos y estructuras metálicas en Polígono El Rey, Atarfe (Granada). Verificado y activo.",
+    "contacted": false,
+    "contactDate": null,
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-10-12T20:45:00.000Z"
   }
 ]
