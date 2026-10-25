@@ -20,7 +20,7 @@ const C1 = process.env.SAFETYMAILS_C1 || '97a8c565af';
 const FIELD_EMAIL_CODE = process.env.SAFETYMAILS_FIELD_CODE || '2d3981ee5c';
 const OFFSET_RIGHT = process.env.SAFETYMAILS_OFFSET_RIGHT || '5098f39262';
 const OFFSET_LOADING_RIGHT = process.env.SAFETYMAILS_OFFSET_LOADING_RIGHT || '4cd9841858';
-const AUTHORIZED_DOMAIN = process.env.SAFETYMAILS_AUTHORIZED_DOMAIN || '';
+const AUTHORIZED_DOMAIN = process.env.SAFETYMAILS_AUTHORIZED_DOMAIN || 'https://gmail.com/';
 
 /**
  * Realiza la llamada a la API de SafetyMails para un email dado
@@ -28,8 +28,8 @@ const AUTHORIZED_DOMAIN = process.env.SAFETYMAILS_AUTHORIZED_DOMAIN || '';
  * @param {string} [originUrl] - URL o dominio de origen autorizado
  * @returns {Promise<any>}
  */
-async function callSafetyMailsApi(email, originUrl = '') {
-  const effectiveOrigin = originUrl || AUTHORIZED_DOMAIN || 'https://safetymails.com/';
+export async function callSafetyMailsApi(email, originUrl = '') {
+  const effectiveOrigin = originUrl || AUTHORIZED_DOMAIN;
   const a = `${OFFSET_RIGHT}${OFFSET_LOADING_RIGHT}`;
   const regPage = `${FIELD_EMAIL_CODE}${C1}`;
   const tmp = `${a}${regPage}`;
@@ -47,17 +47,10 @@ async function callSafetyMailsApi(email, originUrl = '') {
 
   const headers = {
     'Sf-Hmac': h,
+    'Referer': effectiveOrigin,
+    'Origin': new URL(effectiveOrigin).origin,
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
   };
-
-  if (effectiveOrigin) {
-    headers['Referer'] = effectiveOrigin;
-    try {
-      headers['Origin'] = new URL(effectiveOrigin).origin;
-    } catch {
-      // Ignorar si no es una URL parseable
-    }
-  }
 
   const response = await fetch(endpoint, {
     method: 'POST',
@@ -111,7 +104,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             },
             origin_domain: {
               type: 'string',
-              description: 'URL o dominio de origen registrado en SafetyMails (opcional)',
+              description: 'URL o dominio de origen registrado en SafetyMails (opcional, por defecto https://gmail.com/)',
             },
           },
           required: ['email'],
@@ -148,7 +141,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         content: [
           {
             type: 'text',
-            text: JSON.stringify(result, null, 2),
+            text: JSON.stringify(result.data || result, null, 2),
           },
         ],
       };
@@ -162,7 +155,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             text: JSON.stringify({
               ticket: TICKET_ORIGEM,
               c1: C1,
-              authorized_domain: AUTHORIZED_DOMAIN || '(pendiente de especificar por usuario)',
+              authorized_domain: AUTHORIZED_DOMAIN,
               version: '6.3'
             }, null, 2),
           },

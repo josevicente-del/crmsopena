@@ -10,6 +10,8 @@ import html2canvas from 'html2canvas';
 // jsPDF: genera el archivo PDF con soporte de links activos
 import { jsPDF } from 'jspdf';
 import rawProspects from './data/prospects.json';
+// Tareas persistentes en el servidor (fuente de verdad centralizada)
+import initialServerTasks from './data/tasks.json';
 // Registro centralizado de empresas permanentemente excluidas (competencia directa y bajas comerciales)
 import excludedCompaniesData from './data/excludedCompanies.json';
 import './App.css';
@@ -39,10 +41,114 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 // Componente para ajustar dinámicamente la vista del mapa según los puntos seleccionados y forzar invalidateSize
+// Centros y zooms óptimos por zona para navegación fluida en el mapa
+const ZONE_VIEWPORTS = {
+  'Andalucia': { center: [37.3891, -5.9845], zoom: 7 },
+  'Aragon': { center: [41.6488, -0.8891], zoom: 7 },
+  'Asturias': { center: [43.3619, -5.8494], zoom: 8 },
+  'Baleares': { center: [39.5696, 2.6502], zoom: 8 },
+  'Canarias': { center: [28.2916, -16.6291], zoom: 8 },
+  'Cantabria': { center: [43.4623, -3.8099], zoom: 9 },
+  'Castilla y Leon': { center: [41.6523, -4.7245], zoom: 7 },
+  'Castilla-La Mancha': { center: [39.8628, -4.0273], zoom: 7 },
+  'Cataluña': { center: [41.5912, 1.5209], zoom: 8 },
+  'Comunidad de Madrid': { center: [40.4168, -3.7038], zoom: 9 },
+  'Comunidad Valenciana': { center: [39.4699, -0.3763], zoom: 8 },
+  'Extremadura': { center: [39.4753, -6.3722], zoom: 7 },
+  'Galicia': { center: [42.5751, -8.1339], zoom: 8 },
+  'La Rioja': { center: [42.4650, -2.4456], zoom: 9 },
+  'Murcia': { center: [37.9922, -1.1307], zoom: 9 },
+  'Navarra': { center: [42.8125, -1.6458], zoom: 9 },
+  'Pais Vasco': { center: [43.0000, -2.6000], zoom: 8 },
+  'Portugal': { center: [39.5572, -8.0500], zoom: 7 },
+  'Francia': { center: [43.6047, 1.4442], zoom: 7 },
+  'Argelia': { center: [36.7538, 3.0588], zoom: 7 }
+};
+
+// Controlador reactivo inteligente del mapa para la Calculadora / Planificador de Rutas
+const RoutingMapController = ({ selectedZone, selectedSector, selectedProduct, displayedProspects, routeClients, forceTrigger }) => {
+  const map = useMap();
+
+  // Asegurar dimensiones de Leaflet cuando cambia el layout o los filtros
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 120);
+    return () => clearTimeout(timer);
+  }, [map, selectedZone, selectedSector, selectedProduct]);
+
+  // Reaccionar al cambio de filtros (zona, sector, producto) o forzado de recentrado
+  useEffect(() => {
+    const hasActiveFilters = Boolean(selectedZone || selectedSector || selectedProduct);
+
+    // 1. Si no hay filtros activos pero hay paradas en la ruta, centrar en la ruta
+    if (!hasActiveFilters && routeClients && routeClients.length > 0) {
+      const routeCoords = routeClients
+        .filter(c => Array.isArray(c.location) && c.location.length === 2 && !isNaN(c.location[0]) && !isNaN(c.location[1]))
+        .map(c => c.location);
+
+      if (routeCoords.length > 1) {
+        map.fitBounds(L.latLngBounds(routeCoords), { padding: [50, 50], maxZoom: 12, animate: true });
+        return;
+      } else if (routeCoords.length === 1) {
+        map.setView(routeCoords[0], 11, { animate: true });
+        return;
+      }
+    }
+
+    // 2. Si hay filtros activos (Zona, Sector o Producto): encuadrar los prospectos filtrados
+    if (hasActiveFilters && displayedProspects && displayedProspects.length > 0) {
+      const filterCoords = displayedProspects
+        .filter(p => Array.isArray(p.location) && p.location.length === 2 && !isNaN(p.location[0]) && !isNaN(p.location[1]))
+        .map(p => p.location);
+
+      if (filterCoords.length > 1) {
+        const bounds = L.latLngBounds(filterCoords);
+        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 12, animate: true });
+        return;
+      } else if (filterCoords.length === 1) {
+        map.setView(filterCoords[0], 11, { animate: true });
+        return;
+      } else if (selectedZone && ZONE_VIEWPORTS[selectedZone]) {
+        const z = ZONE_VIEWPORTS[selectedZone];
+        map.setView(z.center, z.zoom, { animate: true });
+        return;
+      }
+    }
+
+    // 3. Si solo hay zona seleccionada sin prospectos con coords, usar viewport predefinido de zona
+    if (selectedZone && ZONE_VIEWPORTS[selectedZone]) {
+      const z = ZONE_VIEWPORTS[selectedZone];
+      map.setView(z.center, z.zoom, { animate: true });
+      return;
+    }
+
+    // 4. Si hay paradas en la ruta aunque los filtros devuelvan 0 prospectos, enfocar la ruta
+    if (routeClients && routeClients.length > 0) {
+      const routeCoords = routeClients
+        .filter(c => Array.isArray(c.location) && c.location.length === 2 && !isNaN(c.location[0]) && !isNaN(c.location[1]))
+        .map(c => c.location);
+
+      if (routeCoords.length > 1) {
+        map.fitBounds(L.latLngBounds(routeCoords), { padding: [50, 50], maxZoom: 12, animate: true });
+        return;
+      } else if (routeCoords.length === 1) {
+        map.setView(routeCoords[0], 11, { animate: true });
+        return;
+      }
+    }
+
+    // 5. Vista general por defecto de la Península
+    map.setView([40.4168, -3.7038], 6, { animate: true });
+  }, [map, selectedZone, selectedSector, selectedProduct, displayedProspects, routeClients, forceTrigger]);
+
+  return null;
+};
+
+// Componente para ajustar dinámicamente la vista del mapa según los puntos seleccionados y forzar invalidateSize
 const MapAutoBounds = ({ points, defaultCenter = [40.4168, -3.7038], defaultZoom = 6 }) => {
   const map = useMap();
   useEffect(() => {
-    // Forzar redibujado de las dimensiones del contenedor de Leaflet
     const timer = setTimeout(() => {
       map.invalidateSize();
     }, 150);
@@ -489,6 +595,7 @@ const App = () => {
       // Combinar la base fija original (no borrada ni excluida) con las empresas añadidas válidas
       const combined = sanitize([...validAdded, ...rawProspects.filter(p => !deletedIds.has(p.id))]);
 
+      const rawMap = new Map(rawProspects.map(rp => [rp.id, rp]));
       const savedMods = localStorage.getItem('aluminio_crm_modifications');
       if (savedMods) {
         try {
@@ -498,9 +605,14 @@ const App = () => {
             const merged = combined.map(p => {
               const mod = modsMap.get(p.id);
               if (!mod) return p;
+              const raw = rawMap.get(p.id);
               return {
                 ...p,
                 ...mod,
+                // Garantizar que la geolocalización y demarcación oficial de la base no sea corrompida por modificaciones obsoletas
+                location: raw ? raw.location : (mod.location || p.location),
+                zone: raw ? raw.zone : (mod.zone || p.zone),
+                department: raw ? raw.department : (mod.department || p.department),
                 tasks: Array.isArray(mod.tasks) ? mod.tasks : (p.tasks || []),
                 history: Array.isArray(mod.history) ? mod.history : (p.history || [])
               };
@@ -517,6 +629,54 @@ const App = () => {
       return rawProspects;
     }
   });
+
+  // =========================================================================
+  // GESTIÓN Y PERSISTENCIA CENTRALIZADA DE TAREAS EN SERVIDOR (/api/tasks)
+  // Las tareas se guardan de forma centralizada en el servidor (src/data/tasks.json)
+  // =========================================================================
+  const [crmTasks, setCrmTasks] = useState(() => {
+    if (Array.isArray(initialServerTasks) && initialServerTasks.length > 0) {
+      return initialServerTasks;
+    }
+    return [];
+  });
+
+  // Estados de control para la interfaz de la pestaña Tareas Pendientes
+  const [taskFilterTab, setTaskFilterTab] = useState('pending'); // 'pending' | 'completed' | 'all'
+  const [taskSearchQuery, setTaskSearchQuery] = useState('');
+  const [newQuickTaskText, setNewQuickTaskText] = useState('');
+  const [newQuickTaskProspectId, setNewQuickTaskProspectId] = useState('');
+  const [newQuickTaskDays, setNewQuickTaskDays] = useState('3');
+  const [newQuickTaskPriority, setNewQuickTaskPriority] = useState('Normal');
+
+  // Carga y sincronización activa de tareas directamente desde el SERVIDOR (/api/tasks)
+  useEffect(() => {
+    let isMounted = true;
+    const fetchServerTasks = async () => {
+      try {
+        const res = await fetch('/api/tasks');
+        if (res.ok) {
+          const serverTasks = await res.json();
+          if (Array.isArray(serverTasks) && isMounted) {
+            setCrmTasks(serverTasks);
+          }
+        }
+      } catch (e) {
+        console.warn('[Tasks] Conexión con servidor /api/tasks (usando datos de servidor locales):', e);
+      }
+    };
+    fetchServerTasks();
+    return () => { isMounted = false; };
+  }, []);
+
+  // Sincronizar bidireccionalmente las tareas dentro de la propiedad p.tasks de cada prospecto
+  useEffect(() => {
+    setProspects(prev => prev.map(p => {
+      const associated = crmTasks.filter(t => t.prospectId === p.id);
+      return { ...p, tasks: associated };
+    }));
+  }, [crmTasks]);
+
   // ==========================================
   // CONFIGURACIÓN DE USUARIOS GRUPO SOPENA
   // ==========================================
@@ -860,11 +1020,36 @@ const App = () => {
     });
   }, [userProspects, filterZone, filterSector, pipelineSortOrder]);
 
-  // Estados para filtrar en la Calculadora de Rutas
+  // Estados para filtrar en la Calculadora / Planificador de Rutas
   const [routingFilterName, setRoutingFilterName] = useState('');
   const [routingFilterZone, setRoutingFilterZone] = useState('');
+  const [routingFilterSector, setRoutingFilterSector] = useState('');
+  const [routingFilterProduct, setRoutingFilterProduct] = useState('');
+  const [mapForceViewTrigger, setMapForceViewTrigger] = useState(0);
 
-  // Ordenar y filtrar prospectos para la calculadora de rutas por zona y luego por orden alfabético
+  // Sectores únicos disponibles para el filtro del planificador de rutas
+  const availableRoutingSectors = useMemo(() => {
+    return [...new Set(userProspects.map(p => p.sector).filter(Boolean))].sort((a, b) => 
+      a.localeCompare(b, 'es', { sensitivity: 'base' })
+    );
+  }, [userProspects]);
+
+  // Productos de aluminio extruido únicos consumidos para el filtro del planificador de rutas
+  const availableRoutingProducts = useMemo(() => {
+    const pSet = new Set();
+    userProspects.forEach(p => {
+      if (Array.isArray(p.products)) {
+        p.products.forEach(prod => {
+          if (prod && typeof prod === 'string' && prod.trim()) {
+            pSet.add(prod.trim());
+          }
+        });
+      }
+    });
+    return [...pSet].sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
+  }, [userProspects]);
+
+  // Ordenar y filtrar prospectos para la calculadora de rutas por zona, sector, producto y nombre/CIF
   const routingSortedProspects = useMemo(() => {
     return [...userProspects]
       .filter(p => {
@@ -872,7 +1057,13 @@ const App = () => {
           p.name.toLowerCase().includes(routingFilterName.trim().toLowerCase()) ||
           (p.cif && p.cif.toLowerCase().includes(routingFilterName.trim().toLowerCase()));
         const matchZone = routingFilterZone === '' || p.zone === routingFilterZone;
-        return matchName && matchZone;
+        const matchSector = routingFilterSector === '' || p.sector === routingFilterSector;
+        const matchProduct = routingFilterProduct === '' || (
+          Array.isArray(p.products) && p.products.some(prod => 
+            prod.toLowerCase().includes(routingFilterProduct.toLowerCase())
+          )
+        );
+        return matchName && matchZone && matchSector && matchProduct;
       })
       .sort((a, b) => {
         const zoneA = a.zone || '';
@@ -883,72 +1074,157 @@ const App = () => {
         const nameB = b.name || '';
         return nameA.localeCompare(nameB, 'es', { sensitivity: 'base' });
       });
-  }, [userProspects, routingFilterName, routingFilterZone]);
+  }, [userProspects, routingFilterName, routingFilterZone, routingFilterSector, routingFilterProduct]);
   const handleSaveCrm = (id, data) => {
-    setProspects(prev => prev.map(p => p.id === id ? { ...p, ...data } : p));
+    setProspects(prev => prev.map(p => {
+      if (p.id === id) {
+        const associatedTasks = crmTasks.filter(t => t.prospectId === id);
+        return { ...p, ...data, tasks: associatedTasks };
+      }
+      return p;
+    }));
     setSelectedProspect(null);
   };
-  const handleAddTask = (prospectId, taskText) => {
-    if (!taskText || !taskText.trim()) return;
-    setProspects(prev => prev.map(p => {
-      if (p.id === prospectId) {
-        return {
-          ...p,
-          tasks: [...(p.tasks || []), { id: Date.now(), text: taskText, date: new Date().toISOString(), completed: false }]
-        };
-      }
-      return p;
-    }));
+
+  const handleAddTask = async (prospectId, taskText, options = {}) => {
+    if (!taskText || !taskText.trim()) return null;
+    const targetProspect = prospects.find(p => p.id === prospectId);
+    const pName = targetProspect ? targetProspect.name : (options.prospectName || 'Tarea General');
+
+    let dueDate = options.dueDate || null;
+    let dueDateFormatted = options.dueDateFormatted || null;
+    if (dueDate && !dueDateFormatted) {
+      try {
+        dueDateFormatted = new Date(dueDate).toLocaleDateString('es-ES');
+      } catch (e) {}
+    }
+
+    const newTask = {
+      id: Date.now() + Math.floor(Math.random() * 10000),
+      prospectId: prospectId || null,
+      prospectName: pName,
+      text: taskText.trim(),
+      date: new Date().toISOString(),
+      dueDate: dueDate,
+      dueDateFormatted: dueDateFormatted,
+      priority: options.priority || 'Normal',
+      category: options.category || 'General',
+      completed: false
+    };
+
+    // Actualización inmediata del estado reactivo en cliente
+    setCrmTasks(prev => [newTask, ...prev]);
+
+    // Actualizar de forma reactiva selectedProspect si está abierto
+    if (selectedProspect && selectedProspect.id === prospectId) {
+      setSelectedProspect(prev => ({
+        ...prev,
+        tasks: [...(prev.tasks || []), newTask]
+      }));
+    }
+
+    // Persistencia directa en el SERVIDOR (src/data/tasks.json)
+    try {
+      await fetch('/api/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newTask)
+      });
+    } catch (err) {
+      console.error('Error al persistir nueva tarea en el servidor:', err);
+    }
+
+    return newTask;
   };
-  const handleToggleTask = (prospectId, taskId) => {
-    setProspects(prev => prev.map(p => {
-      if (p.id === prospectId) {
-        return {
-          ...p,
-          tasks: (p.tasks || []).map(t => t.id === taskId ? { ...t, completed: !t.completed } : t)
-        };
+
+  const handleToggleTask = async (prospectId, taskId) => {
+    // Actualización optimista inmediata en cliente
+    setCrmTasks(prev => prev.map(t => {
+      if (t.id === taskId || (prospectId && t.prospectId === prospectId && t.id === taskId)) {
+        return { ...t, completed: !t.completed, completedAt: !t.completed ? new Date().toISOString() : null };
       }
-      return p;
+      return t;
     }));
+
+    if (selectedProspect) {
+      setSelectedProspect(prev => ({
+        ...prev,
+        tasks: (prev.tasks || []).map(t => t.id === taskId ? { ...t, completed: !t.completed } : t)
+      }));
+    }
+
+    // Persistencia directa en el SERVIDOR
+    try {
+      await fetch(`/api/tasks/${taskId}/toggle`, {
+        method: 'PATCH'
+      });
+    } catch (err) {
+      console.error('Error al actualizar estado de tarea en el servidor:', err);
+    }
   };
+
+  const handleDeleteTask = async (taskId) => {
+    // Actualización optimista inmediata en cliente
+    setCrmTasks(prev => prev.filter(t => t.id !== taskId));
+    if (selectedProspect) {
+      setSelectedProspect(prev => ({
+        ...prev,
+        tasks: (prev.tasks || []).filter(t => t.id !== taskId)
+      }));
+    }
+
+    // Eliminación directa en el SERVIDOR (src/data/tasks.json)
+    try {
+      await fetch(`/api/tasks/${taskId}`, {
+        method: 'DELETE'
+      });
+    } catch (err) {
+      console.error('Error al eliminar tarea en el servidor:', err);
+    }
+  };
+
   const handleAddHistory = (prospectId, type, text) => {
     if (!text || !text.trim()) return;
+    const targetProspect = prospects.find(p => p.id === prospectId);
+    const pName = targetProspect ? targetProspect.name : '';
+
+    const newHistoryEntry = { id: Date.now(), type, text, date: new Date().toISOString() };
+
+    // Si se registra un email, agendamos automáticamente tarea de seguimiento a 7 días
+    const isEmailActivity = (type && type.toLowerCase().includes('email')) || 
+                            (text && (text.toLowerCase().includes('enviado email') || text.toLowerCase().includes('email enviado') || text.toLowerCase().includes('correo enviado')));
+    
+    if (isEmailActivity && targetProspect) {
+      const followUpDate = new Date();
+      followUpDate.setDate(followUpDate.getDate() + 7);
+      const formattedFollowUpDate = followUpDate.toLocaleDateString('es-ES');
+      
+      handleAddTask(prospectId, `✉️ Volver a contactar (${pName})`, {
+        dueDate: followUpDate.toISOString(),
+        dueDateFormatted: formattedFollowUpDate,
+        priority: 'Normal',
+        category: 'Email'
+      });
+    }
+
     setProspects(prev => prev.map(p => {
       if (p.id === prospectId) {
-        const newHistoryEntry = { id: Date.now(), type, text, date: new Date().toISOString() };
-        let updatedTasks = p.tasks || [];
-
-        // Si se registra que se ha enviado un email a la empresa, agendamos automáticamente
-        // una tarea de seguimiento en Tareas Pendientes para una semana después (7 días)
-        const isEmailActivity = (type && type.toLowerCase().includes('email')) || 
-                                (text && (text.toLowerCase().includes('enviado email') || text.toLowerCase().includes('email enviado') || text.toLowerCase().includes('correo enviado')));
-        
-        if (isEmailActivity) {
-          const followUpDate = new Date();
-          followUpDate.setDate(followUpDate.getDate() + 7);
-          const formattedFollowUpDate = followUpDate.toLocaleDateString('es-ES');
-          
-          const autoEmailFollowUpTask = {
-            id: Date.now() + 10,
-            text: `✉️ Volver a contactar (${p.name})`,
-            date: new Date().toISOString(), // Fecha en la que se generó el seguimiento
-            dueDate: followUpDate.toISOString(), // Fecha de vencimiento a 7 días
-            dueDateFormatted: formattedFollowUpDate,
-            autoGenerated: true,
-            completed: false
-          };
-          updatedTasks = [...updatedTasks, autoEmailFollowUpTask];
-        }
-
         return { 
           ...p, 
-          history: [newHistoryEntry, ...(p.history || [])],
-          tasks: updatedTasks
+          history: [newHistoryEntry, ...(p.history || [])]
         };
       }
       return p;
     }));
+
+    if (selectedProspect && selectedProspect.id === prospectId) {
+      setSelectedProspect(prev => ({
+        ...prev,
+        history: [newHistoryEntry, ...(prev.history || [])]
+      }));
+    }
   };
+
   const handleUpdatePipelineStage = (prospectId, newStage) => {
     setProspects(prev => prev.map(p => {
       if (p.id === prospectId) {
@@ -959,13 +1235,14 @@ const App = () => {
           const targetDate = new Date();
           targetDate.setDate(targetDate.getDate() + 3);
           const formattedDate = targetDate.toLocaleDateString('es-ES');
-          const autoFollowUpTask = {
-            id: Date.now(),
-            text: `📞 Llamada de seguimiento: contacto comercial (Agendada para el ${formattedDate})`,
-            date: new Date().toISOString(), // Fecha de creación actual
-            completed: false
-          };
-          updatedProspect.tasks = [...(p.tasks || []), autoFollowUpTask];
+
+          handleAddTask(prospectId, `📞 Llamada de seguimiento: contacto comercial (Agendada para el ${formattedDate})`, {
+            dueDate: targetDate.toISOString(),
+            dueDateFormatted: formattedDate,
+            priority: 'Alta',
+            category: 'Llamada'
+          });
+
           // Registrar en el historial del prospecto para mantener la trazabilidad del proceso
           const historyEntry = {
             id: Date.now() + 1,
@@ -1357,6 +1634,10 @@ const App = () => {
         sectorText = isPt
           ? `Na indústria moderna, os ${target.sector} são o standard para a construção de maquinaria e líneas de montagem. Na Aluminios Innovations contamos com a capacidade técnica para extrudar perfis ranhurados con tolerâncias milimétricas.`
           : `En la industria moderna, los ${target.sector} son el estándar para la construcción de maquinaria y líneas de ensamblaje. En Aluminios Innovations contamos con la capacidad técnica para extruir perfiles ranurados con tolerancias milimétricas.`;
+      } else if (['Suelos Técnicos', 'Suelos Tecnicos'].includes(target.sector)) {
+        sectorText = isPt
+          ? `Especialistas em ${target.sector} e sistemas de tetos estruturais (como sistemas GRID em centros de dados). Extrudimos perfis de alta precisão em ligas EN AW-6060 T6 e 6083 com capacidade de carga superior a 20 kN, suportando pedestais, travessas e painéis de ventilação.`
+          : `Especialistas en ${target.sector} y sistemas de techos estructurales (como sistemas GRID para data centers). Extruimos perfiles de alta precisión en aleaciones EN AW-6060 T6 y 6083 con capacidad de carga de hasta 20 kN, pedestales, travesaños y paneles de ventilación con tolerancias milimétricas.`;
       } else {
         sectorText = isPt
           ? `Oferecemos perfilaria de alumínio sob medida com ligas otimizadas e acabamentos de tratamento de superfície certificados para apoiar os seus processos de fabrico.`
@@ -1895,6 +2176,10 @@ const App = () => {
         sectorText = isPt
           ? `Na indústria moderna, os ${target.sector} são o standard para a construção de maquinaria e linhas de montagem. Na Aluminios Innovations contamos com a capacidade técnica para extrudar perfis ranhurados con tolerâncias milimétricas.`
           : `En la industria moderna, los ${target.sector} son el estándar para la construcción de maquinaria y líneas de ensamblaje. En Aluminios Innovations contamos con la capacidad técnica para extruir perfiles ranurados con tolerancias milimétricas.`;
+      } else if (['Suelos Técnicos', 'Suelos Tecnicos'].includes(target.sector)) {
+        sectorText = isPt
+          ? `Especialistas em ${target.sector} e sistemas de tetos estruturais (como sistemas GRID em centros de dados). Extrudimos perfis de alta precisão em ligas EN AW-6060 T6 e 6083 com capacidade de carga superior a 20 kN, suportando pedestais, travessas e painéis de ventilação.`
+          : `Especialistas en ${target.sector} y sistemas de techos estructurales (como sistemas GRID para data centers). Extruimos perfiles de alta precisión en aleaciones EN AW-6060 T6 y 6083 con capacidad de carga de hasta 20 kN, pedestales, travesaños y paneles de ventilación con tolerancias milimétricas.`;
       } else {
         sectorText = isPt
           ? `Oferecemos perfilaria de alumínio sob medida com ligas otimizadas e acabamentos de tratamento de superfície certificados para apoiar os seus processos de fabrico.`
@@ -2696,6 +2981,7 @@ const App = () => {
                   <label>Sector</label>
                   <select value={filterSector} onChange={e => setFilterSector(e.target.value)}>
                     <option value="">Todos los sectores</option>
+                    <option value="Suelos Técnicos">Suelos Técnicos</option>
                     <option value="Cerramientos">Cerramientos</option>
                     <option value="Construccion Modular">Construcción Modular</option>
                     <option value="Puertas y Ventanas">Puertas y Ventanas</option>
@@ -3001,8 +3287,9 @@ const App = () => {
                   </span>
                 </div>
 
-                {/* Filtros de búsqueda para la ruta: por Nombre y por Zona */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '14px', background: '#f8fafc', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                {/* Filtros de búsqueda para la ruta: por Nombre, Zona, Sector y Producto */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px', marginBottom: '14px', background: '#f8fafc', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                  {/* 1. Búsqueda por texto (Nombre / CIF) */}
                   <div>
                     <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 'bold', color: '#475569', marginBottom: '4px' }}>
                       🔍 Buscar Cliente
@@ -3044,13 +3331,17 @@ const App = () => {
                     </div>
                   </div>
 
+                  {/* 2. Filtro por Zona */}
                   <div>
                     <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 'bold', color: '#475569', marginBottom: '4px' }}>
                       🌍 Filtrar por Zona
                     </label>
                     <select
                       value={routingFilterZone}
-                      onChange={e => setRoutingFilterZone(e.target.value)}
+                      onChange={e => {
+                        setRoutingFilterZone(e.target.value);
+                        setMapForceViewTrigger(prev => prev + 1);
+                      }}
                       style={{
                         width: '100%',
                         padding: '7px 10px',
@@ -3067,35 +3358,109 @@ const App = () => {
                       ))}
                     </select>
                   </div>
+
+                  {/* 3. Filtro por Sector */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 'bold', color: '#475569', marginBottom: '4px' }}>
+                      🏭 Filtrar por Sector
+                    </label>
+                    <select
+                      value={routingFilterSector}
+                      onChange={e => {
+                        setRoutingFilterSector(e.target.value);
+                        setMapForceViewTrigger(prev => prev + 1);
+                      }}
+                      style={{
+                        width: '100%',
+                        padding: '7px 10px',
+                        borderRadius: '6px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.85rem',
+                        backgroundColor: '#ffffff',
+                        color: '#0f172a'
+                      }}
+                    >
+                      <option value="">Todos los sectores ({availableRoutingSectors.length})</option>
+                      {availableRoutingSectors.map(s => (
+                        <option key={s} value={s}>{s}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* 4. Filtro por Producto */}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 'bold', color: '#475569', marginBottom: '4px' }}>
+                      📦 Filtrar por Producto
+                    </label>
+                    <select
+                      value={routingFilterProduct}
+                      onChange={e => {
+                        setRoutingFilterProduct(e.target.value);
+                        setMapForceViewTrigger(prev => prev + 1);
+                      }}
+                      style={{
+                        width: '100%',
+                        padding: '7px 10px',
+                        borderRadius: '6px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.85rem',
+                        backgroundColor: '#ffffff',
+                        color: '#0f172a'
+                      }}
+                    >
+                      <option value="">Todos los productos ({availableRoutingProducts.length})</option>
+                      {availableRoutingProducts.map(prod => (
+                        <option key={prod} value={prod}>{prod}</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
                 {/* Lista de clientes filtrados */}
                 <div style={{maxHeight: '380px', overflowY: 'auto', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '10px'}}>
                   {routingSortedProspects.map(p => (
-                    <div key={p.id} style={{display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', padding: '4px 6px', borderRadius: '4px', transition: 'background 0.2s', background: routeClients.find(c => c.id === p.id) ? '#eff6ff' : 'transparent'}}>
+                    <div key={p.id} style={{display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', padding: '6px 8px', borderRadius: '6px', transition: 'background 0.2s', background: routeClients.find(c => c.id === p.id) ? '#eff6ff' : 'transparent', borderBottom: '1px solid #f1f5f9'}}>
                       <input
                         type="checkbox"
                         checked={!!routeClients.find(c => c.id === p.id)}
                         onChange={() => handleToggleRouteClient(p)}
-                        style={{ cursor: 'pointer' }}
+                        style={{ cursor: 'pointer', transform: 'scale(1.1)' }}
                       />
                       <div style={{ flex: 1, cursor: 'pointer' }} onClick={() => handleToggleRouteClient(p)}>
-                        <strong>{p.name}</strong> <span style={{fontSize: '0.8rem', color: '#666'}}>({p.zone})</span>
-                        {p.department && <span style={{fontSize: '0.75rem', color: '#94a3b8', display: 'block'}}>{p.department}</span>}
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px' }}>
+                          <strong style={{ fontSize: '0.88rem', color: '#0f172a' }}>{p.name}</strong>
+                          <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>{p.zone}</span>
+                        </div>
+                        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '4px' }}>
+                          <span style={{ fontSize: '0.72rem', background: '#f1f5f9', color: '#334155', padding: '1px 6px', borderRadius: '4px', fontWeight: 500 }}>
+                            🏭 {p.sector}
+                          </span>
+                          {Array.isArray(p.products) && p.products.length > 0 && (
+                            <span style={{ fontSize: '0.72rem', background: '#e0f2fe', color: '#0369a1', padding: '1px 6px', borderRadius: '4px', fontWeight: 500 }} title={p.products.join(', ')}>
+                              📦 {p.products[0]}{p.products.length > 1 ? ` (+${p.products.length - 1})` : ''}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   ))}
                   {routingSortedProspects.length === 0 && (
                     <div style={{ padding: '25px', textAlign: 'center', color: '#64748b', fontSize: '0.9rem' }}>
                       No se encontraron clientes con los filtros aplicados.
-                      {(routingFilterName || routingFilterZone) && (
-                        <div style={{ marginTop: '8px' }}>
+                      {(routingFilterName || routingFilterZone || routingFilterSector || routingFilterProduct) && (
+                        <div style={{ marginTop: '10px' }}>
                           <button
                             type="button"
-                            onClick={() => { setRoutingFilterName(''); setRoutingFilterZone(''); }}
+                            onClick={() => {
+                              setRoutingFilterName('');
+                              setRoutingFilterZone('');
+                              setRoutingFilterSector('');
+                              setRoutingFilterProduct('');
+                              setMapForceViewTrigger(prev => prev + 1);
+                            }}
                             style={{ background: 'none', border: 'none', color: 'var(--sopena-blue)', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.85rem' }}
                           >
-                            Limpiar filtros
+                            Limpiar todos los filtros
                           </button>
                         </div>
                       )}
@@ -3179,20 +3544,104 @@ const App = () => {
                 )}
               </div>
               <div className="card map-container" style={{gridColumn: '2 / -1', padding: 0, height: '520px', minHeight: '520px', position: 'relative'}}>
+                
+                {/* Botones flotantes de navegación rápida y recentrado en zona */}
+                <div style={{
+                  position: 'absolute',
+                  top: '12px',
+                  right: '12px',
+                  zIndex: 1000,
+                  display: 'flex',
+                  gap: '6px',
+                  background: 'rgba(255, 255, 255, 0.95)',
+                  padding: '5px 8px',
+                  borderRadius: '8px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                  backdropFilter: 'blur(4px)'
+                }}>
+                  {(routingFilterZone || routingFilterSector || routingFilterProduct) && (
+                    <button
+                      type="button"
+                      onClick={() => setMapForceViewTrigger(prev => prev + 1)}
+                      style={{
+                        background: '#e0f2fe',
+                        color: '#0369a1',
+                        border: '1px solid #bae6fd',
+                        borderRadius: '6px',
+                        padding: '4px 10px',
+                        fontSize: '0.78rem',
+                        fontWeight: 'bold',
+                        cursor: 'pointer'
+                      }}
+                      title="Centrar mapa en los prospectos filtrados"
+                    >
+                      🎯 Centrar Filtros ({routingSortedProspects.length})
+                    </button>
+                  )}
+                  {routeClients.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setRoutingFilterZone('');
+                        setRoutingFilterSector('');
+                        setRoutingFilterProduct('');
+                        setMapForceViewTrigger(prev => prev + 1);
+                      }}
+                      style={{
+                        background: '#dcfce7',
+                        color: '#15803d',
+                        border: '1px solid #bbf7d0',
+                        borderRadius: '6px',
+                        padding: '4px 10px',
+                        fontSize: '0.78rem',
+                        fontWeight: 'bold',
+                        cursor: 'pointer'
+                      }}
+                      title="Enfocar todas las paradas de la ruta"
+                    >
+                      🛣️ Ver Ruta ({routeClients.length})
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setRoutingFilterZone('');
+                      setRoutingFilterSector('');
+                      setRoutingFilterProduct('');
+                      setRoutingFilterName('');
+                      setMapForceViewTrigger(prev => prev + 1);
+                    }}
+                    style={{
+                      background: '#f1f5f9',
+                      color: '#475569',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '6px',
+                      padding: '4px 10px',
+                      fontSize: '0.78rem',
+                      fontWeight: 'bold',
+                      cursor: 'pointer'
+                    }}
+                    title="Limpiar filtros y volver a la vista general de toda España"
+                  >
+                    🇪🇸 Vista General
+                  </button>
+                </div>
+
                 <MapContainer center={[40.4168, -3.7038]} zoom={6} style={{ height: '100%', width: '100%' }}>
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                   
-                  {/* Autoencuadre automático para redibujar el mapa y centrar las empresas activas */}
-                  <MapAutoBounds 
-                    points={
-                      routeClients.length > 0 
-                        ? routeClients.map(c => c.location)
-                        : routingSortedProspects.slice(0, 100).map(p => p.location)
-                    } 
+                  {/* Controlador reactivo inteligente para centrar y encuadrar zona, sector y producto en tiempo real */}
+                  <RoutingMapController 
+                    selectedZone={routingFilterZone}
+                    selectedSector={routingFilterSector}
+                    selectedProduct={routingFilterProduct}
+                    displayedProspects={routingSortedProspects}
+                    routeClients={routeClients}
+                    forceTrigger={mapForceViewTrigger}
                   />
 
-                  {/* 1. Marcadores de todos los prospectos disponibles según el filtro (tenues/grises si no están en la ruta) */}
-                  {routingSortedProspects.slice(0, 120).map(p => {
+                  {/* 1. Marcadores de todos los prospectos disponibles según los filtros aplicados */}
+                  {((routingFilterZone || routingFilterSector || routingFilterProduct || routingFilterName) ? routingSortedProspects : routingSortedProspects.slice(0, 150)).map(p => {
                     const isSelected = !!routeClients.find(c => c.id === p.id);
                     if (isSelected) return null; // Los seleccionados se dibujan encima con su número
                     return (
@@ -3202,7 +3651,7 @@ const App = () => {
                         icon={createRoutePinIcon(null, false)}
                       >
                         <Popup>
-                          <div style={{ padding: '4px' }}>
+                          <div style={{ padding: '4px', maxWidth: '240px' }}>
                             <strong style={{ fontSize: '0.92rem', color: '#1e293b' }}>{p.name}</strong>
                             <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '3px' }}>
                               📍 {p.zone} {p.department && `• ${p.department}`}
@@ -3210,6 +3659,11 @@ const App = () => {
                             <div style={{ fontSize: '0.78rem', color: '#0369a1', marginTop: '2px', fontWeight: 600 }}>
                               🏭 {p.sector}
                             </div>
+                            {Array.isArray(p.products) && p.products.length > 0 && (
+                              <div style={{ fontSize: '0.74rem', color: '#0f766e', marginTop: '4px', background: '#f0fdfa', padding: '3px 6px', borderRadius: '4px', border: '1px solid #ccfbf1' }}>
+                                📦 {p.products.slice(0, 3).join(', ')}{p.products.length > 3 ? '...' : ''}
+                              </div>
+                            )}
                             <button
                               type="button"
                               onClick={() => handleToggleRouteClient(p)}
@@ -3904,60 +4358,386 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
               </div>
             </div>
           )}
-          {/* TASKS TAB */}
+          {/* TASKS TAB (GESTIÓN INTEGRAL Y PERSISTENTE DE TAREAS COMERCIALES) */}
           {activeTab === 'tasks' && (
-            <div className="tasks-container" style={{padding: '20px', background: 'white', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)'}}>
-              <h2 style={{color: 'var(--sopena-blue-dark)', marginBottom: '20px'}}>Todas las tareas pendientes</h2>
-              <div style={{display: 'flex', flexDirection: 'column', gap: '15px'}}>
-                {prospects.flatMap(p => (p.tasks || []).map(t => ({...t, prospectName: p.name, prospectId: p.id})))
-                  .filter(t => !t.completed)
-                  .sort((a, b) => new Date(b.date) - new Date(a.date))
-                  .map(task => {
-                    const dueDateObj = task.dueDate ? new Date(task.dueDate) : null;
-                    const isDueValid = dueDateObj && !isNaN(dueDateObj.getTime());
-                    const dueDateStr = task.dueDateFormatted || (isDueValid ? dueDateObj.toLocaleDateString('es-ES') : null);
-                    const isRecontactTask = (task.text && task.text.toLowerCase().includes('volver a contactar'));
+            <div className="tasks-container" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              
+              {/* HEADER Y MÉTRICAS DE TAREAS */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
+                <div style={{ background: 'white', padding: '16px 20px', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                  <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 'bold', textTransform: 'uppercase' }}>Tareas Pendientes</span>
+                  <div style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--sopena-blue)', marginTop: '4px' }}>
+                    {crmTasks.filter(t => !t.completed).length}
+                  </div>
+                </div>
 
-                    return (
-                      <div key={task.id} style={{
-                        display: 'flex', 
-                        justifyContent: 'space-between', 
-                        alignItems: 'center', 
-                        padding: '16px 20px', 
-                        background: isRecontactTask ? '#f0fdf4' : '#f8fafc', 
-                        borderRadius: '8px', 
-                        borderLeft: isRecontactTask ? '5px solid #10b981' : '5px solid var(--sopena-blue)',
-                        border: '1px solid #e2e8f0',
-                        boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
-                      }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            <strong style={{ fontSize: '1.05rem', color: '#1e293b' }}>{task.text}</strong>
-                            {isRecontactTask && (
-                              <span style={{ background: '#dcfce7', color: '#166534', padding: '2px 8px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 600 }}>
-                                📅 Recontacto a 1 semana
+                <div style={{ background: 'white', padding: '16px 20px', borderRadius: '10px', border: '1px solid #fed7aa', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                  <span style={{ fontSize: '0.8rem', color: '#9a3412', fontWeight: 'bold', textTransform: 'uppercase' }}>Alta Prioridad / Urgentes</span>
+                  <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#ea580c', marginTop: '4px' }}>
+                    {crmTasks.filter(t => !t.completed && (t.priority === 'Urgente' || t.priority === 'Alta')).length}
+                  </div>
+                </div>
+
+                <div style={{ background: 'white', padding: '16px 20px', borderRadius: '10px', border: '1px solid #bbf7d0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                  <span style={{ fontSize: '0.8rem', color: '#166534', fontWeight: 'bold', textTransform: 'uppercase' }}>Completadas</span>
+                  <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#10b981', marginTop: '4px' }}>
+                    {crmTasks.filter(t => t.completed).length}
+                  </div>
+                </div>
+
+                <div style={{ background: 'white', padding: '16px 20px', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                  <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 'bold', textTransform: 'uppercase' }}>Total Registradas</span>
+                  <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#334155', marginTop: '4px' }}>
+                    {crmTasks.length}
+                  </div>
+                </div>
+              </div>
+
+              {/* CARD DE ALTA RÁPIDA DE TAREA COMERCIAL */}
+              <div style={{ background: 'white', borderRadius: '12px', padding: '20px', border: '1px solid #cbd5e1', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }}>
+                <h3 style={{ margin: '0 0 15px 0', color: 'var(--sopena-blue-dark)', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span>➕</span> Programar Nueva Tarea Comercial
+                </h3>
+                
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!newQuickTaskText.trim()) return;
+
+                  let dueDate = null;
+                  let dueDateFormatted = null;
+                  const daysOffset = parseInt(newQuickTaskDays, 10);
+                  if (!isNaN(daysOffset)) {
+                    const target = new Date();
+                    target.setDate(target.getDate() + daysOffset);
+                    dueDate = target.toISOString();
+                    dueDateFormatted = target.toLocaleDateString('es-ES');
+                  }
+
+                  handleAddTask(newQuickTaskProspectId || null, newQuickTaskText, {
+                    dueDate,
+                    dueDateFormatted,
+                    priority: newQuickTaskPriority
+                  });
+
+                  setNewQuickTaskText('');
+                  setNewQuickTaskProspectId('');
+                  setNewQuickTaskDays('3');
+                  setNewQuickTaskPriority('Normal');
+                }} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', alignItems: 'flex-end' }}>
+                  
+                  <div style={{ gridColumn: 'span 2' }}>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--text-secondary)', marginBottom: '6px' }}>
+                      Descripción de la tarea comercial *
+                    </label>
+                    <input 
+                      type="text" 
+                      placeholder="Ej: Enviar oferta de perfiles RPT serie 70, llamar a compras..." 
+                      value={newQuickTaskText} 
+                      onChange={(e) => setNewQuickTaskText(e.target.value)}
+                      required 
+                      style={{ width: '100%', padding: '10px 14px', borderRadius: '6px', border: '1px solid var(--border-color)', fontSize: '0.9rem' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--text-secondary)', marginBottom: '6px' }}>
+                      Empresa asociada (opcional)
+                    </label>
+                    <select 
+                      value={newQuickTaskProspectId} 
+                      onChange={(e) => setNewQuickTaskProspectId(e.target.value)}
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--border-color)', fontSize: '0.9rem', background: 'white' }}
+                    >
+                      <option value="">🏢 Tarea General de Ventas</option>
+                      {userProspects
+                        .slice()
+                        .sort((a, b) => (a.name || '').localeCompare(b.name || '', 'es', { sensitivity: 'base' }))
+                        .map(p => (
+                          <option key={p.id} value={p.id}>
+                            {p.name} ({p.zone})
+                          </option>
+                        ))
+                      }
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--text-secondary)', marginBottom: '6px' }}>
+                      Plazo objetivo
+                    </label>
+                    <select 
+                      value={newQuickTaskDays} 
+                      onChange={(e) => setNewQuickTaskDays(e.target.value)}
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--border-color)', fontSize: '0.9rem', background: 'white' }}
+                    >
+                      <option value="0">Hoy</option>
+                      <option value="1">Mañana</option>
+                      <option value="3">En 3 días</option>
+                      <option value="7">En 1 semana (7 días)</option>
+                      <option value="14">En 2 semanas (14 días)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--text-secondary)', marginBottom: '6px' }}>
+                      Prioridad
+                    </label>
+                    <select 
+                      value={newQuickTaskPriority} 
+                      onChange={(e) => setNewQuickTaskPriority(e.target.value)}
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--border-color)', fontSize: '0.9rem', background: 'white' }}
+                    >
+                      <option value="Normal">Normal</option>
+                      <option value="Alta">Alta</option>
+                      <option value="Urgente">Urgente</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <button 
+                      type="submit" 
+                      className="action-btn"
+                      style={{ 
+                        width: '100%', 
+                        padding: '11px', 
+                        fontWeight: 'bold',
+                        background: 'linear-gradient(135deg, var(--sopena-blue) 0%, #034694 100%)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '6px'
+                      }}
+                    >
+                      + Añadir Tarea
+                    </button>
+                  </div>
+
+                </form>
+              </div>
+
+              {/* LISTADO DE TAREAS Y FILTROS */}
+              <div style={{ background: 'white', borderRadius: '12px', padding: '20px', border: '1px solid #cbd5e1', boxShadow: '0 2px 6px rgba(0,0,0,0.03)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px', flexWrap: 'wrap', gap: '12px' }}>
+                  
+                  {/* Selector de Pestañas de Estado */}
+                  <div style={{ display: 'flex', gap: '8px', background: '#f1f5f9', padding: '4px', borderRadius: '8px' }}>
+                    <button 
+                      type="button" 
+                      onClick={() => setTaskFilterTab('pending')}
+                      style={{ 
+                        padding: '8px 16px', 
+                        borderRadius: '6px', 
+                        border: 'none', 
+                        fontWeight: 'bold', 
+                        fontSize: '0.85rem',
+                        cursor: 'pointer',
+                        background: taskFilterTab === 'pending' ? 'white' : 'transparent',
+                        color: taskFilterTab === 'pending' ? 'var(--sopena-blue)' : '#64748b',
+                        boxShadow: taskFilterTab === 'pending' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'
+                      }}
+                    >
+                      📌 Pendientes ({crmTasks.filter(t => !t.completed).length})
+                    </button>
+                    <button 
+                      type="button" 
+                      onClick={() => setTaskFilterTab('completed')}
+                      style={{ 
+                        padding: '8px 16px', 
+                        borderRadius: '6px', 
+                        border: 'none', 
+                        fontWeight: 'bold', 
+                        fontSize: '0.85rem',
+                        cursor: 'pointer',
+                        background: taskFilterTab === 'completed' ? 'white' : 'transparent',
+                        color: taskFilterTab === 'completed' ? '#10b981' : '#64748b',
+                        boxShadow: taskFilterTab === 'completed' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'
+                      }}
+                    >
+                      ✅ Completadas ({crmTasks.filter(t => t.completed).length})
+                    </button>
+                    <button 
+                      type="button" 
+                      onClick={() => setTaskFilterTab('all')}
+                      style={{ 
+                        padding: '8px 16px', 
+                        borderRadius: '6px', 
+                        border: 'none', 
+                        fontWeight: 'bold', 
+                        fontSize: '0.85rem',
+                        cursor: 'pointer',
+                        background: taskFilterTab === 'all' ? 'white' : 'transparent',
+                        color: taskFilterTab === 'all' ? '#1e293b' : '#64748b',
+                        boxShadow: taskFilterTab === 'all' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'
+                      }}
+                    >
+                      📋 Todas ({crmTasks.length})
+                    </button>
+                  </div>
+
+                  {/* Buscador de Tareas */}
+                  <div style={{ minWidth: '240px', flex: '1', maxWidth: '360px' }}>
+                    <input 
+                      type="text" 
+                      placeholder="Buscar por texto o empresa..." 
+                      value={taskSearchQuery} 
+                      onChange={(e) => setTaskSearchQuery(e.target.value)}
+                      style={{ width: '100%', padding: '9px 12px', borderRadius: '6px', border: '1px solid var(--border-color)', fontSize: '0.85rem' }}
+                    />
+                  </div>
+
+                </div>
+
+                {/* Lista de Tarjetas de Tareas */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {(() => {
+                    const filtered = crmTasks
+                      .filter(t => {
+                        if (taskFilterTab === 'pending') return !t.completed;
+                        if (taskFilterTab === 'completed') return t.completed;
+                        return true;
+                      })
+                      .filter(t => {
+                        if (!taskSearchQuery.trim()) return true;
+                        const query = taskSearchQuery.toLowerCase();
+                        return (t.text && t.text.toLowerCase().includes(query)) ||
+                               (t.prospectName && t.prospectName.toLowerCase().includes(query));
+                      })
+                      .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                    if (filtered.length === 0) {
+                      return (
+                        <div style={{ textAlign: 'center', padding: '50px 20px', color: '#64748b' }}>
+                          <p style={{ fontSize: '1.1rem', margin: 0, fontWeight: 'bold' }}>
+                            {taskFilterTab === 'pending' ? '¡Todo al día! No tienes tareas pendientes.' : 'No se encontraron tareas con los filtros seleccionados.'}
+                          </p>
+                          <p style={{ fontSize: '0.9rem', color: '#94a3b8', marginTop: '6px' }}>
+                            Usa el formulario superior para programar una nueva tarea y se mantendrá guardada para tus próximas sesiones.
+                          </p>
+                        </div>
+                      );
+                    }
+
+                    return filtered.map(task => {
+                      const isUrg = task.priority === 'Urgente';
+                      const isHigh = task.priority === 'Alta';
+                      const isEmailFollow = task.category === 'Email' || (task.text && task.text.includes('Volver a contactar'));
+                      const borderCol = task.completed ? '#cbd5e1' : isUrg ? '#ef4444' : isHigh ? '#f59e0b' : isEmailFollow ? '#10b981' : 'var(--sopena-blue)';
+
+                      return (
+                        <div key={task.id} style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          padding: '16px 20px',
+                          background: task.completed ? '#f8fafc' : isEmailFollow ? '#f0fdf4' : '#ffffff',
+                          borderRadius: '8px',
+                          borderLeft: `5px solid ${borderCol}`,
+                          borderTop: '1px solid #e2e8f0',
+                          borderRight: '1px solid #e2e8f0',
+                          borderBottom: '1px solid #e2e8f0',
+                          boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
+                          flexWrap: 'wrap',
+                          gap: '12px'
+                        }}>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', flex: 1, minWidth: '280px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                              <strong style={{ fontSize: '1rem', color: task.completed ? '#94a3b8' : '#1e293b', textDecoration: task.completed ? 'line-through' : 'none' }}>
+                                {task.text}
+                              </strong>
+                              {task.priority && task.priority !== 'Normal' && !task.completed && (
+                                <span style={{
+                                  background: isUrg ? '#fee2e2' : '#fef3c7',
+                                  color: isUrg ? '#b91c1c' : '#b45309',
+                                  padding: '2px 8px',
+                                  borderRadius: '12px',
+                                  fontSize: '0.72rem',
+                                  fontWeight: 'bold'
+                                }}>
+                                  {isUrg ? '🚨 Urgente' : '⚡ Alta Prioridad'}
+                                </span>
+                              )}
+                              {isEmailFollow && !task.completed && (
+                                <span style={{ background: '#dcfce7', color: '#166534', padding: '2px 8px', borderRadius: '12px', fontSize: '0.72rem', fontWeight: 600 }}>
+                                  📅 Recontacto
+                                </span>
+                              )}
+                              {task.completed && (
+                                <span style={{ background: '#e2e8f0', color: '#475569', padding: '2px 8px', borderRadius: '12px', fontSize: '0.72rem', fontWeight: 600 }}>
+                                  ✓ Completada
+                                </span>
+                              )}
+                            </div>
+
+                            <div style={{ fontSize: '0.82rem', color: '#64748b', display: 'flex', gap: '15px', flexWrap: 'wrap', alignItems: 'center' }}>
+                              <span>
+                                🏢 Empresa:{' '}
+                                {task.prospectId ? (
+                                  <strong 
+                                    onClick={() => {
+                                      const p = prospects.find(item => item.id === task.prospectId);
+                                      if (p) setSelectedProspect(p);
+                                    }} 
+                                    style={{ color: 'var(--sopena-blue)', cursor: 'pointer', textDecoration: 'underline' }}
+                                    title="Ver ficha de cliente"
+                                  >
+                                    {task.prospectName}
+                                  </strong>
+                                ) : (
+                                  <strong style={{ color: '#475569' }}>Tarea General</strong>
+                                )}
                               </span>
-                            )}
+                              <span>🕒 Creada: {new Date(task.date).toLocaleDateString('es-ES')}</span>
+                              {task.dueDateFormatted && (
+                                <span style={{ color: task.completed ? '#64748b' : '#059669', fontWeight: '600' }}>
+                                  🎯 Plazo: {task.dueDateFormatted}
+                                </span>
+                              )}
+                            </div>
                           </div>
-                          <div style={{ fontSize: '0.85rem', color: '#64748b', display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                            <span>🏢 Empresa: <strong style={{ color: '#334155' }}>{task.prospectName}</strong></span>
-                            <span>🕒 Creada: {new Date(task.date).toLocaleDateString('es-ES')}</span>
-                            {dueDateStr && (
-                              <span style={{ color: '#059669', fontWeight: '600' }}>
-                                🎯 Fecha objetivo: {dueDateStr}
-                              </span>
-                            )}
+
+                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <button 
+                              type="button"
+                              onClick={() => handleToggleTask(task.prospectId, task.id)} 
+                              style={{
+                                background: task.completed ? '#f1f5f9' : '#10b981',
+                                color: task.completed ? '#475569' : 'white',
+                                border: 'none',
+                                padding: '8px 16px',
+                                borderRadius: '6px',
+                                fontWeight: 'bold',
+                                fontSize: '0.85rem',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px'
+                              }}
+                            >
+                              {task.completed ? '↩ Deshacer' : '✔ Completar'}
+                            </button>
+                            <button 
+                              type="button"
+                              onClick={() => handleDeleteTask(task.id)} 
+                              style={{
+                                background: '#fee2e2',
+                                color: '#ef4444',
+                                border: 'none',
+                                padding: '8px 12px',
+                                borderRadius: '6px',
+                                fontWeight: 'bold',
+                                fontSize: '0.85rem',
+                                cursor: 'pointer'
+                              }}
+                              title="Eliminar tarea definitivamente"
+                            >
+                              🗑️
+                            </button>
                           </div>
                         </div>
-                        <button className="action-btn" onClick={() => handleToggleTask(task.prospectId, task.id)} style={{background: '#10b981', border: 'none', padding: '8px 16px', fontWeight: 600}}>
-                          ✔ Completar
-                        </button>
-                      </div>
-                    );
-                  })}
-                {prospects.flatMap(p => (p.tasks || []).filter(t => !t.completed)).length === 0 && (
-                  <p style={{textAlign: 'center', color: '#64748b', padding: '40px', fontSize: '1.1rem'}}>No hay tareas pendientes en este momento. ¡Todo al día! 🎉</p>
-                )}
+                      );
+                    });
+                  })()}
+                </div>
+
               </div>
             </div>
           )}
@@ -3987,6 +4767,7 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                   <label>Sector</label>
                   <select value={filterSector} onChange={e => setFilterSector(e.target.value)}>
                     <option value="">Todos los sectores</option>
+                    <option value="Suelos Técnicos">Suelos Técnicos</option>
                     <option value="Cerramientos">Cerramientos</option>
                     <option value="Construccion Modular">Construcción Modular</option>
                     <option value="Puertas y Ventanas">Puertas y Ventanas</option>
@@ -4583,8 +5364,33 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                     {/* Sección de Tareas */}
                     <div style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '20px' }}>
                       <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>Tareas Pendientes</label>
-                      <div style={{ display: 'flex', gap: '10px', marginBottom: '12px', alignItems: 'center' }}>
-                        <input type="text" id="newTaskInput" placeholder="Ej: Enviar nuevo presupuesto..." style={{ flex: 1, padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)' }} />
+                      <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <input 
+                          type="text" 
+                          id="newTaskInput" 
+                          placeholder="Ej: Enviar nuevo presupuesto, llamada de seguimiento..." 
+                          style={{ flex: 1, minWidth: '180px', padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)' }} 
+                        />
+                        <select 
+                          id="newTaskDays" 
+                          defaultValue="3" 
+                          style={{ padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)', fontSize: '0.85rem', background: 'white' }}
+                        >
+                          <option value="0">Hoy</option>
+                          <option value="1">Mañana</option>
+                          <option value="3">En 3 días</option>
+                          <option value="7">En 7 días</option>
+                          <option value="14">En 14 días</option>
+                        </select>
+                        <select 
+                          id="newTaskPriority" 
+                          defaultValue="Normal" 
+                          style={{ padding: '10px', borderRadius: '6px', border: '1px solid var(--border-color)', fontSize: '0.85rem', background: 'white' }}
+                        >
+                          <option value="Normal">Normal</option>
+                          <option value="Alta">Alta</option>
+                          <option value="Urgente">Urgente</option>
+                        </select>
                         <button 
                           type="button" 
                           onClick={() => toggleSpeechRecognition('newTaskInput', selectedProspect.zone === 'Portugal' ? 'pt-PT' : 'es-ES')}
@@ -4601,39 +5407,134 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                         >
                           {activeSpeechInput === 'newTaskInput' ? <MicOff size={18} /> : <Mic size={18} />}
                         </button>
-                        <button type="button" className="action-btn" onClick={() => {
-                          const input = document.getElementById('newTaskInput');
-                          const text = input.value;
-                          if (!text.trim()) return;
-                          handleAddTask(selectedProspect.id, text);
-                          input.value = '';
-                          setSelectedProspect(prev => ({ ...prev, tasks: [...(prev.tasks || []), { id: Date.now(), text: text, date: new Date().toISOString(), completed: false }] }));
-                        }}>+ Añadir</button>
+                        <button 
+                          type="button" 
+                          className="action-btn" 
+                          onClick={() => {
+                            const input = document.getElementById('newTaskInput');
+                            const daysInput = document.getElementById('newTaskDays');
+                            const prioInput = document.getElementById('newTaskPriority');
+                            const text = input ? input.value : '';
+                            if (!text.trim()) return;
+
+                            let dueDate = null;
+                            let dueDateFormatted = null;
+                            const daysOffset = parseInt(daysInput ? daysInput.value : '3', 10);
+                            if (!isNaN(daysOffset)) {
+                              const target = new Date();
+                              target.setDate(target.getDate() + daysOffset);
+                              dueDate = target.toISOString();
+                              dueDateFormatted = target.toLocaleDateString('es-ES');
+                            }
+
+                            const priority = prioInput ? prioInput.value : 'Normal';
+
+                            handleAddTask(selectedProspect.id, text, {
+                              dueDate,
+                              dueDateFormatted,
+                              priority
+                            });
+
+                            if (input) input.value = '';
+                          }}
+                        >
+                          + Añadir
+                        </button>
                       </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '140px', overflowY: 'auto' }}>
-                        {(selectedProspect.tasks || []).map(t => {
-                          const dueDateObj = t.dueDate ? new Date(t.dueDate) : null;
-                          const dueDateStr = t.dueDateFormatted || (dueDateObj && !isNaN(dueDateObj.getTime()) ? dueDateObj.toLocaleDateString('es-ES') : null);
-                          return (
-                            <div key={t.id} className={`modal-task-item ${t.completed ? 'completed' : ''}`} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <span style={{ textDecoration: t.completed ? 'line-through' : 'none', color: t.completed ? '#94a3b8' : '#0f172a', fontSize: '0.9rem' }}>{t.text}</span>
-                                {dueDateStr && (
-                                  <span style={{ fontSize: '0.75rem', color: '#059669', fontWeight: 600 }}>🎯 Para el: {dueDateStr}</span>
-                                )}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '180px', overflowY: 'auto' }}>
+                        {(() => {
+                          const modalTasks = crmTasks.filter(t => t.prospectId === selectedProspect.id);
+                          if (modalTasks.length === 0) {
+                            return (
+                              <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.85rem', margin: '5px 0' }}>
+                                Sin tareas pendientes para este cliente.
+                              </p>
+                            );
+                          }
+                          return modalTasks.map(t => {
+                            const dueDateObj = t.dueDate ? new Date(t.dueDate) : null;
+                            const dueDateStr = t.dueDateFormatted || (dueDateObj && !isNaN(dueDateObj.getTime()) ? dueDateObj.toLocaleDateString('es-ES') : null);
+                            const isUrg = t.priority === 'Urgente';
+                            const isHigh = t.priority === 'Alta';
+
+                            return (
+                              <div 
+                                key={t.id} 
+                                className={`modal-task-item ${t.completed ? 'completed' : ''}`} 
+                                style={{ 
+                                  display: 'flex', 
+                                  justifyContent: 'space-between', 
+                                  alignItems: 'center',
+                                  padding: '8px 12px',
+                                  borderRadius: '6px',
+                                  border: '1px solid #e2e8f0',
+                                  background: t.completed ? '#f8fafc' : '#ffffff'
+                                }}
+                              >
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flex: 1, marginRight: '10px' }}>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                                    <span style={{ 
+                                      textDecoration: t.completed ? 'line-through' : 'none', 
+                                      color: t.completed ? '#94a3b8' : '#0f172a', 
+                                      fontSize: '0.9rem',
+                                      fontWeight: t.completed ? 'normal' : '500'
+                                    }}>
+                                      {t.text}
+                                    </span>
+                                    {t.priority && t.priority !== 'Normal' && !t.completed && (
+                                      <span style={{
+                                        fontSize: '0.7rem',
+                                        fontWeight: 'bold',
+                                        color: isUrg ? '#b91c1c' : '#b45309',
+                                        background: isUrg ? '#fee2e2' : '#fef3c7',
+                                        padding: '1px 6px',
+                                        borderRadius: '8px'
+                                      }}>
+                                        {isUrg ? 'Urgente' : 'Alta'}
+                                      </span>
+                                    )}
+                                  </div>
+                                  {dueDateStr && (
+                                    <span style={{ fontSize: '0.75rem', color: t.completed ? '#94a3b8' : '#059669', fontWeight: 600 }}>
+                                      🎯 Para el: {dueDateStr}
+                                    </span>
+                                  )}
+                                </div>
+                                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                  <button 
+                                    type="button" 
+                                    onClick={() => handleToggleTask(selectedProspect.id, t.id)} 
+                                    style={{ 
+                                      background: 'none', 
+                                      border: 'none', 
+                                      color: t.completed ? '#10b981' : 'var(--sopena-blue)', 
+                                      cursor: 'pointer', 
+                                      fontWeight: 'bold', 
+                                      fontSize: '0.85rem' 
+                                    }}
+                                  >
+                                    {t.completed ? '↩ Deshacer' : '✔ Completar'}
+                                  </button>
+                                  <button 
+                                    type="button" 
+                                    onClick={() => handleDeleteTask(t.id)} 
+                                    style={{ 
+                                      background: 'none', 
+                                      border: 'none', 
+                                      color: '#ef4444', 
+                                      cursor: 'pointer', 
+                                      fontSize: '0.9rem',
+                                      padding: '2px 6px'
+                                    }}
+                                    title="Eliminar tarea"
+                                  >
+                                    🗑️
+                                  </button>
+                                </div>
                               </div>
-                              <button type="button" onClick={() => {
-                                handleToggleTask(selectedProspect.id, t.id);
-                                setSelectedProspect(prev => ({ ...prev, tasks: prev.tasks.map(task => task.id === t.id ? { ...task, completed: !task.completed } : task) }));
-                              }} style={{ background: 'none', border: 'none', color: t.completed ? '#10b981' : 'var(--sopena-blue)', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.85rem' }}>
-                                {t.completed ? 'Deshacer' : '✔ Completar'}
-                              </button>
-                            </div>
-                          );
-                        })}
-                        {(!selectedProspect.tasks || selectedProspect.tasks.length === 0) && (
-                          <p style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.85rem', margin: '5px 0' }}>Sin tareas pendientes.</p>
-                        )}
+                            );
+                          });
+                        })()}
                       </div>
                     </div>
                     {/* Timeline de Actividad */}
@@ -4666,38 +5567,11 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                         <button type="button" className="action-btn" onClick={() => {
                           const typeInput = document.getElementById('newHistoryType');
                           const textInput = document.getElementById('newHistoryText');
-                          const type = typeInput.value;
-                          const text = textInput.value;
+                          const type = typeInput ? typeInput.value : '📝 Nota';
+                          const text = textInput ? textInput.value : '';
                           if (!text.trim()) return;
                           handleAddHistory(selectedProspect.id, type, text);
-                          textInput.value = '';
-
-                          // Actualización reactiva inmediata en la ficha del modal actual
-                          const isEmail = (type && type.toLowerCase().includes('email')) || 
-                                          (text && (text.toLowerCase().includes('enviado email') || text.toLowerCase().includes('email enviado') || text.toLowerCase().includes('correo enviado')));
-                          const newHistoryEntry = { id: Date.now(), type, text, date: new Date().toISOString() };
-                          
-                          setSelectedProspect(prev => {
-                            let updatedTasks = prev.tasks || [];
-                            if (isEmail) {
-                              const followUpDate = new Date();
-                              followUpDate.setDate(followUpDate.getDate() + 7);
-                              updatedTasks = [...updatedTasks, {
-                                id: Date.now() + 10,
-                                text: `✉️ Volver a contactar (${prev.name})`,
-                                date: new Date().toISOString(),
-                                dueDate: followUpDate.toISOString(),
-                                dueDateFormatted: followUpDate.toLocaleDateString('es-ES'),
-                                autoGenerated: true,
-                                completed: false
-                              }];
-                            }
-                            return {
-                              ...prev,
-                              history: [newHistoryEntry, ...(prev.history || [])],
-                              tasks: updatedTasks
-                            };
-                          });
+                          if (textInput) textInput.value = '';
                         }}>Registrar</button>
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '180px', overflowY: 'auto' }}>

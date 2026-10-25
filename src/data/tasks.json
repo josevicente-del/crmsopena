@@ -1,0 +1,63 @@
+[
+  {
+    "id": 1792933038395,
+    "prospectId": "PROP-MANCHA-0507",
+    "prospectName": "Aluminios Villalta S.L.",
+    "text": "Revisar stock de perfiles lacados con fabrica",
+    "date": "2026-10-25T12:57:17.873Z",
+    "dueDate": "2026-10-28T12:57:17.844Z",
+    "dueDateFormatted": null,
+    "completed": true,
+    "priority": "Alta",
+    "category": "Gestión",
+    "completedAt": "2026-10-25T12:58:17.188Z"
+  },
+  {
+    "id": 1729000000001,
+    "prospectId": "PROP-MANCHA-0507",
+    "prospectName": "Aluminios Villalta S.L.",
+    "text": "📞 Llamada de seguimiento: presentar catálogo de perfiles RPT y condiciones de entrega Grupo Sopena",
+    "date": "2026-10-25T11:00:00.000Z",
+    "dueDate": "2026-10-28T11:00:00.000Z",
+    "dueDateFormatted": "28/10/2026",
+    "completed": false,
+    "priority": "Alta",
+    "category": "Llamada"
+  },
+  {
+    "id": 1729000000002,
+    "prospectId": "PROP-MADRID-0508",
+    "prospectName": "Ventanas Térmicas Madrileñas S.L.U. (VTM)",
+    "text": "✉️ Enviar tarifa técnica de perfiles de rotura de puente térmico y accesorios para ventanas",
+    "date": "2026-10-25T11:00:00.000Z",
+    "dueDate": "2026-10-28T11:00:00.000Z",
+    "dueDateFormatted": "28/10/2026",
+    "completed": false,
+    "priority": "Normal",
+    "category": "Email"
+  },
+  {
+    "id": 1729000000003,
+    "prospectId": "PROP-MANCHA-0509",
+    "prospectName": "Aluminios Criptana, S.L.",
+    "text": "🤝 Concertar visita comercial en Pol. Ind. Pozo Hondo con el responsable de compras",
+    "date": "2026-10-25T11:00:00.000Z",
+    "dueDate": "2026-11-01T11:00:00.000Z",
+    "dueDateFormatted": "01/11/2026",
+    "completed": false,
+    "priority": "Urgente",
+    "category": "Reunión"
+  },
+  {
+    "id": 1729000000004,
+    "prospectId": "PROP-DISTRIB-0320",
+    "prospectName": "ALDAL S.L. (Aluminios de Andalucía y Levante)",
+    "text": "📋 Revisión de acuerdo comercial de distribución mayorista en delegación de Murcia",
+    "date": "2026-10-25T11:00:00.000Z",
+    "dueDate": "2026-11-01T11:00:00.000Z",
+    "dueDateFormatted": "01/11/2026",
+    "completed": false,
+    "priority": "Normal",
+    "category": "Oferta"
+  }
+]

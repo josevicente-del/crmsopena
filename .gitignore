@@ -23,6 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 .netlify
-src/data/prospects.backup-*.json
-*.backup-*.json
-
+# Backups temporales y caches
+*.bak_*
+src/data/prospects.backup*
+*.backup*
+__pycache__/
+*.pyc
+*.pyo
+scripts/output_*.txt

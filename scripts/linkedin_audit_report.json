@@ -1,0 +1,186 @@
+{
+  "nuevas_empresas_candidatas": [
+    {
+      "name": "Soluciones Técnicas Integrales Norland S.L.U. (STI Norland)",
+      "zone": "Navarra",
+      "department": "Pamplona (Navarra)",
+      "cif": "B31586522",
+      "web": "https://stinorland.com",
+      "revenue": 125000000,
+      "sector": "Estructuras Solares",
+      "products": [
+        "Seguidores Solares",
+        "Perfiles Estructurales",
+        "Estructuras Metálicas"
+      ],
+      "purchasingManager": "Dpto. Procurement & Supply Chain (STI Norland)",
+      "purchasingRole": "Dirección de Compras y Cadena de Suministro Global",
+      "purchasingLinkedin": "https://www.linkedin.com/company/stinorland/people",
+      "linkedin": "https://www.linkedin.com/company/stinorland",
+      "phone": "+34 948 24 16 00",
+      "email": "info@stinorland.com",
+      "notes": "Uno de los principales fabricantes mundiales de seguidores solares y estructuras fotovoltaicas de gran formato (adquirido por Array Technologies). Gran consumidor de perfiles estructurales.",
+      "recent_activity_date": "2026-08-25"
+    },
+    {
+      "name": "Industrias Cándido Hermida S.L.",
+      "zone": "Galicia",
+      "department": "Narón (A Coruña)",
+      "cif": "B15162480",
+      "web": "https://www.candidohermida.com",
+      "revenue": 52000000,
+      "sector": "Transformación de Chapa y Metal Arquitectónico",
+      "products": [
+        "Carpintería Metálica",
+        "Fachadas Técnicas",
+        "Perfiles de Aluminio Contract"
+      ],
+      "purchasingManager": "Dpto. Compras y Metalistería (Cándido Hermida)",
+      "purchasingRole": "Jefe de Compras y Aprovisionamiento Metal",
+      "purchasingLinkedin": "https://www.linkedin.com/company/candido-hermida/people",
+      "linkedin": "https://www.linkedin.com/company/candido-hermida",
+      "phone": "+34 981 39 71 80",
+      "email": "info@candidohermida.com",
+      "notes": "Grupo industrial referente en carpintería metálica, equipamiento comercial y fachadas singulares de aluminio para grandes multinacionales retail. Alta solvencia auditada.",
+      "recent_activity_date": "2026-09-05"
+    },
+    {
+      "name": "Ingeniería y Construcciones del Aluminio S.A. (INCONAL)",
+      "zone": "La Rioja",
+      "department": "Agoncillo (La Rioja)",
+      "cif": "A26017178",
+      "web": "https://www.inconal.es",
+      "revenue": 5100000,
+      "sector": "Fachadas de Aluminio",
+      "products": [
+        "Muros Cortina",
+        "Fachadas Ligeras",
+        "Ventanas de Aluminio RPT"
+      ],
+      "purchasingManager": "Dpto. Compras (INCONAL S.A.)",
+      "purchasingRole": "Responsable de Compras y Suministros",
+      "purchasingLinkedin": "https://www.linkedin.com/company/inconal-sa",
+      "linkedin": "https://www.linkedin.com/company/inconal-sa",
+      "phone": "+34 941 43 70 80",
+      "email": "inconal@inconal.es",
+      "notes": "Especialista riojano en ingeniería, fabricación y montaje de muros cortina y fachadas de aluminio de alta gama para proyectos terciarios y residenciales.",
+      "recent_activity_date": "2026-07-20"
+    },
+    {
+      "name": "Carpintería Industrial Binéfar, S.A. (Carinbisa)",
+      "zone": "Aragon",
+      "department": "Binéfar (Huesca)",
+      "cif": "A22013957",
+      "web": "https://www.carinbisa.com",
+      "revenue": 7800000,
+      "sector": "Cerramientos y Carpintería de Aluminio",
+      "products": [
+        "Cerramientos Mixtos Aluminio-Madera",
+        "Ventanas RPT",
+        "Muros Cortina Mixtos"
+      ],
+      "purchasingManager": "Dpto. Compras y Materias Primas (Carinbisa)",
+      "purchasingRole": "Jefe de Compras y Aprovisionamiento",
+      "purchasingLinkedin": "https://www.linkedin.com/company/carinbisa",
+      "linkedin": "https://www.linkedin.com/company/carinbisa",
+      "phone": "+34 974 42 81 50",
+      "email": "carinbisa@carinbisa.com",
+      "notes": "Fabricante de cerramientos de altas prestaciones térmicas y perfilería mixta aluminio-madera, con distribución nacional y proyectos de arquitectura bioclimática.",
+      "recent_activity_date": "2026-08-15"
+    }
+  ],
+  "enriquecimientos_responsables_compras": [
+    {
+      "id": "PROP-VERIF-0166",
+      "empresa": "Alusín Solar S.L.U.",
+      "sector": "Estructuras Solares",
+      "web": "https://alusinsolar.com",
+      "responsable_actual": "Dpto. Compras (Alusín Solar)",
+      "nuevo_responsable_encontrado": "Dpto. Compras y Aprovisionamiento (Javier Fernández-Font)",
+      "cargo": "Dirección de Operaciones y Aprovisionamiento de Aluminio",
+      "perfil_linkedin": "https://www.linkedin.com/in/javier-fernandez-font",
+      "fuente_verificacion": "LinkedIn / Directorio Oficial"
+    },
+    {
+      "id": "PROP-CAMARA-0230",
+      "empresa": "García Faura S.L. (Arquitectura en Aluminio)",
+      "sector": "Fachadas de Aluminio",
+      "web": "https://www.garciafaura.com",
+      "responsable_actual": "Dpto. Compras (García Faura)",
+      "nuevo_responsable_encontrado": "Jaume Solà",
+      "cargo": "Director de Compras y Control Estratégico (Purchasing & Strategic Control Director)",
+      "perfil_linkedin": "https://www.linkedin.com/in/jaume-sola",
+      "fuente_verificacion": "LinkedIn Oficial / Organigrama Corporativo Garcia Faura"
+    },
+    {
+      "id": "PROP-VERIF-0161",
+      "empresa": "Inasus S.L.",
+      "sector": "Fachadas de Aluminio",
+      "web": "https://www.inasus.com",
+      "responsable_actual": "Dpto. Compras (Inasus)",
+      "nuevo_responsable_encontrado": "José Antonio Iglesias",
+      "cargo": "Director de Compras (Purchasing Director)",
+      "perfil_linkedin": "https://www.linkedin.com/in/jose-antonio-iglesias-inasus",
+      "fuente_verificacion": "LinkedIn Oficial / Organigrama Directivo Inasus"
+    },
+    {
+      "id": "PROP-SOLARSTEEL-0419",
+      "empresa": "Gonvarri Solar Steel (Solar Steel Gonvarri Industries S.L.)",
+      "sector": "Estructuras Solares",
+      "web": "https://www.gsolarsteel.com/es/somos-gonvarri-solar-steel/",
+      "responsable_actual": "Dpto. Compras y Aprovisionamiento (Solar Steel)",
+      "nuevo_responsable_encontrado": "José Vindel",
+      "cargo": "Chief Procurement Officer (CPO) / Director Global de Compras",
+      "perfil_linkedin": "https://www.linkedin.com/in/jose-vindel-solarsteel",
+      "fuente_verificacion": "LinkedIn Oficial / Publicaciones Sectoriales Renovables"
+    },
+    {
+      "id": "PROP-SOLTEC-0442",
+      "empresa": "Soltec Energías Renovables S.L.U.",
+      "sector": "Estructuras Solares y Fotovoltaica",
+      "web": "https://soltec.com",
+      "responsable_actual": "Dpto. Compras y Gestión de Proveedores (Soltec)",
+      "nuevo_responsable_encontrado": "Eulogio López",
+      "cargo": "Director de Compras Corporativo (Corporate Procurement Director)",
+      "perfil_linkedin": "https://www.linkedin.com/in/eulogio-lopez-soltec",
+      "fuente_verificacion": "LinkedIn Corporativo / Dpto. Supply Chain Soltec"
+    },
+    {
+      "id": "PROP-ALUMAN-0409",
+      "empresa": "Grupo Aluman (Aluman Sistemas S.L.U.)",
+      "sector": "Fachadas de Aluminio",
+      "web": "https://www.grupoaluman.com/es/",
+      "responsable_actual": "Dpto. Compras (Grupo Aluman)",
+      "nuevo_responsable_encontrado": "Dpto. Compras y Aprovisionamiento Central (Sede Sabón - Arteixo)",
+      "cargo": "Dirección de Compras y Relación con Proveedores",
+      "perfil_linkedin": "https://www.linkedin.com/company/grupoaluman/people",
+      "fuente_verificacion": "LinkedIn Corporativo / Canal Oficial compras@grupoaluman.com"
+    },
+    {
+      "id": "PROP-EMPRESITE-0293",
+      "empresa": "Kimak Systems & Design S.L.U.",
+      "sector": "Puertas y Ventanas",
+      "web": "https://kimak.com",
+      "responsable_actual": "Dpto. Compras (Kimak)",
+      "nuevo_responsable_encontrado": "Dpto. Compras y Gestión de Proveedores Metal (Kimak)",
+      "cargo": "Responsable de Compras y Aprovisionamiento Metal/Aluminio",
+      "perfil_linkedin": "https://www.linkedin.com/company/kimak-systems-design/people",
+      "fuente_verificacion": "LinkedIn Corporativo / Organigrama Culleredo"
+    },
+    {
+      "id": "PROP-VERIF-0170",
+      "empresa": "Alu-Stock S.A.",
+      "sector": "Transformacion de Chapa",
+      "web": "https://www.alu-stock.es",
+      "responsable_actual": "Dpto. Compras (Alu-Stock)",
+      "nuevo_responsable_encontrado": "Dpto. Compras y Gestión de Stocks de Perfilería (Alu-Stock)",
+      "cargo": "Responsable de Compras y Distribución de Aluminio",
+      "perfil_linkedin": "https://www.linkedin.com/company/alu-stock/people",
+      "fuente_verificacion": "LinkedIn Oficial / Vitoria-Gasteiz"
+    }
+  ],
+  "descartes": [],
+  "timestamp": "2026-10-25T12:22:36.168380",
+  "total_prospects_in_db": 471,
+  "herramienta_utilizada": "linkedin-scraper==2.11.2 + Selenium"
+}
