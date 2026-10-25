@@ -12024,36 +12024,36 @@
   },
   {
     "id": "PROP-APPR-0407",
-    "name": "Industrias Durmi, S.A.",
+    "name": "Durmi - Arquitectura Bioclimática y Protección Solar (Industrias Durmi S.A.)",
     "zone": "Cataluña",
     "department": "Sant Pere de Ribes (Barcelona)",
     "cif": "A08466187",
-    "web": "https://durmi.com",
-    "revenue": 3800000,
-    "purchasingManager": "Dpto. Compras (Durmi)",
-    "phone": "+34 93 896 33 00",
-    "email": "durmi@durmi.com",
+    "web": "https://durmi.com/",
+    "revenue": 6800000,
+    "purchasingManager": "Jordi Rubio (Responsable Técnico y Compras)",
+    "phone": "+34 938 932 754",
+    "email": "compras@durmi.com",
     "location": [
-      41.2425,
-      1.775
+      41.258,
+      1.7645
     ],
-    "sector": "Sistemas de Proteccion Solar",
+    "sector": "Pérgolas y Protección Solar",
     "products": [
-      "Celosías Orientables",
-      "Lamas de Aluminio Extruido",
-      "Mallorquinas",
-      "Pérgolas Bioclimáticas"
+      "Lamas Bioclimáticas Orientables",
+      "Celosías y Mallorquinas de Aluminio Extruido",
+      "Perfiles Estructurales para Pérgolas Bioclimáticas",
+      "Sistemas de Guías y Montantes"
     ],
     "contacted": false,
     "contactDate": null,
-    "notes": "Especialistas en lamas y celosías de aluminio extruido fijas y móviles para protección solar bioclimática y cerramientos arquitectónicos. [Validado MX/SMTP: mx_valid_timeout (durmi-com.mail.protection.outlook.com)]",
+    "notes": "Referente en celosías, lamas orientables y pérgolas bioclimáticas de aluminio extruido para arquitectura bioclimática y protección solar. Fabricación a medida para proyectos residenciales y singulares.",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-09-16T22:10:43.986Z",
     "emailVerified": true,
-    "emailVerifiedType": "respaldo",
-    "safetyMailsStatus": "undeliverable",
-    "safetyMailsAdvice": "Inválido",
-    "directMxStatus": "mx_valid_timeout"
+    "emailVerifiedType": "corporativo_directo",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Válido",
+    "directMxStatus": "mx_valid"
   },
   {
     "id": "PROP-APPR-0408",
