@@ -58,5 +58,55 @@
     "reason": "Competencia directa (Fabricante y distribuidor de perfiles y sistemas de aluminio)",
     "excludedAt": "2026-09-29T21:20:00.000Z",
     "notes": "Eliminada y excluida permanentemente por indicación de Dirección Comercial al ser fabricante y distribuidor competidor de perfiles de aluminio en Andalucía."
+  },
+  {
+    "id": "PROP-LEAD26-0458",
+    "name": "Cubinor Construcciones Deportivas S.L.",
+    "cif": "B33917824",
+    "domain": "https://cubinor.com",
+    "web": "https://cubinor.com",
+    "reason": "Eliminada por solicitud expresa de Dirección Comercial",
+    "excludedAt": "2026-10-25T17:57:44.053046+00:00",
+    "notes": "Baja definitiva del CRM por indicación expresa del usuario."
+  },
+  {
+    "id": "PROP-LEAD26-0618",
+    "name": "Oleohidráulica Ferruz S.A. (Grupo Ferruz)",
+    "cif": "A50027069",
+    "domain": "https://www.ferruz.com",
+    "web": "https://www.ferruz.com",
+    "reason": "Eliminada por solicitud expresa de Dirección Comercial",
+    "excludedAt": "2026-10-25T17:57:44.053046+00:00",
+    "notes": "Baja definitiva del CRM por indicación expresa del usuario."
+  },
+  {
+    "id": "PROP-LEAD26-0621",
+    "name": "Siplan S.L.",
+    "cif": "B41584442",
+    "domain": "https://www.siplan.es",
+    "web": "https://www.siplan.es",
+    "reason": "Eliminada por solicitud expresa de Dirección Comercial",
+    "excludedAt": "2026-10-25T17:57:44.053046+00:00",
+    "notes": "Baja definitiva del CRM por indicación expresa del usuario."
+  },
+  {
+    "id": "PROP-LEAD26-0622",
+    "name": "Mitjavila España S.A.",
+    "cif": "A17169129",
+    "domain": "https://www.mitjavila.com",
+    "web": "https://www.mitjavila.com",
+    "reason": "Eliminada por solicitud expresa de Dirección Comercial",
+    "excludedAt": "2026-10-25T17:57:44.053046+00:00",
+    "notes": "Baja definitiva del CRM por indicación expresa del usuario."
+  },
+  {
+    "id": "PROP-LEAD26-0628",
+    "name": "Aluminios Galisur S.L.",
+    "cif": "B41257460",
+    "domain": "https://galisur.es",
+    "web": "https://galisur.es",
+    "reason": "Eliminada por solicitud expresa de Dirección Comercial",
+    "excludedAt": "2026-10-25T17:57:44.053046+00:00",
+    "notes": "Baja definitiva del CRM por indicación expresa del usuario."
   }
 ]

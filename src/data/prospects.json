@@ -16182,37 +16182,6 @@
   },
   {
     "id": "PROP-LEAD26-0458",
-    "name": "Cubinor Construcciones Deportivas S.L.",
-    "cif": "B33917824",
-    "email": "contacto@cubinor.com",
-    "web": "https://cubinor.com",
-    "phone": "+34 985 30 70 80",
-    "provincia": "Asturias",
-    "sector": "Estructuras y cubiertas deportivas de aluminio",
-    "emailVerified": true,
-    "emailVerifiedType": "contacto",
-    "directMxStatus": "deliverable",
-    "bouncerStatus": "deliverable",
-    "notes": "Cubiertas y estructuras para pistas deportivas en Siero (Asturias). Fabricación cerramientos y pistas deportivas de aluminio. Facturación >7M € Compras de perfilería estructural y cubiertas de aluminio verificada en LinkedIn.",
-    "zone": "Asturias",
-    "location": [
-      43.3912,
-      -5.6614
-    ],
-    "revenue": 7000000,
-    "products": [
-      "Perfiles de Aluminio",
-      "Carpintería de Aluminio"
-    ],
-    "department": "Siero (Asturias)",
-    "purchasingManager": "Iñigo Martínez (Responsable de Compras y Montajes)",
-    "lat": 43.3912,
-    "lng": -5.6614,
-    "website": "https://cubinor.com",
-    "contact": "Iñigo Martínez (Responsable de Compras y Montajes)"
-  },
-  {
-    "id": "PROP-LEAD26-0459",
     "name": "Alusín Solar S.L.U.",
     "cif": "B33981242",
     "email": "info@alusinsolar.com",
@@ -16243,7 +16212,7 @@
     "contact": "Javier Fernández-Font (CEO & Procurement Lead)"
   },
   {
-    "id": "PROP-LEAD26-0460",
+    "id": "PROP-LEAD26-0459",
     "name": "Cerramientos del Sureste S.A. (CESUR)",
     "cif": "A03412988",
     "email": "compras@cesur.es",
@@ -16274,7 +16243,7 @@
     "contact": "Pedro Martínez (Jefe de Compras y Aprovisionamiento Carpintería)"
   },
   {
-    "id": "PROP-LEAD26-0461",
+    "id": "PROP-LEAD26-0460",
     "name": "Aluminios y PVC Ochoa S.L. (Konner Ventanas)",
     "cif": "B39366836",
     "email": "presupuestos@ventanasochoa.com",
@@ -16305,7 +16274,7 @@
     "contact": "David Ochoa (Director Técnico y de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0462",
+    "id": "PROP-LEAD26-0461",
     "name": "Industrias Teyco S.L. (D'Glass Aluminium Systems)",
     "cif": "B08560871",
     "email": "info@industriasteyco.com",
@@ -16336,7 +16305,7 @@
     "contact": "Jordi Tey (Director de Operaciones y Compras de Extrusión)"
   },
   {
-    "id": "PROP-LEAD26-0463",
+    "id": "PROP-LEAD26-0462",
     "name": "Pórtico Gestión e Ingeniería S.L. (Pórtico Sport)",
     "cif": "B06585897",
     "email": "info@porticosport.com",
@@ -16367,7 +16336,7 @@
     "contact": "Sergio Gómez (Director Técnico y Aprovisionamiento Estructuras)"
   },
   {
-    "id": "PROP-LEAD26-0464",
+    "id": "PROP-LEAD26-0463",
     "name": "Sunsupport S.L.",
     "cif": "B19623842",
     "email": "info@sunsupport.es",
@@ -16398,7 +16367,7 @@
     "contact": "Fernando Gómez (Responsable de Compras y Suministros Metálicos)"
   },
   {
-    "id": "PROP-LEAD26-0465",
+    "id": "PROP-LEAD26-0464",
     "name": "Basadre e Hijos S.L.",
     "cif": "B27003466",
     "email": "info@basadre.eu",
@@ -16429,7 +16398,7 @@
     "contact": "Manuel Basadre (Gerencia y Aprovisionamiento Carrocerías)"
   },
   {
-    "id": "PROP-LEAD26-0466",
+    "id": "PROP-LEAD26-0465",
     "name": "Técnicas Expansivas, S.L. (INDEX Fixing Systems)",
     "cif": "B26220491",
     "email": "info@indexfix.com",
@@ -16461,7 +16430,7 @@
     "contact": "Óscar Gómez (Global Sourcing & Purchasing Director)"
   },
   {
-    "id": "PROP-LEAD26-0467",
+    "id": "PROP-LEAD26-0466",
     "name": "Mediterraneo Aluminio Teknico Murcia 2016 S.L.",
     "cif": "B73948309",
     "email": "info@mediterraneoaluminio.com",
@@ -16497,7 +16466,7 @@
     "contact": "Pedro Antonio Gómez (Responsable de Compras y Taller)"
   },
   {
-    "id": "PROP-LEAD26-0468",
+    "id": "PROP-LEAD26-0467",
     "name": "Carpintería Eurometal S.L.",
     "cif": "B73145773",
     "email": "info@eurometalmurcia.es",
@@ -16533,7 +16502,7 @@
     "contact": "José Antonio Martínez (Jefe de Compras y Producción)"
   },
   {
-    "id": "PROP-LEAD26-0469",
+    "id": "PROP-LEAD26-0468",
     "name": "Alvidur 2005 S.L. (Alvidur)",
     "cif": "B09765488",
     "email": "info@alvidur.com",
@@ -16569,7 +16538,7 @@
     "contact": "Francisco Durán (Director de Aprovisionamiento y Vidrio)"
   },
   {
-    "id": "PROP-LEAD26-0470",
+    "id": "PROP-LEAD26-0469",
     "name": "Andemoy Granada S.L.",
     "cif": "B18858571",
     "email": "info@andemoy.com",
@@ -16605,7 +16574,7 @@
     "contact": "Manuel Moya (Gerente y Responsable de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0471",
+    "id": "PROP-LEAD26-0470",
     "name": "Talleres Metálicos Gutiérrez S.L.",
     "cif": "B19704212",
     "email": "info@talleresmetalicosgutierrez.com",
@@ -16641,7 +16610,7 @@
     "contact": "Antonio Gutiérrez (Responsable de Compras y Taller)"
   },
   {
-    "id": "PROP-LEAD26-0472",
+    "id": "PROP-LEAD26-0471",
     "name": "Soluciones Técnicas Integrales Norland S.L.U. (STI Norland)",
     "zone": "Navarra",
     "department": "Pamplona (Navarra)",
@@ -16675,7 +16644,7 @@
     "contact": "Dpto. Procurement & Supply Chain (STI Norland)"
   },
   {
-    "id": "PROP-LEAD26-0473",
+    "id": "PROP-LEAD26-0472",
     "name": "Industrias Cándido Hermida S.L.",
     "zone": "Galicia",
     "department": "Narón (A Coruña)",
@@ -16709,7 +16678,7 @@
     "contact": "Dpto. Compras y Metalistería (Cándido Hermida)"
   },
   {
-    "id": "PROP-LEAD26-0474",
+    "id": "PROP-LEAD26-0473",
     "name": "Ingeniería y Construcciones del Aluminio S.A. (INCONAL)",
     "zone": "La Rioja",
     "department": "Agoncillo (La Rioja)",
@@ -16743,7 +16712,7 @@
     "contact": "Dpto. Compras (INCONAL S.A.)"
   },
   {
-    "id": "PROP-LEAD26-0475",
+    "id": "PROP-LEAD26-0474",
     "name": "Carpintería Industrial Binéfar, S.A. (Carinbisa)",
     "zone": "Aragon",
     "department": "Binéfar (Huesca)",
@@ -16777,7 +16746,7 @@
     "contact": "Dpto. Compras y Materias Primas (Carinbisa)"
   },
   {
-    "id": "PROP-LEAD26-0476",
+    "id": "PROP-LEAD26-0475",
     "name": "DC Systems (Technical Flooring Systems S.L.)",
     "cif": "B75180497",
     "web": "https://dcsystems.es",
@@ -16813,7 +16782,7 @@
     "contact": "Dpto. Compras y Prescripción Técnica (DC Systems)"
   },
   {
-    "id": "PROP-LEAD26-0477",
+    "id": "PROP-LEAD26-0476",
     "name": "Polygroup Europe S.L. (Suelos Técnicos GAMAFLOR)",
     "cif": "B91813543",
     "web": "https://polygroup.es",
@@ -16848,7 +16817,7 @@
     "contact": "Dpto. Compras y Aprovisionamiento (Polygroup)"
   },
   {
-    "id": "PROP-LEAD26-0478",
+    "id": "PROP-LEAD26-0477",
     "name": "Aluminios Villalta S.L.",
     "zone": "Castilla-La Mancha",
     "department": "Nambroca (Toledo)",
@@ -16884,7 +16853,7 @@
     "contact": "Dpto. Compras y Aprovisionamiento (Villalta)"
   },
   {
-    "id": "PROP-LEAD26-0479",
+    "id": "PROP-LEAD26-0478",
     "name": "Ventanas Térmicas Madrileñas S.L.U. (VTM)",
     "zone": "Comunidad de Madrid",
     "department": "Humanes de Madrid (Madrid)",
@@ -16920,7 +16889,7 @@
     "contact": "Dpto. Compras y Producción (VTM)"
   },
   {
-    "id": "PROP-LEAD26-0480",
+    "id": "PROP-LEAD26-0479",
     "name": "Aluminios Criptana, S.L.",
     "zone": "Castilla-La Mancha",
     "department": "Campo de Criptana (Ciudad Real)",
@@ -16956,7 +16925,7 @@
     "contact": "Dpto. Compras y Suministros (Aluminios Criptana)"
   },
   {
-    "id": "PROP-LEAD26-0481",
+    "id": "PROP-LEAD26-0480",
     "name": "R. Dyscar S.L. (Fijación, Cierre y Estanqueidad)",
     "zone": "Comunidad de Madrid",
     "department": "San Fernando de Henares (Madrid)",
@@ -16992,7 +16961,7 @@
     "contact": "Sergio Gómez (Resp. Compras y Aprovisionamiento)"
   },
   {
-    "id": "PROP-LEAD26-0482",
+    "id": "PROP-LEAD26-0481",
     "name": "Hilti Española S.A.",
     "zone": "Comunidad de Madrid",
     "department": "Madrid (Madrid)",
@@ -17027,7 +16996,7 @@
     "contact": "Dpto. Compras y Subcontratación de Perfilería"
   },
   {
-    "id": "PROP-LEAD26-0483",
+    "id": "PROP-LEAD26-0482",
     "name": "Fischer Ibérica S.A.U.",
     "zone": "Cataluña",
     "department": "Tarragona (Tarragona)",
@@ -17062,7 +17031,7 @@
     "contact": "Dpto. Aprovisionamiento Industrial"
   },
   {
-    "id": "PROP-LEAD26-0484",
+    "id": "PROP-LEAD26-0483",
     "name": "Giesse España S.A.U.",
     "zone": "Comunidad de Madrid",
     "department": "Pinto (Madrid)",
@@ -17097,7 +17066,7 @@
     "contact": "Dpto. Compras y Suministros (Giesse)"
   },
   {
-    "id": "PROP-LEAD26-0485",
+    "id": "PROP-LEAD26-0484",
     "name": "Sobinco Ibérica S.L.",
     "zone": "Comunidad Valenciana",
     "department": "Paterna (Valencia)",
@@ -17132,7 +17101,7 @@
     "contact": "Vicente Martí (Compras y Logística)"
   },
   {
-    "id": "PROP-LEAD26-0486",
+    "id": "PROP-LEAD26-0485",
     "name": "Schmitz Cargobull Ibérica S.A.",
     "zone": "Aragon",
     "department": "Figueruelas (Zaragoza)",
@@ -17167,7 +17136,7 @@
     "contact": "Dpto. Compras y Cadena de Suministro (Schmitz)"
   },
   {
-    "id": "PROP-LEAD26-0487",
+    "id": "PROP-LEAD26-0486",
     "name": "SOR Ibérica S.A.",
     "zone": "Comunidad Valenciana",
     "department": "Alzira (Valencia)",
@@ -17202,7 +17171,7 @@
     "contact": "Enrique Gómez (Director de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0488",
+    "id": "PROP-LEAD26-0487",
     "name": "Granalu (Montajes y Estampaciones Metálicas S.L.)",
     "zone": "Castilla y Leon",
     "department": "Sanchonuño (Segovia)",
@@ -17237,7 +17206,7 @@
     "contact": "Alberto Sanz (Responsable de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0489",
+    "id": "PROP-LEAD26-0488",
     "name": "Indetruck S.L.",
     "zone": "Andalucia",
     "department": "Antas (Almería)",
@@ -17272,7 +17241,7 @@
     "contact": "Francisco Rodríguez (Jefe de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0490",
+    "id": "PROP-LEAD26-0489",
     "name": "Tecnove S.L.",
     "zone": "Castilla-La Mancha",
     "department": "Herencia (Ciudad Real)",
@@ -17307,7 +17276,7 @@
     "contact": "Carlos Fernández (Dpto. Compras)"
   },
   {
-    "id": "PROP-LEAD26-0491",
+    "id": "PROP-LEAD26-0490",
     "name": "Parcisa S.L.U.",
     "zone": "Castilla-La Mancha",
     "department": "Villarrobledo (Albacete)",
@@ -17342,7 +17311,7 @@
     "contact": "Dpto. Aprovisionamiento Metalúrgico"
   },
   {
-    "id": "PROP-LEAD26-0492",
+    "id": "PROP-LEAD26-0491",
     "name": "Caldal S.A.",
     "zone": "Galicia",
     "department": "Vilalba (Lugo)",
@@ -17377,7 +17346,7 @@
     "contact": "Dpto. Compras y Homologación de Materiales"
   },
   {
-    "id": "PROP-LEAD26-0493",
+    "id": "PROP-LEAD26-0492",
     "name": "Beulas S.A.U.",
     "zone": "Cataluña",
     "department": "Arbúcies (Girona)",
@@ -17412,7 +17381,7 @@
     "contact": "Joan Beulas (Jefe de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0494",
+    "id": "PROP-LEAD26-0493",
     "name": "UNVI S.A.",
     "zone": "Galicia",
     "department": "Ourense (Ourense)",
@@ -17447,7 +17416,7 @@
     "contact": "David Pérez (Responsable de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0495",
+    "id": "PROP-LEAD26-0494",
     "name": "Carrocerías Ferqui S.L.",
     "zone": "Asturias",
     "department": "Noreña (Asturias)",
@@ -17482,7 +17451,7 @@
     "contact": "Pelayo Álvarez (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0496",
+    "id": "PROP-LEAD26-0495",
     "name": "Carrocerías Ugarte S.L.",
     "zone": "Pais Vasco",
     "department": "Amurrio (Álava)",
@@ -17517,7 +17486,7 @@
     "contact": "Aitor Ugarte (Dirección de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0497",
+    "id": "PROP-LEAD26-0496",
     "name": "Koolair S.A.",
     "zone": "Comunidad de Madrid",
     "department": "Móstoles (Madrid)",
@@ -17552,7 +17521,7 @@
     "contact": "Javier Martín (Director de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0498",
+    "id": "PROP-LEAD26-0497",
     "name": "Madel Air Technical Diffusion S.A.",
     "zone": "Cataluña",
     "department": "Centelles (Barcelona)",
@@ -17587,7 +17556,7 @@
     "contact": "Josep Maria Mas (Compras de Metal y Extrusión)"
   },
   {
-    "id": "PROP-LEAD26-0499",
+    "id": "PROP-LEAD26-0498",
     "name": "Airzone (Corporación Empresarial Altra S.L.)",
     "zone": "Andalucia",
     "department": "Málaga (Málaga)",
@@ -17622,7 +17591,7 @@
     "contact": "Dpto. Compras y Cadena de Suministro (Airzone)"
   },
   {
-    "id": "PROP-LEAD26-0500",
+    "id": "PROP-LEAD26-0499",
     "name": "Tradair S.A. (Tratamientos para la Difusión del Aire)",
     "zone": "Castilla-La Mancha",
     "department": "Illescas (Toledo)",
@@ -17657,7 +17626,7 @@
     "contact": "Carlos Moreno (Jefe de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0501",
+    "id": "PROP-LEAD26-0500",
     "name": "Airflow España S.L.",
     "zone": "Comunidad de Madrid",
     "department": "Fuenlabrada (Madrid)",
@@ -17692,7 +17661,7 @@
     "contact": "Roberto Sánchez (Compras Industriales)"
   },
   {
-    "id": "PROP-LEAD26-0502",
+    "id": "PROP-LEAD26-0501",
     "name": "Euroclima Difusión S.L.",
     "zone": "Comunidad de Madrid",
     "department": "Torrejón de Ardoz (Madrid)",
@@ -17727,7 +17696,7 @@
     "contact": "Dpto. Aprovisionamiento (Euroclima)"
   },
   {
-    "id": "PROP-LEAD26-0503",
+    "id": "PROP-LEAD26-0502",
     "name": "Trox España S.A.",
     "zone": "Aragon",
     "department": "Zaragoza (Zaragoza)",
@@ -17762,7 +17731,7 @@
     "contact": "Ignacio Arruebo (Director de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0504",
+    "id": "PROP-LEAD26-0503",
     "name": "Manufacturas Difair S.A. (Difair-Clima)",
     "zone": "Comunidad de Madrid",
     "department": "San Sebastián de los Reyes (Madrid)",
@@ -17797,7 +17766,7 @@
     "contact": "Mariano Ruiz (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0505",
+    "id": "PROP-LEAD26-0504",
     "name": "Termomecánica Ibérica S.A. (Tecna)",
     "zone": "Comunidad de Madrid",
     "department": "Pinto (Madrid)",
@@ -17832,7 +17801,7 @@
     "contact": "Dpto. Compras Industriales (Tecna)"
   },
   {
-    "id": "PROP-LEAD26-0506",
+    "id": "PROP-LEAD26-0505",
     "name": "Schreder Socelec S.A.U.",
     "zone": "Castilla-La Mancha",
     "department": "Marchamalo (Guadalajara)",
@@ -17867,7 +17836,7 @@
     "contact": "Carlos Pascual (Supply Chain & Purchasing Manager)"
   },
   {
-    "id": "PROP-LEAD26-0507",
+    "id": "PROP-LEAD26-0506",
     "name": "Leds C4 S.A.",
     "zone": "Cataluña",
     "department": "Torà (Lleida)",
@@ -17902,7 +17871,7 @@
     "contact": "Jordi Miralles (Director de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0508",
+    "id": "PROP-LEAD26-0507",
     "name": "Simon Holding S.L. (Simon Lighting)",
     "zone": "Cataluña",
     "department": "Barcelona (Barcelona)",
@@ -17937,7 +17906,7 @@
     "contact": "Dpto. Compras Corporativas (Grupo Simon)"
   },
   {
-    "id": "PROP-LEAD26-0509",
+    "id": "PROP-LEAD26-0508",
     "name": "Lamp Lighting (Lamp S.A.U.)",
     "zone": "Cataluña",
     "department": "Terrassa (Barcelona)",
@@ -17972,7 +17941,7 @@
     "contact": "Albert Vidal (Responsable de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0510",
+    "id": "PROP-LEAD26-0509",
     "name": "Secom Iluminación S.L.",
     "zone": "Murcia",
     "department": "Molina de Segura (Murcia)",
@@ -18007,7 +17976,7 @@
     "contact": "Antonio Conesa (Compras Industriales)"
   },
   {
-    "id": "PROP-LEAD26-0511",
+    "id": "PROP-LEAD26-0510",
     "name": "Prilux Iluminación (Transformados Plásticos Toledo S.L.)",
     "zone": "Castilla-La Mancha",
     "department": "Toledo (Toledo)",
@@ -18042,7 +18011,7 @@
     "contact": "Carlos García (Director de Aprovisionamiento)"
   },
   {
-    "id": "PROP-LEAD26-0512",
+    "id": "PROP-LEAD26-0511",
     "name": "Normagrup Technology S.A.",
     "zone": "Asturias",
     "department": "Llanera (Asturias)",
@@ -18077,7 +18046,7 @@
     "contact": "Dpto. Compras y Materias Primas (Normagrup)"
   },
   {
-    "id": "PROP-LEAD26-0513",
+    "id": "PROP-LEAD26-0512",
     "name": "Airfal International S.L.",
     "zone": "Aragon",
     "department": "Villanueva de Gállego (Zaragoza)",
@@ -18112,7 +18081,7 @@
     "contact": "Pilar Ruiz (Jefa de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0514",
+    "id": "PROP-LEAD26-0513",
     "name": "Tecsoled S.L.",
     "zone": "Galicia",
     "department": "A Coruña (A Coruña)",
@@ -18147,7 +18116,7 @@
     "contact": "Borja Varela (Responsable de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0515",
+    "id": "PROP-LEAD26-0514",
     "name": "Proycsa (Projectes i Construccions d'Estructures S.L.)",
     "zone": "Cataluña",
     "department": "Tarragona (Tarragona)",
@@ -18182,7 +18151,7 @@
     "contact": "Sergi Puig (Director Técnico y Compras)"
   },
   {
-    "id": "PROP-LEAD26-0516",
+    "id": "PROP-LEAD26-0515",
     "name": "Mecanizados Aguerri S.L.",
     "zone": "Navarra",
     "department": "Tudela (Navarra)",
@@ -18217,7 +18186,7 @@
     "contact": "Fernando Aguerri (Director de Aprovisionamiento)"
   },
   {
-    "id": "PROP-LEAD26-0517",
+    "id": "PROP-LEAD26-0516",
     "name": "Item Ibérica (Sistemas Modulares Item S.L.)",
     "zone": "Cataluña",
     "department": "Granollers (Barcelona)",
@@ -18252,7 +18221,7 @@
     "contact": "Dpto. Compras y Operaciones (Item)"
   },
   {
-    "id": "PROP-LEAD26-0518",
+    "id": "PROP-LEAD26-0517",
     "name": "Tecnifuelle S.L.",
     "zone": "Pais Vasco",
     "department": "Itziar-Deba (Gipuzkoa)",
@@ -18287,7 +18256,7 @@
     "contact": "Gorka Eceiza (Jefe de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0519",
+    "id": "PROP-LEAD26-0518",
     "name": "Alutec Estructuras de Aluminio S.L.",
     "zone": "Cataluña",
     "department": "Rubí (Barcelona)",
@@ -18322,7 +18291,7 @@
     "contact": "Jordi Riera (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0520",
+    "id": "PROP-LEAD26-0519",
     "name": "Dexis Ibérica (Grupo Dexis)",
     "zone": "Aragon",
     "department": "Zaragoza (Zaragoza)",
@@ -18357,7 +18326,7 @@
     "contact": "Dpto. Aprovisionamiento Industrial y Perfilería"
   },
   {
-    "id": "PROP-LEAD26-0521",
+    "id": "PROP-LEAD26-0520",
     "name": "Manusa Door Systems S.L.",
     "zone": "Cataluña",
     "department": "Sant Cugat del Vallès (Barcelona)",
@@ -18392,7 +18361,7 @@
     "contact": "Carles Rovira (Director de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0522",
+    "id": "PROP-LEAD26-0521",
     "name": "Geze Iberia S.L.U.",
     "zone": "Cataluña",
     "department": "Sant Cugat del Vallès (Barcelona)",
@@ -18427,7 +18396,7 @@
     "contact": "Dpto. Aprovisionamiento y Logística"
   },
   {
-    "id": "PROP-LEAD26-0523",
+    "id": "PROP-LEAD26-0522",
     "name": "Erreka Puertas Automáticas (Matz-Erreka S.Coop.)",
     "zone": "Pais Vasco",
     "department": "Antzuola (Gipuzkoa)",
@@ -18462,7 +18431,7 @@
     "contact": "Iban Agirre (Director de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0524",
+    "id": "PROP-LEAD26-0523",
     "name": "Aprimatic Puertas Automáticas S.L.",
     "zone": "Comunidad de Madrid",
     "department": "San Fernando de Henares (Madrid)",
@@ -18497,7 +18466,7 @@
     "contact": "Dpto. Compras y Materiales (Aprimatic)"
   },
   {
-    "id": "PROP-LEAD26-0525",
+    "id": "PROP-LEAD26-0524",
     "name": "JCM Technologies S.A.U.",
     "zone": "Cataluña",
     "department": "Vic (Barcelona)",
@@ -18532,7 +18501,7 @@
     "contact": "Josep Baucells (Jefe de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0526",
+    "id": "PROP-LEAD26-0525",
     "name": "Puertas Castalla S.L.",
     "zone": "Comunidad Valenciana",
     "department": "Castalla (Alicante)",
@@ -18567,7 +18536,7 @@
     "contact": "Dpto. Compras y Metalistería"
   },
   {
-    "id": "PROP-LEAD26-0527",
+    "id": "PROP-LEAD26-0526",
     "name": "Puertas Sanrafael S.A.",
     "zone": "Castilla-La Mancha",
     "department": "Villacañas (Toledo)",
@@ -18602,7 +18571,7 @@
     "contact": "Ángel Gómez (Director de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0528",
+    "id": "PROP-LEAD26-0527",
     "name": "Orona S.Coop.",
     "zone": "Pais Vasco",
     "department": "Hernani (Gipuzkoa)",
@@ -18637,7 +18606,7 @@
     "contact": "Dpto. Aprovisionamiento Global (Orona)"
   },
   {
-    "id": "PROP-LEAD26-0529",
+    "id": "PROP-LEAD26-0528",
     "name": "Mac Puar S.A. (MP Ascensores)",
     "zone": "Andalucia",
     "department": "Sevilla (Sevilla)",
@@ -18672,7 +18641,7 @@
     "contact": "Manuel Barroso (Director de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0530",
+    "id": "PROP-LEAD26-0529",
     "name": "Hidral S.A.",
     "zone": "Andalucia",
     "department": "Sevilla (Sevilla)",
@@ -18707,7 +18676,7 @@
     "contact": "Carlos Moreno (Jefe de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0531",
+    "id": "PROP-LEAD26-0530",
     "name": "Fain Ascensores S.A.",
     "zone": "Comunidad de Madrid",
     "department": "Madrid (Madrid)",
@@ -18742,7 +18711,7 @@
     "contact": "Dpto. Compras y Mantenimiento (Fain)"
   },
   {
-    "id": "PROP-LEAD26-0532",
+    "id": "PROP-LEAD26-0531",
     "name": "Embarba Ascensores S.A.",
     "zone": "Andalucia",
     "department": "Málaga (Málaga)",
@@ -18777,7 +18746,7 @@
     "contact": "José Antonio Morales (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0533",
+    "id": "PROP-LEAD26-0532",
     "name": "Ascensores Enor S.A.",
     "zone": "Galicia",
     "department": "Vigo (Pontevedra)",
@@ -18812,7 +18781,7 @@
     "contact": "Dpto. Compras y Suministros (Enor)"
   },
   {
-    "id": "PROP-LEAD26-0534",
+    "id": "PROP-LEAD26-0533",
     "name": "Grupo Ramón García S.L.",
     "zone": "Galicia",
     "department": "Mesía (A Coruña)",
@@ -18847,7 +18816,7 @@
     "contact": "Dpto. Compras y Metal"
   },
   {
-    "id": "PROP-LEAD26-0535",
+    "id": "PROP-LEAD26-0534",
     "name": "THU Ceiling Solutions S.L.",
     "zone": "Comunidad Valenciana",
     "department": "Vilamarxant (Valencia)",
@@ -18882,7 +18851,7 @@
     "contact": "Emilio Valero (Jefe de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0536",
+    "id": "PROP-LEAD26-0535",
     "name": "Atenzza Outdoor S.L.",
     "zone": "Comunidad Valenciana",
     "department": "Ontinyent (Valencia)",
@@ -18917,7 +18886,7 @@
     "contact": "Carles Gandia (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0537",
+    "id": "PROP-LEAD26-0536",
     "name": "Toldos Pacheco S.L.",
     "zone": "Comunidad de Madrid",
     "department": "Valdemoro (Madrid)",
@@ -18952,7 +18921,7 @@
     "contact": "Dpto. Compras Industriales"
   },
   {
-    "id": "PROP-LEAD26-0538",
+    "id": "PROP-LEAD26-0537",
     "name": "Biossun Ibérica S.L.",
     "zone": "Comunidad de Madrid",
     "department": "Alcobendas (Madrid)",
@@ -18987,7 +18956,7 @@
     "contact": "Dpto. Aprovisionamiento (Biossun)"
   },
   {
-    "id": "PROP-LEAD26-0539",
+    "id": "PROP-LEAD26-0538",
     "name": "Tedisel Medical S.L.",
     "zone": "Cataluña",
     "department": "Sant Boi de Llobregat (Barcelona)",
@@ -19022,7 +18991,7 @@
     "contact": "Marc Gómez (Director de Operaciones)"
   },
   {
-    "id": "PROP-LEAD26-0540",
+    "id": "PROP-LEAD26-0539",
     "name": "Clean Room Concept S.L.",
     "zone": "Cataluña",
     "department": "Rubí (Barcelona)",
@@ -19057,7 +19026,7 @@
     "contact": "Dpto. Aprovisionamiento y Proyectos"
   },
   {
-    "id": "PROP-LEAD26-0541",
+    "id": "PROP-LEAD26-0540",
     "name": "Postigo Conservación y Equipamiento S.L.",
     "zone": "Comunidad de Madrid",
     "department": "Madrid (Madrid)",
@@ -19092,7 +19061,7 @@
     "contact": "Dpto. Compras y Metalurgia Vial"
   },
   {
-    "id": "PROP-LEAD26-0542",
+    "id": "PROP-LEAD26-0541",
     "name": "Tecno-Vial S.L.",
     "zone": "Castilla-La Mancha",
     "department": "Toledo (Toledo)",
@@ -19127,7 +19096,7 @@
     "contact": "Juan Carlos Martín (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0543",
+    "id": "PROP-LEAD26-0542",
     "name": "Mobles 114 Barcelona S.L.",
     "zone": "Cataluña",
     "department": "Barcelona (Barcelona)",
@@ -19162,7 +19131,7 @@
     "contact": "Gabriel Moragas (Director de Producto y Compras)"
   },
   {
-    "id": "PROP-LEAD26-0544",
+    "id": "PROP-LEAD26-0543",
     "name": "Talleres Inox S.L. (Fachadas y Carpintería de Aluminio)",
     "zone": "Galicia",
     "department": "Santiago de Compostela (A Coruña)",
@@ -19197,7 +19166,7 @@
     "contact": "Manuel Seoane (Jefe de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0545",
+    "id": "PROP-LEAD26-0544",
     "name": "Estrumat Cerramientos S.L.",
     "zone": "Castilla-La Mancha",
     "department": "Toledo (Toledo)",
@@ -19232,7 +19201,7 @@
     "contact": "Dpto. Compras y Licitaciones"
   },
   {
-    "id": "PROP-LEAD26-0546",
+    "id": "PROP-LEAD26-0545",
     "name": "Aluminios Benicarló S.L.",
     "zone": "Comunidad Valenciana",
     "department": "Benicarló (Castellón)",
@@ -19267,7 +19236,7 @@
     "contact": "Joan Forés (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0547",
+    "id": "PROP-LEAD26-0546",
     "name": "Aluminios Guridi S.L.",
     "zone": "Pais Vasco",
     "department": "Zarautz (Gipuzkoa)",
@@ -19302,7 +19271,7 @@
     "contact": "Mikel Guridi (Director de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0548",
+    "id": "PROP-LEAD26-0547",
     "name": "Calamocha Aluminios S.L.",
     "zone": "Aragon",
     "department": "Calamocha (Teruel)",
@@ -19337,7 +19306,7 @@
     "contact": "Jesús Latorre (Jefe de Taller y Compras)"
   },
   {
-    "id": "PROP-LEAD26-0549",
+    "id": "PROP-LEAD26-0548",
     "name": "Talleres Metálicos Almansa S.L.",
     "zone": "Castilla-La Mancha",
     "department": "Almansa (Albacete)",
@@ -19372,7 +19341,7 @@
     "contact": "Dpto. Compras Industriales"
   },
   {
-    "id": "PROP-LEAD26-0550",
+    "id": "PROP-LEAD26-0549",
     "name": "Aluprom Aluminios S.L.",
     "zone": "Murcia",
     "department": "Cartagena (Murcia)",
@@ -19407,7 +19376,7 @@
     "contact": "Mariano Soler (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0551",
+    "id": "PROP-LEAD26-0550",
     "name": "Aluminios Bages S.L.",
     "zone": "Cataluña",
     "department": "Manresa (Barcelona)",
@@ -19442,7 +19411,7 @@
     "contact": "Dpto. Aprovisionamiento"
   },
   {
-    "id": "PROP-LEAD26-0552",
+    "id": "PROP-LEAD26-0551",
     "name": "Carpintería Metálica San Blas S.L.",
     "zone": "Comunidad Valenciana",
     "department": "Alicante (Alicante)",
@@ -19477,7 +19446,7 @@
     "contact": "Dpto. Compras y Presupuestos"
   },
   {
-    "id": "PROP-LEAD26-0553",
+    "id": "PROP-LEAD26-0552",
     "name": "Aluminios Olot S.L.",
     "zone": "Cataluña",
     "department": "Olot (Girona)",
@@ -19512,7 +19481,7 @@
     "contact": "Pere Costa (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0554",
+    "id": "PROP-LEAD26-0553",
     "name": "Talleres Alce S.L.",
     "zone": "Castilla-La Mancha",
     "department": "Alcázar de San Juan (Ciudad Real)",
@@ -19547,7 +19516,7 @@
     "contact": "Dpto. Compras"
   },
   {
-    "id": "PROP-LEAD26-0555",
+    "id": "PROP-LEAD26-0554",
     "name": "Aluminios Almenara S.L.",
     "zone": "Comunidad Valenciana",
     "department": "Almenara (Castellón)",
@@ -19582,7 +19551,7 @@
     "contact": "Vicente Boix (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0556",
+    "id": "PROP-LEAD26-0555",
     "name": "Aluminios La Mancha S.L.",
     "zone": "Castilla-La Mancha",
     "department": "La Roda (Albacete)",
@@ -19617,7 +19586,7 @@
     "contact": "Dpto. Compras"
   },
   {
-    "id": "PROP-LEAD26-0557",
+    "id": "PROP-LEAD26-0556",
     "name": "Estructuras Metálicas Hermanos Peña S.L.",
     "zone": "Andalucia",
     "department": "Dos Hermanas (Sevilla)",
@@ -19652,7 +19621,7 @@
     "contact": "José Peña (Director de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0558",
+    "id": "PROP-LEAD26-0557",
     "name": "Aluminios Guadiana S.L.",
     "zone": "Extremadura",
     "department": "Badajoz (Badajoz)",
@@ -19687,7 +19656,7 @@
     "contact": "Manuel Barrena (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0559",
+    "id": "PROP-LEAD26-0558",
     "name": "Ventanas y Cerramientos del Duero S.L.",
     "zone": "Castilla y Leon",
     "department": "Zamora (Zamora)",
@@ -19722,7 +19691,7 @@
     "contact": "Dpto. Compras y Suministros"
   },
   {
-    "id": "PROP-LEAD26-0560",
+    "id": "PROP-LEAD26-0559",
     "name": "Aluminios Val Miñor S.L.",
     "zone": "Galicia",
     "department": "Nigrán (Pontevedra)",
@@ -19757,7 +19726,7 @@
     "contact": "Carlos Costas (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0561",
+    "id": "PROP-LEAD26-0560",
     "name": "Aluminios Anaga S.L.",
     "zone": "Canarias",
     "department": "Santa Cruz de Tenerife (Santa Cruz de Tenerife)",
@@ -19792,7 +19761,7 @@
     "contact": "Dpto. Compras y Logística Marítima"
   },
   {
-    "id": "PROP-LEAD26-0562",
+    "id": "PROP-LEAD26-0561",
     "name": "Carpintería Metálica Balear S.L.",
     "zone": "Baleares",
     "department": "Palma de Mallorca (Illes Balears)",
@@ -19827,7 +19796,7 @@
     "contact": "Miquel Pons (Director de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0563",
+    "id": "PROP-LEAD26-0562",
     "name": "Aluminios Menorca S.L.",
     "zone": "Baleares",
     "department": "Mahón (Illes Balears)",
@@ -19862,7 +19831,7 @@
     "contact": "Joan Sintes (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0564",
+    "id": "PROP-LEAD26-0563",
     "name": "Talleres Almar S.L.",
     "zone": "Aragon",
     "department": "Zaragoza (Zaragoza)",
@@ -19897,7 +19866,7 @@
     "contact": "Dpto. Compras"
   },
   {
-    "id": "PROP-LEAD26-0565",
+    "id": "PROP-LEAD26-0564",
     "name": "Aluminios del Jalón S.L.",
     "zone": "Aragon",
     "department": "Calatayud (Zaragoza)",
@@ -19932,7 +19901,7 @@
     "contact": "Dpto. Aprovisionamiento"
   },
   {
-    "id": "PROP-LEAD26-0566",
+    "id": "PROP-LEAD26-0565",
     "name": "Aluminios Somontano S.L.",
     "zone": "Aragon",
     "department": "Barbastro (Huesca)",
@@ -19967,7 +19936,7 @@
     "contact": "Javier Subías (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0567",
+    "id": "PROP-LEAD26-0566",
     "name": "Aluminios Alcarria S.L.",
     "zone": "Castilla-La Mancha",
     "department": "Guadalajara (Guadalajara)",
@@ -20002,7 +19971,7 @@
     "contact": "Dpto. Compras y Presupuestos"
   },
   {
-    "id": "PROP-LEAD26-0568",
+    "id": "PROP-LEAD26-0567",
     "name": "Aluminios Tajo S.L.",
     "zone": "Castilla-La Mancha",
     "department": "Talavera de la Reina (Toledo)",
@@ -20037,7 +20006,7 @@
     "contact": "Raúl Gómez (Jefe de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0569",
+    "id": "PROP-LEAD26-0568",
     "name": "Aluminios Vega Baja S.L.",
     "zone": "Comunidad Valenciana",
     "department": "Orihuela (Alicante)",
@@ -20072,7 +20041,7 @@
     "contact": "Antonio Murcia (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0570",
+    "id": "PROP-LEAD26-0569",
     "name": "Aluminios Marina Alta S.L.",
     "zone": "Comunidad Valenciana",
     "department": "Dénia (Alicante)",
@@ -20107,7 +20076,7 @@
     "contact": "Dpto. Compras y Obras"
   },
   {
-    "id": "PROP-LEAD26-0571",
+    "id": "PROP-LEAD26-0570",
     "name": "Aluminios Plana Baixa S.L.",
     "zone": "Comunidad Valenciana",
     "department": "Vila-real (Castellón)",
@@ -20142,7 +20111,7 @@
     "contact": "Pascual Vilanova (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0572",
+    "id": "PROP-LEAD26-0571",
     "name": "Aluminios Ribera Alta S.L.",
     "zone": "Comunidad Valenciana",
     "department": "Carcaixent (Valencia)",
@@ -20177,7 +20146,7 @@
     "contact": "Enrique Sala (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0573",
+    "id": "PROP-LEAD26-0572",
     "name": "Aluminios Hoya de Buñol S.L.",
     "zone": "Comunidad Valenciana",
     "department": "Buñol (Valencia)",
@@ -20212,7 +20181,7 @@
     "contact": "Dpto. Aprovisionamiento"
   },
   {
-    "id": "PROP-LEAD26-0574",
+    "id": "PROP-LEAD26-0573",
     "name": "Aluminios Aljarafe S.L.",
     "zone": "Andalucia",
     "department": "Mairena del Aljarafe (Sevilla)",
@@ -20247,7 +20216,7 @@
     "contact": "Francisco Moreno (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0575",
+    "id": "PROP-LEAD26-0574",
     "name": "Aluminios Campiña Sur S.L.",
     "zone": "Extremadura",
     "department": "Llerena (Badajoz)",
@@ -20282,7 +20251,7 @@
     "contact": "Dpto. Compras"
   },
   {
-    "id": "PROP-LEAD26-0576",
+    "id": "PROP-LEAD26-0575",
     "name": "Aluminios Tierra de Barros S.L.",
     "zone": "Extremadura",
     "department": "Almendralejo (Badajoz)",
@@ -20317,7 +20286,7 @@
     "contact": "Manuel Ortiz (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0577",
+    "id": "PROP-LEAD26-0576",
     "name": "Aluminios Valle del Jerte S.L.",
     "zone": "Extremadura",
     "department": "Plasencia (Cáceres)",
@@ -20352,7 +20321,7 @@
     "contact": "Dpto. Aprovisionamiento"
   },
   {
-    "id": "PROP-LEAD26-0578",
+    "id": "PROP-LEAD26-0577",
     "name": "Aluminios Campo Arañuelo S.L.",
     "zone": "Extremadura",
     "department": "Navalmoral de la Mata (Cáceres)",
@@ -20387,7 +20356,7 @@
     "contact": "Dpto. Compras"
   },
   {
-    "id": "PROP-LEAD26-0579",
+    "id": "PROP-LEAD26-0578",
     "name": "Aluminios Tierra de Campos S.L.",
     "zone": "Castilla y Leon",
     "department": "Palencia (Palencia)",
@@ -20422,7 +20391,7 @@
     "contact": "Eduardo Martín (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0580",
+    "id": "PROP-LEAD26-0579",
     "name": "Aluminios Pinares S.L.",
     "zone": "Castilla y Leon",
     "department": "Soria (Soria)",
@@ -20457,7 +20426,7 @@
     "contact": "Dpto. Compras"
   },
   {
-    "id": "PROP-LEAD26-0581",
+    "id": "PROP-LEAD26-0580",
     "name": "Aluminios Tierra de Medina S.L.",
     "zone": "Castilla y Leon",
     "department": "Medina del Campo (Valladolid)",
@@ -20492,7 +20461,7 @@
     "contact": "Carlos Lorenzo (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0582",
+    "id": "PROP-LEAD26-0581",
     "name": "Aluminios Maragatería S.L.",
     "zone": "Castilla y Leon",
     "department": "Astorga (León)",
@@ -20527,7 +20496,7 @@
     "contact": "Dpto. Aprovisionamiento"
   },
   {
-    "id": "PROP-LEAD26-0583",
+    "id": "PROP-LEAD26-0582",
     "name": "Aluminios Sanabria S.L.",
     "zone": "Castilla y Leon",
     "department": "Benavente (Zamora)",
@@ -20562,7 +20531,7 @@
     "contact": "Dpto. Compras"
   },
   {
-    "id": "PROP-LEAD26-0584",
+    "id": "PROP-LEAD26-0583",
     "name": "Aluminios Sierra de Francia S.L.",
     "zone": "Castilla y Leon",
     "department": "Béjar (Salamanca)",
@@ -20597,7 +20566,7 @@
     "contact": "Dpto. Compras"
   },
   {
-    "id": "PROP-LEAD26-0585",
+    "id": "PROP-LEAD26-0584",
     "name": "Aluminios Tiétar S.L.",
     "zone": "Castilla y Leon",
     "department": "Arenas de San Pedro (Ávila)",
@@ -20632,7 +20601,7 @@
     "contact": "Dpto. Compras"
   },
   {
-    "id": "PROP-LEAD26-0586",
+    "id": "PROP-LEAD26-0585",
     "name": "SC Herrajes (Sistemas y Complementos de Herrajes S.L.)",
     "zone": "Comunidad de Madrid",
     "department": "Fuenlabrada (Madrid)",
@@ -20667,7 +20636,7 @@
     "contact": "Santiago Castro (Director de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0587",
+    "id": "PROP-LEAD26-0586",
     "name": "ACOFAL (Accesorios para Fabricación de Aluminio S.L.)",
     "zone": "Murcia",
     "department": "Molina de Segura (Murcia)",
@@ -20702,7 +20671,7 @@
     "contact": "Mariano Jiménez (Responsable de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0588",
+    "id": "PROP-LEAD26-0587",
     "name": "Alu System S.L.",
     "zone": "Cataluña",
     "department": "Sabadell (Barcelona)",
@@ -20737,7 +20706,7 @@
     "contact": "Dpto. Aprovisionamiento y Logística"
   },
   {
-    "id": "PROP-LEAD26-0589",
+    "id": "PROP-LEAD26-0588",
     "name": "Syskor S.L.",
     "zone": "Pais Vasco",
     "department": "Zarautz (Gipuzkoa)",
@@ -20772,7 +20741,7 @@
     "contact": "Aritz Eizagirre (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0590",
+    "id": "PROP-LEAD26-0589",
     "name": "Guillén Desarrollos Industriales S.L. (Grupo Guillén)",
     "zone": "Comunidad Valenciana",
     "department": "Alginet (Valencia)",
@@ -20807,7 +20776,7 @@
     "contact": "Dpto. Compras y Metalurgia (Guillén)"
   },
   {
-    "id": "PROP-LEAD26-0591",
+    "id": "PROP-LEAD26-0590",
     "name": "Carrocerías Frigoríficas Iglu S.L.",
     "zone": "Comunidad Valenciana",
     "department": "Silla (Valencia)",
@@ -20842,7 +20811,7 @@
     "contact": "Francisco Grau (Compras)"
   },
   {
-    "id": "PROP-LEAD26-0592",
+    "id": "PROP-LEAD26-0591",
     "name": "Carrocerías Burillo S.L.",
     "zone": "Aragon",
     "department": "Villanueva de Gállego (Zaragoza)",
@@ -20877,7 +20846,7 @@
     "contact": "Dpto. Aprovisionamiento (Burillo)"
   },
   {
-    "id": "PROP-LEAD26-0593",
+    "id": "PROP-LEAD26-0592",
     "name": "Carrocerías Nogebus S.L.",
     "zone": "Cataluña",
     "department": "Arbúcies (Girona)",
@@ -20912,7 +20881,7 @@
     "contact": "Jordi Vinyoles (Director de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0594",
+    "id": "PROP-LEAD26-0593",
     "name": "Spigogroup (Spigotec / Spigoline)",
     "zone": "La Rioja",
     "department": "Nalda (La Rioja)",
@@ -20947,7 +20916,7 @@
     "contact": "Jesús Martínez (Compras y Producción)"
   },
   {
-    "id": "PROP-LEAD26-0595",
+    "id": "PROP-LEAD26-0594",
     "name": "Citterio Ibérica S.A.",
     "zone": "Comunidad de Madrid",
     "department": "Madrid (Madrid)",
@@ -20982,7 +20951,7 @@
     "contact": "Dpto. Compras y Proyectos (Citterio)"
   },
   {
-    "id": "PROP-LEAD26-0596",
+    "id": "PROP-LEAD26-0595",
     "name": "Knauf Ceiling Solutions Ibérica S.L.",
     "zone": "Comunidad de Madrid",
     "department": "Madrid (Madrid)",
@@ -21017,7 +20986,7 @@
     "contact": "Dpto. Suministros y Perfilería Metálica"
   },
   {
-    "id": "PROP-LEAD26-0597",
+    "id": "PROP-LEAD26-0596",
     "name": "Termia Clima S.L.",
     "zone": "Cataluña",
     "department": "Sant Feliu de Llobregat (Barcelona)",
@@ -21052,7 +21021,7 @@
     "contact": "Sergi Bonet (Compras Industriales)"
   },
   {
-    "id": "PROP-LEAD26-0598",
+    "id": "PROP-LEAD26-0597",
     "name": "Casals Ventilación Industrial S.L.",
     "zone": "Cataluña",
     "department": "Ripoll (Girona)",
@@ -21087,7 +21056,7 @@
     "contact": "Albert Planas (Director de Compras)"
   },
   {
-    "id": "PROP-LEAD26-0599",
+    "id": "PROP-LEAD26-0598",
     "name": "Ditem Sistemas de Aluminio S.L.",
     "zone": "Comunidad de Madrid",
     "department": "Leganés (Madrid)",
@@ -21122,7 +21091,7 @@
     "contact": "Carlos Navas (Compras y Oficina Técnica)"
   },
   {
-    "id": "PROP-LEAD26-0600",
+    "id": "PROP-LEAD26-0599",
     "name": "Aluminio Soldado S.L. (Cema Cerramientos)",
     "zone": "Galicia",
     "department": "Salceda de Caselas (Pontevedra)",
@@ -21158,7 +21127,7 @@
     "contact": "José Ramón Camiña (Director de Producción y Aprovisionamiento Metal)"
   },
   {
-    "id": "PROP-LEAD26-0601",
+    "id": "PROP-LEAD26-0600",
     "name": "Manufacturados de Aluminio San Antonio S.L. (Aluminios San Antonio)",
     "zone": "Castilla y Leon",
     "department": "La Bañeza (León)",
@@ -21194,7 +21163,7 @@
     "contact": "Antonio Martínez (Responsable de Compras y Almacén)"
   },
   {
-    "id": "PROP-LEAD26-0602",
+    "id": "PROP-LEAD26-0601",
     "name": "Aprimatic Doors S.L. (Aprimatic Puertas Automáticas)",
     "zone": "Madrid",
     "department": "Alcalá de Henares (Madrid)",
@@ -21230,7 +21199,7 @@
     "contact": "Juan Ramírez (Director General / Dirección Operaciones y Compras)"
   },
   {
-    "id": "PROP-LEAD26-0603",
+    "id": "PROP-LEAD26-0602",
     "name": "Klein Ibérica S.A.U. (Klein Europe)",
     "cif": "A08712341",
     "address": "Pol. Ind. Can Cuiàs, Carrer Nacionals 4",
@@ -21262,7 +21231,7 @@
     "purchasingManager": "Jordi Martí"
   },
   {
-    "id": "PROP-LEAD26-0604",
+    "id": "PROP-LEAD26-0603",
     "name": "Lucerglass S.L.",
     "cif": "B86950524",
     "address": "Calle Mejorana 12",
@@ -21294,7 +21263,7 @@
     "purchasingManager": "Javier Ruiz Morcillo"
   },
   {
-    "id": "PROP-LEAD26-0605",
+    "id": "PROP-LEAD26-0604",
     "name": "Portalum S.L.",
     "cif": "B97487961",
     "address": "Pol. Ind. Oliveral, C/ H, Parcela 14",
@@ -21326,7 +21295,7 @@
     "purchasingManager": "Carlos Navarro Giménez"
   },
   {
-    "id": "PROP-LEAD26-0606",
+    "id": "PROP-LEAD26-0605",
     "name": "Collbaix Security Shutters S.L. (Grupo Collbaix)",
     "cif": "B62241690",
     "address": "Pol. Ind. Salelles II, C/ Salelles 14",
@@ -21358,7 +21327,7 @@
     "purchasingManager": "Francesc Xicota"
   },
   {
-    "id": "PROP-LEAD26-0607",
+    "id": "PROP-LEAD26-0606",
     "name": "Sistemas Técnicos de Agronomía S.L. (J. Huete Greenhouses)",
     "cif": "B30510101",
     "address": "Pol. Ind. Oeste, C/ Venezuela, Parcela 17/10",
@@ -21389,7 +21358,7 @@
     "purchasingManager": "Ginés Huete Guillén"
   },
   {
-    "id": "PROP-LEAD26-0608",
+    "id": "PROP-LEAD26-0607",
     "name": "Rufepa Tecnoagro S.L.",
     "cif": "B03947801",
     "address": "Ctra. N-332 Km 74,5",
@@ -21422,7 +21391,7 @@
     "purchasingManager": "Alberto Ferrández Pascual"
   },
   {
-    "id": "PROP-LEAD26-0609",
+    "id": "PROP-LEAD26-0608",
     "name": "Invernaderos e Instalaciones S.A. (ININSA)",
     "cif": "A46167883",
     "address": "Pol. Ind. El Raconc, Calle dels Fusters 6",
@@ -21454,7 +21423,7 @@
     "purchasingManager": "Vicent Soler Carbonell"
   },
   {
-    "id": "PROP-LEAD26-0610",
+    "id": "PROP-LEAD26-0609",
     "name": "Azbil Telstar S.L.",
     "cif": "A08151219",
     "address": "Josep Tapiolas 120",
@@ -21486,7 +21455,7 @@
     "purchasingManager": "Marc Casasayas"
   },
   {
-    "id": "PROP-LEAD26-0611",
+    "id": "PROP-LEAD26-0610",
     "name": "Tecnoplanning S.L. (Grupo Albian)",
     "cif": "B95180550",
     "address": "Parque Científico y Tecnológico de Bizkaia, Edificio 500",
@@ -21517,7 +21486,7 @@
     "purchasingManager": "Iñaki Bilbao Larrauri"
   },
   {
-    "id": "PROP-LEAD26-0612",
+    "id": "PROP-LEAD26-0611",
     "name": "Luxiona S.L. (Troll, Metalarte)",
     "cif": "B60322526",
     "address": "Passeig de la Ribera 115",
@@ -21548,7 +21517,7 @@
     "purchasingManager": "David Gómez Prat"
   },
   {
-    "id": "PROP-LEAD26-0613",
+    "id": "PROP-LEAD26-0612",
     "name": "Daisalux S.A.U.",
     "cif": "A01053776",
     "address": "Pol. Ind. Júndiz, Calle San Vicente 8",
@@ -21579,7 +21548,7 @@
     "purchasingManager": "Mikel González de San Pedro"
   },
   {
-    "id": "PROP-LEAD26-0614",
+    "id": "PROP-LEAD26-0613",
     "name": "Primur S.A. (Mobiliario Urbano y Cerramientos)",
     "cif": "A28751519",
     "address": "Pol. Ind. San Roque, Camino de los Canteros 14",
@@ -21610,7 +21579,7 @@
     "purchasingManager": "Miguel Ángel Hernando"
   },
   {
-    "id": "PROP-LEAD26-0615",
+    "id": "PROP-LEAD26-0614",
     "name": "Microarquitectura S.L.",
     "cif": "B60935541",
     "address": "Gran Via de les Corts Catalanes, 630",
@@ -21641,7 +21610,7 @@
     "purchasingManager": "Xavier Ballesteros"
   },
   {
-    "id": "PROP-LEAD26-0616",
+    "id": "PROP-LEAD26-0615",
     "name": "Signes Dissenys Tècnics S.L.",
     "cif": "B58265323",
     "address": "Pol. Ind. Els Batzacs, Carrer de la Química 6",
@@ -21673,7 +21642,7 @@
     "purchasingManager": "Lluís Fontcuberta"
   },
   {
-    "id": "PROP-LEAD26-0617",
+    "id": "PROP-LEAD26-0616",
     "name": "Lamberet Vehículos Comerciales S.A.U.",
     "cif": "A78229977",
     "address": "Pol. Ind. Las Mercedes, Calle Campezo 1",
@@ -21705,38 +21674,7 @@
     "purchasingManager": "Roberto Sánchez Merino"
   },
   {
-    "id": "PROP-LEAD26-0618",
-    "name": "Oleohidráulica Ferruz S.A. (Grupo Ferruz)",
-    "cif": "A50027069",
-    "address": "Parque Tecnológico de Reciclado (PTR), Avda. de la Innovación 4",
-    "city": "Zaragoza",
-    "province": "Zaragoza",
-    "zone": "Norte",
-    "postal_code": "50720",
-    "lat": 41.5621,
-    "lng": -0.8412,
-    "phone": "+34 976 571 571",
-    "email": "compras@ferruz.com",
-    "website": "https://www.ferruz.com",
-    "sector": "Carrocerías y Semirremolques / Basculantes de Aluminio",
-    "products": [
-      "Perfiles huecos machihembrados para laterales y frontales de semirremolques basculantes y chasis aligerados de aluminio."
-    ],
-    "sales": "64,8 M€",
-    "contact": "Javier Ferruz Gil",
-    "linkedin_role": "Purchasing & Supply Chain Director",
-    "linkedin_url": "https://www.linkedin.com/in/javier-ferruz-ferruz",
-    "notes": "Gran grupo industrial fabricante de semirremolques de aluminio de gran volumen y alta capacidad.",
-    "verified": true,
-    "location": [
-      41.5621,
-      -0.8412
-    ],
-    "web": "https://www.ferruz.com",
-    "purchasingManager": "Javier Ferruz Gil"
-  },
-  {
-    "id": "PROP-LEAD26-0619",
+    "id": "PROP-LEAD26-0617",
     "name": "Mondo Ibérica S.A.U.",
     "cif": "A50119858",
     "address": "Pol. Ind. Malpica, Calle E, Parcela 8",
@@ -21768,7 +21706,7 @@
     "purchasingManager": "Santiago Aranda"
   },
   {
-    "id": "PROP-LEAD26-0620",
+    "id": "PROP-LEAD26-0618",
     "name": "Moñita Pulido S.L. (Grupo Moñita)",
     "cif": "B28547495",
     "address": "Vía Complutense 128",
@@ -21799,71 +21737,7 @@
     "purchasingManager": "Raúl Moñita Gómez"
   },
   {
-    "id": "PROP-LEAD26-0621",
-    "name": "Siplan S.L.",
-    "cif": "B41584442",
-    "address": "Pol. Ind. La Red, C/ Cuatro, Nave 18",
-    "city": "Alcalá de Guadaíra",
-    "province": "Sevilla",
-    "zone": "Sur",
-    "postal_code": "41500",
-    "lat": 37.3482,
-    "lng": -5.8712,
-    "phone": "+34 955 634 000",
-    "email": "compras@siplan.es",
-    "website": "https://www.siplan.es",
-    "sector": "Pérgolas Bioclimáticas y Protección Solar",
-    "products": [
-      "Lamas bioclimáticas orientables de extrusión de aluminio",
-      "columnas con canal de desagüe y brazos de tensión para toldos."
-    ],
-    "sales": "11,4 M€",
-    "contact": "Joaquín Silva Gómez",
-    "linkedin_role": "Responsable de Compras y Producción",
-    "linkedin_url": "https://www.linkedin.com/in/joaquin-silva-siplan",
-    "notes": "Fabricante integral de herrajes y perfiles de extrusión para toldos, pérgolas y protección solar.",
-    "verified": true,
-    "location": [
-      37.3482,
-      -5.8712
-    ],
-    "web": "https://www.siplan.es",
-    "purchasingManager": "Joaquín Silva Gómez"
-  },
-  {
-    "id": "PROP-LEAD26-0622",
-    "name": "Mitjavila España S.A.",
-    "cif": "A17169129",
-    "address": "Ctra. d'Olot s/n",
-    "city": "Vilafant",
-    "province": "Girona",
-    "zone": "Cataluña",
-    "postal_code": "17740",
-    "lat": 42.2512,
-    "lng": 2.9421,
-    "phone": "+34 972 505 500",
-    "email": "compras@mitjavila.com",
-    "website": "https://www.mitjavila.com",
-    "sector": "Pérgolas Bioclimáticas y Accesorios de Protección Solar",
-    "products": [
-      "Extrusión de aluminio para cajones cofre",
-      "perfiles de carga y guías motorizadas de sistemas de sombra."
-    ],
-    "sales": "13,8 M€",
-    "contact": "Marc Bartrolí",
-    "linkedin_role": "Purchasing & Supply Chain Manager",
-    "linkedin_url": "https://www.linkedin.com/in/marc-bartroli-mitjavila",
-    "notes": "Multinacional especializada en el diseño y fabricación de componentes extruidos de aluminio para protección solar.",
-    "verified": true,
-    "location": [
-      42.2512,
-      2.9421
-    ],
-    "web": "https://www.mitjavila.com",
-    "purchasingManager": "Marc Bartrolí"
-  },
-  {
-    "id": "PROP-LEAD26-0623",
+    "id": "PROP-LEAD26-0619",
     "name": "Forma 5 S.A.",
     "cif": "A41065165",
     "address": "Ctra. de la Isla, km 0,5",
@@ -21895,7 +21769,7 @@
     "purchasingManager": "Manuel Morón Domínguez"
   },
   {
-    "id": "PROP-LEAD26-0624",
+    "id": "PROP-LEAD26-0620",
     "name": "Ofita Interiores S.A.",
     "cif": "A01004126",
     "address": "Pol. Ind. Betoño, Calle Portal de Betoño 21",
@@ -21926,7 +21800,7 @@
     "purchasingManager": "José María Orive"
   },
   {
-    "id": "PROP-LEAD26-0625",
+    "id": "PROP-LEAD26-0621",
     "name": "Sistemas de Fijación MASA S.L. (Sistema MASA)",
     "cif": "B60907151",
     "address": "Pol. Ind. Sud, C/ Narcís Monturiol 21",
@@ -21958,7 +21832,7 @@
     "purchasingManager": "Óscar Martínez Santos"
   },
   {
-    "id": "PROP-LEAD26-0626",
+    "id": "PROP-LEAD26-0622",
     "name": "Wandegar Ingenia S.L.",
     "cif": "B12822474",
     "address": "Ctra. Onda km 3,2",
@@ -21989,7 +21863,7 @@
     "purchasingManager": "Héctor Ramos Broch"
   },
   {
-    "id": "PROP-LEAD26-0627",
+    "id": "PROP-LEAD26-0623",
     "name": "Disset Odiseo S.L.",
     "cif": "B08709321",
     "address": "C/ Compositor Chopin 30",
@@ -22021,38 +21895,7 @@
     "purchasingManager": "Jordi Rovira Valls"
   },
   {
-    "id": "PROP-LEAD26-0628",
-    "name": "Aluminios Galisur S.L.",
-    "cif": "B41257460",
-    "address": "Pol. Ind. La Red, C/ Cuatro 12",
-    "city": "Alcalá de Guadaíra",
-    "province": "Sevilla",
-    "zone": "Sur",
-    "postal_code": "41500",
-    "lat": 37.3491,
-    "lng": -5.8734,
-    "phone": "+34 955 631 160",
-    "email": "compras@galisur.es",
-    "website": "https://galisur.es",
-    "sector": "Fabricación y Ensamblaje de Carpintería y Muros Cortina",
-    "products": [
-      "Fabricación industrializada de cerramientos residenciales de alta gama y muros cortina modulares de aluminio con RPT."
-    ],
-    "sales": "14,5 M€",
-    "contact": "Antonio Gallardo Pérez",
-    "linkedin_role": "Director de Compras y Aprovisionamiento",
-    "linkedin_url": "https://www.linkedin.com/in/antonio-gallardo-galisur",
-    "notes": "Fabricante de carpintería y cerramientos para proyectos de edificación singular en Andalucía.",
-    "verified": true,
-    "location": [
-      37.3491,
-      -5.8734
-    ],
-    "web": "https://galisur.es",
-    "purchasingManager": "Antonio Gallardo Pérez"
-  },
-  {
-    "id": "PROP-LEAD26-0629",
+    "id": "PROP-LEAD26-0624",
     "name": "Hiberlux Techos y Fachadas Ligeras S.L.",
     "cif": "B86927498",
     "address": "C/ Puerta de Ferrocarril 11",
@@ -22083,7 +21926,7 @@
     "purchasingManager": "Fernando Herrero Gómez"
   },
   {
-    "id": "PROP-LEAD26-0630",
+    "id": "PROP-LEAD26-0625",
     "name": "Construcciones Metálicas Comesaña S.L.",
     "cif": "B36631893",
     "address": "Ctra. Camposancos 132",
@@ -22115,7 +21958,7 @@
     "purchasingManager": "Alberto Comesaña Costas"
   },
   {
-    "id": "PROP-LEAD26-0631",
+    "id": "PROP-LEAD26-0626",
     "name": "Sistemas Térmicos Alviento S.L.",
     "cif": "B87219481",
     "address": "Pol. Ind. Las Monjas, C/ Invierno 18",
@@ -22146,7 +21989,7 @@
     "purchasingManager": "Carlos Alarcón Benito"
   },
   {
-    "id": "PROP-LEAD26-0632",
+    "id": "PROP-LEAD26-0627",
     "name": "Carpintería Metálica Alupre S.L.",
     "cif": "B31456789",
     "address": "Pol. Ind. Mocholi, C/ Ronda Mocholi 8",
