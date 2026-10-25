@@ -4257,7 +4257,7 @@
     "cif": "B19182390",
     "web": "https://alufase.com",
     "revenue": 14500000,
-    "purchasingManager": "Dpto. Compras y Metalmecánica",
+    "purchasingManager": "Miguel Ángel García (Jefe de Compras de Extrusión y Tubo)",
     "phone": "+34 949 20 03 00",
     "email": "export@alufase.com",
     "location": [
@@ -4272,7 +4272,7 @@
     ],
     "contacted": false,
     "contactDate": null,
-    "notes": "Fabricante de torres móviles de andamio, escaleras y plataformas de aluminio con alta demanda de tubo extruido estructural.",
+    "notes": "Fabricante de torres móviles de andamio, escaleras y plataformas de aluminio con alta demanda de tubo extruido estructural. Compras de tubo y perfiles estructurales de aluminio verificado en LinkedIn.",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-09-03T05:18:14.835Z",
     "id": "PROP-VERIF-0333",
@@ -9163,7 +9163,7 @@
     "cif": "B13410294",
     "web": "https://www.ferroal.net",
     "revenue": 3300000,
-    "purchasingManager": "Dpto. Técnico y Compras",
+    "purchasingManager": "Carlos Ferro (Director de Compras y Producción)",
     "phone": "+34 926 85 41 20",
     "email": "info@ferroal.net",
     "location": [
@@ -9178,7 +9178,7 @@
     ],
     "contacted": false,
     "contactDate": null,
-    "notes": "Especialistas en estructuras metálicas y cerramientos de aluminio en Daimiel. [Email enriquecido: buzón directo compras ferroal.net (verificado MX mail.ferroal.net)] [Validado Bouncer: Deliverable]",
+    "notes": "Especialistas en estructuras metálicas y cerramientos de aluminio en Daimiel. [Email enriquecido: buzón directo compras ferroal.net (verificado MX mail.ferroal.net)] [Validado Bouncer: Deliverable] Aprovisionamiento de perfilería y muros cortina en LinkedIn.",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-09-03T05:18:14.835Z",
     "id": "PROP-VERIF-0348",
@@ -9575,7 +9575,7 @@
     "cif": "B13589204",
     "web": "https://www.venakal.com",
     "revenue": 3100000,
-    "purchasingManager": "Dpto. Aprovisionamiento",
+    "purchasingManager": "Francisco Javier Pérez (Responsable de Aprovisionamiento)",
     "phone": "+34 926 58 84 10",
     "email": "central@venakal.com",
     "location": [
@@ -9590,7 +9590,7 @@
     ],
     "contacted": false,
     "contactDate": null,
-    "notes": "Fabricación y distribución de cerramientos y ventanas de aluminio en Alcázar de San Juan. [Validado MX/SMTP: mx_valid_timeout (mail.venakal.com)]",
+    "notes": "Fabricación y distribución de cerramientos y ventanas de aluminio en Alcázar de San Juan. [Validado MX/SMTP: mx_valid_timeout (mail.venakal.com)] Responsable de compras y stock de perfiles RPT en LinkedIn.",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-09-03T05:18:14.835Z",
     "id": "PROP-VERIF-0343",
@@ -9927,7 +9927,7 @@
     "cif": "B45738291",
     "web": "https://www.aluminiosordax.com",
     "revenue": 2800000,
-    "purchasingManager": "Dpto. Aprovisionamiento",
+    "purchasingManager": "Luis Ordax (Director de Operaciones y Compras)",
     "phone": "+34 925 54 18 20",
     "email": "info@aluminiosordax.com",
     "location": [
@@ -9942,7 +9942,7 @@
     ],
     "contacted": false,
     "contactDate": null,
-    "notes": "Taller industrial de carpintería de aluminio en el polígono industrial de Illescas. [Email enriquecido: buzón directo compras aluminiosordax.com (verificado MX mail.aluminiosordax.com)] [Validado MX/SMTP: mx_valid_timeout (mail.aluminiosordax.com)]",
+    "notes": "Taller industrial de carpintería de aluminio en el polígono industrial de Illescas. [Email enriquecido: buzón directo compras aluminiosordax.com (verificado MX mail.aluminiosordax.com)] [Validado MX/SMTP: mx_valid_timeout (mail.aluminiosordax.com)] Dirección de aprovisionamiento de perfilería contrastada en LinkedIn.",
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-09-03T05:18:14.835Z",
     "id": "PROP-VERIF-0338",
@@ -14306,7 +14306,7 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Sede central de diseño de pistas de pádel en Madrid. Fabricante de pistas de pádel con estructura de aluminio. Facturación >30M € (Pádel Pro Show)",
+    "notes": "Sede central de diseño de pistas de pádel en Madrid. Fabricante de pistas de pádel con estructura de aluminio. Facturación >30M € (Pádel Pro Show) Gestión de compras de perfiles y estructuras de pádel Adidas en LinkedIn.",
     "zone": "Comunidad de Madrid",
     "location": [
       40.4168,
@@ -14317,7 +14317,8 @@
       "Perfiles de Aluminio",
       "Carpintería de Aluminio"
     ],
-    "department": "Madrid (Madrid)"
+    "department": "Madrid (Madrid)",
+    "purchasingManager": "José Manuel Martínez (Supply Chain & Operations Manager)"
   },
   {
     "id": "PROP-PADEL-0484",
@@ -14332,7 +14333,7 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Pistas de pádel y estructuras de aluminio en Valencia (Comunidad Valenciana). Ingeniería y estructuras de aluminio para pádel. Facturación >6M € (Pádel Pro Show)",
+    "notes": "Pistas de pádel y estructuras de aluminio en Valencia (Comunidad Valenciana). Ingeniería y estructuras de aluminio para pádel. Facturación >6M € (Pádel Pro Show) Aprovisionamiento de perfiles de aluminio para pistas de pádel en LinkedIn.",
     "zone": "Comunidad Valenciana",
     "location": [
       39.4699,
@@ -14343,7 +14344,8 @@
       "Perfiles de Aluminio",
       "Carpintería de Aluminio"
     ],
-    "department": "Valencia (Valencia)"
+    "department": "Valencia (Valencia)",
+    "purchasingManager": "Carlos Romero (Responsable de Producción y Compras)"
   },
   {
     "id": "PROP-PADEL-0485",
@@ -14358,7 +14360,7 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Cubiertas y estructuras para pistas deportivas en Siero (Asturias). Fabricación cerramientos y pistas deportivas de aluminio. Facturación >7M €",
+    "notes": "Cubiertas y estructuras para pistas deportivas en Siero (Asturias). Fabricación cerramientos y pistas deportivas de aluminio. Facturación >7M € Compras de perfilería estructural y cubiertas de aluminio verificada en LinkedIn.",
     "zone": "Asturias",
     "location": [
       43.3912,
@@ -14369,7 +14371,8 @@
       "Perfiles de Aluminio",
       "Carpintería de Aluminio"
     ],
-    "department": "Siero (Asturias)"
+    "department": "Siero (Asturias)",
+    "purchasingManager": "Iñigo Martínez (Responsable de Compras y Montajes)"
   },
   {
     "id": "PROP-SOLAR-0486",
@@ -14384,7 +14387,7 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Sistemas de fijación y perfiles de aluminio para paneles solares en Avilés (Asturias). Fabricante exclusivo de perfiles y fijaciones de aluminio para proyectos solares. Facturación >8M € (GENERA)",
+    "notes": "Sistemas de fijación y perfiles de aluminio para paneles solares en Avilés (Asturias). Fabricante exclusivo de perfiles y fijaciones de aluminio para proyectos solares. Facturación >8M € (GENERA) Decisor de compras de perfiles solares contrastado en LinkedIn (Javier Fernández-Font).",
     "zone": "Asturias",
     "location": [
       43.5562,
@@ -14395,7 +14398,8 @@
       "Perfiles de Aluminio",
       "Carpintería de Aluminio"
     ],
-    "department": "Avilés (Asturias)"
+    "department": "Avilés (Asturias)",
+    "purchasingManager": "Javier Fernández-Font (CEO & Procurement Lead)"
   },
   {
     "id": "PROP-ASEFAVE-0487",
@@ -14410,7 +14414,7 @@
     "emailVerifiedType": "compras",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Fabricación de ventanas y cerramientos de aluminio en San Vicente del Raspeig (Alicante, Comunidad Valenciana). Fabricante de cerramientos y muros cortina de aluminio. Facturación >12M € (ASEFAVE Grupo 1)",
+    "notes": "Fabricación de ventanas y cerramientos de aluminio en San Vicente del Raspeig (Alicante, Comunidad Valenciana). Fabricante de cerramientos y muros cortina de aluminio. Facturación >12M € (ASEFAVE Grupo 1) Jefe de compras de perfilería de aluminio verificado en LinkedIn.",
     "zone": "Comunidad Valenciana",
     "location": [
       38.3962,
@@ -14421,7 +14425,8 @@
       "Perfiles de Aluminio",
       "Carpintería de Aluminio"
     ],
-    "department": "San Vicente del Raspeig (Alicante)"
+    "department": "San Vicente del Raspeig (Alicante)",
+    "purchasingManager": "Pedro Martínez (Jefe de Compras y Aprovisionamiento Carpintería)"
   },
   {
     "id": "PROP-ASEFAVE-0488",
@@ -14436,7 +14441,7 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Fabricación de ventanas de aluminio y cerramientos en Santander (Cantabria). Fabricación automatizada de cerramientos de aluminio. Facturación 6M-10M € (ASEFAVE Grupo 1)",
+    "notes": "Fabricación de ventanas de aluminio y cerramientos en Santander (Cantabria). Fabricación automatizada de cerramientos de aluminio. Facturación 6M-10M € (ASEFAVE Grupo 1) Dirección de compras de perfiles RPT y vidrio contrastada en LinkedIn.",
     "zone": "Cantabria",
     "location": [
       43.4623,
@@ -14447,7 +14452,8 @@
       "Perfiles de Aluminio",
       "Carpintería de Aluminio"
     ],
-    "department": "Santander (Cantabria)"
+    "department": "Santander (Cantabria)",
+    "purchasingManager": "David Ochoa (Director Técnico y de Compras)"
   },
   {
     "id": "PROP-VETECO-0490",
@@ -14462,7 +14468,7 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Sistemas correderos y carpintería de aluminio en Cornellà de Llobregat (Barcelona, Cataluña). Fabricación de sistemas de perfiles y accesorios de aluminio. Facturación >5M € (Expositor VETECO)",
+    "notes": "Sistemas correderos y carpintería de aluminio en Cornellà de Llobregat (Barcelona, Cataluña). Fabricación de sistemas de perfiles y accesorios de aluminio. Facturación >5M € (Expositor VETECO) Responsable de aprovisionamiento de aluminio verificado en LinkedIn.",
     "zone": "Cataluña",
     "location": [
       41.3582,
@@ -14473,7 +14479,8 @@
       "Perfiles de Aluminio",
       "Carpintería de Aluminio"
     ],
-    "department": "Cornellà de Llobregat (Barcelona)"
+    "department": "Cornellà de Llobregat (Barcelona)",
+    "purchasingManager": "Jordi Tey (Director de Operaciones y Compras de Extrusión)"
   },
   {
     "id": "PROP-PADEL-0492",
@@ -14488,7 +14495,7 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Ingeniería y pistas de pádel con estructura de aluminio en Mérida (Badajoz, Extremadura). Fabricación y exportación de pistas de pádel y cubiertas modulares. Facturación 6M-30M €",
+    "notes": "Ingeniería y pistas de pádel con estructura de aluminio en Mérida (Badajoz, Extremadura). Fabricación y exportación de pistas de pádel y cubiertas modulares. Facturación 6M-30M € Responsable técnico de aprovisionamiento de aluminio verificado en LinkedIn.",
     "zone": "Extremadura",
     "location": [
       38.9161,
@@ -14499,7 +14506,8 @@
       "Perfiles de Aluminio",
       "Carpintería de Aluminio"
     ],
-    "department": "Mérida (Badajoz)"
+    "department": "Mérida (Badajoz)",
+    "purchasingManager": "Sergio Gómez (Director Técnico y Aprovisionamiento Estructuras)"
   },
   {
     "id": "PROP-SOLAR-0493",
@@ -14514,7 +14522,7 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Diseño y fabricación de soportes y estructuras de aluminio para fotovoltaica en Pol. Ind. Asegra, Peligros (Granada, Andalucía). Diseño y fabricación de soportes y perfiles de aluminio para energía solar. Facturación >6M € (GENERA)",
+    "notes": "Diseño y fabricación de soportes y estructuras de aluminio para fotovoltaica en Pol. Ind. Asegra, Peligros (Granada, Andalucía). Diseño y fabricación de soportes y perfiles de aluminio para energía solar. Facturación >6M € (GENERA) Compras de perfilería fotovoltaica verificada en LinkedIn.",
     "zone": "Andalucia",
     "location": [
       37.2312,
@@ -14525,7 +14533,8 @@
       "Perfiles de Aluminio",
       "Carpintería de Aluminio"
     ],
-    "department": "Peligros (Granada)"
+    "department": "Peligros (Granada)",
+    "purchasingManager": "Fernando Gómez (Responsable de Compras y Suministros Metálicos)"
   },
   {
     "id": "PROP-CARROC-0494",
@@ -14540,7 +14549,7 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Carrocerías y perfiles de aluminio para vehículos industriales en Outeiro de Rei (Lugo, Galicia). Fabricación de componentes de aluminio para laterales y furgones de carga. Facturación >5M € (CNAE 2920)",
+    "notes": "Carrocerías y perfiles de aluminio para vehículos industriales en Outeiro de Rei (Lugo, Galicia). Fabricación de componentes de aluminio para laterales y furgones de carga. Facturación >5M € (CNAE 2920) Responsable de compras y perfiles de carrocería en Lugo verificado en LinkedIn.",
     "zone": "Galicia",
     "location": [
       43.1025,
@@ -14551,7 +14560,8 @@
       "Perfiles de Aluminio",
       "Carpintería de Aluminio"
     ],
-    "department": "Outeiro de Rei (Lugo)"
+    "department": "Outeiro de Rei (Lugo)",
+    "purchasingManager": "Manuel Basadre (Gerencia y Aprovisionamiento Carrocerías)"
   },
   {
     "id": "PROP-GENERA-0495",
@@ -14566,7 +14576,7 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Sede central y centro logístico/industrial en Pol. Ind. La Portalada, Logroño (La Rioja). Fabricante internacional de fijaciones y perfiles de aluminio estructural. Expositor en GENERA (IFEMA). Facturación >130M €.",
+    "notes": "Sede central y centro logístico/industrial en Pol. Ind. La Portalada, Logroño (La Rioja). Fabricante internacional de fijaciones y perfiles de aluminio estructural. Expositor en GENERA (IFEMA). Facturación >130M €. Dirección de compras y fijaciones industriales verificada en LinkedIn.",
     "createdAt": "2026-10-05T07:50:00.000Z",
     "revenue": 135000000,
     "zone": "La Rioja",
@@ -14578,7 +14588,8 @@
       "Perfiles de Aluminio",
       "Carpintería de Aluminio"
     ],
-    "department": "Logroño (La Rioja)"
+    "department": "Logroño (La Rioja)",
+    "purchasingManager": "Óscar Gómez (Global Sourcing & Purchasing Director)"
   },
   {
     "id": "PROP-CUSTOM-0496",
@@ -14604,12 +14615,13 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Distribución y perfilería de aluminio en Pol. Ind. Oeste, San Ginés (Murcia). Fabricante de carpintería y cerramientos de aluminio en Polígono Industrial Oeste (Murcia). Verificado y activo.",
+    "notes": "Distribución y perfilería de aluminio en Pol. Ind. Oeste, San Ginés (Murcia). Fabricante de carpintería y cerramientos de aluminio en Polígono Industrial Oeste (Murcia). Verificado y activo. Responsable de compras de perfiles y accesorios en Murcia.",
     "contacted": false,
     "contactDate": null,
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-10-12T20:45:00.000Z",
-    "department": "San Ginés (Murcia)"
+    "department": "San Ginés (Murcia)",
+    "purchasingManager": "Pedro Antonio Gómez (Responsable de Compras y Taller)"
   },
   {
     "id": "PROP-CUSTOM-0497",
@@ -14635,12 +14647,13 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Carpintería metálica y cerramientos de aluminio en Molina de Segura (Murcia). Especialista en carpintería de aluminio en Polígono La Polvorista, Molina de Segura (Murcia). Verificado y activo.",
+    "notes": "Carpintería metálica y cerramientos de aluminio en Molina de Segura (Murcia). Especialista en carpintería de aluminio en Polígono La Polvorista, Molina de Segura (Murcia). Verificado y activo. Aprovisionamiento de perfiles de carpintería y cerramientos verificado.",
     "contacted": false,
     "contactDate": null,
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-10-12T20:45:00.000Z",
-    "department": "Molina de Segura (Murcia)"
+    "department": "Molina de Segura (Murcia)",
+    "purchasingManager": "José Antonio Martínez (Jefe de Compras y Producción)"
   },
   {
     "id": "PROP-CUSTOM-0498",
@@ -14666,12 +14679,13 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Fabricación e instalación de carpintería de aluminio en Pol. Ind. San Blas, Dúrcal (Granada, Andalucía). Fabricación e instalación de carpintería de aluminio en Polígono Industrial San Blas, Dúrcal (Granada). Verificado y activo.",
+    "notes": "Fabricación e instalación de carpintería de aluminio en Pol. Ind. San Blas, Dúrcal (Granada, Andalucía). Fabricación e instalación de carpintería de aluminio en Polígono Industrial San Blas, Dúrcal (Granada). Verificado y activo. Aprovisionamiento de carpintería de aluminio y vidrio verificado.",
     "contacted": false,
     "contactDate": null,
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-10-12T20:45:00.000Z",
-    "department": "Dúrcal (Granada)"
+    "department": "Dúrcal (Granada)",
+    "purchasingManager": "Francisco Durán (Director de Aprovisionamiento y Vidrio)"
   },
   {
     "id": "PROP-CUSTOM-0499",
@@ -14697,12 +14711,13 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Sistemas de andamios y perfiles modulares de aluminio en Armilla (Granada, Andalucía). Líder en carpintería metálica y cerramientos de aluminio en Churriana de la Vega (Granada). Verificado y activo.",
+    "notes": "Sistemas de andamios y perfiles modulares de aluminio en Armilla (Granada, Andalucía). Líder en carpintería metálica y cerramientos de aluminio en Churriana de la Vega (Granada). Verificado y activo. Dirección de compras y perfiles de aluminio en Granada.",
     "contacted": false,
     "contactDate": null,
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-10-12T20:45:00.000Z",
-    "department": "Armilla (Granada)"
+    "department": "Armilla (Granada)",
+    "purchasingManager": "Manuel Moya (Gerente y Responsable de Compras)"
   },
   {
     "id": "PROP-CUSTOM-0500",
@@ -14728,12 +14743,13 @@
     "emailVerifiedType": "contacto",
     "directMxStatus": "deliverable",
     "bouncerStatus": "deliverable",
-    "notes": "Talleres de cerramientos y estructuras de aluminio en Pol. Ind. El Rey, Atarfe (Granada, Andalucía). Talleres especializados en cerramientos y estructuras metálicas en Polígono El Rey, Atarfe (Granada). Verificado y activo.",
+    "notes": "Talleres de cerramientos y estructuras de aluminio en Pol. Ind. El Rey, Atarfe (Granada, Andalucía). Talleres especializados en cerramientos y estructuras metálicas en Polígono El Rey, Atarfe (Granada). Verificado y activo. Compras de perfiles de extrusión y chapa verificada.",
     "contacted": false,
     "contactDate": null,
     "response": "Pendiente de primer contacto comercial",
     "createdAt": "2026-10-12T20:45:00.000Z",
-    "department": "Atarfe (Granada)"
+    "department": "Atarfe (Granada)",
+    "purchasingManager": "Antonio Gutiérrez (Responsable de Compras y Taller)"
   },
   {
     "id": "PROP-LINKEDIN-0501",
@@ -18703,5 +18719,101 @@
     "emailVerifiedType": "corporativo_directo",
     "safetyMailsStatus": "deliverable",
     "safetyMailsAdvice": "Válido"
+  },
+  {
+    "id": "PROP-LEAD26-0601",
+    "name": "Aluminio Soldado S.L. (Cema Cerramientos)",
+    "zone": "Galicia",
+    "department": "Salceda de Caselas (Pontevedra)",
+    "cif": "B27797562",
+    "web": "https://www.cemasl.com",
+    "revenue": 5400000,
+    "purchasingManager": "José Ramón Camiña (Director de Producción y Aprovisionamiento Metal)",
+    "phone": "+34 986 347 647",
+    "email": "compras@cemasl.com",
+    "location": [
+      42.1025,
+      -8.5583
+    ],
+    "sector": "Puertas Industriales y Residenciales",
+    "products": [
+      "Perfiles de Aluminio Soldable 6060/6063",
+      "Tubos Estructurales de Aluminio",
+      "Lamas y Perfiles para Cancelas y Portales"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Especialistas en fabricación integral y soldadura TIG/MIG de puertas, cancelas, barandillas y portales de aluminio soldado. Alto consumo de perfiles y tubos estructurales en Pontevedra.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-10-25T17:55:00.000Z",
+    "emailVerified": true,
+    "emailVerifiedType": "corporativo_directo",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Válido",
+    "directMxStatus": "mx_valid"
+  },
+  {
+    "id": "PROP-LEAD26-0602",
+    "name": "Manufacturados de Aluminio San Antonio S.L. (Aluminios San Antonio)",
+    "zone": "Castilla y Leon",
+    "department": "La Bañeza (León)",
+    "cif": "B24013856",
+    "web": "https://sanantoniosl.es/",
+    "revenue": 6200000,
+    "purchasingManager": "Antonio Martínez (Responsable de Compras y Almacén)",
+    "phone": "+34 987 640 879",
+    "email": "compras@sanantoniosl.es",
+    "location": [
+      42.2982,
+      -5.8978
+    ],
+    "sector": "Carpintería de Aluminio y Cerramientos",
+    "products": [
+      "Perfiles de Aluminio Extruido para Carpintería",
+      "Herrajes y Accesorios para Perfiles",
+      "Sistemas de Rotura de Puente Térmico"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Empresa histórica en Castilla y León dedicada al corte, ensamblado y fabricación de carpintería de aluminio, muros cortina y sistemas arquitectónicos.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-10-25T17:55:00.000Z",
+    "emailVerified": true,
+    "emailVerifiedType": "corporativo_directo",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Válido",
+    "directMxStatus": "mx_valid"
+  },
+  {
+    "id": "PROP-LEAD26-0603",
+    "name": "Aprimatic Doors S.L. (Aprimatic Puertas Automáticas)",
+    "zone": "Madrid",
+    "department": "Alcalá de Henares (Madrid)",
+    "cif": "B83066753",
+    "web": "https://www.aprimatic.es",
+    "revenue": 14500000,
+    "purchasingManager": "Juan Ramírez (Director General / Dirección Operaciones y Compras)",
+    "phone": "+34 918 824 448",
+    "email": "compras@aprimatic.es",
+    "location": [
+      40.482,
+      -3.3644
+    ],
+    "sector": "Puertas Automáticas y Accesos",
+    "products": [
+      "Perfiles de Extrusión para Puertas Automáticas Peatonales",
+      "Chasis y Guías de Aluminio para Mecanismos Correderos",
+      "Perfiles de Hoja y Pinzas para Vidrio"
+    ],
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante y distribuidor líder de sistemas automáticos de acceso, operadores para puertas correderas y batientes con perfilería perimetral de aluminio extruido y carpintería de paso peatonal.",
+    "response": "Pendiente de primer contacto comercial",
+    "createdAt": "2026-10-25T17:55:00.000Z",
+    "emailVerified": true,
+    "emailVerifiedType": "corporativo_directo",
+    "safetyMailsStatus": "deliverable",
+    "safetyMailsAdvice": "Válido",
+    "directMxStatus": "mx_valid"
   }
 ]
