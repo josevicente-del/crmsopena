@@ -18303,15 +18303,15 @@
   },
   {
     "id": "PROP-LEAD26-0587",
-    "name": "Acofal (Accesorios para Fabricación de Aluminio S.L.)",
+    "name": "ACOFAL (Accesorios para Fabricación de Aluminio S.L.)",
     "zone": "Murcia",
     "department": "Molina de Segura (Murcia)",
     "cif": "B30194824",
-    "web": "https://acofal.com",
+    "web": "https://acofal.es/",
     "revenue": 13800000,
     "purchasingManager": "Mariano Jiménez (Responsable de Compras)",
     "phone": "+34 968 389 000",
-    "email": "compras@acofal.com",
+    "email": "compras@acofal.es",
     "location": [
       38.0538,
       -1.2115
@@ -18324,38 +18324,7 @@
     ],
     "contacted": false,
     "contactDate": null,
-    "notes": "Referente en herrajes, accesorios de ensamblaje, escuadras de fundición/extrusión y juntas para carpintería de aluminio.",
-    "response": "Pendiente de aprobación de Dirección Comercial",
-    "createdAt": "2026-10-25T16:30:00.000Z",
-    "emailVerified": true,
-    "emailVerifiedType": "corporativo_directo",
-    "safetyMailsStatus": "deliverable",
-    "safetyMailsAdvice": "Válido"
-  },
-  {
-    "id": "PROP-LEAD26-0588",
-    "name": "Alma Componentes S.A.",
-    "zone": "Comunidad Valenciana",
-    "department": "Paterna (Valencia)",
-    "cif": "A46291824",
-    "web": "https://alma.es",
-    "revenue": 15200000,
-    "purchasingManager": "Vicente Alapont (Jefe de Compras y Materiales)",
-    "phone": "+34 961 340 500",
-    "email": "compras@alma.es",
-    "location": [
-      39.505,
-      -0.44
-    ],
-    "sector": "Fijación y Cierre Industrial",
-    "products": [
-      "Herrajes de Bloqueo de Aluminio",
-      "Bisagras Extruidas",
-      "Accesorios para Rotura de Puente Térmico"
-    ],
-    "contacted": false,
-    "contactDate": null,
-    "notes": "Líder en diseño y fabricación de herrajes y perfiles de cierre perimetral para sistemas de aluminio arquitectónico.",
+    "notes": "Fabricante referente en accesorios y herrajes para carpintería de aluminio (escuadras, juntas de estanqueidad, cierres y pasadores).",
     "response": "Pendiente de aprobación de Dirección Comercial",
     "createdAt": "2026-10-25T16:30:00.000Z",
     "emailVerified": true,
