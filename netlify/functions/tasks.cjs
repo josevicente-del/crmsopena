@@ -2,10 +2,15 @@
  * Netlify Serverless Function para /api/tasks
  * Permite responder a las peticiones del CRM en despliegues en la nube Netlify.
  */
-const initialTasks = require('../../src/data/tasks.json');
+let initialTasks = [];
+try {
+  initialTasks = require('../../src/data/tasks.json');
+} catch (e) {
+  initialTasks = [];
+}
 
 // Memoria viva del runtime serverless (con fallback a tasks.json)
-let inMemoryTasks = [...initialTasks];
+let inMemoryTasks = Array.isArray(initialTasks) ? [...initialTasks] : [];
 
 exports.handler = async (event) => {
   const method = event.httpMethod;
