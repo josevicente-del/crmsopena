@@ -557,10 +557,22 @@ const App = () => {
             if (!clean.name) clean.name = 'Empresa sin nombre';
             if (!clean.zone) clean.zone = clean.provincia || 'Otras';
             if (typeof clean.revenue !== 'number' || isNaN(clean.revenue)) clean.revenue = 5000000;
+            // Garantizar coordenadas válidas: si no viene location pero sí lat y lng numéricos, asignarlos
             if (!clean.location || !Array.isArray(clean.location) || clean.location.length !== 2 || isNaN(clean.location[0]) || isNaN(clean.location[1])) {
-              clean.location = [40, -4];
+              const latNum = Number(clean.lat);
+              const lngNum = Number(clean.lng);
+              if (!isNaN(latNum) && !isNaN(lngNum) && -90 <= latNum && latNum <= 90 && -180 <= lngNum && lngNum <= 180) {
+                clean.location = [latNum, lngNum];
+              } else {
+                clean.location = [40.4168, -3.7038];
+              }
             }
-            if (!clean.products || !Array.isArray(clean.products)) clean.products = [];
+            // Garantizar products como array de cadenas
+            if (typeof clean.products === 'string') {
+              clean.products = clean.products.split(',').map(s => s.trim()).filter(Boolean);
+            } else if (!Array.isArray(clean.products)) {
+              clean.products = [];
+            }
             if (!clean.tasks || !Array.isArray(clean.tasks)) clean.tasks = [];
             if (!clean.history || !Array.isArray(clean.history)) clean.history = [];
             // Respetar estado y etapa si ya fue asignado o contactado
@@ -589,8 +601,17 @@ const App = () => {
       }
 
       const rawIds = new Set(rawProspects.map(p => p.id));
-      // Filtrar empresas añadidas que no estén repetidas en la base fija, ni borradas, ni en lista de exclusión
-      const validAdded = addedRecords.filter(p => p && p.id && !rawIds.has(p.id) && !deletedIds.has(p.id) && !checkIsCompanyExcluded(p, deletedRecords));
+      const rawCifs = new Set(rawProspects.map(p => (p.cif || '').trim().toUpperCase()).filter(Boolean));
+      // Filtrar empresas añadidas que no estén repetidas en la base fija (por ID ni por CIF), ni borradas, ni en lista de exclusión
+      const validAdded = addedRecords.filter(p => {
+        if (!p || !p.id) return false;
+        if (rawIds.has(p.id)) return false;
+        const normCif = (p.cif || '').trim().toUpperCase();
+        if (normCif && rawCifs.has(normCif)) return false;
+        if (deletedIds.has(p.id)) return false;
+        if (checkIsCompanyExcluded(p, deletedRecords)) return false;
+        return true;
+      });
 
       // Combinar la base fija original (no borrada ni excluida) con las empresas añadidas válidas
       const combined = sanitize([...validAdded, ...rawProspects.filter(p => !deletedIds.has(p.id))]);
@@ -617,13 +638,27 @@ const App = () => {
                 history: Array.isArray(mod.history) ? mod.history : (p.history || [])
               };
             });
-            return merged;
+            return ensureUniqueIds(merged);
           }
         } catch (e) {
           localStorage.removeItem('aluminio_crm_modifications');
         }
       }
-      return combined;
+      
+      // Garantizar que todos los IDs sean estrictamente únicos y coherentes para evitar colisiones en React
+      const ensureUniqueIds = (list) => {
+        const seen = new Set();
+        return list.map((p, idx) => {
+          let uId = p.id;
+          if (!uId || seen.has(uId)) {
+            uId = `PROP-LEAD26-${String(idx + 1).padStart(4, '0')}`;
+          }
+          seen.add(uId);
+          return { ...p, id: uId };
+        });
+      };
+
+      return ensureUniqueIds(combined);
     } catch (err) {
       console.error('Error al inicializar prospectos:', err);
       return rawProspects;
@@ -1027,41 +1062,87 @@ const App = () => {
   const [routingFilterProduct, setRoutingFilterProduct] = useState('');
   const [mapForceViewTrigger, setMapForceViewTrigger] = useState(0);
 
-  // Sectores únicos disponibles para el filtro del planificador de rutas
-  const availableRoutingSectors = useMemo(() => {
-    return [...new Set(userProspects.map(p => p.sector).filter(Boolean))].sort((a, b) => 
-      a.localeCompare(b, 'es', { sensitivity: 'base' })
-    );
+  // Zonas únicas disponibles con recuento de empresas
+  const availableRoutingZones = useMemo(() => {
+    const counts = {};
+    userProspects.forEach(p => {
+      if (p.zone) counts[p.zone] = (counts[p.zone] || 0) + 1;
+    });
+    return Object.entries(counts)
+      .map(([zone, count]) => ({ zone, count }))
+      .sort((a, b) => a.zone.localeCompare(b.zone, 'es', { sensitivity: 'base' }));
   }, [userProspects]);
 
-  // Productos de aluminio extruido únicos consumidos para el filtro del planificador de rutas
+  // Sectores únicos disponibles según la zona seleccionada (actualización dinámica en cascada)
+  const availableRoutingSectors = useMemo(() => {
+    const subset = routingFilterZone 
+      ? userProspects.filter(p => p.zone === routingFilterZone)
+      : userProspects;
+    const counts = {};
+    subset.forEach(p => {
+      if (p.sector) counts[p.sector] = (counts[p.sector] || 0) + 1;
+    });
+    return Object.entries(counts)
+      .map(([sector, count]) => ({ sector, count }))
+      .sort((a, b) => a.sector.localeCompare(b.sector, 'es', { sensitivity: 'base' }));
+  }, [userProspects, routingFilterZone]);
+
+  // Productos únicos consumidos según la zona y el sector seleccionados (actualización dinámica en cascada)
   const availableRoutingProducts = useMemo(() => {
-    const pSet = new Set();
-    userProspects.forEach(p => {
+    const subset = userProspects.filter(p => {
+      const matchZone = routingFilterZone === '' || p.zone === routingFilterZone;
+      const matchSector = routingFilterSector === '' || p.sector === routingFilterSector;
+      return matchZone && matchSector;
+    });
+    const counts = {};
+    subset.forEach(p => {
       if (Array.isArray(p.products)) {
         p.products.forEach(prod => {
           if (prod && typeof prod === 'string' && prod.trim()) {
-            pSet.add(prod.trim());
+            const clean = prod.trim();
+            counts[clean] = (counts[clean] || 0) + 1;
           }
         });
+      } else if (typeof p.products === 'string' && p.products.trim()) {
+        const clean = p.products.trim();
+        counts[clean] = (counts[clean] || 0) + 1;
       }
     });
-    return [...pSet].sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
-  }, [userProspects]);
+    return Object.entries(counts)
+      .map(([product, count]) => ({ product, count }))
+      .sort((a, b) => a.product.localeCompare(b.product, 'es', { sensitivity: 'base' }));
+  }, [userProspects, routingFilterZone, routingFilterSector]);
+
+  // Si cambia la zona y el sector seleccionado ya no existe en esa zona, resetearlo automáticamente
+  useEffect(() => {
+    if (routingFilterSector && !availableRoutingSectors.some(s => s.sector === routingFilterSector)) {
+      setRoutingFilterSector('');
+    }
+  }, [availableRoutingSectors, routingFilterSector]);
+
+  // Si cambia la zona o sector y el producto seleccionado ya no existe, resetearlo automáticamente
+  useEffect(() => {
+    if (routingFilterProduct && !availableRoutingProducts.some(p => p.product === routingFilterProduct)) {
+      setRoutingFilterProduct('');
+    }
+  }, [availableRoutingProducts, routingFilterProduct]);
 
   // Ordenar y filtrar prospectos para la calculadora de rutas por zona, sector, producto y nombre/CIF
   const routingSortedProspects = useMemo(() => {
+    const q = routingFilterName.trim().toLowerCase();
     return [...userProspects]
       .filter(p => {
-        const matchName = routingFilterName.trim() === '' ||
-          p.name.toLowerCase().includes(routingFilterName.trim().toLowerCase()) ||
-          (p.cif && p.cif.toLowerCase().includes(routingFilterName.trim().toLowerCase()));
+        const matchName = q === '' ||
+          (p.name && p.name.toLowerCase().includes(q)) ||
+          (p.cif && p.cif.toLowerCase().includes(q)) ||
+          (p.city && p.city.toLowerCase().includes(q)) ||
+          (p.province && p.province.toLowerCase().includes(q));
         const matchZone = routingFilterZone === '' || p.zone === routingFilterZone;
         const matchSector = routingFilterSector === '' || p.sector === routingFilterSector;
         const matchProduct = routingFilterProduct === '' || (
-          Array.isArray(p.products) && p.products.some(prod => 
-            prod.toLowerCase().includes(routingFilterProduct.toLowerCase())
-          )
+          Array.isArray(p.products)
+            ? p.products.some(prod => typeof prod === 'string' && prod.toLowerCase().includes(routingFilterProduct.toLowerCase()))
+            : (typeof p.products === 'string' && p.products.toLowerCase().includes(routingFilterProduct.toLowerCase()))
         );
         return matchName && matchZone && matchSector && matchProduct;
       })
@@ -3289,7 +3370,7 @@ const App = () => {
 
                 {/* Filtros de búsqueda para la ruta: por Nombre, Zona, Sector y Producto */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px', marginBottom: '14px', background: '#f8fafc', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                  {/* 1. Búsqueda por texto (Nombre / CIF) */}
+                  {/* 1. Búsqueda por texto (Nombre / CIF / Ciudad) */}
                   <div>
                     <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 'bold', color: '#475569', marginBottom: '4px' }}>
                       🔍 Buscar Cliente
@@ -3297,9 +3378,12 @@ const App = () => {
                     <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                       <input
                         type="text"
-                        placeholder="Nombre o CIF..."
+                        placeholder="Nombre, CIF, ciudad..."
                         value={routingFilterName}
-                        onChange={e => setRoutingFilterName(e.target.value)}
+                        onChange={e => {
+                          setRoutingFilterName(e.target.value);
+                          setMapForceViewTrigger(prev => prev + 1);
+                        }}
                         style={{
                           width: '100%',
                           padding: '7px 26px 7px 10px',
@@ -3311,7 +3395,10 @@ const App = () => {
                       />
                       {routingFilterName && (
                         <button
-                          onClick={() => setRoutingFilterName('')}
+                          onClick={() => {
+                            setRoutingFilterName('');
+                            setMapForceViewTrigger(prev => prev + 1);
+                          }}
                           style={{
                             position: 'absolute',
                             right: '6px',
@@ -3352,9 +3439,9 @@ const App = () => {
                         color: '#0f172a'
                       }}
                     >
-                      <option value="">Todas las zonas</option>
-                      {[...new Set(userProspects.map(p => p.zone).filter(Boolean))].sort().map(z => (
-                        <option key={z} value={z}>{z}</option>
+                      <option value="">Todas las zonas ({userProspects.length})</option>
+                      {availableRoutingZones.map(z => (
+                        <option key={z.zone} value={z.zone}>{z.zone} ({z.count})</option>
                       ))}
                     </select>
                   </div>
@@ -3382,7 +3469,7 @@ const App = () => {
                     >
                       <option value="">Todos los sectores ({availableRoutingSectors.length})</option>
                       {availableRoutingSectors.map(s => (
-                        <option key={s} value={s}>{s}</option>
+                        <option key={s.sector} value={s.sector}>{s.sector} ({s.count})</option>
                       ))}
                     </select>
                   </div>
@@ -3409,8 +3496,8 @@ const App = () => {
                       }}
                     >
                       <option value="">Todos los productos ({availableRoutingProducts.length})</option>
-                      {availableRoutingProducts.map(prod => (
-                        <option key={prod} value={prod}>{prod}</option>
+                      {availableRoutingProducts.map(p => (
+                        <option key={p.product} value={p.product}>{p.product} ({p.count})</option>
                       ))}
                     </select>
                   </div>
@@ -3418,8 +3505,21 @@ const App = () => {
 
                 {/* Lista de clientes filtrados */}
                 <div style={{maxHeight: '380px', overflowY: 'auto', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '10px'}}>
-                  {routingSortedProspects.map(p => (
-                    <div key={p.id} style={{display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', padding: '6px 8px', borderRadius: '6px', transition: 'background 0.2s', background: routeClients.find(c => c.id === p.id) ? '#eff6ff' : 'transparent', borderBottom: '1px solid #f1f5f9'}}>
+                  {routingSortedProspects.map((p, pIdx) => (
+                    <div 
+                      key={`routing-item-${p.id || p.cif}-${pIdx}`} 
+                      style={{
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: '10px', 
+                        marginBottom: '10px', 
+                        padding: '6px 8px', 
+                        borderRadius: '6px', 
+                        transition: 'background 0.2s', 
+                        background: routeClients.find(c => c.id === p.id) ? '#eff6ff' : 'transparent', 
+                        borderBottom: '1px solid #f1f5f9'
+                      }}
+                    >
                       <input
                         type="checkbox"
                         checked={!!routeClients.find(c => c.id === p.id)}
@@ -3641,12 +3741,13 @@ const App = () => {
                   />
 
                   {/* 1. Marcadores de todos los prospectos disponibles según los filtros aplicados */}
-                  {((routingFilterZone || routingFilterSector || routingFilterProduct || routingFilterName) ? routingSortedProspects : routingSortedProspects.slice(0, 150)).map(p => {
+                  {((routingFilterZone || routingFilterSector || routingFilterProduct || routingFilterName) ? routingSortedProspects : routingSortedProspects.slice(0, 150)).map((p, pIdx) => {
                     const isSelected = !!routeClients.find(c => c.id === p.id);
                     if (isSelected) return null; // Los seleccionados se dibujan encima con su número
+                    if (!Array.isArray(p.location) || p.location.length !== 2 || isNaN(p.location[0]) || isNaN(p.location[1])) return null;
                     return (
                       <Marker 
-                        key={`avail-${p.id}`} 
+                        key={`avail-${p.id || p.cif}-${pIdx}`} 
                         position={p.location}
                         icon={createRoutePinIcon(null, false)}
                       >
@@ -3691,7 +3792,7 @@ const App = () => {
                   {/* 2. Marcadores de las empresas añadidas a la ruta (azules numeradas en orden de parada) */}
                   {routeClients.map((p, idx) => (
                     <Marker 
-                      key={`route-${p.id}`} 
+                      key={`route-${p.id || p.cif}-${idx}`} 
                       position={p.location}
                       icon={createRoutePinIcon(idx, true)}
                     >
