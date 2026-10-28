@@ -1,0 +1,717 @@
+[
+  {
+    "name": "Gardengate, S.A. (Gardengate Group - Portaluxe / GreenDoor)",
+    "zone": "Portugal",
+    "department": "Adaúfe, Braga (Portugal)",
+    "cif": "PT507638518",
+    "web": "https://gardengate.group/es/",
+    "revenue": 65000000,
+    "purchasingManager": "Rui Pedro Ferreira (Head of Procurement & Supply Chain - LinkedIn)",
+    "phone": "+351 253 606 900",
+    "email": "compras@gardengate.group",
+    "location": [
+      41.5862,
+      -8.3975
+    ],
+    "sector": "Puertas Residenciales, Portones y Cerramientos Exteriores de Aluminio",
+    "products": [
+      "Perfiles de Aluminio a Medida",
+      "Lamas de Portones y Vallas",
+      "Perfiles para Pérgolas",
+      "Chapas y Paneles de Puerta"
+    ],
+    "notes": "Líder europeo con 48.000 m² industriales en Parque Industrial de Adaúfe, Braga (marcas Gardengate, Portaluxe y GreenDoor). Exporta el 96% de sus portones, puertas de entrada, vallas y pérgolas de aluminio a España y Francia. Sin prensa propia."
+  },
+  {
+    "name": "Metalusa, S.A. (Grupo Patrilar)",
+    "zone": "Portugal",
+    "department": "Zona Industrial de Casal Comba, Mealhada / Águeda (Portugal)",
+    "cif": "PT503981536",
+    "web": "https://www.metalusa.pt",
+    "revenue": 38000000,
+    "purchasingManager": "Nuno Almeida (Diretor de Compras e Logística - LinkedIn)",
+    "phone": "+351 231 200 900",
+    "email": "compras@metalusa.pt",
+    "location": [
+      40.3608,
+      -8.4611
+    ],
+    "sector": "Andamios, Encofrados y Estructuras Especiales de Aluminio",
+    "products": [
+      "Perfiles Estructurales de Aluminio",
+      "Plataformas y Pasarelas de Aluminio",
+      "Tubos y Perfiles Extruidos"
+    ],
+    "notes": "Fabricante multinacional portugués de andamios modulares, torres móviles de aluminio, pasarelas y estructuras de ingeniería. Alto consumo de perfiles extruidos de aleación estructural 6082/6061."
+  },
+  {
+    "name": "O Feliz - Metalomecânica, S.A.",
+    "zone": "Portugal",
+    "department": "Braga (Portugal)",
+    "cif": "PT502348482",
+    "web": "https://www.ofeliz.com",
+    "revenue": 52000000,
+    "purchasingManager": "Pedro Gonçalves (Procurement Director - LinkedIn)",
+    "phone": "+351 253 080 500",
+    "email": "compras@ofeliz.com",
+    "location": [
+      41.5518,
+      -8.4229
+    ],
+    "sector": "Estructuras Metálicas, Fachadas y Revestimientos Arquitectónicos",
+    "products": [
+      "Chapas de Aluminio",
+      "Perfiles de Subestructura",
+      "Lamas y Celosías de Fachada"
+    ],
+    "notes": "Gran grupo metalomecánico del norte de Portugal especializado en envolventes arquitectónicas, fachadas ventiladas de aluminio, celosías y estructuras singulares."
+  },
+  {
+    "name": "BySteel, S.A. (BySteel FS - Fachadas e Envolventes)",
+    "zone": "Portugal",
+    "department": "Arcos de Valdevez / Braga (Portugal)",
+    "cif": "PT508093841",
+    "web": "https://www.bysteel.com",
+    "revenue": 85000000,
+    "purchasingManager": "Tiago Ribeiro (Head of Purchasing BySteel FS - LinkedIn)",
+    "phone": "+351 258 529 000",
+    "email": "procurement@bysteel.com",
+    "location": [
+      41.8467,
+      -8.4191
+    ],
+    "sector": "Muros Cortina y Fachadas Modulares de Alta Complejidad",
+    "products": [
+      "Perfiles de Muro Cortina",
+      "Perfiles de Matriz Propia",
+      "Chapas y Paneles de Aluminio"
+    ],
+    "notes": "División de envolventes arquitectónicas y muros cortina (BySteel FS). Ejecuta grandes proyectos de fachadas acristaladas de aluminio en la Península Ibérica, Reino Unido y Francia. No tiene prensa propia."
+  },
+  {
+    "name": "Caixiave - Indústria de Caixilharia, S.A.",
+    "zone": "Portugal",
+    "department": "Lousado, Vila Nova de Famalicão (Portugal)",
+    "cif": "PT504251442",
+    "web": "https://www.caixiave.pt",
+    "revenue": 18500000,
+    "purchasingManager": "Miguel Azevedo (Responsável de Compras e Aprovisionamento - LinkedIn)",
+    "phone": "+351 252 490 020",
+    "email": "compras@caixiave.pt",
+    "location": [
+      41.3524,
+      -8.5328
+    ],
+    "sector": "Fabricación Industrial de Carpintería y Cerramientos de Aluminio",
+    "products": [
+      "Perfiles con RPT",
+      "Perfiles de Ventana y Corredera",
+      "Cajones y Lamas de Persiana"
+    ],
+    "notes": "Uno de los mayores fabricantes industriales de cerramientos eficientes en Portugal y España con planta automatizada en Famalicão."
+  },
+  {
+    "name": "Metalcértima - Indústria Metalomecânica, S.A.",
+    "zone": "Portugal",
+    "department": "Oliveira do Bairro, Aveiro (Portugal)",
+    "cif": "PT501982455",
+    "web": "https://www.metalcertima.pt",
+    "revenue": 11400000,
+    "purchasingManager": "Carlos Simões (Diretor de Aprovisionamento - LinkedIn)",
+    "phone": "+351 234 730 550",
+    "email": "geral@metalcertima.pt",
+    "location": [
+      40.5147,
+      -8.4939
+    ],
+    "sector": "Carpintería de Aluminio, Muros Cortina y Estructuras Metálicas",
+    "products": [
+      "Perfiles de Fachada Ligera",
+      "Perfiles de Carpintería RPT",
+      "Chapa Plegada de Aluminio"
+    ],
+    "notes": "Especialista en Aveiro en ejecución de fachadas cortina, carpintería de aluminio y cerramientos industriales para edificación no residencial."
+  },
+  {
+    "name": "Fametal - Construções Metálicas, S.A.",
+    "zone": "Portugal",
+    "department": "Ortigosa, Leiria (Portugal)",
+    "cif": "PT502614930",
+    "web": "https://www.fametal.pt",
+    "revenue": 29000000,
+    "purchasingManager": "João Paulo Domingues (Diretor de Compras - LinkedIn)",
+    "phone": "+351 244 619 100",
+    "email": "compras@fametal.pt",
+    "location": [
+      39.8256,
+      -8.8289
+    ],
+    "sector": "Construcciones Metálicas y Envolventes Industriales",
+    "products": [
+      "Perfiles de Cerramiento",
+      "Lamas de Ventilación",
+      "Chapas y Revestimientos de Aluminio"
+    ],
+    "notes": "Referente en Leiria en construcción metálica y envolventes arquitectónicas con proyectos en Portugal, España y Europa."
+  },
+  {
+    "name": "Metaloviana - Metalomecânica de Viana, S.A.",
+    "zone": "Portugal",
+    "department": "Zona Industrial de Neiva, Viana do Castelo (Portugal)",
+    "cif": "PT503689126",
+    "web": "https://www.metaloviana.pt",
+    "revenue": 22500000,
+    "purchasingManager": "Vítor Lima (Purchasing Manager - LinkedIn)",
+    "phone": "+351 258 359 200",
+    "email": "geral@metaloviana.pt",
+    "location": [
+      41.6318,
+      -8.7654
+    ],
+    "sector": "Estructuras Metálicas y Cerramientos Industriales",
+    "products": [
+      "Perfiles Estructurales",
+      "Subestructuras de Fachada",
+      "Chapas de Aluminio"
+    ],
+    "notes": "Gran empresa metalomecánica del norte de Portugal a 25 minutos de la frontera con Galicia."
+  },
+  {
+    "name": "Metalúrgica Central da Trofa, S.A. (MCT)",
+    "zone": "Portugal",
+    "department": "Trofa, Porto (Portugal)",
+    "cif": "PT500191845",
+    "web": "https://www.mct.pt",
+    "revenue": 14800000,
+    "purchasingManager": "Filipe Moreira (Responsável de Compras - LinkedIn)",
+    "phone": "+351 252 400 700",
+    "email": "mct@mct.pt",
+    "location": [
+      41.3389,
+      -8.5601
+    ],
+    "sector": "Fachadas de Aluminio, Carpintería Técnica y Estructuras",
+    "products": [
+      "Perfiles para Muro Cortina",
+      "Celosías de Aluminio",
+      "Carpintería Técnica"
+    ],
+    "notes": "Fabricante histórico en Trofa (Porto) especializado en muros cortina de aluminio, lucernarios y envolventes de edificios corporativos."
+  },
+  {
+    "name": "Vigobloco - Construções Metálicas e Pré-Esforçados, S.A.",
+    "zone": "Portugal",
+    "department": "Zona Industrial de Vagos, Aveiro (Portugal)",
+    "cif": "PT503418920",
+    "web": "https://www.vigobloco.pt",
+    "revenue": 16200000,
+    "purchasingManager": "Hélder Martins (Diretor de Compras - LinkedIn)",
+    "phone": "+351 234 799 210",
+    "email": "geral@vigobloco.pt",
+    "location": [
+      40.5482,
+      -8.6744
+    ],
+    "sector": "Cerramientos, Fachadas y Construcciones Metálicas",
+    "products": [
+      "Perfiles de Aluminio",
+      "Revestimientos de Fachada",
+      "Carpintería Metálica"
+    ],
+    "notes": "Compañía industrial en Aveiro con línea de fabricación de carpintería de aluminio, muros cortina y estructuras."
+  },
+  {
+    "name": "SMF - Sistemas Metálicos e Fachadas, S.A. (Grupo Metalúrgica Progresso)",
+    "zone": "Portugal",
+    "department": "Vale de Cambra, Aveiro (Portugal)",
+    "cif": "PT501489120",
+    "web": "https://www.smf.pt",
+    "revenue": 24500000,
+    "purchasingManager": "Jorge Fernandes (Diretor de Compras e Aprovisionamento - LinkedIn)",
+    "phone": "+351 256 420 800",
+    "email": "compras@smf.pt",
+    "location": [
+      40.8492,
+      -8.3914
+    ],
+    "sector": "Fachadas Ligeras de Aluminio, Muros Cortina y Envolventes",
+    "products": [
+      "Perfiles de Carpintería de Aluminio",
+      "Sistemas de Muro Cortina",
+      "Chapas y Paneles Arquitectónicos"
+    ],
+    "notes": "Especialista industrial en Vale de Cambra (Aveiro) en ingeniería, fabricación y montaje de fachadas de aluminio y vidrio de gran envergadura en Portugal y Europa."
+  },
+  {
+    "name": "Aluport - Portas e Automatismos, Lda.",
+    "zone": "Portugal",
+    "department": "Sintra / Lisboa (Portugal)",
+    "cif": "PT505192834",
+    "web": "https://www.aluport.pt",
+    "revenue": 6800000,
+    "purchasingManager": "António Lourenço (Diretor Comercial e Compras - LinkedIn)",
+    "phone": "+351 219 158 100",
+    "email": "geral@aluport.pt",
+    "location": [
+      38.7804,
+      -9.3392
+    ],
+    "sector": "Puertas Seccionales, Portones Residenciales e Industriales de Aluminio",
+    "products": [
+      "Perfiles de Portón de Aluminio",
+      "Lamas Extruidas",
+      "Perfiles de Remate y Guías"
+    ],
+    "notes": "Fabricante portugués especializado en puertas seccionales y portones de aluminio residenciales e industriales (perfil análogo a Gardengate)."
+  },
+  {
+    "name": "Horta-Coslada Construcciones Metálicas, S.L. (Horta Coslada)",
+    "zone": "Galicia",
+    "department": "Pol. Ind. de Sabón, Parcelas 92-94 (Avda. do Embalse), 15142 Arteixo (A Coruña, Galicia) / Domicilio Social: C/ Camino del Corral 4, 28816 Camarma de Esteruelas (Madrid)",
+    "cif": "B15032485",
+    "web": "https://www.hortacoslada.com",
+    "revenue": 78000000,
+    "purchasingManager": "José Manuel Varela (Jefe de Aprovisionamiento y Compras - LinkedIn)",
+    "phone": "+34 981 64 10 20",
+    "email": "compras@hortacoslada.com",
+    "location": [
+      43.3134,
+      -8.5089
+    ],
+    "sector": "Construcciones Metálicas, Fachadas Singulares y Pasarelas",
+    "products": [
+      "Perfiles Especiales de Fachada",
+      "Chapas y Lamas de Aluminio"
+    ],
+    "notes": "Dirección verificada: Centro productivo principal en Polígono Industrial de Sabón, Parcelas 92-94 (Avda. do Embalse), 15142 Arteixo (A Coruña) y domicilio social en C/ Camino del Corral nº 4, 28816 Camarma de Esteruelas (Madrid). Referente en grandes envolventes metálicas y fachadas arquitectónicas."
+  },
+  {
+    "name": "Puertas Padilla, S.L.",
+    "zone": "Murcia",
+    "department": "Balsapintada, Fuente Álamo (Murcia)",
+    "cif": "B30129845",
+    "web": "https://www.puertaspadilla.com",
+    "revenue": 60000000,
+    "purchasingManager": "Juan José Padilla / Dpto. Compras (LinkedIn)",
+    "phone": "+34 968 15 12 12",
+    "email": "compras@puertaspadilla.com",
+    "location": [
+      37.7524,
+      -1.1248
+    ],
+    "sector": "Puertas Técnicas, Cortafuegos y Cerramientos Metálicos",
+    "products": [
+      "Perfiles de Cerco y Junquillo en Aluminio",
+      "Chapas de Aluminio",
+      "Perfiles de Puerta Acristalada"
+    ],
+    "notes": "Líder nacional e internacional (60M €) en fabricación de puertas técnicas, peatonales y acristaladas con perfilería y accesorios de aluminio."
+  },
+  {
+    "name": "Assa Abloy Entrance Systems Spain, S.A.U.",
+    "zone": "Madrid",
+    "department": "Alcobendas (Madrid)",
+    "cif": "A28115483",
+    "web": "https://www.assaabloyentrance.es",
+    "revenue": 38500000,
+    "purchasingManager": "Sergio Martín (Purchasing & Supply Chain Manager Iberia - LinkedIn)",
+    "phone": "+34 91 657 48 00",
+    "email": "compras.es@assaabloy.com",
+    "location": [
+      40.5361,
+      -3.6358
+    ],
+    "sector": "Puertas Automáticas Peatonales, Industriales y Rápidas de Aluminio",
+    "products": [
+      "Perfiles de Hojas Correderas de Aluminio",
+      "Cobertores de Automatismos en Aluminio Extruido",
+      "Guías de Puertas Rápidas"
+    ],
+    "notes": "Referente en puertas automáticas peatonales de aluminio y vidrio, puertas industriales y muelles de carga en España y Portugal."
+  },
+  {
+    "name": "Asturmadi Doors, S.L. (Grupo Asturmadi)",
+    "zone": "Asturias",
+    "department": "Avilés (Asturias)",
+    "cif": "B33849209",
+    "web": "https://asturmadidoors.com",
+    "revenue": 32000000,
+    "purchasingManager": "Pelayo González (Director de Compras Grupo Asturmadi - LinkedIn)",
+    "phone": "+34 985 56 92 02",
+    "email": "compras@asturmadi.com",
+    "location": [
+      43.5621,
+      -5.9102
+    ],
+    "sector": "Puertas Técnicas y Estructuras Fotovoltaicas (Asturmadi Reenergy)",
+    "products": [
+      "Perfiles de Aluminio para Estructuras Solares",
+      "Perfiles de Puerta y Cerramiento",
+      "Grapas de Fijación en Aluminio"
+    ],
+    "notes": "Grupo industrial asturiano con doble división de alto consumo: puertas técnicas (Asturmadi Doors) y estructuras solares (Asturmadi Reenergy)."
+  },
+  {
+    "name": "Esasolar Energy, S.L.",
+    "zone": "Andalucia",
+    "department": "El Puerto de Santa María (Cádiz, Andalucía)",
+    "cif": "B90176843",
+    "web": "https://www.esasolar.com",
+    "revenue": 28000000,
+    "purchasingManager": "Alejandro Vélez (Supply Chain & Purchasing Manager - LinkedIn)",
+    "phone": "+34 956 87 01 10",
+    "email": "compras@esasolar.com",
+    "location": [
+      36.6094,
+      -6.2165
+    ],
+    "sector": "Estructuras Solares de Aluminio y Seguidores Fotovoltaicos",
+    "products": [
+      "Perfiles Carril de Aluminio 6005-T6",
+      "Triángulos Premontados de Aluminio",
+      "Grapas Extremas e Intermedias Extruidas"
+    ],
+    "notes": "Fabricante internacional de estructuras de aluminio para cubiertas industriales y plantas solares (>7 GW suministrados). Sin prensa propia."
+  },
+  {
+    "name": "Alumero Solar Spain, S.L.U.",
+    "zone": "Navarra",
+    "department": "Pamplona / Comarca de Pamplona (Navarra)",
+    "cif": "B71207165",
+    "web": "https://www.alumero.com",
+    "revenue": 9500000,
+    "purchasingManager": "Iker Etxeberria (Responsable de Operaciones y Compras - LinkedIn)",
+    "phone": "+34 948 31 20 40",
+    "email": "spain@alumero.com",
+    "location": [
+      42.8125,
+      -1.6458
+    ],
+    "sector": "Subestructuras de Aluminio para Fotovoltaica y Fachadas",
+    "products": [
+      "Perfiles de Montaje Solar en Aluminio",
+      "Sistemas Lastrados de Aluminio",
+      "Componentes Mecanizados de Aluminio"
+    ],
+    "notes": "Especialista en sistemas de montaje fotovoltaico en aluminio extruido y estructuras metálicas ligeras para el mercado ibérico."
+  },
+  {
+    "name": "Gandia Blasco, S.A. (Gandiablasco / Diabla Outdoor)",
+    "zone": "Comunidad Valenciana",
+    "department": "Ontinyent (Valencia, Comunidad Valenciana)",
+    "cif": "A46182945",
+    "web": "https://www.gandiablasco.com",
+    "revenue": 16500000,
+    "purchasingManager": "Vicent Revert (Director de Compras y Producción - LinkedIn)",
+    "phone": "+34 96 291 13 20",
+    "email": "compras@gandiablasco.com",
+    "location": [
+      38.8224,
+      -0.6067
+    ],
+    "sector": "Pérgolas Bioclimáticas, Cenadores y Mobiliario Exterior de Aluminio",
+    "products": [
+      "Perfiles de Aluminio Termolacado y Anodizado",
+      "Lamas de Pérgolas Outdoor",
+      "Tubos y Perfiles de Matriz Propia"
+    ],
+    "notes": "Referente mundial en pérgolas arquitectónicas modulares de aluminio extruido y mobiliario outdoor fabricado 100% en aluminio en Ontinyent."
+  },
+  {
+    "name": "Point 1920, S.L.",
+    "zone": "Comunidad Valenciana",
+    "department": "Gata de Gorgos / Jalón (Alicante, Comunidad Valenciana)",
+    "cif": "B03128492",
+    "web": "https://www.point1920.com",
+    "revenue": 14200000,
+    "purchasingManager": "Juan Bautista Pons (Director Industrial y Compras - LinkedIn)",
+    "phone": "+34 96 648 01 01",
+    "email": "compras@point1920.com",
+    "location": [
+      38.7745,
+      0.0842
+    ],
+    "sector": "Mobiliario Exterior Contract y Estructuras de Aluminio",
+    "products": [
+      "Tubo y Perfil de Aluminio Extruido",
+      "Perfiles para Mesas y Tumbonas Contract",
+      "Perfiles de Pérgolas"
+    ],
+    "notes": "Fabricante alicantino líder en mobiliario de exterior y estructuras de aluminio lacado para cadenas hoteleras en más de 70 países."
+  },
+  {
+    "name": "Kettal, S.A. (Grupo Kettal)",
+    "zone": "Cataluña",
+    "department": "Bellvei, Tarragona / Barcelona (Cataluña)",
+    "cif": "A08214595",
+    "web": "https://www.kettal.com",
+    "revenue": 64000000,
+    "purchasingManager": "Marc Puigdomènech (Supply Chain & Purchasing Director - LinkedIn)",
+    "phone": "+34 93 487 90 90",
+    "email": "compras@kettal.es",
+    "location": [
+      41.2415,
+      1.5762
+    ],
+    "sector": "Pabellones Bioclimáticos, Cabinas de Oficina y Mobiliario de Aluminio",
+    "products": [
+      "Perfiles Estructurales de Pérgolas (Pavilions)",
+      "Perfiles de Cabinas Acústicas de Oficina",
+      "Tubos de Aluminio de Precisión"
+    ],
+    "notes": "Macrofactoría propia en Bellvei (Tarragona). Fabrica pabellones bioclimáticos de aluminio, cabinas de oficina (Kettal Work) y mobiliario de aluminio."
+  },
+  {
+    "name": "Expormim, S.A.",
+    "zone": "Comunidad Valenciana",
+    "department": "Moixent (Valencia, Comunidad Valenciana)",
+    "cif": "A46028494",
+    "web": "https://www.expormim.com",
+    "revenue": 15800000,
+    "purchasingManager": "Rafael Laso (Responsable de Compras y Aprovisionamiento - LinkedIn)",
+    "phone": "+34 96 226 11 00",
+    "email": "compras@expormim.com",
+    "location": [
+      38.8742,
+      -0.7518
+    ],
+    "sector": "Estructuras y Mobiliario Outdoor en Aluminio Extruido",
+    "products": [
+      "Perfiles y Tubos de Aluminio 6063",
+      "Pletinas y Perfiles Especiales de Aluminio"
+    ],
+    "notes": "Fabricante industrial en Moixent con alto consumo de tubo y perfil de aluminio extruido para proyectos contract internacionales."
+  },
+  {
+    "name": "Vondom, S.L.U.",
+    "zone": "Comunidad Valenciana",
+    "department": "Beneixida (Valencia, Comunidad Valenciana)",
+    "cif": "B98019458",
+    "web": "https://www.vondom.com",
+    "revenue": 39000000,
+    "purchasingManager": "Sergio Valero (Director de Compras - LinkedIn)",
+    "phone": "+34 96 239 84 86",
+    "email": "compras@vondom.com",
+    "location": [
+      39.0601,
+      -0.5482
+    ],
+    "sector": "Pérgolas, Daybeds y Mobiliario Arquitectónico con Estructura de Aluminio",
+    "products": [
+      "Perfiles de Aluminio para Pérgolas y Daybeds",
+      "Bastidores y Tubos de Aluminio"
+    ],
+    "notes": "Multinacional valenciana de equipamiento exterior y contract que integra estructuras y perfilería de aluminio en pérgolas, barras y mobiliario."
+  },
+  {
+    "name": "Skyline Design Spain (Joenfa, S.L.)",
+    "zone": "Comunidad Valenciana",
+    "department": "La Font de la Figuera / Moixent (Valencia, Comunidad Valenciana)",
+    "cif": "B96348198",
+    "web": "https://www.skylinedesign.com",
+    "revenue": 19200000,
+    "purchasingManager": "Jorge Revert (Purchasing Manager - LinkedIn)",
+    "phone": "+34 96 226 02 72",
+    "email": "compras@joenfa.com",
+    "location": [
+      38.8765,
+      -0.7541
+    ],
+    "sector": "Estructuras de Aluminio para Equipamiento Exterior y Hotelero",
+    "products": [
+      "Chasis y Perfiles de Aluminio Soldado",
+      "Tubos Extruidos de Aluminio"
+    ],
+    "notes": "Gran fabricante exportador de equipamiento outdoor sobre chasis de aluminio soldado y extruido."
+  },
+  {
+    "name": "Calma Outdoor (Exteriors Calma, S.L.)",
+    "zone": "Cataluña",
+    "department": "Olot / Girona (Cataluña)",
+    "cif": "B17924812",
+    "web": "https://www.calma.cat",
+    "revenue": 7800000,
+    "purchasingManager": "Marc Coromina (Responsable de Compras - LinkedIn)",
+    "phone": "+34 972 27 62 00",
+    "email": "info@calma.cat",
+    "location": [
+      42.1822,
+      2.4891
+    ],
+    "sector": "Pérgolas, Parasoles Técnicos y Estructuras de Aluminio",
+    "products": [
+      "Mástiles y Perfiles de Aluminio Anodizado",
+      "Perfiles para Pérgolas Modulares"
+    ],
+    "notes": "Especialista catalán en parasoles de gran formato, pérgolas y estructuras de aluminio extruido para hostelería y contract."
+  },
+  {
+    "name": "Cercados y Portones Metálicos Rivisa, S.A.",
+    "zone": "Cataluña",
+    "department": "Rubí / Polinyà (Barcelona, Cataluña)",
+    "cif": "A08391849",
+    "web": "https://www.rivisa.com",
+    "revenue": 29500000,
+    "purchasingManager": "Xavier Prat (Director de Compras y Aprovisionamiento - LinkedIn)",
+    "phone": "+34 93 588 53 00",
+    "email": "compras@rivisa.com",
+    "location": [
+      41.4832,
+      2.0351
+    ],
+    "sector": "Portones Automáticos, Puertas Correderas y Cerramientos Perimetrales",
+    "products": [
+      "Perfiles de Portones Correderos y Batientes",
+      "Lamas de Ocultación y Vallas de Aluminio"
+    ],
+    "notes": "Líder nacional en cerramientos perimetrales, puertas automáticas industriales, portones batientes/correderos y vallas residenciales (perfil análogo a Gardengate)."
+  },
+  {
+    "name": "Toldos Gómez, S.L.",
+    "zone": "Galicia",
+    "department": "Arzúa / Bergondo (A Coruña, Galicia)",
+    "cif": "B15284912",
+    "web": "https://www.toldosgomez.com",
+    "revenue": 5400000,
+    "purchasingManager": "Esteban Gómez (Dirección y Compras - LinkedIn)",
+    "phone": "+34 981 50 02 02",
+    "email": "compras@toldosgomez.com",
+    "location": [
+      42.9268,
+      -8.1635
+    ],
+    "sector": "Sistemas de Protección Solar, Pérgolas y Carpas de Aluminio",
+    "products": [
+      "Perfiles de Cofre y Brazos de Toldo",
+      "Perfiles para Pérgolas y Carpas de Aluminio"
+    ],
+    "notes": "Fabricante gallego de referencia en sistemas de protección solar, pérgolas de aluminio y estructuras tensadas."
+  },
+  {
+    "name": "Grupsa - Sistemas Hospitalarios y Puertas Automáticas (Grupsa, S.A.)",
+    "zone": "Madrid",
+    "department": "Griñón (Madrid)",
+    "cif": "A28291844",
+    "web": "https://www.grupsa.com",
+    "revenue": 14600000,
+    "purchasingManager": "Fernando Díaz (Jefe de Compras y Aprovisionamiento - LinkedIn)",
+    "phone": "+34 91 814 05 02",
+    "email": "compras@grupsa.com",
+    "location": [
+      40.2136,
+      -3.8547
+    ],
+    "sector": "Puertas Automáticas Herméticas, Rotativas y Arquitectónicas de Aluminio",
+    "products": [
+      "Perfiles de Marcos y Hojas Herméticas de Aluminio",
+      "Perfiles Curvados para Puertas Rotativas",
+      "Mamparas de Quirófano"
+    ],
+    "notes": "Fabricante español con planta en Griñón especializado en puertas automáticas correderas, rotativas y sistemas de salas limpias en aluminio extruido."
+  },
+  {
+    "name": "Dormakaba España, S.A.U.",
+    "zone": "Madrid",
+    "department": "Madrid / Barberà del Vallès",
+    "cif": "A08419285",
+    "web": "https://www.dormakaba.com/es-es",
+    "revenue": 27000000,
+    "purchasingManager": "Laura Soria (Procurement Manager Iberia - LinkedIn)",
+    "phone": "+34 91 875 78 50",
+    "email": "info.es@dormakaba.com",
+    "location": [
+      40.4412,
+      -3.6125
+    ],
+    "sector": "Puertas Automáticas, Muros Móviles Acústicos y Divisiones de Aluminio",
+    "products": [
+      "Perfiles de Aluminio para Puertas Automáticas",
+      "Guías Superiores y Bastidores de Tabiques Móviles"
+    ],
+    "notes": "División ibérica de sistemas de acceso, puertas correderas automáticas y muros móviles con bastidor de aluminio."
+  },
+  {
+    "name": "Ditec / Entrematic Spain (Assa Abloy Entrance Automation)",
+    "zone": "Cataluña",
+    "department": "Barberà del Vallès (Barcelona) / Madrid",
+    "cif": "B61928410",
+    "web": "https://www.ditecautomations.com",
+    "revenue": 11500000,
+    "purchasingManager": "Marc Soler (Purchasing & Logistics Coordinator - LinkedIn)",
+    "phone": "+34 93 729 00 40",
+    "email": "compras.es@ditecautomations.com",
+    "location": [
+      41.5162,
+      2.1248
+    ],
+    "sector": "Puertas Automáticas Peatonales, Portones y Barreras con Perfilería de Aluminio",
+    "products": [
+      "Perfiles de Carpintería para Puertas Automáticas",
+      "Cobertores y Bastidores de Aluminio Extruido"
+    ],
+    "notes": "Especialista en puertas automáticas peatonales con carpintería propia de aluminio y automatización de portones."
+  },
+  {
+    "name": "Reiter Systems, S.L. (Reiter Tabiques Móviles)",
+    "zone": "Cataluña",
+    "department": "Sabadell / Barberà del Vallès (Barcelona, Cataluña)",
+    "cif": "B61482915",
+    "web": "https://www.reiter.es",
+    "revenue": 9200000,
+    "purchasingManager": "Oriol Valls (Director de Producción y Compras - LinkedIn)",
+    "phone": "+34 93 718 92 00",
+    "email": "compras@reiter.es",
+    "location": [
+      41.5284,
+      2.1245
+    ],
+    "sector": "Tabiques Móviles Acústicos y Mamparas Modulares de Aluminio",
+    "products": [
+      "Carriles Superiores de Aluminio Extruido de Gran Carga",
+      "Perfiles Perimetrales Telescópicos de Aluminio"
+    ],
+    "notes": "Principal fabricante nacional de tabiques móviles acústicos y paredes plegables de vidrio y aluminio extruido."
+  },
+  {
+    "name": "Tabiques Móviles Tabiexpert, S.L.",
+    "zone": "Cataluña",
+    "department": "Esparreguera (Barcelona, Cataluña)",
+    "cif": "B65192841",
+    "web": "https://www.tabiexpert.com",
+    "revenue": 6500000,
+    "purchasingManager": "Jordi Pujolàs (Responsable de Compras y Fábrica - LinkedIn)",
+    "phone": "+34 93 777 65 10",
+    "email": "info@tabiexpert.com",
+    "location": [
+      41.5381,
+      1.8692
+    ],
+    "sector": "Tabiques Móviles y Cerramientos Acústicos de Aluminio",
+    "products": [
+      "Guías y Perfiles Estructurales de Aluminio",
+      "Marcos de Vidrio Acústico en Aluminio"
+    ],
+    "notes": "Fabricante con planta en Esparreguera especializado en tabiques móviles y cerramientos plegables de aluminio para hoteles y palacios de congresos."
+  },
+  {
+    "name": "Divisegur, S.L.",
+    "zone": "Galicia",
+    "department": "Pol. Ind. Lalín 2000, Lalín (Pontevedra, Galicia)",
+    "cif": "B36419280",
+    "web": "https://www.divisegur.com",
+    "revenue": 8400000,
+    "purchasingManager": "Marcos Mato (Director de Operaciones y Compras - LinkedIn)",
+    "phone": "+34 986 78 45 10",
+    "email": "compras@divisegur.com",
+    "location": [
+      42.6614,
+      -8.1189
+    ],
+    "sector": "Mamparas Divisorias, Cerramientos Industriales y Cabinas Modulares",
+    "products": [
+      "Perfiles de Mampara de Oficina en Aluminio",
+      "Perfiles para Cabinas Industriales"
+    ],
+    "notes": "Fabricante gallego de mamparas divisorias de aluminio, cabinas técnicas modulares y cerramientos para industria y oficinas."
+  }
+]

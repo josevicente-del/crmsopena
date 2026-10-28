@@ -108,5 +108,165 @@
     "reason": "Eliminada por solicitud expresa de Dirección Comercial",
     "excludedAt": "2026-10-25T17:57:44.053046+00:00",
     "notes": "Baja definitiva del CRM por indicación expresa del usuario."
+  },
+  {
+    "id": "PROP-LEAD26-0080",
+    "name": "Sosoares - Caixilharia de Alumínio S.A.",
+    "cif": "PT501248910",
+    "domain": "sosoares.pt",
+    "web": "https://www.sosoares.pt",
+    "reason": "Prensa de extrusión propia (Competencia directa)",
+    "excludedAt": "2026-10-28T20:35:24.440633+00:00",
+    "notes": "Eliminada y blindada por tener prensa de extrusión propia."
+  },
+  {
+    "id": "PROP-LEAD26-0183",
+    "name": "Kawneer France S.A.S.",
+    "cif": "FR910294829",
+    "domain": "kawneer.com",
+    "web": "https://www.kawneer.com",
+    "reason": "Prensa de extrusión propia (Competencia directa)",
+    "excludedAt": "2026-10-28T20:35:24.440633+00:00",
+    "notes": "Eliminada y blindada por tener prensa de extrusión propia."
+  },
+  {
+    "id": "PROP-LEAD26-0355",
+    "name": "Technal France S.A.S.",
+    "cif": "FR572074360",
+    "domain": "technal.com",
+    "web": "https://technal.com",
+    "reason": "Prensa de extrusión propia (Competencia directa)",
+    "excludedAt": "2026-10-28T20:35:24.440633+00:00",
+    "notes": "Eliminada y blindada por tener prensa de extrusión propia."
+  },
+  {
+    "id": "PROP-EXC-EXTRUGAL-PT1",
+    "name": "Navarra - Indústria de Alumínio S.A.",
+    "cif": "PT500682555",
+    "domain": "navarraaluminio.com",
+    "web": "https://www.navarraaluminio.com",
+    "reason": "Competencia directa (Prensa de extrusión propia en Braga, Portugal)",
+    "notes": "Extrusor portugués con prensas propias. Excluido por política de no incluir empresas con prensa propia.",
+    "excludedAt": "2026-10-28T20:35:24.440633+00:00"
+  },
+  {
+    "id": "PROP-EXC-EXTRUGAL-PT2",
+    "name": "Extrusal - Companhia Portuguesa de Extrusão S.A.",
+    "cif": "PT500105396",
+    "domain": "extrusal.pt",
+    "web": "https://www.extrusal.pt",
+    "reason": "Competencia directa (Prensa de extrusión propia en Aveiro, Portugal)",
+    "notes": "Extrusor portugués con prensas propias. Excluido por política de no incluir empresas con prensa propia.",
+    "excludedAt": "2026-10-28T20:35:24.440633+00:00"
+  },
+  {
+    "id": "PROP-EXC-EXTRUGAL-PT3",
+    "name": "Anicolor - Sistemas de Alumínio S.A.",
+    "cif": "PT501441187",
+    "domain": "anicolor.pt",
+    "web": "https://www.anicolor.pt",
+    "reason": "Competencia directa (Prensa de extrusión propia en Águeda, Portugal)",
+    "notes": "Extrusor portugués con prensas propias. Excluido por política de no incluir empresas con prensa propia.",
+    "excludedAt": "2026-10-28T20:35:24.440633+00:00"
+  },
+  {
+    "id": "PROP-EXC-EXTRUGAL-PT4",
+    "name": "Portalex - Alumínio Extrudido S.A.",
+    "cif": "PT500220144",
+    "domain": "portalex.pt",
+    "web": "https://www.portalex.pt",
+    "reason": "Competencia directa (Prensa de extrusión propia en Sintra, Portugal)",
+    "notes": "Extrusor portugués con prensas propias. Excluido por política de no incluir empresas con prensa propia.",
+    "excludedAt": "2026-10-28T20:35:24.440633+00:00"
+  },
+  {
+    "id": "PROP-EXC-AEA-CORTIZO",
+    "name": "Aluminios Cortizo S.A.",
+    "cif": "A15082696",
+    "domain": "cortizo.com",
+    "web": "https://www.cortizo.com",
+    "reason": "Competencia directa (Prensa de extrusión propia - AEA)",
+    "notes": "Extrusor con prensas propias en España y Portugal.",
+    "excludedAt": "2026-10-28T20:35:24.440633+00:00"
+  },
+  {
+    "id": "PROP-EXC-AEA-EXLABESA",
+    "name": "Exlabesa Building Systems S.L.",
+    "cif": "B15794167",
+    "domain": "exlabesa.com",
+    "web": "https://www.exlabesa.com",
+    "reason": "Competencia directa (Prensa de extrusión propia - AEA)",
+    "notes": "Extrusor con prensas propias en España y Portugal.",
+    "excludedAt": "2026-10-28T20:35:24.440633+00:00"
+  },
+  {
+    "id": "PROP-EXC-AEA-EXTRUGASA",
+    "name": "Extrugasa (Transformaciones Metálicas S.A.)",
+    "cif": "A15014178",
+    "domain": "extrugasa.com",
+    "web": "https://www.extrugasa.com",
+    "reason": "Competencia directa (Prensa de extrusión propia - AEA)",
+    "notes": "Extrusor con prensas propias.",
+    "excludedAt": "2026-10-28T20:35:24.440633+00:00"
+  },
+  {
+    "id": "PROP-EXC-AEA-STRUGAL",
+    "name": "Strugal (Industrial de Extrusión S.L. / Nazarenos)",
+    "cif": "B41122680",
+    "domain": "strugal.com",
+    "web": "https://www.strugal.com",
+    "reason": "Competencia directa (Prensa de extrusión propia - AEA)",
+    "notes": "Extrusor con prensas propias.",
+    "excludedAt": "2026-10-28T20:35:24.440633+00:00"
+  },
+  {
+    "id": "PROP-EXC-AEA-ITESAL",
+    "name": "Itesal S.L.",
+    "cif": "B50164557",
+    "domain": "itesal.es",
+    "web": "https://www.itesal.es",
+    "reason": "Competencia directa (Prensa de extrusión propia - AEA)",
+    "notes": "Extrusor con prensas propias.",
+    "excludedAt": "2026-10-28T20:35:24.440633+00:00"
+  },
+  {
+    "id": "PROP-EXC-AEA-ALUGOM",
+    "name": "Alugom Madrid S.A. (Grupo Alugom / Avalum)",
+    "cif": "A28382315",
+    "domain": "alugom.com",
+    "web": "https://www.alugom.com",
+    "reason": "Competencia directa (Prensa de extrusión propia - AEA)",
+    "notes": "Extrusor con prensas propias.",
+    "excludedAt": "2026-10-28T20:35:24.440633+00:00"
+  },
+  {
+    "id": "PROP-EXC-USER-INGEMETAL",
+    "name": "Ingemetal, S.A.",
+    "cif": "A28391042",
+    "domain": "ingemetal.es",
+    "web": "https://www.ingemetal.es",
+    "reason": "Excluida por indicación expresa del usuario en validación previa",
+    "notes": "No incorporar a la base de datos por instrucción directa del usuario.",
+    "excludedAt": "2026-10-28T20:48:09.578533+00:00"
+  },
+  {
+    "id": "PROP-EXC-USER-MOREDA",
+    "name": "Moreda Riviere Trefilerías, S.A. (MRT Cerramientos)",
+    "cif": "A33518945",
+    "domain": "moreda.com",
+    "web": "https://www.moreda.com",
+    "reason": "Excluida por indicación expresa del usuario en validación previa",
+    "notes": "No incorporar a la base de datos por instrucción directa del usuario.",
+    "excludedAt": "2026-10-28T20:48:09.578533+00:00"
+  },
+  {
+    "id": "PROP-EXC-USER-EIBAR",
+    "name": "Aluminios Eibar, S.A.",
+    "cif": "A20048195",
+    "domain": "aluminioseibar.com",
+    "web": "https://www.aluminioseibar.com",
+    "reason": "Excluida por indicación expresa del usuario en validación previa",
+    "notes": "No incorporar a la base de datos por instrucción directa del usuario.",
+    "excludedAt": "2026-10-28T20:48:09.578533+00:00"
   }
 ]
