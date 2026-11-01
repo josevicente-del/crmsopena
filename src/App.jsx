@@ -1706,7 +1706,14 @@ const App = () => {
     e.target.value = '';
   };
 
+  // Función para descargar la base de datos en formato JSON protegida con contraseña
   const handleDownloadJSON = () => {
+    const passwordConfirm = window.prompt("Por seguridad, introduzca la contraseña autorizada para exportar la base de datos en JSON:");
+    if (passwordConfirm === null) return; // Canceló el prompt
+    if (passwordConfirm !== 'aluminio') {
+      alert("⚠️ Contraseña incorrecta. Operación de exportación cancelada.");
+      return;
+    }
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(prospects, null, 2));
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
@@ -1719,7 +1726,7 @@ const App = () => {
   const handleExportCSV = () => {
     const passwordConfirm = window.prompt("Por seguridad, introduzca la contraseña de administración del CRM para exportar los datos:");
     if (passwordConfirm === null) return; // Canceló el prompt
-    if (passwordConfirm !== 'lacado2026') {
+    if (passwordConfirm !== 'aluminio') {
       alert("⚠️ Contraseña incorrecta. Operación de exportación cancelada.");
       return;
     }
@@ -5320,7 +5327,7 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                     <div>
                       <strong>4. Copia de Seguridad Protegida:</strong>
                       <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
-                        Exporta toda la base de datos a Excel (CSV). Por seguridad corporativa, el sistema solicita la contraseña de administrador autorizada (<code>lacado2026</code>).
+                        Exporta toda la base de datos a Excel (CSV). Por seguridad corporativa, el sistema solicita la contraseña autorizada de exportación (<code>aluminio</code>).
                       </p>
                     </div>
                   </div>
@@ -5488,7 +5495,7 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                       <strong>3. Claves de Acceso y Administración:</strong>
                       <div style={{ background: '#f8fafc', border: '1px solid #cbd5e1', padding: '10px', borderRadius: '6px', marginTop: '6px' }}>
                         <div><strong>Administrador General:</strong> usuario <code>admin</code> / clave <code>lacado2026</code></div>
-                        <div style={{ marginTop: '4px' }}><strong>Exportación CSV:</strong> clave <code>lacado2026</code></div>
+                        <div style={{ marginTop: '4px' }}><strong>Exportación CSV y JSON:</strong> clave <code>aluminio</code></div>
                       </div>
                     </div>
                   </div>
@@ -7201,7 +7208,7 @@ ${kit.emailBody}`)}
                     🔒 Seguridad Comercial: Nueva Clave de Administrador
                   </h4>
                   <p style={{ margin: 0, fontSize: '0.82rem', color: '#475569', lineHeight: '1.45' }}>
-                    Actualizada la contraseña de administración a <code>lacado2026</code> tanto para acceso al perfil de control como para la descarga de copias de seguridad de la base de datos en formato Excel/CSV.
+                    Contraseña de administración para acceso: <code>lacado2026</code>. Contraseña para exportación de copias de seguridad en formato Excel/CSV y JSON: <code>aluminio</code>.
                   </p>
                 </div>
               </div>

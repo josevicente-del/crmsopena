@@ -1,5 +1,18 @@
 [
   {
+    "id": "LOG-EXPORT-PASS-ALUMINIO",
+    "timestamp": "2026-11-01T21:47:00.000Z",
+    "user": "Superadministrador Grupo Sopena",
+    "action": "CONFIGURACION_CLAVE_EXPORTACION",
+    "targetId": "export_system",
+    "targetName": "Exportación CSV y JSON",
+    "details": "Establecida la clave 'aluminio' como contraseña obligatoria para exportar la base de datos en formatos CSV (Excel) y JSON.",
+    "metadata": {
+      "exportFormat": "CSV / JSON",
+      "requiredPassword": "aluminio"
+    }
+  },
+  {
     "id": "LOG-SECURITY-PASS-2026",
     "timestamp": "2026-11-01T21:43:00.000Z",
     "user": "Superadministrador Grupo Sopena",
