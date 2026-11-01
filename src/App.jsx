@@ -877,7 +877,7 @@ const App = () => {
     // Bloqueo estricto de contraseña obsoleta lacado2025
     if (password === 'lacado2025') {
       setLoginError(true);
-      alert("⚠️ La contraseña 'lacado2025' ha sido revocada y anulada por completo. Introduzca la clave válida 'lacado2026'.");
+      alert("La contraseña 'lacado2025' ha sido revocada y anulada por completo. Consulta al administador jvcatala@gruposopena.com");
       return;
     }
 
@@ -7208,7 +7208,7 @@ ${kit.emailBody}`)}
                     🔒 Seguridad Comercial: Nueva Clave de Administrador
                   </h4>
                   <p style={{ margin: 0, fontSize: '0.82rem', color: '#475569', lineHeight: '1.45' }}>
-                    Contraseña de administración para acceso: <code>lacado2026</code>. Contraseña para exportación de copias de seguridad en formato Excel/CSV y JSON: <code>aluminio</code>.
+                    La contraseña 'lacado2025' ha sido revocada y anulada por completo. Para acceso o soporte consulte a <code>jvcatala@gruposopena.com</code>. Clave para exportación de copias de seguridad (CSV / JSON): <code>aluminio</code>.
                   </p>
                 </div>
               </div>
