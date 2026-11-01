@@ -108,6 +108,10 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
   const [chatZone, setChatZone] = useState(''); // Zona activa seleccionable para consultas de IA
   const terminalEndRef = useRef(null);
 
+  // --- CANDIDATOS DETECTADOS POR LEAD FINDER PENDIENTES DE REVISIÓN Y VALIDACIÓN ---
+  const [prospectingCandidates, setProspectingCandidates] = useState([]);
+  const [selectedCandidateIds, setSelectedCandidateIds] = useState(new Set());
+
   // --- ESTADOS DE LA AUDITORÍA Y REPARACIÓN MASIVA DE EMAILS ---
   const [isRepairingBatch, setIsRepairingBatch] = useState(false);
   const [batchRepairLogs, setBatchRepairLogs] = useState([]);
@@ -389,6 +393,16 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
     { name: 'Galisur S.L.', web: 'galisur.es' }
   ];
 
+  // Función auxiliar para normalizar nombres eliminando sufijos societarios y caracteres especiales
+  const normalizeCompanyName = (nameStr) => {
+    return (nameStr || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/\b(s\.?l\.?u\.?|s\.?l\.?|s\.?a\.?u\.?|s\.?a\.?|sociedad limitada|sociedad anonima|c\.?b\.?)\b/gi, '')
+      .replace(/[^a-z0-9]/gi, '')
+      .trim();
+  };
+
   // --- LÓGICA DE PROSPECCIÓN COMERCIAL DE AGENTFORCE ---
   const handleStartProspecting = () => {
     if (isSearching) return;
@@ -396,6 +410,8 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
     setIsSearching(true);
     setFoundLeadsCount(0);
     setSearchLogs([]);
+    setProspectingCandidates([]);
+    setSelectedCandidateIds(new Set());
 
     const logs = [];
     const addLog = (text, type = 'info') => {
@@ -425,24 +441,36 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
     }, 2200);
 
     setTimeout(() => {
-      addLog(`📖 Motor Sectorial Novoperfil (https://www.novoperfil.com/): Indexando empresas de cerramientos, muros cortina, fachadas ligeras y carpintería de aluminio de alta gama con actividad 2024-2026.`, 'info');
-    }, 3000);
+      addLog("📖 Motor Sectorial Novoperfil (https://www.novoperfil.com/): Indexando empresas de cerramientos, muros cortina, fachadas ligeras y carpintería de aluminio de alta gama con actividad 2024-2026.", "info");
+    }, 2800);
 
     setTimeout(() => {
-      addLog(`🏭 Federación FEMVAL (https://www.femval.es/): Consultando censo sectorial de transformadores de metal, chapa y cerramientos de la Comunidad Valenciana.`, 'info');
-    }, 3800);
+      addLog("🎪 Catálogos Oficiales de Ferias (VETECO Madrid / CONCRETA Oporto / GENERA / FIAA): Escaneando expositores industriales fabricantes de cerramientos, muros cortina, estructuras solares y carrocerías de aluminio.", "info");
+    }, 3400);
 
     setTimeout(() => {
-      addLog(`🏛️ Asociación AECIM (https://www.aecim.org/): Escaneando registro empresarial de la industria del metal y fabricantes de fachadas/carpintería de Madrid y Zona Centro.`, 'info');
+      addLog("⚖️ Licitaciones Públicas (contrataciondelestado.es & base.gov.pt): Rastreando adjudicaciones de obras y lotes de carpintería metálica de aluminio y muros cortina.", "info");
+    }, 4000);
+
+    setTimeout(() => {
+      addLog("🏛️ Prescripción Técnica en Arquitectura (Tectónica.archi & ArchDaily): Indexando sistemas de cerramiento modular y fachadas de aluminio prescritos en proyectos recientes.", "info");
     }, 4600);
 
     setTimeout(() => {
-      addLog(`🔎 Extrayendo el Ranking Nacional de Empresas de El Economista (https://ranking-empresas.eleconomista.es/) para indexar el top de facturación oficial de los últimos ejercicios fiscales (2024, 2025 y previsiones 2026).`, 'info');
-    }, 5400);
+      addLog("🇵🇹 Directorios Sectoriales Portugal (ANFAJE & AIMMAP): Extrayendo fabricantes de janelas eficientes y metalomecánica consumidora de perfilería extruida.", "info");
+    }, 5200);
 
     setTimeout(() => {
-      addLog(`🔑 Auditoría Financiera Mercantil Axesor (https://www.axesor.es/) y eInforma: Aplicando filtro estricto de solvencia y facturación > 5.000.000 € (> 5M €). Descartando pymes menores a 5M €.`, 'info');
-    }, 6200);
+      addLog("🏭 Federación FEMVAL & Asociación AECIM: Consultando censos industriales de transformadores de metal y cerramientos en C. Valenciana y Madrid.", "info");
+    }, 5800);
+
+    setTimeout(() => {
+      addLog("🔎 Extrayendo el Ranking Nacional de Empresas de El Economista (https://ranking-empresas.eleconomista.es/) para contrastar facturaciones oficiales.", "info");
+    }, 6400);
+
+    setTimeout(() => {
+      addLog("🔑 Auditoría Financiera Mercantil Axesor (https://www.axesor.es/) y eInforma: Comprobando solvencia y facturación > 5.000.000 € (o en blanco si no es comprobable al 100%).", "info");
+    }, 7000);;
 
     setTimeout(() => {
       addLog(`📈 Indexando bases de datos de Iberinform (https://www.iberinform.es/) para comprobar datos vigentes de administradores y vinculaciones empresariales del período actual.`, 'info');
@@ -691,32 +719,112 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
       }
 
       if (newProspectsToAdd.length > 0) {
-        // 1. Incorporación definitiva en el almacenamiento persistente (LocalStorage)
-        try {
-          const savedAdded = localStorage.getItem('aluminio_crm_added');
-          const currentAdded = savedAdded ? JSON.parse(savedAdded) : [];
-          const filteredCurrent = currentAdded.filter(existing => 
-            !newProspectsToAdd.some(n => normalizeCompanyName(n.name) === normalizeCompanyName(existing.name))
-          );
-          const updatedAdded = [...newProspectsToAdd, ...filteredCurrent];
-          localStorage.setItem('aluminio_crm_added', JSON.stringify(updatedAdded));
-        } catch (err) {
-          console.error('Error al guardar de forma definitiva las empresas en LocalStorage:', err);
-        }
-
-        // 2. Actualizar estado global reactivo del CRM
-        setProspects(prev => [...newProspectsToAdd, ...prev]);
+        // En lugar de guardar a ciegas, se presentan como candidatos seleccionables para que el usuario elija
+        setProspectingCandidates(newProspectsToAdd);
+        setSelectedCandidateIds(new Set(newProspectsToAdd.map(p => p.id)));
         setFoundLeadsCount(newProspectsToAdd.length);
 
-        addLog(`🎉 Agente de Prospección finalizado con éxito.`, 'success');
-        addLog(`💾 ¡Se han incorporado de forma definitiva ${newProspectsToAdd.length} nuevas empresas cualificadas en "${searchZone}" a la base de datos comercial!`, 'success');
-        addLog(`🔒 Persistencia permanente asegurada: Los nuevos registros se mantendrán guardados en tu CRM aunque recargues la página.`, 'success');
+        addLog(`🎉 Prospección finalizada con éxito.`, 'success');
+        addLog(`📋 Se han localizado ${newProspectsToAdd.length} empresas potenciales cualificadas en "${searchZone}".`, 'success');
+        addLog(`👉 Seleccione abajo qué empresas desea incorporar a la base de datos del CRM y cuáles prefiere descartar.`, 'warning');
       } else {
+        setProspectingCandidates([]);
+        setSelectedCandidateIds(new Set());
         addLog(`🏁 Proceso concluido. Todos los candidatos analizados ya existían en tu base de datos comercial.`, 'info');
       }
 
       setIsSearching(false);
     }, 10000);
+  };
+
+  // --- ACCIONES DE SELECCIÓN E INCORPORACIÓN MANUAL DE CANDIDATOS ---
+  const toggleSelectCandidate = (candidateId) => {
+    setSelectedCandidateIds(prev => {
+      const next = new Set(prev);
+      if (next.has(candidateId)) {
+        next.delete(candidateId);
+      } else {
+        next.add(candidateId);
+      }
+      return next;
+    });
+  };
+
+  const selectAllCandidates = () => {
+    setSelectedCandidateIds(new Set(prospectingCandidates.map(c => c.id)));
+  };
+
+  const deselectAllCandidates = () => {
+    setSelectedCandidateIds(new Set());
+  };
+
+  const handleIncorporateSelected = () => {
+    const toAdd = prospectingCandidates.filter(c => selectedCandidateIds.has(c.id));
+    if (toAdd.length === 0) {
+      alert('Por favor, seleccione al menos una empresa para incorporar.');
+      return;
+    }
+
+    // 1. Guardar de forma definitiva en LocalStorage
+    try {
+      const savedAdded = localStorage.getItem('aluminio_crm_added');
+      const currentAdded = savedAdded ? JSON.parse(savedAdded) : [];
+      const filteredCurrent = currentAdded.filter(existing => 
+        !toAdd.some(n => normalizeCompanyName(n.name) === normalizeCompanyName(existing.name))
+      );
+      const updatedAdded = [...toAdd, ...filteredCurrent];
+      localStorage.setItem('aluminio_crm_added', JSON.stringify(updatedAdded));
+    } catch (err) {
+      console.error('Error al guardar de forma definitiva las empresas en LocalStorage:', err);
+    }
+
+    // 2. Incorporar al estado global reactivo del CRM
+    setProspects(prev => [...toAdd, ...prev]);
+
+    // 3. Añadir logs en la consola del agente
+    setSearchLogs(prev => [
+      ...prev,
+      {
+        id: Date.now() + Math.random(),
+        text: `💾 ¡Incorporación confirmada! Se han añadido ${toAdd.length} empresas seleccionadas a la base de datos comercial del CRM:`,
+        type: 'success'
+      },
+      ...toAdd.map(item => ({
+        id: Date.now() + Math.random(),
+        text: `   ✅ [Añadida]: "${item.name}" | ${item.sector} | ${item.city || item.zone} | Email: ${item.email}`,
+        type: 'success'
+      }))
+    ]);
+
+    const discardedCount = prospectingCandidates.length - toAdd.length;
+    if (discardedCount > 0) {
+      setSearchLogs(prev => [
+        ...prev,
+        {
+          id: Date.now() + Math.random(),
+          text: `ℹ️ ${discardedCount} ${discardedCount === 1 ? 'empresa fue descartada' : 'empresas fueron descartadas'} por el usuario y omitidas de la base de datos.`,
+          type: 'info'
+        }
+      ]);
+    }
+
+    // Limpiar candidatos tras incorporar
+    setProspectingCandidates([]);
+    setSelectedCandidateIds(new Set());
+  };
+
+  const handleDiscardAll = () => {
+    const count = prospectingCandidates.length;
+    setSearchLogs(prev => [
+      ...prev,
+      {
+        id: Date.now() + Math.random(),
+        text: `❌ El usuario ha descartado las ${count} empresas candidatas de esta prospección. Ninguna ha sido añadida a la base de datos.`,
+        type: 'warning'
+      }
+    ]);
+    setProspectingCandidates([]);
+    setSelectedCandidateIds(new Set());
   };
 
   // --- PROCESAMIENTO E INSIGHTS DE IA EN TIEMPO REAL ---
@@ -821,9 +929,9 @@ Would you be available for a brief call next Tuesday at 10:00 AM?
 
 Best regards,
 
-Carmen Castro
+Norte 1
 Project Manager - Aluminios Innovations
-ccastro@gruposopena.com | +34 610 240 017`;
+info@gruposopena.com | +34 610 240 017`;
         setGeneratedEmail(englishEmail);
         return '📝 He traducido profesionalmente el borrador al **inglés** y he actualizado el editor del Redactor Inteligente de la derecha.';
       }
@@ -846,8 +954,8 @@ Ventajas principales:
 
 Atentamente,
 
-Carmen Castro
-ccastro@gruposopena.com | +34 610 240 017`;
+Norte 1
+info@gruposopena.com | +34 610 240 017`;
         setGeneratedEmail(shortEmail);
         return '📝 He simplificado y resumido el borrador actual para que sea más corto y directo. He actualizado el editor de la derecha.';
       }
@@ -998,10 +1106,10 @@ Terá disponibilidade para uma breve chamada telefónica ou reunião por Teams n
 
 Com os melhores cumprimentos,
 
-Carmen Castro
+Norte 1
 Project Manager - Zona Noroeste e Portugal
 SOPENA INNOVATIONS, S.L.
-ccastro@gruposopena.com | +34 610 240 017`
+info@gruposopena.com | +34 610 240 017`
 :
 `Estimado/a ${manager},
 
@@ -1022,10 +1130,10 @@ Le invito a consultar nuestros catálogos técnicos e interactivos directamente 
 
 Atentamente,
 
-Carmen Castro
+Norte 1
 Project Manager - Zona Noroeste y Portugal
 SOPENA INNOVATIONS, S.L.
-ccastro@gruposopena.com | +34 610 240 017`;
+info@gruposopena.com | +34 610 240 017`;
     } else {
       subject = isPt 
         ? `Seguimento comercial e apoio técnico - Aluminios Innovations / ${company.name}`
@@ -1046,9 +1154,9 @@ Gostaria de agendar uma breve chamada de 5 minutos esta semana para analisarmos 
 
 Melhores cumprimentos,
 
-Carmen Castro
+Norte 1
 Project Manager
-ccastro@gruposopena.com | +34 610 240 017`
+info@gruposopena.com | +34 610 240 017`
 :
 `Hola, ${manager}.
 
@@ -1064,9 +1172,9 @@ Puede ver las gamas y especificaciones en nuestros catálogos oficiales en líne
 
 Un saludo cordial,
 
-Carmen Castro
+Norte 1
 Project Manager
-ccastro@gruposopena.com | +34 610 240 017`;
+info@gruposopena.com | +34 610 240 017`;
     }
 
     setGeneratedEmail(`Asunto: ${subject}\n\n${body}`);
@@ -1092,7 +1200,7 @@ ccastro@gruposopena.com | +34 610 240 017`;
     let summaryText = `**Resumen Ejecutivo:** Empresa del sector **${sector}** ubicada en **${zone}**, con facturación estimada de **${fact}**. `;
     
     if (company.contacted) {
-      summaryText += `La cuenta ha sido previamente **contactada** y se encuentra activa en el canal de seguimiento comercial gestionado por Carmen Castro. El decisor clave de compras registrado es **${manager}** y el canal preferente es **${company.email || 'correo electrónico'}**. Se aconseja consolidar los puntos de interés e interacciones previas.`;
+      summaryText += `La cuenta ha sido previamente **contactada** y se encuentra activa en el canal de seguimiento comercial gestionado por Norte 1. El decisor clave de compras registrado es **${manager}** y el canal preferente es **${company.email || 'correo electrónico'}**. Se aconseja consolidar los puntos de interés e interacciones previas.`;
     } else {
       summaryText += `La cuenta está actualmente **Pendiente de Contacto inicial**. El contacto clave para establecer enlace es **${manager}** en el teléfono **${company.phone || 'No registrado'}** o correo **${company.email || 'No registrado'}**. Se sugiere iniciar aproximación fría presentando los catálogos técnicos interactivos del sector.`;
     }
@@ -1889,7 +1997,7 @@ ccastro@gruposopena.com | +34 610 240 017`;
               <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', padding: '8px 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <Globe size={20} style={{ color: '#2563eb', flexShrink: 0 }} />
                 <div style={{ fontSize: '0.8rem', color: '#1e40af' }}>
-                  <strong>Fuentes Sectoriales Activas:</strong> <strong>Novoperfil</strong>, <strong>FEMVAL</strong>, <strong>AECIM</strong> y <strong>Axesor</strong> (&gt; 5M €).
+                  <strong>Fuentes Sectoriales Activas:</strong> <strong>VETECO / CONCRETA</strong> (Ferias), <strong>Licitaciones Públicas</strong>, <strong>Tectónica</strong>, <strong>ANFAJE / AIMMAP</strong>, <strong>Novoperfil</strong> y <strong>Axesor</strong> (&gt; 5M €).
                 </div>
               </div>
               <div style={{ background: '#fdf4ff', border: '1px solid #f0abfc', padding: '8px 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -2041,6 +2149,241 @@ ccastro@gruposopena.com | +34 610 240 017`;
               <div ref={terminalEndRef} />
             </div>
           </div>
+
+          {/* PANEL DE SELECCIÓN Y REVISIÓN DE CANDIDATOS (AGENTFORCE LEAD FINDER) */}
+          {prospectingCandidates.length > 0 && (
+            <div style={{
+              background: '#ffffff',
+              border: '2px solid #7c3aed',
+              borderRadius: '12px',
+              padding: '24px',
+              boxShadow: '0 8px 25px rgba(124, 58, 237, 0.12)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '18px'
+            }}>
+              {/* Header de la sección de selección */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px', borderBottom: '1px solid #e2e8f0', paddingBottom: '16px' }}>
+                <div>
+                  <h4 style={{ margin: 0, color: '#1e1b4b', fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '800' }}>
+                    <ListChecks size={24} style={{ color: '#7c3aed' }} />
+                    Empresas Candidatas Encontradas ({prospectingCandidates.length})
+                  </h4>
+                  <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: '#64748b' }}>
+                    Seleccione las casillas de las empresas que desea incorporar formalmente a la base de datos del CRM. Las desmarcadas serán descartadas.
+                  </p>
+                </div>
+
+                {/* Acciones de selección rápida y botones principales */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  <button
+                    type="button"
+                    onClick={selectAllCandidates}
+                    style={{
+                      background: '#f1f5f9',
+                      border: '1px solid #cbd5e1',
+                      padding: '8px 14px',
+                      borderRadius: '6px',
+                      fontSize: '0.82rem',
+                      fontWeight: '600',
+                      color: '#334155',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Seleccionar Todas
+                  </button>
+                  <button
+                    type="button"
+                    onClick={deselectAllCandidates}
+                    style={{
+                      background: '#f1f5f9',
+                      border: '1px solid #cbd5e1',
+                      padding: '8px 14px',
+                      borderRadius: '6px',
+                      fontSize: '0.82rem',
+                      fontWeight: '600',
+                      color: '#334155',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Deseleccionar Todas
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleIncorporateSelected}
+                    disabled={selectedCandidateIds.size === 0}
+                    style={{
+                      background: selectedCandidateIds.size > 0 ? 'linear-gradient(135deg, #059669 0%, #10b981 100%)' : '#94a3b8',
+                      color: 'white',
+                      border: 'none',
+                      padding: '9px 20px',
+                      borderRadius: '8px',
+                      fontSize: '0.9rem',
+                      fontWeight: '700',
+                      cursor: selectedCandidateIds.size > 0 ? 'pointer' : 'not-allowed',
+                      boxShadow: selectedCandidateIds.size > 0 ? '0 4px 12px rgba(16, 185, 129, 0.3)' : 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}
+                  >
+                    <Check size={18} /> Incorporar Seleccionadas ({selectedCandidateIds.size})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleDiscardAll}
+                    style={{
+                      background: '#fff1f2',
+                      color: '#e11d48',
+                      border: '1px solid #fecdd3',
+                      padding: '9px 14px',
+                      borderRadius: '8px',
+                      fontSize: '0.85rem',
+                      fontWeight: '600',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Descartar Todo
+                  </button>
+                </div>
+              </div>
+
+              {/* Lista / Grid de empresas candidatas con checkbox */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '14px' }}>
+                {prospectingCandidates.map(cand => {
+                  const isSelected = selectedCandidateIds.has(cand.id);
+                  return (
+                    <div
+                      key={cand.id}
+                      onClick={() => toggleSelectCandidate(cand.id)}
+                      style={{
+                        border: isSelected ? '2px solid #10b981' : '1px solid #cbd5e1',
+                        background: isSelected ? '#f0fdf4' : '#f8fafc',
+                        borderRadius: '10px',
+                        padding: '16px',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '10px',
+                        position: 'relative'
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '10px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={() => {}} // click en contenedor maneja el cambio
+                            style={{
+                              width: '18px',
+                              height: '18px',
+                              cursor: 'pointer',
+                              accentColor: '#10b981'
+                            }}
+                          />
+                          <div>
+                            <strong style={{ fontSize: '1rem', color: isSelected ? '#065f46' : '#1e293b' }}>
+                              {cand.name}
+                            </strong>
+                            <div style={{ fontSize: '0.8rem', color: '#64748b' }}>
+                              📍 {cand.city || cand.zone} {cand.address ? `• ${cand.address}` : ''}
+                            </div>
+                          </div>
+                        </div>
+                        <span style={{
+                          fontSize: '0.75rem',
+                          fontWeight: '700',
+                          padding: '3px 8px',
+                          borderRadius: '6px',
+                          background: isSelected ? '#dcfce7' : '#e2e8f0',
+                          color: isSelected ? '#166534' : '#64748b'
+                        }}>
+                          {isSelected ? '✓ A incorporar' : '✕ Descartada'}
+                        </span>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.82rem', background: 'white', padding: '10px', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
+                        <div>
+                          <span style={{ color: '#64748b', display: 'block', fontSize: '0.72rem', fontWeight: 'bold' }}>SECTOR:</span>
+                          <strong style={{ color: '#334155' }}>{cand.sector}</strong>
+                        </div>
+                        <div>
+                          <span style={{ color: '#64748b', display: 'block', fontSize: '0.72rem', fontWeight: 'bold' }}>FACTURACIÓN:</span>
+                          <strong style={{ color: '#047857' }}>
+                            {cand.revenue ? `${(cand.revenue / 1000000).toFixed(1)}M €` : 'Pendiente'}
+                          </strong>
+                        </div>
+                        <div>
+                          <span style={{ color: '#64748b', display: 'block', fontSize: '0.72rem', fontWeight: 'bold' }}>EMAIL:</span>
+                          <span style={{ color: '#2563eb', wordBreak: 'break-all' }}>{cand.email || 'No disponible'}</span>
+                        </div>
+                        <div>
+                          <span style={{ color: '#64748b', display: 'block', fontSize: '0.72rem', fontWeight: 'bold' }}>TELÉFONO:</span>
+                          <span style={{ color: '#334155' }}>{cand.purchasingPhone || cand.phone || 'No disponible'}</span>
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: '#64748b', paddingTop: '4px' }}>
+                        <span>🛡️ AEA: <strong>No Competidor</strong></span>
+                        {cand.web && (
+                          <a
+                            href={cand.web.startsWith('http') ? cand.web : `https://${cand.web}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            style={{ color: '#7c3aed', textDecoration: 'underline' }}
+                          >
+                            Visitar web →
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Botón inferior de confirmación */}
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', borderTop: '1px solid #e2e8f0', paddingTop: '14px' }}>
+                <button
+                  type="button"
+                  onClick={handleDiscardAll}
+                  style={{
+                    background: '#f8fafc',
+                    color: '#64748b',
+                    border: '1px solid #cbd5e1',
+                    padding: '8px 16px',
+                    borderRadius: '6px',
+                    fontSize: '0.85rem',
+                    fontWeight: '600',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Cancelar / Descartar Todo
+                </button>
+                <button
+                  type="button"
+                  onClick={handleIncorporateSelected}
+                  disabled={selectedCandidateIds.size === 0}
+                  style={{
+                    background: selectedCandidateIds.size > 0 ? 'linear-gradient(135deg, #059669 0%, #10b981 100%)' : '#94a3b8',
+                    color: 'white',
+                    border: 'none',
+                    padding: '10px 22px',
+                    borderRadius: '8px',
+                    fontSize: '0.92rem',
+                    fontWeight: 'bold',
+                    cursor: selectedCandidateIds.size > 0 ? 'pointer' : 'not-allowed',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}
+                >
+                  <Check size={18} /> Confirmar e Incorporar {selectedCandidateIds.size} {selectedCandidateIds.size === 1 ? 'Empresa' : 'Empresas'} al CRM
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* DETALLES DE EXCLUSIÓN Y CONTROL FINANCIERO */}
           <div style={{ background: '#f8fafc', padding: '15px', borderRadius: '8px', border: '1px solid #e2e8f0', display: 'flex', gap: '15px', alignItems: 'center' }}>

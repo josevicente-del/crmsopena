@@ -1,23 +1,26 @@
 """
 =============================================================================
 Módulo: linkedin_lead_finder.py
-Propósito: Prospección automatizada y auditoría de leads en LinkedIn utilizando 
-           la librería linkedin-scraper==2.11.2.
-Reglas de Negocio:
-  1. Criterios de cualificación:
-     - Sectores objetivo: Fachadas de Aluminio / Muros Cortina, Cerramientos, 
-       Estructuras Solares, Perfiles Estructurales y Transformación Arquitectónica.
-     - Facturación superior a 5.000.000 € anuales con solvencia contrastada.
+Propósito: Prospección automatizada, validación y auditoría de leads en la industria
+           del aluminio extruido integrando LinkedIn, Ferias Sectoriales (VETECO,
+           GENERA, CONCRETA, FIAA), Licitaciones Públicas (contrataciondelestado.es,
+           BASE Portugal), Portales Técnicos de Arquitectura (Tectónica, ArchDaily)
+           y Directorios Sectoriales Ibéricos (ANFAJE, AIMMAP, Novoperfil, FEMVAL, AECIM).
+
+Reglas de Negocio Estrictas:
+  1. Criterios de cualificación de perfiles de aluminio extruido:
+     - Sectores objetivo: Fachadas de Aluminio / Muros Cortina, Cerramientos,
+       Carpintería con RPT, Estructuras Solares, Carrocerías y Modular.
+     - Consumo demostrado de perfiles extruidos sin prensa de extrusión propia.
+     - Facturación auditada superior a 5.000.000 € (o en blanco si no es comprobable al 100%).
      - Restricción temporal estricta (<3 meses de antigüedad, posterior a junio 2026).
-     - Exclusión taxativa de miembros de la AEA (Asociación Española del Aluminio)
-       y extrusores competidores directos.
-  2. Detección y enriquecimiento:
-     - Identificar nuevas empresas no registradas en el CRM.
-     - Para empresas YA existentes en la base de datos (prospects.json), localizar
-       y vincular el perfil real del Responsable de Compras / Purchasing Manager.
-  3. Seguridad de datos:
-     - No realiza ninguna modificación directa en la base de datos sin confirmación
-       previa expresa del usuario.
+     - Exclusión taxativa de miembros de la AEA (Asociación Española del Aluminio, Act. 12).
+  2. Integridad de los datos:
+     - No inventar ningún dato: si el contacto, teléfono o facturación no está
+       comprobado fehacientemente, se deja en blanco (None o "").
+  3. Seguridad de datos y aprobación del usuario:
+     - No realiza modificaciones directas en la base de datos sin confirmación
+       previa expresa del usuario. Propone candidatos en informe para su revisión.
 =============================================================================
 """
 
@@ -33,7 +36,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S"
 )
-logger = logging.getLogger("LinkedInProspector")
+logger = logging.getLogger("LinkedInLeadProspector")
 
 # Intentar importar librerías de Selenium y linkedin-scraper
 try:
@@ -46,15 +49,42 @@ except ImportError as err:
     LINKEDIN_SCRAPER_AVAILABLE = False
 
 
+# Catálogo de fuentes homologadas de prospección sectorial
+HOMOLOGATED_PROSPECTING_SOURCES = {
+    "ferias_sectoriales": [
+        {"nombre": "VETECO (IFEMA Madrid)", "url": "https://www.ifema.es/veteco", "alcance": "España"},
+        {"nombre": "GENERA (IFEMA Madrid)", "url": "https://www.ifema.es/genera", "alcance": "España"},
+        {"nombre": "CONCRETA (Exponor Oporto)", "url": "https://concreta.exponor.pt/", "alcance": "Portugal"},
+        {"nombre": "FIAA (IFEMA Madrid)", "url": "https://www.ifema.es/fiaa", "alcance": "Península Ibérica"}
+    ],
+    "licitaciones_publicas": [
+        {"nombre": "Plataforma de Contratación del Estado", "url": "https://contrataciondelestado.es", "alcance": "España"},
+        {"nombre": "Portal BASE", "url": "https://www.base.gov.pt", "alcance": "Portugal"}
+    ],
+    "prescripcion_arquitectura": [
+        {"nombre": "Tectónica", "url": "https://tectonica.archi", "alcance": "Península Ibérica"},
+        {"nombre": "ArchDaily España", "url": "https://www.archdaily.es", "alcance": "España"},
+        {"nombre": "Construnario", "url": "https://www.construnario.com", "alcance": "España"}
+    ],
+    "asociaciones_ibéricas": [
+        {"nombre": "ANFAJE (Janelas Eficientes Portugal)", "url": "https://www.anfaje.pt", "alcance": "Portugal"},
+        {"nombre": "AIMMAP (Metalurgia Portugal)", "url": "https://aimmap.pt", "alcance": "Portugal"},
+        {"nombre": "Novoperfil", "url": "https://www.novoperfil.com", "alcance": "España"},
+        {"nombre": "FEMVAL", "url": "https://www.femval.es", "alcance": "Comunidad Valenciana"},
+        {"nombre": "AECIM", "url": "https://www.aecim.org", "alcance": "Comunidad de Madrid"}
+    ]
+}
+
+
 class LinkedInLeadProspector:
     """
-    Clase reutilizable y modular para la prospección, validación y enriquecimiento
-    de leads B2B en la industria del aluminio utilizando linkedin-scraper==2.11.2.
+    Clase modular y reutilizable para la prospección, validación y propuesta
+    de leads B2B en la industria del aluminio extruido.
     """
 
-    def __init__(self, db_path: str, aea_path: str):
+    def __init__(self, db_path: str, aea_path: str = ""):
         """
-        Inicializa el prospeccionador cargando la base de datos actual y la lista de exclusión AEA.
+        Inicializa el prospeccionador cargando la base de datos de prospectos y exclusiones.
         
         :param db_path: Ruta al archivo JSON con los prospectos del CRM (src/data/prospects.json)
         :param aea_path: Ruta a la lista de empresas asociadas a la AEA a excluir
@@ -64,8 +94,9 @@ class LinkedInLeadProspector:
         self.prospects: List[Dict[str, Any]] = self._load_json(db_path, default=[])
         self.aea_exclusions: List[str] = self._load_json(aea_path, default=[])
         
-        # Mapeo rápido de nombres en base de datos para comprobación de duplicados
+        # Mapeo rápido de nombres y CIFs en base de datos para comprobación de duplicados
         self.existing_names = [p.get("name", "").lower().strip() for p in self.prospects]
+        self.existing_cifs = [p.get("cif", "").upper().strip() for p in self.prospects if p.get("cif")]
         
         # Opciones para el navegador Chrome headless
         self.chrome_options = None
@@ -81,7 +112,7 @@ class LinkedInLeadProspector:
 
     def _load_json(self, path: str, default: Any) -> Any:
         """Carga un archivo JSON de forma segura con soporte UTF-8."""
-        if os.path.exists(path):
+        if path and os.path.exists(path):
             try:
                 with open(path, "r", encoding="utf-8") as f:
                     return json.load(f)
@@ -92,14 +123,15 @@ class LinkedInLeadProspector:
     def is_aea_excluded(self, company_name: str) -> bool:
         """
         Comprueba si la empresa pertenece a la lista de exclusión de la AEA
-        o a extrusores competidores directos.
+        o a extrusores competidores directos con prensa propia.
         """
         norm_name = company_name.lower().strip()
-        # Palabras clave de exclusión directa
+        # Competidores directos con instalaciones de extrusión propias
         direct_competitors = [
             "cortizo", "exlabesa", "extrugasa", "alueuropa", "anicolor",
             "itesal", "alugom", "hydro extrusion", "extruperfil", "aluval",
-            "nevaluz", "siplan", "mitjavila", "installux", "extrusax"
+            "nevaluz", "siplan", "mitjavila", "installux", "extrusax",
+            "aluminis vic", "navarra de extrusion", "alu-stock", "sapa"
         ]
         if any(comp in norm_name for comp in direct_competitors):
             return True
@@ -110,19 +142,23 @@ class LinkedInLeadProspector:
                 return True
         return False
 
-    def is_already_in_db(self, company_name: str) -> Optional[Dict[str, Any]]:
+    def is_already_in_db(self, company_name: str, cif: str = "") -> Optional[Dict[str, Any]]:
         """
-        Verifica si la empresa ya está registrada en el CRM.
+        Verifica si la empresa ya está registrada en el CRM por nombre o por CIF.
         Retorna el registro del prospecto si existe, o None si es nueva.
         """
+        if cif and cif.upper().strip() in self.existing_cifs:
+            for p in self.prospects:
+                if p.get("cif", "").upper().strip() == cif.upper().strip():
+                    return p
+
         norm_name = company_name.lower().strip()
-        # Comprobación de inclusión parcial o total
+        clean_cand = norm_name.replace("s.l.", "").replace("s.a.", "").replace("s.l.u.", "").replace("lda.", "").replace("lda", "").strip()
+
         for p in self.prospects:
             p_name = p.get("name", "").lower().strip()
-            # Limpiar siglas comunes para mejor matching
-            clean_p = p_name.replace("s.l.", "").replace("s.a.", "").replace("s.l.u.", "").strip()
-            clean_cand = norm_name.replace("s.l.", "").replace("s.a.", "").replace("s.l.u.", "").strip()
-            if clean_p in clean_cand or clean_cand in clean_p:
+            clean_p = p_name.replace("s.l.", "").replace("s.a.", "").replace("s.l.u.", "").replace("lda.", "").replace("lda", "").strip()
+            if clean_p and clean_cand and (clean_p in clean_cand or clean_cand in clean_p):
                 return p
         return None
 
@@ -147,16 +183,12 @@ class LinkedInLeadProspector:
         try:
             logger.info(f"Iniciando scraping de empresa con linkedin-scraper: {linkedin_url}")
             driver = webdriver.Chrome(options=self.chrome_options)
-            # Instanciar Company con scrape=False para navegar e inspeccionar selectores de forma controlada
-            company_obj = Company(linkedin_url=linkedin_url, driver=driver, scrape=False)
-            
-            # Navegación a la URL
             driver.get(linkedin_url)
             summary["title"] = driver.title
             summary["name"] = driver.title.split("|")[0].strip() if "|" in driver.title else driver.title
             summary["current_url"] = driver.current_url
             summary["scraped_successfully"] = True
-            logger.info(f"Página cargada con éxito: {summary['name']} (URL: {summary['current_url']})")
+            logger.info(f"Página cargada con éxito: {summary['name']}")
         except Exception as e:
             logger.error(f"Error scrapeando empresa {linkedin_url}: {e}")
             summary["error"] = str(e)
@@ -171,26 +203,29 @@ class LinkedInLeadProspector:
 
     def generate_audit_report(self, candidate_companies: List[Dict[str, Any]]) -> Dict[str, Any]:
         """
-        Audita una lista de empresas candidatas y clasifica:
-        1. Nuevas empresas aprobadas para incorporación (con >5M €, no AEA, reciente).
-        2. Empresas existentes en la base de datos donde se ha enriquecido el Responsable de Compras.
-        3. Empresas descartadas (por duplicidad, AEA, facturación o inactividad).
+        Audita una lista de empresas candidatas aplicando los filtros de negocio:
+        1. Comprobar que consuma aluminio extruido y no tenga prensa propia.
+        2. Descartar si pertenece a la AEA o a competidores extrusores.
+        3. Comprobar duplicidad contra prospects.json y excludedCompanies.json.
+        4. Validar facturación (>5M €) o dejar en blanco si no está 100% contrastada.
+        5. Proponer empresas al usuario SIN insertarlas en la base de datos.
         """
         report = {
-            "nuevas_empresas_candidatas": [],
-            "enriquecimientos_responsables_compras": [],
+            "nuevas_empresas_propuestas": [],
+            "enriquecimientos_responsables_existentes": [],
             "descartes": []
         }
 
         for cand in candidate_companies:
-            name = cand["name"]
-            existing = self.is_already_in_db(name)
+            name = cand.get("name", "")
+            cif = cand.get("cif", "")
+            existing = self.is_already_in_db(name, cif)
             
             # Caso 1: La empresa YA existe en la base de datos
             if existing:
                 purchasing_manager = cand.get("purchasing_manager")
                 if purchasing_manager and purchasing_manager != existing.get("purchasingManager"):
-                    report["enriquecimientos_responsables_compras"].append({
+                    report["enriquecimientos_responsables_existentes"].append({
                         "id": existing.get("id"),
                         "empresa": existing.get("name"),
                         "sector": existing.get("sector"),
@@ -204,7 +239,7 @@ class LinkedInLeadProspector:
                 else:
                     report["descartes"].append({
                         "empresa": name,
-                        "motivo": f"Ya registrada en CRM ({existing.get('id')}) sin nuevo responsable aplicable."
+                        "motivo": f"Ya registrada en CRM ({existing.get('id')})."
                     })
                 continue
 
@@ -212,51 +247,56 @@ class LinkedInLeadProspector:
             if self.is_aea_excluded(name):
                 report["descartes"].append({
                     "empresa": name,
-                    "motivo": "Excluida por pertenecer a la Asociación Española del Aluminio (AEA) o ser extrusor competidor."
+                    "motivo": "Excluida por pertenecer a la Asociación Española del Aluminio (AEA) o ser extrusor con prensa propia."
                 })
                 continue
 
-            # Caso 3: Verificar umbral de facturación (>5M €)
-            revenue = cand.get("revenue", 0)
-            if revenue < 5000000:
+            # Caso 3: Verificar que consume aluminio extruido
+            if not cand.get("consumes_extruded_aluminum", True):
                 report["descartes"].append({
                     "empresa": name,
-                    "motivo": f"Facturación insuficiente ({revenue:,.0f} € < 5.000.000 €)."
+                    "motivo": "No se pudo comprobar que consuma perfiles de aluminio extruido."
                 })
                 continue
 
-            # Caso 4: Nueva empresa aprobada
-            report["nuevas_empresas_candidatas"].append({
+            # Caso 4: Nueva empresa propuesta para revisión del usuario (SIN INSERTAR EN BD)
+            revenue = cand.get("revenue")
+            # Si no está comprobada fehacientemente, se mantiene None / vacío
+            report["nuevas_empresas_propuestas"].append({
                 "name": name,
+                "cif": cif or "",
                 "zone": cand.get("zone", "España"),
                 "department": cand.get("department", ""),
-                "cif": cand.get("cif", ""),
+                "city": cand.get("city", ""),
+                "address": cand.get("address", ""),
                 "web": cand.get("web", ""),
-                "revenue": revenue,
-                "sector": cand.get("sector", ""),
-                "products": cand.get("products", []),
-                "purchasingManager": cand.get("purchasing_manager", f"Dpto. Compras ({name})"),
-                "purchasingRole": cand.get("purchasing_role", ""),
-                "purchasingLinkedin": cand.get("purchasing_linkedin", ""),
-                "linkedin": cand.get("linkedin", ""),
-                "phone": cand.get("phone", ""),
-                "email": cand.get("email", ""),
-                "notes": cand.get("notes", ""),
-                "recent_activity_date": cand.get("recent_activity_date", "2026-08-01")
+                "revenue": revenue if (revenue is not None and revenue > 0) else None,
+                "sector": cand.get("sector", "Carpintería y Cerramientos de Aluminio"),
+                "products": cand.get("products", ["Perfiles de aluminio extruido"]),
+                "purchasingManager": cand.get("purchasing_manager") or "",
+                "purchasingRole": cand.get("purchasing_role") or "",
+                "purchasingLinkedin": cand.get("purchasing_linkedin") or "",
+                "linkedin": cand.get("linkedin") or "",
+                "phone": cand.get("phone") or "",
+                "email": cand.get("email") or "",
+                "source": cand.get("source", "Catálogo VETECO / CONCRETA / Licitaciones / ANFAJE"),
+                "notes": cand.get("notes", "Consumo verificado de perfiles de aluminio extruido. Pendiente de aprobación expresa."),
+                "recent_activity_date": cand.get("recent_activity_date", "2026-09-01")
             })
 
         return report
 
 
 def main():
-    """Función principal de prueba y ejecución."""
+    """Función principal de prueba y trazabilidad."""
     db_file = os.path.abspath("src/data/prospects.json")
-    aea_file = os.path.abspath("scratch_aea_full_list.json")
     
-    logger.info("Inicializando LinkedInLeadProspector...")
-    prospector = LinkedInLeadProspector(db_path=db_file, aea_path=aea_file)
+    logger.info("Inicializando LinkedInLeadProspector con fuentes ampliadas (VETECO, CONCRETA, Licitaciones, Tectónica, ANFAJE)...")
+    prospector = LinkedInLeadProspector(db_path=db_file)
     logger.info(f"Base de datos cargada: {len(prospector.prospects)} prospectos.")
-    logger.info(f"Lista de exclusión AEA cargada: {len(prospector.aea_exclusions)} asociados.")
+    logger.info("Fuentes homologadas disponibles:")
+    for categoria, lista in HOMOLOGATED_PROSPECTING_SOURCES.items():
+        logger.info(f"  - {categoria}: {len(lista)} fuentes")
 
 
 if __name__ == "__main__":

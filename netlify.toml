@@ -13,6 +13,31 @@
   status = 200
 
 [[redirects]]
+  from = "/api/prospects/*"
+  to = "/.netlify/functions/prospects/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/api/prospects"
+  to = "/.netlify/functions/prospects"
+  status = 200
+
+[[redirects]]
+  from = "/api/interactions/*"
+  to = "/.netlify/functions/interactions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/api/interactions"
+  to = "/.netlify/functions/interactions"
+  status = 200
+
+[[redirects]]
+  from = "/api/audit-logs"
+  to = "/.netlify/functions/interactions"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

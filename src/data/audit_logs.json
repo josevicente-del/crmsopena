@@ -1,0 +1,75 @@
+[
+  {
+    "id": "LOG-1793563270817",
+    "timestamp": "2026-11-01T21:01:10.817797Z",
+    "user": "Superadministrador Grupo Sopena",
+    "action": "MODIFICACION_EMAIL_USUARIO",
+    "targetId": "norte1",
+    "targetName": "Usuario Norte 1",
+    "details": "Actualizado el email corporativo del usuario 'norte 1' a 'info@gruposopena.com'.",
+    "metadata": {
+      "user": "norte1",
+      "oldEmail": "norte1@gruposopena.com",
+      "newEmail": "info@gruposopena.com"
+    }
+  },
+  {
+    "id": "LOG-1793563072992",
+    "timestamp": "2026-11-01T20:57:52.992062Z",
+    "user": "Superadministrador Grupo Sopena",
+    "action": "CONFIGURACION_USUARIO_SISTEMA",
+    "targetId": "norte1",
+    "targetName": "Usuario Norte 1",
+    "details": "Eliminado usuario 'ccastro'. Creado nuevo usuario 'norte 1' (username: norte1, email: norte1@gruposopena.com) con las zonas: Asturias, Castilla y Leon, Portugal, Pais Vasco.",
+    "metadata": {
+      "deletedUser": "ccastro",
+      "createdUser": "norte1",
+      "displayName": "Norte 1",
+      "zones": [
+        "Asturias",
+        "Castilla y Leon",
+        "Portugal",
+        "Pais Vasco"
+      ]
+    }
+  },
+  {
+    "id": "LOG-1793562927253",
+    "timestamp": "2026-11-01T20:55:27.253328Z",
+    "user": "Usuario Operador",
+    "action": "MODIFICACION_FACTURACION",
+    "targetId": "PROP-LEAD26-0029",
+    "targetName": "Sunfer Energy S.L.",
+    "details": "Facturación de Sunfer Energy S.L. actualizada a 24.700.000 € (Tier 1 Oro).",
+    "metadata": {
+      "newRevenue": 24700000,
+      "tier": "Tier 1",
+      "estimatedTonsPerYear": 1400
+    }
+  },
+  {
+    "id": "LOG-1793562927236-349",
+    "timestamp": "2026-11-01T19:55:27.236Z",
+    "user": "Usuario Operador",
+    "action": "MODIFICACION_FACTURACION",
+    "targetId": "PROP-LEAD26-0029",
+    "targetName": "Sunfer Energy S.L.",
+    "details": "Facturación actualizada a 24.700.000 € (Tier 1 Oro, 1.400 Tm/año).",
+    "metadata": {
+      "oldRevenue": 38000000,
+      "newRevenue": 24700000,
+      "tier": "Tier 1",
+      "estimatedTonsPerYear": 1400
+    }
+  },
+  {
+    "id": "LOG-1793562866453-98",
+    "timestamp": "2026-11-01T19:54:26.453Z",
+    "user": "Auditoría Sistema",
+    "action": "AUDITORIA_INICIAL_GLOBAL_DB",
+    "targetId": null,
+    "targetName": "CRM Grupo Sopena",
+    "details": "Verificación de persistencia global y trazabilidad de interacciones.",
+    "metadata": {}
+  }
+]

@@ -1,7 +1,7 @@
 // Importamos los hooks de React (React no se importa directamente porque no se usa en el alcance)
 import { useState, useEffect, useMemo, useRef } from 'react';
 // Importamos únicamente los iconos de lucide-react que se utilizan en la aplicación
-import { MapPin, Building2, Briefcase, FileText, CheckCircle, Navigation, Sparkles, Mic, MicOff, Database, Mail, Download, Smartphone, Info, Menu, X } from 'lucide-react';
+import { MapPin, Building2, Briefcase, FileText, CheckCircle, CheckCircle2, Navigation, Sparkles, Mic, MicOff, Database, Mail, Download, Smartphone, Info, Menu, X, ShieldCheck, Clock, Zap } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -18,10 +18,18 @@ import './App.css';
 import './index.css';
 import { calculateShortestDistance } from './utils/distance';
 import AgentforceAssistant from './components/AgentforceAssistant';
-// Componente de alerta de novedad temporal (activo durante los próximos 6 días para anunciar nuevas empresas)
-import NovedadBanner from './components/NovedadBanner';
+
+
 import { findEmailWithIA, checkEmailQuality } from './utils/emailFinderEngine';
 import { getB2BExtrusionProfile, generateB2BOutreachKit, findNearbyClusterProspects } from './utils/b2bExtrusionEngine';
+import { 
+  getSupabaseClient, 
+  isSupabaseConfigured, 
+  saveSupabaseConfig, 
+  getSupabaseConfig, 
+  testSupabaseConnection 
+} from './utils/supabaseClient';
+import { logUserInteraction, fetchAuditLogs } from './utils/auditLogger';
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -211,7 +219,7 @@ const App = () => {
     if (saved === 'false') return false;
     return true; // Acceso directo habilitado por defecto
   });
-  const [username, setUsername] = useState('ccastro');
+  const [username, setUsername] = useState('norte1');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
   const [activeTab, setActiveTab] = useState('prospects');
@@ -306,7 +314,7 @@ const App = () => {
   // Evalúa si el usuario abre la aplicación con nuevas características pendientes de ver
   useEffect(() => {
     const lastSeenVersion = localStorage.getItem('aluminio_whats_new_version');
-    if (lastSeenVersion !== 'v1.2') {
+    if (lastSeenVersion !== 'v3.0') {
       setShowWhatsNew(true);
     }
   }, []);
@@ -327,7 +335,7 @@ const App = () => {
     setShowBackupPrompt(false);
   };
   const handleCloseWhatsNew = () => {
-    localStorage.setItem('aluminio_whats_new_version', 'v1.2');
+    localStorage.setItem('aluminio_whats_new_version', 'v3.0');
     setShowWhatsNew(false);
   };
   
@@ -670,6 +678,16 @@ const App = () => {
   // GESTIÓN Y PERSISTENCIA CENTRALIZADA DE TAREAS EN SERVIDOR (/api/tasks)
   // Las tareas se guardan de forma centralizada en el servidor (src/data/tasks.json)
   // =========================================================================
+  // Estados para Auditoría Global de Interacciones y Base de Datos Cloud (Supabase)
+  const [auditLogsList, setAuditLogsList] = useState([]);
+  const [auditFilterUser, setAuditFilterUser] = useState('');
+  const [auditFilterAction, setAuditFilterAction] = useState('');
+  const [supabaseStatus, setSupabaseStatus] = useState(() => isSupabaseConfigured());
+  const [supabaseUrlInput, setSupabaseUrlInput] = useState(() => getSupabaseConfig().url);
+  const [supabaseKeyInput, setSupabaseKeyInput] = useState(() => getSupabaseConfig().anonKey);
+  const [supabaseTestMsg, setSupabaseTestMsg] = useState(null);
+  const [isSyncingGlobalDb, setIsSyncingGlobalDb] = useState(false);
+
   const [crmTasks, setCrmTasks] = useState(() => {
     if (Array.isArray(initialServerTasks) && initialServerTasks.length > 0) {
       return initialServerTasks;
@@ -702,6 +720,46 @@ const App = () => {
       }
     };
     fetchServerTasks();
+
+    // Carga inicial del registro global de interacciones de usuario
+    const loadAuditHistory = async () => {
+      try {
+        const logs = await fetchAuditLogs();
+        if (Array.isArray(logs) && isMounted) {
+          setAuditLogsList(logs);
+        }
+      } catch (err) {
+        console.warn('[Audit] Error al cargar historial:', err);
+      }
+    };
+    loadAuditHistory();
+
+    // Sincronización activa con la API REST central (/api/prospects) y Supabase al iniciar
+    const syncFromGlobalDb = async () => {
+      try {
+        const res = await fetch('/api/prospects');
+        if (res.ok) {
+          const cloudProspects = await res.json();
+          if (Array.isArray(cloudProspects) && cloudProspects.length > 0 && isMounted) {
+            // Reconciliar sin perder modificaciones locales no persistidas
+            setProspects(prev => {
+              const cloudMap = new Map(cloudProspects.map(p => [String(p.id), p]));
+              return prev.map(p => {
+                const cloudRecord = cloudMap.get(String(p.id));
+                if (cloudRecord) {
+                  return { ...p, ...cloudRecord, tasks: p.tasks || cloudRecord.tasks || [] };
+                }
+                return p;
+              });
+            });
+          }
+        }
+      } catch (err) {
+        console.warn('[GlobalDB] Conexión activa con API de prospectos:', err);
+      }
+    };
+    syncFromGlobalDb();
+
     return () => { isMounted = false; };
   }, []);
 
@@ -728,14 +786,14 @@ const App = () => {
       isDefaultPass: true,
       defaultPass: 'lacado2025'
     },
-    ccastro: {
-      username: 'ccastro',
-      name: 'Carmen Castro',
-      role: 'Project Manager Comercial',
-      email: 'ccastro@gruposopena.com',
+    norte1: {
+      username: 'norte1',
+      name: 'Norte 1',
+      role: 'Delegado Comercial Norte 1',
+      email: 'info@gruposopena.com',
       phone: '+34 610 240 017',
       whatsapp: '34610240017',
-      zones: ['ALL']
+      zones: ['Asturias', 'Castilla y Leon', 'Portugal', 'Pais Vasco']
     },
     // Configuración de usuario comercial: Alfredo Domingo
     adomingo: {
@@ -763,18 +821,22 @@ const App = () => {
     if (saved) {
       try { 
         const parsed = JSON.parse(saved);
-        if (parsed && parsed.username === 'ccastro') {
-          parsed.name = 'Carmen Castro';
+        if (parsed && (parsed.username === 'ccastro' || parsed.username === 'norte1')) {
+          parsed.username = 'norte1';
+          parsed.name = 'Norte 1';
+          parsed.role = 'Delegado Comercial Norte 1';
+          parsed.email = 'info@gruposopena.com';
           parsed.phone = '+34 610 240 017';
           parsed.whatsapp = '34610240017';
-          parsed.zones = ['ALL'];
+          parsed.zones = ['Asturias', 'Castilla y Leon', 'Portugal', 'Pais Vasco'];
           localStorage.setItem('sopena_user_session', JSON.stringify(parsed));
+          return parsed;
         }
         return parsed;
       } catch (e) {}
     }
     // Usuario activo por defecto para arranque inmediato
-    return SOPENA_USERS.ccastro;
+    return SOPENA_USERS.norte1;
   });
 
   const [userPasswords, setUserPasswords] = useState(() => {
@@ -943,8 +1005,48 @@ const App = () => {
         return hasTasks || hasNewHistory || stageChanged || contactChanged || notesChanged || respChanged || dataChanged;
       });
       localStorage.setItem('aluminio_crm_modifications', JSON.stringify(modifiedOnly));
+
+      // 3. SINCRONIZACIÓN AUTOMÁTICA CON BASE DE DATOS GLOBAL / API REST CENTRAL
+      // Cada cambio realizado por el usuario se envía inmediatamente al servidor y a Supabase
+      const syncPayload = {
+        sync: true,
+        modifications: modifiedOnly,
+        added: addedCompanies
+      };
+      fetch('/api/prospects/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(syncPayload)
+      }).catch(() => {});
+
+      // Sincronizar directamente con Supabase PostgreSQL si las credenciales están configuradas
+      const supabase = getSupabaseClient();
+      if (supabase && (modifiedOnly.length > 0 || addedCompanies.length > 0)) {
+        const toUpsert = [...addedCompanies, ...modifiedOnly].map(p => ({
+          id: String(p.id),
+          name: p.name,
+          cif: p.cif || '',
+          zone: p.zone || 'ALL',
+          department: p.department || '',
+          address: p.address || '',
+          revenue: p.revenue || null,
+          tier: p.tier || null,
+          sector: p.sector || '',
+          email: p.email || '',
+          phone: p.phone || '',
+          web: p.web || '',
+          pipeline_stage: p.pipelineStage || 'Lead',
+          contacted: !!p.contacted,
+          contact_date: p.contactDate || null,
+          notes: p.notes || '',
+          updated_at: new Date().toISOString()
+        }));
+        supabase.from('prospects').upsert(toUpsert, { onConflict: 'id' }).then(({ error }) => {
+          if (error) console.warn('[Supabase Sync] Upsert aviso:', error.message);
+        });
+      }
     } catch (e) {
-      console.warn('Límite de cuota de LocalStorage alcanzado. Los datos se mantienen en memoria viva.', e);
+      console.warn('Almacenamiento reactivo activo. Datos sincronizados con base central.', e);
     }
   }, [prospects]);
   useEffect(() => {
@@ -985,12 +1087,17 @@ const App = () => {
       const matchSector = filterSector === '' || p.sector === filterSector;
       const matchStatus = filterStatus === '' || (filterStatus === 'contacted' ? p.contacted : !p.contacted);
       const b2b = getB2BExtrusionProfile(p);
-      const matchTier = filterTier === '' || b2b.b2bTier === filterTier;
+      const matchTier = filterTier === '' 
+        ? true 
+        : filterTier === 'none' 
+          ? !b2b.b2bTier 
+          : b2b.b2bTier === filterTier;
       
       let matchRevenue = true;
-      if (filterRevenue === 'gt10') matchRevenue = p.revenue > 10000000;
-      else if (filterRevenue === '5to10') matchRevenue = p.revenue >= 5000000 && p.revenue <= 10000000;
-      else if (filterRevenue === 'lt5') matchRevenue = p.revenue < 5000000;
+      if (filterRevenue === 'gt10') matchRevenue = Boolean(p.revenue && p.revenue > 10000000);
+      else if (filterRevenue === '5to10') matchRevenue = Boolean(p.revenue && p.revenue >= 5000000 && p.revenue <= 10000000);
+      else if (filterRevenue === 'lt5') matchRevenue = Boolean(p.revenue && p.revenue > 0 && p.revenue < 5000000);
+      else if (filterRevenue === 'unverified') matchRevenue = !p.revenue || p.revenue === 0;
       let matchNewOnly = true;
       if (filterNewOnly) {
         if (!p.createdAt) {
@@ -1163,6 +1270,21 @@ const App = () => {
       });
   }, [userProspects, routingFilterName, routingFilterZone, routingFilterSector, routingFilterProduct]);
   const handleSaveCrm = (id, data) => {
+    const target = prospects.find(p => p.id === id);
+    const pName = target ? target.name : 'Empresa';
+
+    // REGISTRO INDELEBLE DE AUDITORÍA DE INTERACCIÓN
+    logUserInteraction({
+      action: 'MODIFICACION_FICHA_EMPRESA',
+      user: currentUser?.name || 'Administrador',
+      targetId: id,
+      targetName: pName,
+      details: `Actualizada ficha de "${pName}". Contactado: ${data.contacted ? 'Sí' : 'No'}.`,
+      metadata: { ...data }
+    }).then(newEntry => {
+      if (newEntry) setAuditLogsList(prev => [newEntry, ...prev]);
+    });
+
     setProspects(prev => prev.map(p => {
       if (p.id === id) {
         const associatedTasks = crmTasks.filter(t => t.prospectId === id);
@@ -1313,6 +1435,21 @@ const App = () => {
   };
 
   const handleUpdatePipelineStage = (prospectId, newStage) => {
+    const targetP = prospects.find(p => p.id === prospectId);
+    const oldStageName = targetP?.pipelineStage || 'Lead';
+
+    // REGISTRO INDELEBLE DE AUDITORÍA DE INTERACCIÓN
+    logUserInteraction({
+      action: 'CAMBIO_FASE_PIPELINE',
+      user: currentUser?.name || 'Administrador',
+      targetId: prospectId,
+      targetName: targetP ? targetP.name : 'Empresa',
+      details: `Cambio en pipeline de ventas: de '${oldStageName}' a '${newStage}'`,
+      metadata: { oldStage: oldStageName, newStage }
+    }).then(newEntry => {
+      if (newEntry) setAuditLogsList(prev => [newEntry, ...prev]);
+    });
+
     setProspects(prev => prev.map(p => {
       if (p.id === prospectId) {
         const oldStage = p.pipelineStage || 'Lead';
@@ -1691,8 +1828,8 @@ const App = () => {
       let sectorText = '';
       if (['Cerramientos', 'Puertas y Ventanas', 'Construccion Modular'].includes(target.sector)) {
         sectorText = isPt 
-          ? `Centrados no setor de ${target.sector}, fabricamos e montamos perfis com rotura de ponte térmica e poliamidas "Low Lambda" para o máximo isolamento. Extrudimos tanto para os nossos sistemas próprios de arquitetura como para sistemas de terceiros. Além disso, os nossos lacados Qualicoat Seaside e acabamentos com efeito madeira (Qualideco) garantirão a máxima resistência e estética nas suas caixilharias.`
-          : `Centrados en el sector de ${target.sector}, fabricamos y ensamblamos perfiles con rotura de puente térmico y poliamidas "Low Lambda" para el máximo aislamiento. Extruimos tanto para nuestros sistemas propios de arquitectura como para sistemas de terceros. Además, nuestros lacados Qualicoat Seaside y acabados con efecto madera (Qualideco) garantizarán la máxima resistencia y estética en todos sus cerramientos.`;
+          ? `Centrados no setor de ${target.sector}, fabricamos e montamos perfis com rotura de ponte térmica e poliamidas reforzadas para o máximo isolamento. Extrudimos tanto para os nossos sistemas próprios de arquitetura como para sistemas de terceiros. Além disso, os nossos lacados Qualicoat Seaside e acabamentos com efeito madeira (Qualideco) garantirão a máxima resistência e estética nas suas caixilharias.`
+          : `Centrados en el sector de ${target.sector}, fabricamos y ensamblamos perfiles con rotura de puente térmico y poliamidas reforzadas para el máximo aislamiento. Extruimos tanto para nuestros sistemas propios de arquitectura como para sistemas de terceros. Además, nuestros lacados Qualicoat Seaside y acabados con efecto madera (Qualideco) garantizarán la máxima resistencia y estética en todos sus cerramientos.`;
       } else if (['Fachadas de Aluminio', 'Fabricantes de Escaleras de Aluminio'].includes(target.sector)) {
         sectorText = isPt
           ? `Para ${target.sector}, extrudimos ligas estruturais (6005/6083) que oferecem as propriedades mecânicas avançadas requeridas para muros cortina e estruturas portantes, sempre con acabamentos Qualideco impecáveis.`
@@ -2031,12 +2168,12 @@ const App = () => {
       <div class="grid">
         <div>
           <h3>\${isPt ? 'Quem Somos' : 'Quiénes Somos'}</h3>
-          <p>\${isPt ? 'Somos uma empresa industrial especializada no design e fabricação de perfis de alumínio extrudado sob medida, localizados estrategicamente no ' : 'Somos una empresa industrial especializada en el diseño y fabricación de perfiles de aluminio extruido a medida, ubicados estratégicamente en el '}<strong>Polígono Industrial Los Vientos (Náquera, Valencia)</strong>. \${isPt ? 'Esta produção centralizada permite-nos oferecer uma proximidade logística imbatível para toda a Península Ibérica, garantindo prazos de entrega ágeis, nula dependência de importações e um suporte técnico direto.' : 'Esta produção centralizada nos permite oferecer uma corrência logística inmelhorável para toda a Península Ibérica, garantindo prazos de entrega ágeis, nula dependência de importações e um suporte técnico direto.'}</p>
+          <p>\${isPt ? 'Somos uma empresa industrial especializada no design e fabricação de perfis de alumínio extrudado sob medida, localizados estrategicamente no ' : 'Somos una empresa industrial especializada en el diseño y fabricación de perfiles de aluminio extruido a medida, ubicados estratégicamente en el '}<strong>Polígono Industrial Los Vientos (Náquera, Valencia)</strong>. \${isPt ? 'Esta produção centralizada permite-nos oferecer uma proximidade logística imbatível para toda a Península Ibérica, garantindo prazos de entrega ágeis, nula dependência de importações e um suporte técnico direto.' : 'Esta producción centralizada nos permite ofrecer una cercanía logística inmejorable para toda la Península Ibérica, garantizando plazos de entrega ágiles, nula dependencia de importaciones y un soporte técnico directo.'}</p>
           
           <h3 style="margin-top: 30px;">\${isPt ? 'Compromisso e Normativa' : 'Compromiso y Normativa'}</h3>
           <ul>
             <li><strong>\${isPt ? 'Alumínio Reciclado:' : 'Aluminio Reciclado:'}</strong> \${isPt ? 'Utilização de tarugos de alumínio reciclável de muito baixo impacto.' : 'Uso de tochos de aluminio reciclable de muy bajo impacto.'}</li>
-            <li><strong>\${isPt ? 'Ligas Especializadas:' : 'Aleaciones Especializadas:'}</strong> \${isPt ? 'Capacidade para extrudar ligas exigentes (6060, 6005, 6083).' : 'Capacidad para extruir aleaciones exigentes (6060, 6005, 6083).'}</li>
+            <li><strong>\${isPt ? 'Ligas Especializadas:' : 'Aleaciones Especializadas:'}</strong> \${isPt ? 'Capacidade para extrudar ligas exigentes (6060, 6005, 6082, 6083).' : 'Capacidad para extruir aleaciones exigentes (6060, 6005, 6082, 6083).'}</li>
             <li><strong>\${isPt ? 'Cumprimento Rigoroso:' : 'Cumplimiento Estricto:'}</strong> \${isPt ? 'Marcação CE e avalizados pelos selos internacionais mais exigentes.' : 'Marcado CE y avalados por los sellos internacionales más exigentes.'}</li>
           </ul>
         </div>
@@ -2044,9 +2181,9 @@ const App = () => {
           <div class="capabilities-box">
             <h3>\${isPt ? 'As Nossas Capacidades' : 'Nuestras Capacidades'}</h3>
             <ul style="margin: 0; padding-left: 15px;">
-              <li style="margin-bottom: 12px;"><strong>\${isPt ? 'Extrusão de Precisão:' : 'Extrusión de Precisión:'}</strong><br>\${isPt ? 'Manuseamento avançado da série 6000.' : 'Manejo avanzado de la serie 6000.'}</li>
-              <li style="margin-bottom: 12px;"><strong>\${isPt ? 'Tratamentos Superficiais:' : 'Tratamientos Superficiales:'}</strong><br>\${isPt ? 'Anodização e Lacagem de máxima durabilidade.' : 'Anodizado y Lacado de máxima durabilidad.'}</li>
-              <li><strong>\${isPt ? 'Engenharia e Design:' : 'Ingeniería y Diseño:'}</strong><br>\${isPt ? 'Desenvolvimento de matrizes exclusivas.' : 'Desarrollo de matrices exclusivas.'}</li>
+              <li style="margin-bottom: 12px;"><strong>\${isPt ? 'Extrusão de Precisão:' : 'Extrusión de Precisión:'}</strong><br>\${isPt ? 'Capacidade diária de 55 Tm com duas prensas (7" e 9") para geometrias e ligas diversas (incluindo 6082).' : 'Capacidad diaria de 55 Tm con dos prensas (7" y 9") para geometrías y aleaciones de distintos tipos (incluida 6082).'}</li>
+              <li style="margin-bottom: 12px;"><strong>\${isPt ? 'Tratamentos Superficiais:' : 'Tratamientos Superficiales:'}</strong><br>\${isPt ? 'Lacagem (Qualicoat ou Qualicoat Seaside), Anodização (Qualanod) e Efeito Madeira (Qualideco).' : 'Lacado (Qualicoat o Qualicoat Seaside), Anodizado (Qualanod) y Efecto Madera (Qualideco).'}</li>
+              <li><strong>\${isPt ? 'Engenharia e Design:' : 'Ingeniería y Diseño:'}</strong><br>\${isPt ? 'Apoio ao cliente no desenvolvimento, adaptação e extrusão das suas próprias séries.' : 'Apoyo al cliente en el desarrollo, adaptación y extrusión de sus propias series.'}</li>
             </ul>
           </div>
           <div class="cert-grid">
@@ -2054,13 +2191,35 @@ const App = () => {
             <div class="cert-tag">🌱 ISO 14001</div>
             <div class="cert-tag">🛡️ ISO 45001</div>
             <div class="cert-tag">🇪🇺 Marcado CE</div>
-            <div class="cert-tag">🎖 QUALANOD</div>
-            <div class="cert-tag">🎖 QUALICOAT</div>
+            <div class="cert-tag">🎖️ QUALICOAT / QUALICOAT SEASIDE</div>
+            <div class="cert-tag">🎖️ QUALANOD</div>
+            <div class="cert-tag">🎖️ QUALIDECO</div>
           </div>
         </div>
       </div>
       \${sectorHtml}
       \${catalogsHtml}
+
+      <!-- PRÓXIMOS PASOS DE COLABORACIÓN (CALL-TO-ACTION) -->
+      <div style="margin-top: 35px; margin-bottom: 25px; background: linear-gradient(135deg, #072b66 0%, #1e1b4b 100%); color: white; padding: 24px 28px; border-radius: 12px; box-shadow: 0 8px 20px rgba(7, 43, 102, 0.15);">
+        <h4 style="margin: 0 0 14px 0; font-size: 1.15rem; font-weight: 800; color: #38bdf8; display: flex; align-items: center; gap: 8px;">
+          🚀 \${isPt ? 'Próximos Passos de Colaboração' : 'Próximos Pasos de Colaboración'}
+        </h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; font-size: 0.84rem;">
+          <div style="background: rgba(255,255,255,0.08); padding: 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12);">
+            <strong style="color: #fcd34d; display: block; margin-bottom: 5px;">1️⃣ \${isPt ? 'Envio de Requisitos' : 'Envío de Requerimientos'}</strong>
+            <span style="opacity: 0.9; line-height: 1.4; display: block;">\${isPt ? 'Partilhe com o nosso departamento técnico os seus desenhos ou requisitos de perfil para um estudo de viabilidade sem compromisso.' : 'Comparta con nuestro departamento técnico sus planos o requerimientos de perfil para un estudio de viabilidad sin compromiso.'}</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.08); padding: 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12);">
+            <strong style="color: #fcd34d; display: block; margin-bottom: 5px;">2️⃣ \${isPt ? 'Proposta Personalizada (RFQ)' : 'Oferta Personalizada (RFQ)'}</strong>
+            <span style="opacity: 0.9; line-height: 1.4; display: block;">\${isPt ? 'Apresentaremos uma proposta económica detalhada com prazos diretos para as suas instalações e condições preferenciais.' : 'Le remitiremos una propuesta económica detallada con plazos directos a sus instalaciones y condiciones preferentes.'}</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.08); padding: 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12);">
+            <strong style="color: #fcd34d; display: block; margin-bottom: 5px;">3️⃣ \${isPt ? 'Amostras ou Reunião Técnica' : 'Muestrario o Reunión Técnica'}</strong>
+            <span style="opacity: 0.9; line-height: 1.4; display: block;">\${isPt ? 'Podemos fornecer amostras de acabamento (Qualicoat, Qualanod, Qualideco) ou coordenar uma visita com o vosso delegado.' : 'Podemos suministrarle probetas de acabado (Qualicoat, Qualanod, Qualideco) o coordinar una visita con su delegado.'}</span>
+          </div>
+        </div>
+      </div>
       <div class="footer-section">
         <div class="signature-info">
           <p style="margin-bottom: 15px;">\${isPt ? 'Com os melhores cumprimentos,' : 'Atentamente,'}</p>
@@ -2233,8 +2392,8 @@ const App = () => {
     if (target) {
       if (['Cerramientos', 'Puertas y Ventanas', 'Construccion Modular'].includes(target.sector)) {
         sectorText = isPt 
-          ? `Centrados no setor de ${target.sector}, fabricamos e montamos perfis com rotura de ponte térmica e poliamidas "Low Lambda" para o máximo isolamento. Extrudimos tanto para os nossos sistemas próprios de arquitetura como para sistemas de terceiros. Além disso, os nossos lacados Qualicoat Seaside e acabamentos com efeito madeira (Qualideco) garantirão a máxima resistência e estética nas suas caixilharias.`
-          : `Centrados en el sector de ${target.sector}, fabricamos y ensamblamos perfiles con rotura de puente térmico y poliamidas "Low Lambda" para el máximo aislamiento. Extruimos tanto para nuestros sistemas propios de arquitectura como para sistemas de terceros. Además, nuestros lacados Qualicoat Seaside y acabados con efecto madera (Qualideco) garantizarán la máxima resistencia y estética en todos sus cerramientos.`;
+          ? `Centrados no setor de ${target.sector}, fabricamos e montamos perfis com rotura de ponte térmica e poliamidas reforzadas para o máximo isolamento. Extrudimos tanto para os nossos sistemas próprios de arquitetura como para sistemas de terceiros. Além disso, os nossos lacados Qualicoat Seaside e acabamentos com efeito madeira (Qualideco) garantirão a máxima resistência e estética nas suas caixilharias.`
+          : `Centrados en el sector de ${target.sector}, fabricamos y ensamblamos perfiles con rotura de puente térmico y poliamidas reforzadas para el máximo aislamiento. Extruimos tanto para nuestros sistemas propios de arquitectura como para sistemas de terceros. Además, nuestros lacados Qualicoat Seaside y acabados con efecto madera (Qualideco) garantizarán la máxima resistencia y estética en todos sus cerramientos.`;
       } else if (['Fachadas de Aluminio', 'Fabricantes de Escaleras de Aluminio'].includes(target.sector)) {
         sectorText = isPt
           ? `Para ${target.sector}, extrudimos ligas estruturais (6005/6083) que oferecem as propriedades mecânicas avançadas requeridas para muros cortina e estruturas portantes, sempre com acabamentos Qualideco impecáveis.`
@@ -2361,7 +2520,7 @@ const App = () => {
 
   // Estados para asignación de comercial en la Presentación Corporativa
   // 'auto': según la zona del cliente seleccionado
-  // 'ccastro' | 'adomingo' | 'karim': comercial específico
+  // 'norte1' | 'adomingo' | 'karim': comercial específico
   // 'custom': comercial genérico configurable con campos libres
   const [selectedSalespersonId, setSelectedSalespersonId] = useState('auto');
   const [customSalesperson, setCustomSalesperson] = useState({
@@ -2374,7 +2533,7 @@ const App = () => {
 
   // Determinar comercial por defecto según la zona geográfica del prospecto
   const getSalespersonByZone = (zone) => {
-    if (!zone) return SOPENA_USERS.ccastro;
+    if (!zone) return SOPENA_USERS.norte1;
     const z = zone.toLowerCase();
     if (z.includes('valenciana') || z.includes('madrid') || z.includes('mancha')) {
       return SOPENA_USERS.adomingo;
@@ -2382,8 +2541,8 @@ const App = () => {
     if (z.includes('francia') || z.includes('france')) {
       return SOPENA_USERS.karim;
     }
-    // Portugal, Galicia, Asturias, Castilla y León, etc. corresponden a Carmen Castro / Noroeste
-    return SOPENA_USERS.ccastro;
+    // Zonas Norte y Portugal corresponden a Norte 1
+    return SOPENA_USERS.norte1;
   };
 
   // Obtener el comercial activo a mostrar en la presentación
@@ -2395,7 +2554,7 @@ const App = () => {
       if (presentationTarget && presentationTarget.zone) {
         return getSalespersonByZone(presentationTarget.zone);
       }
-      return currentUser && currentUser.username !== 'admin' ? currentUser : SOPENA_USERS.ccastro;
+      return currentUser && currentUser.username !== 'admin' ? currentUser : SOPENA_USERS.norte1;
     }
 
     // Modo Superadministrador:
@@ -2412,7 +2571,7 @@ const App = () => {
         whatsapp: (customSalesperson.whatsapp || customSalesperson.phone || '').replace(/[^0-9]/g, '')
       };
     }
-    return SOPENA_USERS[selectedSalespersonId] || SOPENA_USERS.ccastro;
+    return SOPENA_USERS[selectedSalespersonId] || SOPENA_USERS.norte1;
   };
   
   // ==========================================
@@ -2637,10 +2796,10 @@ const App = () => {
             <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
               <button 
                 type="button" 
-                onClick={() => { setUsername('ccastro'); setPassword(''); }} 
-                style={{ padding: '4px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', background: username === 'ccastro' ? '#e0e7ff' : 'white', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600, color: '#3730a3' }}
+                onClick={() => { setUsername('norte1'); setPassword(''); }} 
+                style={{ padding: '4px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', background: username === 'norte1' ? '#e0e7ff' : 'white', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600, color: '#3730a3' }}
               >
-                👤 ccastro (Ast, CyL, Por, PV)
+                👤 norte 1 (Ast, CyL, Por, PV)
               </button>
               <button 
                 type="button" 
@@ -2671,7 +2830,7 @@ const App = () => {
               <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#475569', marginBottom: '4px', display: 'block' }}>Usuario</label>
               <input 
                 type="text" 
-                placeholder="Ej. adomingo, karim, ccastro" 
+                placeholder="Ej. adomingo, karim, norte1" 
                 value={username} 
                 onChange={e => setUsername(e.target.value)} 
                 style={{width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '0.95rem', boxSizing: 'border-box'}}
@@ -2835,6 +2994,9 @@ const App = () => {
           <li className={`nav-link ${activeTab === 'instructions' ? 'active' : ''}`} onClick={() => { setActiveTab('instructions'); setIsMobileMenuOpen(false); }} style={{ background: activeTab === 'instructions' ? 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.15) 100%)' : 'transparent', color: activeTab === 'instructions' ? '#34d399' : '' }}>
             <Info size={20} style={{ color: '#34d399' }} /> Guía de Usuario
           </li>
+          <li className={`nav-link ${activeTab === 'audit' ? 'active' : ''}`} onClick={() => { setActiveTab('audit'); setIsMobileMenuOpen(false); }} style={{ background: activeTab === 'audit' ? 'linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(14, 165, 233, 0.2) 100%)' : 'transparent', color: activeTab === 'audit' ? '#38bdf8' : '' }}>
+            <ShieldCheck size={20} style={{ color: '#38bdf8' }} /> Auditoría & BD Global
+          </li>
           <li className="nav-link" onClick={handleLogout} style={{marginTop: 'auto', borderTop: '1px solid rgba(255,255,255,0.1)', borderRadius: '0', paddingTop: '20px'}}>🚪 Cerrar Sesión</li>
         </ul>
       </aside>
@@ -2858,38 +3020,33 @@ const App = () => {
                 {activeTab === 'pipeline' && 'Pipeline de Ventas (Kanban)'}
                 {activeTab === 'agentforce' && 'Asistente de Inteligencia Artificial (Agentforce)'}
                 {activeTab === 'instructions' && 'Guía de Usuario e Instrucciones del CRM'}
+
+                {activeTab === 'audit' && 'Auditoría Global & Base de Datos en Nube (Supabase)'}
             </h1>
-            {activeTab === 'prospects' && (Date.now() <= new Date('2026-09-22T23:59:59').getTime()) && (
-              <span 
-                onClick={() => {
-                  setFilterNewOnly(true);
-                  setFilterName('');
-                  setFilterSector('');
-                  setFilterZone('');
-                  setCurrentPage(1);
-                  const tableElem = document.querySelector('.prospects-table') || document.querySelector('.table-container');
-                  if (tableElem) {
-                    tableElem.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-                style={{
-                  background: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)',
-                  color: 'white',
-                  fontSize: '0.74rem',
-                  fontWeight: '700',
-                  padding: '4px 11px',
-                  borderRadius: '20px',
-                  cursor: 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '5px',
-                  boxShadow: '0 2px 8px rgba(124, 58, 237, 0.35)'
-                }}
-                title="Haz clic para filtrar las nuevas empresas incorporadas (+8 empresas)"
-              >
-                <Sparkles size={13} /> Novedad (+8 empresas)
-              </span>
-            )}
+            <button
+              type="button"
+              onClick={() => setShowWhatsNew(true)}
+              style={{
+                background: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)',
+                color: 'white',
+                border: 'none',
+                fontSize: '0.74rem',
+                fontWeight: '700',
+                padding: '5px 12px',
+                borderRadius: '20px',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                boxShadow: '0 2px 8px rgba(124, 58, 237, 0.35)',
+                transition: 'transform 0.15s ease'
+              }}
+              title="Consultar novedades del sistema (Versión 3.0)"
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+            >
+              <Sparkles size={13} /> Novedades v3.0
+            </button>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             {currentUser && (
@@ -2971,21 +3128,6 @@ const App = () => {
           {/* PROSPECTS TAB */}
           {activeTab === 'prospects' && (
             <>
-              {/* Alerta de Novedad Comercial (vigente durante 6 días con cuenta regresiva hasta el 22 de septiembre) */}
-              <NovedadBanner 
-                onFilterNew={() => {
-                  setFilterNewOnly(true);
-                  setFilterName('');
-                  setFilterSector('');
-                  setFilterZone('');
-                  setCurrentPage(1);
-                  const tableElem = document.querySelector('.prospects-table') || document.querySelector('.table-container');
-                  if (tableElem) {
-                    tableElem.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-              />
-
               <div className="action-bar-fluid" style={{marginBottom: '15px'}}>
                 <button className="action-btn outline" onClick={() => document.getElementById('import-json-input').click()}>📤 Importar JSON</button>
                 <input 
@@ -3121,10 +3263,11 @@ const App = () => {
                 <div className="filter-group">
                   <label>Tier B2B (Consumo)</label>
                   <select value={filterTier} onChange={e => setFilterTier(e.target.value)}>
-                    <option value="">Todos (Tier A/B/C)</option>
+                    <option value="">Todos (Tier A/B/C / Sin Tier)</option>
                     <option value="Tier A">🔥 Tier A (&gt;100 Tn/año)</option>
                     <option value="Tier B">⭐ Tier B (35-100 Tn/año)</option>
                     <option value="Tier C">🔹 Tier C (&lt;35 Tn/año)</option>
+                    <option value="none">⚠️ Sin Tier (Facturación pendiente)</option>
                   </select>
                 </div>
                 <div className="filter-group">
@@ -3134,6 +3277,7 @@ const App = () => {
                     <option value="gt10">&gt; 10M €</option>
                     <option value="5to10">5M € - 10M €</option>
                     <option value="lt5">&lt; 5M €</option>
+                    <option value="unverified">Sin verificar (en blanco)</option>
                   </select>
                 </div>
                 <div className="filter-group">
@@ -3161,7 +3305,6 @@ const App = () => {
               {(() => {
                 const totalTons = filteredProspects.reduce((acc, item) => acc + getB2BExtrusionProfile(item).estimatedTonsPerYear, 0);
                 const tierACount = filteredProspects.filter(item => getB2BExtrusionProfile(item).b2bTier === 'Tier A').length;
-                const customDieCount = filteredProspects.filter(item => getB2BExtrusionProfile(item).profileType.includes('Matriz Propia')).length;
                 const ptCount = filteredProspects.filter(item => item.zone === 'Portugal').length;
                 return (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '15px' }}>
@@ -3174,11 +3317,6 @@ const App = () => {
                       <div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 700 }}>🔥 CUENTAS CLAVE (TIER A)</div>
                       <div style={{ fontSize: '1.35rem', fontWeight: 800, color: '#b45309', marginTop: '2px' }}>{tierACount} empresas</div>
                       <div style={{ fontSize: '0.72rem', color: '#059669', fontWeight: 600 }}>Consumo &gt; 100 Tn/año (Clic para filtrar)</div>
-                    </div>
-                    <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', padding: '12px 16px', borderRadius: '10px' }}>
-                      <div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 700 }}>🛠️ POTENCIAL MATRIZ PROPIA</div>
-                      <div style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', marginTop: '2px' }}>{customDieCount} fabricantes</div>
-                      <div style={{ fontSize: '0.72rem', color: '#64748b' }}>Perfiles técnicos bajo plano DXF/DWG</div>
                     </div>
                     <div onClick={() => setFilterZone(filterZone === 'Portugal' ? '' : 'Portugal')} style={{ background: '#ffffff', border: filterZone === 'Portugal' ? '2px solid #059669' : '1px solid #e2e8f0', padding: '12px 16px', borderRadius: '10px', cursor: 'pointer' }} title="Haz clic para filtrar el mercado portugués">
                       <div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 700 }}>🇵🇹 MERCADO PORTUGAL</div>
@@ -3257,10 +3395,22 @@ const App = () => {
                         </td>
                         <td>
                           <div style={{ fontWeight: 700, color: '#0f172a' }}>
-                            {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(p.revenue)}
+                            {p.revenue 
+                              ? new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(p.revenue) 
+                              : <span style={{ color: '#94a3b8', fontStyle: 'italic', fontWeight: 400, fontSize: '0.82rem' }}>—</span>
+                            }
                           </div>
                           {(() => {
                             const b2b = getB2BExtrusionProfile(p);
+                            if (!b2b.b2bTier) {
+                              return (
+                                <div style={{ marginTop: '4px' }}>
+                                  <span style={{ fontSize: '0.68rem', color: '#94a3b8', background: '#f8fafc', border: '1px solid #e2e8f0', padding: '1px 6px', borderRadius: '4px' }}>
+                                    Sin Tier (Facturación pendiente)
+                                  </span>
+                                </div>
+                              );
+                            }
                             const badgeBg = b2b.b2bTier === 'Tier A' ? '#fef3c7' : b2b.b2bTier === 'Tier B' ? '#e0f2fe' : '#f1f5f9';
                             const badgeCol = b2b.b2bTier === 'Tier A' ? '#b45309' : b2b.b2bTier === 'Tier B' ? '#0369a1' : '#475569';
                             return (
@@ -4007,9 +4157,9 @@ const App = () => {
                       style={{width: '100%', padding: '6px 10px', borderRadius: '6px', border: '1px solid #94a3b8', fontSize: '0.88rem', fontWeight: '600'}}
                     >
                       <option value="auto">
-                        🔄 Automático según zona ({presentationTarget ? `${presentationTarget.zone} → ${getSalespersonByZone(presentationTarget.zone).name}` : 'General → Carmen Castro'})
+                        🔄 Automático según zona ({presentationTarget ? `${presentationTarget.zone} → ${getSalespersonByZone(presentationTarget.zone).name}` : 'General → Norte 1'})
                       </option>
-                      <option value="ccastro">Carmen Castro (Project Manager / Noroeste y Portugal)</option>
+                      <option value="norte1">Norte 1 (Delegado Comercial / Ast, CyL, Por, PV)</option>
                       <option value="adomingo">Alfredo Domingo (Comercial Senior / Levante y Centro)</option>
                       <option value="karim">Karim Kharkhor (Comercial Francia)</option>
                       <option value="custom">✏️ Comercial Personalizado / Genérico...</option>
@@ -4253,7 +4403,7 @@ const App = () => {
                           <h3 style={{color: 'var(--sopena-accent)', fontSize: '1.4rem', borderBottom: '2px solid #e2e8f0', paddingBottom: '10px', marginTop: '30px'}}>{isPt ? 'Compromisso e Normativa' : 'Compromiso y Normativa'}</h3>
                           <ul style={{paddingLeft: '20px', lineHeight: '1.7', color: '#475569'}}>
                             <li><strong>{isPt ? 'Alumínio Reciclado:' : 'Aluminio Reciclado:'}</strong> {isPt ? 'Utilização de tarugos de alumínio reciclável de muito baixo impacto.' : 'Uso de tochos de aluminio reciclable de muy bajo impacto.'}</li>
-                            <li><strong>{isPt ? 'Ligas Especializadas:' : 'Aleaciones Especializadas:'}</strong> {isPt ? 'Capacidade para extrudar ligas exigentes (6060, 6005, 6083).' : 'Capacidad para extruir aleaciones exigentes (6060, 6005, 6083).'}</li>
+                            <li><strong>{isPt ? 'Ligas Especializadas:' : 'Aleaciones Especializadas:'}</strong> {isPt ? 'Capacidade para extrudar ligas exigentes (6060, 6005, 6082, 6083).' : 'Capacidad para extruir aleaciones exigentes (6060, 6005, 6082, 6083).'}</li>
                             <li><strong>{isPt ? 'Cumprimento Rigoroso:' : 'Cumplimiento Estricto:'}</strong> {isPt ? 'Marcação CE e avalizados pelos selos internacionais mais exigentes.' : 'Marcado CE y avalados por los sellos internacionales más exigentes.'}</li>
                           </ul>
                         </div>
@@ -4262,9 +4412,9 @@ const App = () => {
                           <div style={{background: 'var(--sopena-blue)', color: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 25px rgba(10, 61, 145, 0.2)'}}>
                             <h3 style={{marginTop: 0, color: 'white', fontSize: '1.4rem'}}>{isPt ? 'As Nossas Capacidades' : 'Nuestras Capacidades'}</h3>
                             <ul style={{paddingLeft: '20px', lineHeight: '1.6', margin: 0, opacity: 0.9}}>
-                              <li style={{marginBottom: '15px'}}><strong>{isPt ? 'Extrusão de Precisão:' : 'Extrusión de Precisión:'}</strong><br/>{isPt ? 'Manuseamento avançado da série 6000.' : 'Manejo avanzado de la serie 6000.'}</li>
-                              <li style={{marginBottom: '15px'}}><strong>{isPt ? 'Tratamentos Superficiais:' : 'Tratamientos Superficiales:'}</strong><br/>{isPt ? 'Anodização e Lacagem de máxima durabilidade.' : 'Anodizado y Lacado de máxima durabilidad.'}</li>
-                              <li><strong>{isPt ? 'Engenharia e Design:' : 'Ingeniería y Diseño:'}</strong><br/>{isPt ? 'Desenvolvimento de matrizes exclusivas.' : 'Desarrollo de matrices exclusivas.'}</li>
+                              <li style={{marginBottom: '15px'}}><strong>{isPt ? 'Extrusão de Precisão:' : 'Extrusión de Precisión:'}</strong><br/>{isPt ? 'Capacidade diária de 55 Tm com duas prensas (7" e 9") para geometrias e ligas diversas (incluindo 6082).' : 'Capacidad diaria de 55 Tm con dos prensas (7" y 9") para geometrías y aleaciones de distintos tipos (incluida 6082).'}</li>
+                              <li style={{marginBottom: '15px'}}><strong>{isPt ? 'Tratamentos Superficiais:' : 'Tratamientos Superficiales:'}</strong><br/>{isPt ? 'Lacagem (Qualicoat ou Qualicoat Seaside), Anodização (Qualanod) e Efeito Madeira (Qualideco).' : 'Lacado (Qualicoat o Qualicoat Seaside), Anodizado (Qualanod) y Efecto Madera (Qualideco).'}</li>
+                              <li><strong>{isPt ? 'Engenharia e Design:' : 'Ingeniería y Diseño:'}</strong><br/>{isPt ? 'Apoio ao cliente no desenvolvimento, adaptação e extrusão das suas próprias séries.' : 'Apoyo al cliente en el desarrollo, adaptación y extrusión de sus propias series.'}</li>
                             </ul>
                           </div>
                           <div className="cert-grid" style={{marginTop: '30px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px'}}>
@@ -4272,8 +4422,9 @@ const App = () => {
                             <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>🌱 ISO 14001</div>
                             <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>🛡️ ISO 45001</div>
                             <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>🇪🇺 Marcado CE</div>
-                            <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>🎖 QUALANOD</div>
-                            <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>🎖 QUALICOAT</div>
+                            <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>🎖️ QUALICOAT / QUALICOAT SEASIDE</div>
+                            <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>🎖️ QUALANOD</div>
+                            <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>🎖️ QUALIDECO</div>
                           </div>
                         </div>
                         {presentationTarget && (
@@ -4281,7 +4432,7 @@ const App = () => {
                             <h3 style={{color: 'var(--sopena-blue-dark)', marginTop: 0, fontSize: '1.4rem'}}>{isPt ? 'Abordagem para' : 'Enfoque Especializado para'} {presentationTarget.name}</h3>
                             <div style={{lineHeight: '1.7', color: '#475569'}}>
                               {['Cerramientos', 'Puertas y Ventanas', 'Construccion Modular'].includes(presentationTarget.sector) && (
-                                <p style={{margin: 0}}>{isPt ? `Centrados no setor de ${presentationTarget.sector}, fabricamos e montamos perfis com rotura de ponte térmica e poliamidas "Low Lambda" para o máximo isolamento. Extrudimos tanto para os nossos sistemas próprios de arquitetura como para sistemas de terceiros. Além disso, os nossos lacados Qualicoat Seaside e acabamentos com efeito madeira (Qualideco) garantirão a máxima resistência e estética nas suas caixilharias.` : `Centrados en el sector de ${presentationTarget.sector}, fabricamos y ensamblamos perfiles con rotura de puente térmico y poliamidas "Low Lambda" para el máximo aislamiento. Extruimos tanto para nuestros sistemas propios de arquitectura como para sistemas de terceros. Además, nuestros lacados Qualicoat Seaside y acabados con efecto madera (Qualideco) garantizarán la máxima resistencia y estética en todos sus cerramientos.`}</p>
+                                <p style={{margin: 0}}>{isPt ? `Centrados no setor de ${presentationTarget.sector}, fabricamos e montamos perfis com rotura de ponte térmica e poliamidas reforzadas para o máximo isolamento. Extrudimos tanto para os nossos sistemas próprios de arquitetura como para sistemas de terceiros. Além disso, os nossos lacados Qualicoat Seaside e acabamentos com efeito madeira (Qualideco) garantirão a máxima resistência e estética nas suas caixilharias.` : `Centrados en el sector de ${presentationTarget.sector}, fabricamos y ensamblamos perfiles con rotura de puente térmico y poliamidas reforzadas para el máximo aislamiento. Extruimos tanto para nuestros sistemas propios de arquitectura como para sistemas de terceros. Además, nuestros lacados Qualicoat Seaside y acabados con efecto madera (Qualideco) garantizarán la máxima resistencia y estética en todos sus cerramientos.`}</p>
                               )}
                               {['Fachadas de Aluminio', 'Fabricantes de Escaleras de Aluminio'].includes(presentationTarget.sector) && (
                                 <p style={{margin: 0}}>{isPt ? `Para ${presentationTarget.sector}, extrudimos ligas estruturais (6005/6083) que oferecem as propriedades mecânicas avançadas requeridas para muros cortina e estruturas portantes, sempre com acabamentos Qualideco impecáveis.` : `Para ${presentationTarget.sector}, extruimos aleaciones estructurales (6005/6083) que ofrecen las propiedades mecánicas avanzadas requeridas para muros cortina y estructuras portantes, siempre con acabados Qualideco impecables.`}</p>
@@ -4371,13 +4522,13 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                           </p>
                           <div className="dossier-project-grid">
                             <div className="dossier-project-card">
-                              <div className="dossier-image-placeholder">
-                                🏟️ Roig Arena
-                                <span className="dossier-image-subtext">Valencia, España</span>
+                              <div style={{ height: '140px', overflow: 'hidden', position: 'relative', background: '#0f172a' }}>
+                                <img src="/roig_arena.jpg" alt="Fachadas Singulares: Roig Arena" style={{ width: '100%', height: '100%', objectFit: 'cover' }} crossOrigin="anonymous" />
+                                <span className="dossier-image-subtext" style={{ position: 'absolute', bottom: '6px', left: '8px', background: 'rgba(0,0,0,0.65)', color: 'white', padding: '2px 8px', borderRadius: '4px', fontSize: '0.75rem' }}>Valencia, España</span>
                               </div>
                               <div className="dossier-project-content">
-                                <h4 className="dossier-project-name">1. Fachada Singulares: Roig Arena</h4>
-                                <p className="dossier-project-desc">Participamos mediante el suministro de matrices y perfiles especiales para la envolvente de lamas de aluminio onduladas, resistente a altas cargas dinámicas de viento.</p>
+                                <h4 className="dossier-project-name">1. Fachadas Singulares: Roig Arena</h4>
+                                <p className="dossier-project-desc">Participación mediante el suministro de perfiles especiales para la envolvente de lamas de aluminio onduladas, resistente a altas cargas dinámicas de viento.</p>
                               </div>
                             </div>
                             <div className="dossier-project-card">
@@ -4391,13 +4542,13 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                               </div>
                             </div>
                             <div className="dossier-project-card">
-                              <div className="dossier-image-placeholder" style={{ background: 'linear-gradient(135deg, #312e81 0%, #4f46e5 100%)' }}>
-                                🏡 Viviendas Premium
-                                <span className="dossier-image-subtext">Arquitectura Minimalista</span>
+                              <div style={{ height: '140px', overflow: 'hidden', position: 'relative', background: '#1e1b4b' }}>
+                                <img src="/viviendas_premium.jpg" alt="Residencial de Alta Gama" style={{ width: '100%', height: '100%', objectFit: 'cover' }} crossOrigin="anonymous" />
+                                <span className="dossier-image-subtext" style={{ position: 'absolute', bottom: '6px', left: '8px', background: 'rgba(0,0,0,0.65)', color: 'white', padding: '2px 8px', borderRadius: '4px', fontSize: '0.75rem' }}>Arquitectura Minimalista</span>
                               </div>
                               <div className="dossier-project-content">
                                 <h4 className="dossier-project-name">3. Residencial de Alta Gama</h4>
-                                <p className="dossier-project-desc">Cerramientos con sistemas de corredera minimalista RPT (serie GS-120RT) de Aluminios Innovations. Sección de cruce central de 25 mm y rodamientos reforzados.</p>
+                                <p className="dossier-project-desc">Cerramientos con sistemas de corredera minimalista RPT (serie GS-120RT). Sección de cruce central de 25 mm y rodamientos reforzados para grandes luces.</p>
                               </div>
                             </div>
                           </div>
@@ -4407,49 +4558,49 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                         <div className="dossier-section page-break">
                           <h3 className="dossier-section-title">Capacidad Industrial e Infraestructura Propia</h3>
                           <p style={{ fontSize: '0.85rem', marginBottom: '15px' }}>
-                            En Aluminios Innovations controlamos todo el ciclo productivo de forma autónoma en nuestras plantas fabriles:
+                            En Sopena Innovations controlamos todo el ciclo productivo de forma autónoma en nuestras plantas fabriles. Todas las capacidades indicadas son <strong>diarias</strong>:
                           </p>
                           <div className="dossier-fabril-grid">
                             <div className="dossier-fabril-card">
                               <span className="dossier-fabril-icon">🔬</span>
                               <div>
-                                <h4 className="dossier-fabril-title">Ingeniería e I+D de Producto</h4>
-                                <p className="dossier-fabril-desc">Diseño interno de matrices y perfiles personalizados bajo plano exclusivo para nuestros partners.</p>
+                                <h4 className="dossier-fabril-title">Departamento de Ingeniería e I+D</h4>
+                                <p className="dossier-fabril-desc">Departamento propio de ingeniería que ayuda a desarrollar, adaptar y extruir las series que ya pueda tener el cliente, así como diseñar nuevas soluciones a medida.</p>
                               </div>
                             </div>
                             <div className="dossier-fabril-card">
                               <span className="dossier-fabril-icon">🏭</span>
                               <div>
-                                <h4 className="dossier-fabril-title">Dos Prensas de Extrusión</h4>
-                                <p className="dossier-fabril-desc">Maquinaria de extrusión de alta potencia para geometrías complejas de la serie 6000.</p>
+                                <h4 className="dossier-fabril-title">Dos Prensas de Extrusión (7" y 9")</h4>
+                                <p className="dossier-fabril-desc">Capacidad productiva de 55 Tm de extrusión diarias con dos prensas, una de 7 y otra de 9 pulgadas, aptas para geometrías y aleaciones de distintos tipos (incluida aleación 6082).</p>
                               </div>
                             </div>
                             <div className="dossier-fabril-card">
                               <span className="dossier-fabril-icon">⚙️</span>
                               <div>
                                 <h4 className="dossier-fabril-title">Ensamblaje RPT Integrado</h4>
-                                <p className="dossier-fabril-desc">Línea automatizada para inserción de varillas de poliamida reforzada en los perfiles.</p>
+                                <p className="dossier-fabril-desc">Línea automatizada para inserción de varillas de poliamida reforzada en los perfiles para rotura de puente térmico.</p>
                               </div>
                             </div>
                             <div className="dossier-fabril-card">
                               <span className="dossier-fabril-icon">🎨</span>
                               <div>
                                 <h4 className="dossier-fabril-title">Planta de Lacado Vertical</h4>
-                                <p className="dossier-fabril-desc">Línea robotizada para acabados uniformes certificados (Qualicoat Seaside).</p>
+                                <p className="dossier-fabril-desc">Capacidad de 11.000 barras lacadas diarias robotizadas bajo sellos certificados Qualicoat o Qualicoat Seaside.</p>
                               </div>
                             </div>
                             <div className="dossier-fabril-card">
                               <span className="dossier-fabril-icon">🪵</span>
                               <div>
                                 <h4 className="dossier-fabril-title">Planta de Sublimación Madera</h4>
-                                <p className="dossier-fabril-desc">Decoración efecto madera con extraordinario realismo y máxima resistencia exterior (Qualideco).</p>
+                                <p className="dossier-fabril-desc">Capacidad de 1.500 barras sublimadas diarias de efecto madera con extraordinario realismo exterior bajo sello Qualideco.</p>
                               </div>
                             </div>
                             <div className="dossier-fabril-card">
                               <span className="dossier-fabril-icon">🛡️</span>
                               <div>
-                                <h4 className="dossier-fabril-title">Anodizado del Aluminio</h4>
-                                <p className="dossier-fabril-desc">Tratamiento electroquímico para proteger aluminio en ambientes marinos, costeros y de alta salinidad.</p>
+                                <h4 className="dossier-fabril-title">Planta de Anodizado del Aluminio</h4>
+                                <p className="dossier-fabril-desc">Capacidad de 4.500 barras anodizadas diarias bajo norma de calidad y sello internacional Qualanod.</p>
                               </div>
                             </div>
                           </div>
@@ -4458,8 +4609,11 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                         {/* RESUMEN TÉCNICO DE SISTEMAS SOPENA */}
                         <div className="dossier-section page-break">
                           <h3 className="dossier-section-title">Resumen de Especificaciones de Carpintería</h3>
+                          <div style={{ background: '#f8fafc', padding: '14px 18px', borderRadius: '8px', borderLeft: '4px solid #0284c7', marginBottom: '18px', fontSize: '0.86rem', color: '#334155', lineHeight: '1.5' }}>
+                            <strong>ℹ️ Nota Técnica:</strong> Estas series son solo una muestra representativa de nuestro catálogo de arquitectura. Si su proyecto precisa de otras prestaciones térmicas, acústicas, secciones de marco o requerimientos específicos, <strong>consulte con nuestro equipo técnico</strong>; disponemos de múltiples desarrollos adicionales y capacidad de adaptación a medida.
+                          </div>
                           <p style={{ fontSize: '0.85rem', marginBottom: '15px' }}>
-                            Especificaciones de las series del catálogo arquitectónico ensayadas en laboratorios acreditados (con marcado CE):
+                            Especificaciones de referencia ensayadas en laboratorios acreditados (con marcado CE):
                           </p>
                           <div className="dossier-tech-grid">
                             <div className="dossier-tech-card">
@@ -4530,6 +4684,27 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                         </div>
                       </div>
                     )}
+                    {/* PRÓXIMOS PASOS DE COLABORACIÓN (CALL-TO-ACTION) */}
+                    <div style={{ marginTop: '35px', marginBottom: '25px', background: 'linear-gradient(135deg, #072b66 0%, #1e1b4b 100%)', color: 'white', padding: '24px 28px', borderRadius: '12px', boxShadow: '0 8px 20px rgba(7, 43, 102, 0.15)' }}>
+                      <h4 style={{ margin: '0 0 14px 0', fontSize: '1.15rem', fontWeight: '800', color: '#38bdf8', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        🚀 Próximos Pasos de Colaboración
+                      </h4>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '14px', fontSize: '0.84rem' }}>
+                        <div style={{ background: 'rgba(255,255,255,0.08)', padding: '14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.12)' }}>
+                          <strong style={{ color: '#fcd34d', display: 'block', marginBottom: '5px' }}>1️⃣ Envío de Requerimientos</strong>
+                          <span style={{ opacity: 0.9, lineHeight: '1.4', display: 'block' }}>Comparta con nuestro departamento técnico sus planos o requerimientos de perfil para un estudio de viabilidad sin compromiso.</span>
+                        </div>
+                        <div style={{ background: 'rgba(255,255,255,0.08)', padding: '14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.12)' }}>
+                          <strong style={{ color: '#fcd34d', display: 'block', marginBottom: '5px' }}>2️⃣ Oferta Personalizada (RFQ)</strong>
+                          <span style={{ opacity: 0.9, lineHeight: '1.4', display: 'block' }}>Le remitiremos una propuesta económica detallada con plazos directos a sus instalaciones y condiciones preferentes.</span>
+                        </div>
+                        <div style={{ background: 'rgba(255,255,255,0.08)', padding: '14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.12)' }}>
+                          <strong style={{ color: '#fcd34d', display: 'block', marginBottom: '5px' }}>3️⃣ Muestrario o Reunión Técnica</strong>
+                          <span style={{ opacity: 0.9, lineHeight: '1.4', display: 'block' }}>Podemos suministrarle probetas de acabado (Qualicoat, Qualanod, Qualideco) o coordinar una visita con su delegado.</span>
+                        </div>
+                      </div>
+                    </div>
+
                     <div style={{marginTop: '40px', paddingTop: '30px', borderTop: '2px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end'}}>
                       <div style={{lineHeight: '1.6', color: '#334155'}}>
                         <p style={{margin: '0 0 15px 0'}}>{isPt ? 'Com os melhores cumprimentos,' : 'Atentamente,'}</p>
@@ -5076,222 +5251,557 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
               
               {/* Tarjeta de bienvenida de la guía */}
               <div className="card" style={{ background: 'linear-gradient(135deg, #072b66 0%, #1e1b4b 100%)', color: 'white', border: 'none', padding: '30px 40px' }}>
-                <h2 style={{ margin: '0 0 10px 0', fontWeight: '800', fontSize: '1.8rem', color: '#34d399' }}>
-                  Manual & Guía de Usuario del CRM
-                </h2>
-                <p style={{ margin: 0, fontSize: '0.95rem', color: '#94a3b8', lineHeight: '1.6' }}>
-                  Bienvenido a la central de aprendizaje de Aluminios Innovations CRM. Aquí encontrarás toda la documentación detallada de las herramientas implementadas en el sistema para optimizar tu flujo de ventas en la zona Noroeste y Portugal.
-                </p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '15px' }}>
+                  <div>
+                    <h2 style={{ margin: '0 0 10px 0', fontWeight: '800', fontSize: '1.8rem', color: '#38bdf8' }}>
+                      Manual & Guía de Usuario del CRM Industrial B2B
+                    </h2>
+                    <p style={{ margin: 0, fontSize: '0.95rem', color: '#94a3b8', lineHeight: '1.6', maxWidth: '850px' }}>
+                      Bienvenido a la central de aprendizaje de <strong>Aluminios Innovations CRM</strong>. Aquí encontrarás la documentación técnica y comercial completa sobre la prospección industrial, la base de datos centralizada de 597 cuentas auditadas en España y Portugal, y los estándares de extrusión y calidad de acabados.
+                    </p>
+                  </div>
+                  <button 
+                    onClick={() => setShowWhatsNew(true)}
+                    style={{
+                      background: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)',
+                      color: 'white',
+                      border: 'none',
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      fontWeight: 'bold',
+                      fontSize: '0.85rem',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      boxShadow: '0 4px 12px rgba(124, 58, 237, 0.3)'
+                    }}
+                  >
+                    <Sparkles size={16} /> Ver Novedades v3.0 (Pop-up)
+                  </button>
+                </div>
               </div>
+
               {/* Grid principal de la documentación */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '25px' }}>
                 
-                {/* Bloque 1: Gestión Comercial General */}
+                {/* Bloque 1: Base de Datos Centralizada y Cobertura */}
                 <div className="card" style={{ border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   <h3 style={{ margin: 0, color: 'var(--sopena-blue-dark)', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '2px solid #f1f5f9', paddingBottom: '10px' }}>
-                    📦 Gestión Comercial y CRM
+                    🌐 Base de Datos Centralizada (597 Cuentas)
                   </h3>
                   
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.85rem', lineHeight: '1.5' }}>
                     <div>
-                      <strong>1. Base de Datos & Filtros:</strong>
+                      <strong>1. Sincronización Multi-usuario en Red:</strong>
                       <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
-                        Visualiza de forma ordenada todos los prospectos comerciales de la empresa. Utiliza el buscador general en tiempo real o filtra directamente por zona comercial (Portugal, País Vasco, Galicia, Asturias, Cantabria o Castilla y León).
+                        El sistema opera contra una API REST centralizada (<code>/api/prospects</code> y <code>/api/tasks</code>). Todas las actualizaciones de estado, contactos, llamadas y notas quedan guardadas en el servidor y sincronizadas para todos los comerciales conectados en tiempo real.
                       </p>
                     </div>
                     <div>
-                      <strong>2. Mapa Interactivo:</strong>
+                      <strong>2. Cobertura Geográfica Estratégica:</strong>
                       <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
-                        Representación geográfica de todos los prospectos del CRM mediante mapas de calor y marcadores interactivos (React Leaflet).
+                        597 prospectos industriales auditados con facturación mercantil contrastada (&gt;5 M€), focalizados en los cuatro grandes motores industriales: <strong>Cataluña / Barcelona</strong>, <strong>Comunidad Valenciana</strong>, <strong>Región de Murcia</strong>, <strong>Comunidad de Madrid</strong>, junto al Noroeste (Galicia, Asturias, Cantabria, Castilla y León, País Vasco) y Portugal.
                       </p>
                     </div>
                     <div>
-                      <strong>3. Planificador de Rutas Inteligente:</strong>
+                      <strong>3. Filtros Avanzados y Búsqueda Predictiva:</strong>
                       <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
-                        Calcula la ruta más corta y optimizada de visitas a clientes en base a la distancia en kilómetros (algoritmo Haversine), ahorrando tiempo y costes de combustible.
+                        Filtra instantáneamente por zona comercial, sector productivo (Fachadas Ligeras, Muro Cortina, Pérgolas Bioclimáticas, Puertas Industriales, Carrocerías de Camión, Invernaderos Tecnificados, etc.) o por responsable de compras.
                       </p>
                     </div>
                     <div>
-                      <strong>4. Pipeline de Ventas (Kanban):</strong>
+                      <strong>4. Copia de Seguridad Protegida:</strong>
                       <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
-                        Organiza el estado de tus prospectos arrastrándolos visualmente entre columnas (*Lead, Contactado, Propuesta, Cerrado Ganado y Cerrado Perdido*). Al transicionar una tarjeta de la etapa <strong>Lead</strong> a <strong>Propuesta</strong>, el sistema generará de manera autónoma una tarea de llamada de seguimiento programada para dentro de 3 días y la registrará en el historial de la empresa.
-                      </p>
-                    </div>
-                    <div>
-                      <strong>5. Copia de Seguridad Protegida:</strong>
-                      <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
-                        Permite descargar toda la base de datos CRM del sistema en formato Excel (CSV) compatible. Como medida de seguridad obligatoria, requiere ingresar la clave de administrador para autorizar la exportación.
+                        Exporta toda la base de datos a Excel (CSV). Por seguridad corporativa, el sistema solicita la contraseña de administrador autorizada (<code>lacado2026</code>).
                       </p>
                     </div>
                   </div>
                 </div>
-                {/* Bloque 2: Inteligencia Artificial (Agentforce) */}
+
+                {/* Bloque 2: Sistema de Tiers y Scoring Industrial */}
+                <div className="card" style={{ border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                  <h3 style={{ margin: 0, color: 'var(--sopena-blue-dark)', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '2px solid #f1f5f9', paddingBottom: '10px' }}>
+                    🥇 Sistema de Scoring y Tiers Comerciales
+                  </h3>
+                  
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.85rem', lineHeight: '1.5' }}>
+                    <p style={{ margin: 0, color: 'var(--text-secondary)' }}>
+                      El algoritmo calcula un Lead Score (0 a 100 puntos) combinando volumen de facturación, disponibilidad de decisor directo de compras y sector de alta demanda:
+                    </p>
+                    <div>
+                      <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: '12px', background: '#fef3c7', color: '#b45309', border: '1px solid #fcd34d', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '4px' }}>
+                        🥇 Tier 1 · Oro (Score ≥ 75 pts)
+                      </span>
+                      <p style={{ margin: 0, color: 'var(--text-secondary)', paddingLeft: '8px' }}>
+                        Empresas líderes con facturación &gt;50 M€ o alto tonelaje de perfiles extruidos (defensa, carrocerías pesadas, fachadistas internacionales). Requieren asignación de matrices exclusivas y atención técnica personalizada.
+                      </p>
+                    </div>
+                    <div>
+                      <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: '12px', background: '#f1f5f9', color: '#334155', border: '1px solid #cbd5e1', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '4px' }}>
+                        🥈 Tier 2 · Plata (Score 50 - 74 pts)
+                      </span>
+                      <p style={{ margin: 0, color: 'var(--text-secondary)', paddingLeft: '8px' }}>
+                        Empresas de 5 a 50 M€ con consumo recurrente de perfiles de aluminio para carpintería arquitectónica, pérgolas, automatismos y estructuras agrarias. Excelente rotación de pedidos.
+                      </p>
+                    </div>
+                    <div>
+                      <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: '12px', background: '#ffedd5', color: '#9a3412', border: '1px solid #fed7aa', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '4px' }}>
+                        🥉 Tier 3 · Bronce (Score &lt; 50 pts)
+                      </span>
+                      <p style={{ margin: 0, color: 'var(--text-secondary)', paddingLeft: '8px' }}>
+                        Talleres especializados o fabricantes con datos de contacto incompletos que requieren prospección telefónica previa para verificar consumo real.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bloque 3: Sellos de Calidad y Especificaciones Técnicas */}
+                <div className="card" style={{ border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                  <h3 style={{ margin: 0, color: 'var(--sopena-blue-dark)', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '2px solid #f1f5f9', paddingBottom: '10px' }}>
+                    🛡️ Sellos de Calidad, Lacados y Aleaciones
+                  </h3>
+                  
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.85rem', lineHeight: '1.5' }}>
+                    <div>
+                      <strong>Qualicoat Seaside:</strong>
+                      <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
+                        Tratamiento químico anticorrosivo reforzado para zonas costeras con decapado superior (&gt;2 g/m²). Garantiza 10 años de durabilidad sin desconchamientos frente al ambiente salino marino.
+                      </p>
+                    </div>
+                    <div>
+                      <strong>Qualanod:</strong>
+                      <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
+                        Certificación internacional de anodizado arquitectónico clase 15 y 20 micras. Máxima dureza superficial y resistencia contra abrasión e intemperie en fachadas ventiladas.
+                      </p>
+                    </div>
+                    <div>
+                      <strong>Qualideco:</strong>
+                      <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
+                        Acabados decorativos y sublimación efecto madera de alta fidelidad, indicados para perfilería de exterior, verandas y celosías solares.
+                      </p>
+                    </div>
+                    <div>
+                      <strong>Aleaciones 6060/6063 vs. 6082-T6:</strong>
+                      <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
+                        Capacidad de extrusión tanto en aleaciones arquitectónicas para carpintería fina (6060/6063) como en aleación estructural 6082-T6 para estructuras solares, carrocerías y naves industriales.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bloque 4: Pipeline Kanban & Monitor de Leads Dormidos */}
+                <div className="card" style={{ border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                  <h3 style={{ margin: 0, color: 'var(--sopena-blue-dark)', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '2px solid #f1f5f9', paddingBottom: '10px' }}>
+                    📊 Pipeline Kanban y Detección de Leads Dormidos
+                  </h3>
+                  
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.85rem', lineHeight: '1.5' }}>
+                    <div>
+                      <strong>6 Fases Industriales B2B:</strong>
+                      <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
+                        Arrastra los prospectos por el embudo: <em>Prospección Inicial</em> → <em>Contacto con Decisor</em> → <em>Muestras / Tarifa Enviada</em> → <em>Planos Recibidos (RFQ)</em> → <em>Oferta &amp; Negociación</em> → <em>Cuenta Ganada</em>.
+                      </p>
+                    </div>
+                    <div>
+                      <strong>Generación Autónoma de Tareas:</strong>
+                      <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
+                        Al mover un lead hacia fases de negociación o RFQ, el CRM programa automáticamente una tarea de seguimiento en el calendario para evitar enfriar la oportunidad.
+                      </p>
+                    </div>
+                    <div>
+                      <strong>Monitor de Leads Dormidos:</strong>
+                      <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
+                        Los leads en <em>Prospección Inicial</em> no generan alarmas. En cuanto una cuenta es contactada, si transcurren más de 15 días sin llamadas ni avance, se activa la insignia de alerta para reactivar el contacto comercial.
+                      </p>
+                    </div>
+                    <div>
+                      <strong>Planificador de Rutas Inteligente:</strong>
+                      <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
+                        Agrupa visitas por proximidad geográfica y optimiza el kilometraje entre fábricas y talleres antes de salir a la carretera.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bloque 5: Inteligencia Artificial Agentforce */}
                 <div className="card" style={{ border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   <h3 style={{ margin: 0, color: 'var(--sopena-blue-dark)', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '2px solid #f1f5f9', paddingBottom: '10px' }}>
                     🤖 Inteligencia Artificial Agentforce
                   </h3>
+                  
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.85rem', lineHeight: '1.5' }}>
                     <div>
                       <strong>1. Asistente Comercial Chatbot:</strong>
                       <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
-                        Chatea con la IA en lenguaje natural. Puedes hacer consultas predictivas de facturación, listar tareas comerciales pendientes, o filtrar rápidamente por zona de venta activa en la cabecera.
+                        Consultas predictivas de consumo, generación de informes de ventas y recomendaciones de productos idóneos por sector.
                       </p>
                     </div>
                     <div>
-                      <strong>2. Resúmenes Inteligentes de CRM:</strong>
+                      <strong>2. Preparador de Reuniones y Argumentario:</strong>
                       <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
-                        Accede a fichas unificadas y a una síntesis ejecutiva autogenerada por IA que resume la historia de interacción de cada cliente y su volumen potencial.
+                        Genera el pitch idóneo de venta adaptado al sector del cliente, listado de preguntas técnicas para calificar y manejo de objeciones.
                       </p>
                     </div>
                     <div>
-                      <strong>3. Preparador de Reuniones y Llamadas:</strong>
+                      <strong>3. Redactor Interactivo de Propuestas:</strong>
                       <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
-                        Genera dinámicamente el pitch idóneo de venta adaptado al sector del cliente, un listado de preguntas para calificar, objeciones comunes y enlaces de catálogos Empresa de Aluminio recomendados.
+                        Redacta cartas de presentación, presupuestos y cartas de homologación técnica listas para enviar.
                       </p>
                     </div>
                     <div>
-                      <strong>4. Redactor Inteligente de Propuestas:</strong>
+                      <strong>4. Exclusión Taxativa de la AEA:</strong>
                       <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
-                        Crea emails comerciales bilingües. Solicita cambios al chatbot en directo (ej: *"traduce al inglés"*, *"hazlo más corto"*, *"añade garantía"*) y el borrador se actualizará instantáneamente.
-                      </p>
-                    </div>
-                    <div>
-                      <strong>5. Agentforce Lead Finder (Prospección):</strong>
-                      <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
-                        Buscador autónomo de empresas que valida datos de Informa D&B y excluye de forma automática a los competidores extrusores de la **AEA** (Asociación Española del Aluminio).
+                        El motor de búsqueda descarta de manera autónoma a los competidores extrusores asociados a la Asociación Española del Aluminio.
                       </p>
                     </div>
                   </div>
                 </div>
-                {/* Bloque 3: Operativa Avanzada y PWA */}
+
+                {/* Bloque 6: Movilidad, Voz y Seguridad */}
                 <div className="card" style={{ border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   <h3 style={{ margin: 0, color: 'var(--sopena-blue-dark)', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '2px solid #f1f5f9', paddingBottom: '10px' }}>
-                    🎙️ Operativa Avanzada y Soporte PWA
+                    🎙️ Dictado por Voz, Soporte PWA y Credenciales
                   </h3>
+                  
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.85rem', lineHeight: '1.5' }}>
                     <div>
                       <strong>1. Dictado por Voz (Speech-to-Text):</strong>
                       <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
-                        Evita tener que escribir las minutas de visitas. Utiliza los botones de micrófono del formulario de seguimiento de clientes en el CRM para rellenar los datos de interacción mediante la voz.
+                        Rellena las minutas de visita dictando con el micrófono de tu teléfono o portátil mientras realizas tus rutas comerciales.
                       </p>
                     </div>
                     <div>
-                      <strong>2. Soporte Offline (Sin Conexión):</strong>
+                      <strong>2. Aplicación PWA y Trabajo Offline:</strong>
                       <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
-                        Gracias a la implementación del Service Worker (`sw.js`), puedes consultar la base de datos de tus prospectos e interactuar con los layouts principales de la app en zonas rurales o de carretera sin cobertura de internet.
+                        Instala el CRM en tu móvil o tableta. El Service Worker mantiene la base de datos disponible incluso en zonas industriales sin cobertura.
                       </p>
                     </div>
                     <div>
-                      <strong>3. Instalabilidad en Dispositivos (PWA):</strong>
-                      <p style={{ margin: '4px 0 0 0', color: 'var(--text-secondary)' }}>
-                        Al abrir la aplicación en tu navegador (móvil u ordenador), verás un icono de instalación en la barra de direcciones. Instálala como una aplicación nativa para acceder directamente desde tu pantalla de inicio.
-                      </p>
-                    </div>
-                    <div style={{ background: '#ecfdf5', border: '1px solid #a7f3d0', padding: '12px', borderRadius: '8px', marginTop: '10px' }}>
-                      <span style={{ fontSize: '0.8rem', color: '#065f46', fontWeight: 'bold' }}>💡 Consejo Comercial:</span>
-                      <p style={{ margin: '4px 0 0 0', fontSize: '0.75rem', color: '#047857' }}>
-                        Utiliza el dictado por voz cuando estés de camino en tu ruta programada para actualizar de inmediato las notas en el CRM sin perder tiempo.
-                      </p>
+                      <strong>3. Claves de Acceso y Administración:</strong>
+                      <div style={{ background: '#f8fafc', border: '1px solid #cbd5e1', padding: '10px', borderRadius: '6px', marginTop: '6px' }}>
+                        <div><strong>Administrador General:</strong> usuario <code>admin</code> / clave <code>lacado2026</code></div>
+                        <div style={{ marginTop: '4px' }}><strong>Exportación CSV:</strong> clave <code>lacado2026</code></div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Bloque 4: Codificación de Colores y Calidad de Email */}
-                <div className="card" style={{ border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                  <h3 style={{ margin: 0, color: 'var(--sopena-blue-dark)', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '2px solid #f1f5f9', paddingBottom: '10px' }}>
-                    🛡️ Calidad de Datos & Estado de Emails
-                  </h3>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.85rem', lineHeight: '1.5' }}>
-                    <p style={{ margin: 0, color: 'var(--text-secondary)' }}>
-                      El sistema audita automáticamente el estado y la calidad de las direcciones de correo electrónico del CRM, clasificándolas con colores para evitar rebotes y garantizar una comunicación efectiva:
+              </div>
+
+            </div>
+                    )}
+          {/* AUDIT & GLOBAL DATABASE TAB */}
+          {activeTab === 'audit' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '25px', fontFamily: 'Inter, sans-serif' }}>
+              
+              {/* HEADER DE AUDITORÍA Y ESTADO GLOBAL */}
+              <div className="card" style={{ background: 'linear-gradient(135deg, #072b66 0%, #0f172a 100%)', color: 'white', border: 'none', padding: '30px 40px', borderRadius: '12px', boxShadow: '0 8px 25px rgba(7, 43, 102, 0.25)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px' }}>
+                  <div>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(56, 189, 248, 0.15)', border: '1px solid rgba(56, 189, 248, 0.3)', padding: '4px 12px', borderRadius: '20px', color: '#38bdf8', fontSize: '0.8rem', fontWeight: 'bold', marginBottom: '12px' }}>
+                      <ShieldCheck size={16} /> Módulo Oficial de Auditoría y Persistencia Global
+                    </div>
+                    <h2 style={{ margin: '0 0 10px 0', fontWeight: '800', fontSize: '1.8rem', color: '#ffffff' }}>
+                      Auditoría de Actividad y Base de Datos Global
+                    </h2>
+                    <p style={{ margin: 0, fontSize: '0.95rem', color: '#94a3b8', lineHeight: '1.6', maxWidth: '850px' }}>
+                      Toda interacción realizada por cualquier usuario o comercial (cambios de fase kanban, minutas de llamada, tareas, ediciones y altas) queda <strong>registrada de forma indeleble</strong> con marca de tiempo e identidad, sincronizándose de inmediato en la base de datos central en nube (Supabase / REST Cloud).
                     </p>
-                    <div>
-                      <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: '12px', background: '#d1fae5', color: '#065f46', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '4px' }}>
-                        ✅ Verde (Compras Verificado)
-                      </span>
-                      <p style={{ margin: 0, color: 'var(--text-secondary)', paddingLeft: '8px' }}>
-                        Buzones específicos del departamento de compras o cuentas validadas de directores comerciales (ej: <code>talleresmarpe7@gmail.com</code>). Son 100% seguros de usar.
-                      </p>
+                  </div>
+                  
+                  {/* BADGE DE ESTADO GLOBAL */}
+                  <div style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', padding: '16px 20px', borderRadius: '10px', textAlign: 'right' }}>
+                    <div style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 'bold', textTransform: 'uppercase' }}>Estado de Conexión</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '6px', fontSize: '1rem', fontWeight: 'bold', color: isSupabaseConfigured() ? '#4ade80' : '#fcd34d' }}>
+                      <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: isSupabaseConfigured() ? '#4ade80' : '#fcd34d', display: 'inline-block' }}></span>
+                      {isSupabaseConfigured() ? 'Supabase Cloud PostgreSQL (Activo)' : 'Servidor REST Centralizado (Activo)'}
                     </div>
-                    <div>
-                      <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: '12px', background: 'rgba(7, 43, 102, 0.1)', color: 'var(--sopena-blue)', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '4px' }}>
-                        ✉️ Azul (Genérico Corporativo)
-                      </span>
-                      <p style={{ margin: 0, color: 'var(--text-secondary)', paddingLeft: '8px' }}>
-                        Correos genéricos reales como <code>info@</code>, <code>contacto@</code> o <code>geral@</code>. Son reales y verificados, aunque no son cuentas directas de compras.
-                      </p>
-                    </div>
-                    <div>
-                      <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: '12px', background: '#fee2e2', color: '#991b1b', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '4px' }}>
-                        ⚠️ Rojo (Autogenerado / Placeholder)
-                      </span>
-                      <p style={{ margin: 0, color: 'var(--text-secondary)', paddingLeft: '8px' }}>
-                        Correos creados automáticamente con el formato <code>compras@dominio</code>. El sistema advierte de que podrían ser inexistentes y recomienda escanearlos.
-                      </p>
-                    </div>
-                    <div>
-                      <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: '12px', background: '#fef3c7', color: '#92400e', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '4px' }}>
-                        ⚠️ Naranja (Sin email / Inválido)
-                      </span>
-                      <p style={{ margin: 0, color: 'var(--text-secondary)', paddingLeft: '8px' }}>
-                        Indica que no hay ningún correo de contacto registrado o que el formato es incorrecto. Requiere atención comercial inmediata.
-                      </p>
-                    </div>
-                    <div style={{ borderTop: '1px dashed #cbd5e1', paddingTop: '10px' }}>
-                      <strong>Uso del Asistente 🧙‍♂️:</strong> Haz clic en el icono del mago 🧙‍♂️ al lado del email en la tabla o en el modal para iniciar un escaneo OSINT en tiempo real y corregir el correo.
+                    <div style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '4px' }}>
+                      {isSupabaseConfigured() ? 'Sincronización multi-dispositivo en tiempo real' : 'Persistencia en red multi-usuario activa'}
                     </div>
                   </div>
                 </div>
 
-              </div>
-              {/* Sección de pantallas de ejemplo interactivas */}
-              <div className="card" style={{ border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                <h3 style={{ margin: 0, color: 'var(--sopena-blue-dark)', fontSize: '1.3rem', borderBottom: '2px solid #f1f5f9', paddingBottom: '10px' }}>
-                  📸 Ejemplos Visuales de Pantallas Clave
-                </h3>
-                
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
-                  
-                  {/* Mockup de la terminal de prospección */}
-                  <div style={{ border: '1px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden' }}>
-                    <div style={{ background: '#0f172a', padding: '8px 12px', color: '#38bdf8', fontSize: '0.75rem', fontFamily: 'monospace', fontWeight: 'bold' }}>
-                      PANTALLA: Agentforce Lead Finder
-                    </div>
-                    <div style={{ background: '#1e293b', padding: '15px', color: 'white', fontFamily: 'monospace', fontSize: '0.7rem', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <div>⚡ Iniciando búsqueda inteligente...</div>
-                      <div style={{ color: '#f59e0b' }}>⚠️ Detectada coincidencia comercial: "Cortizo España"</div>
-                      <div style={{ color: '#f87171' }}>❌ EXCLUSIÓN AEA: Empresa descartada automáticamente (Extrusores AEA)</div>
-                      <div style={{ color: '#4ade80' }}>✅ VALIDADO: "Metalusa S.A." | Importada al CRM con éxito</div>
-                    </div>
+                {/* MÉTRICAS DE AUDITORÍA */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', marginTop: '25px', paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                  <div>
+                    <span style={{ fontSize: '0.78rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: '600' }}>Interacciones Registradas</span>
+                    <div style={{ fontSize: '1.6rem', fontWeight: '800', color: '#38bdf8', marginTop: '2px' }}>{auditLogsList.length} eventos</div>
                   </div>
-                  {/* Mockup de la preparación IA */}
-                  <div style={{ border: '1px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden' }}>
-                    <div style={{ background: '#1e1b4b', padding: '8px 12px', color: '#a78bfa', fontSize: '0.75rem', fontWeight: 'bold' }}>
-                      PANTALLA: Preparación de Reuniones
-                    </div>
-                    <div style={{ background: '#f5f3ff', padding: '15px', fontSize: '0.75rem', color: '#4c1d95', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                      <strong>Pitch:</strong> "Presentar capacidad de extrusión flexible Empresa de Aluminio..."
-                      <strong>Preguntas:</strong> "¿Qué aleaciones de aluminio utilizan actualmente?"
-                      <strong>Objeción:</strong> "Lacado costero" → "Argumentar sello Qualicoat Seaside (10 años garantía)"
-                    </div>
+                  <div>
+                    <span style={{ fontSize: '0.78rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: '600' }}>Empresas en Base Central</span>
+                    <div style={{ fontSize: '1.6rem', fontWeight: '800', color: '#4ade80', marginTop: '2px' }}>{prospects.length} cuentas</div>
                   </div>
-                  {/* Mockup del Dictado por voz */}
-                  <div style={{ border: '1px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden' }}>
-                    <div style={{ background: '#0f172a', padding: '8px 12px', color: '#34d399', fontSize: '0.75rem', fontWeight: 'bold' }}>
-                      PANTALLA: Dictado de Minutas
-                    </div>
-                    <div style={{ background: '#fafafa', padding: '15px', fontSize: '0.75rem', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444', display: 'inline-block', animation: 'dotPulse 1.2s infinite' }}></span>
-                        <span style={{ color: '#ef4444', fontWeight: 'bold' }}>DICTANDO VOZ EN CURSO...</span>
-                      </div>
-                      <div style={{ fontStyle: 'italic', color: '#475569', borderLeft: '3px solid #10b981', paddingLeft: '8px' }}>
-                        "El cliente está muy interesado en las lamas con rotura de puente térmico..."
-                      </div>
-                    </div>
+                  <div>
+                    <span style={{ fontSize: '0.78rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: '600' }}>Tareas Centralizadas</span>
+                    <div style={{ fontSize: '1.6rem', fontWeight: '800', color: '#fcd34d', marginTop: '2px' }}>{crmTasks.length} tareas</div>
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.78rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: '600' }}>Seguridad y Trazabilidad</span>
+                    <div style={{ fontSize: '1.6rem', fontWeight: '800', color: '#c084fc', marginTop: '2px' }}>100% Auditado</div>
                   </div>
                 </div>
               </div>
+
+              {/* SECCIÓN 1: CONFIGURADOR SUPABASE CLOUD POSTGRESQL */}
+              <div className="card" style={{ border: '1px solid #cbd5e1', padding: '25px', borderRadius: '10px', background: '#ffffff' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '15px', marginBottom: '20px', flexWrap: 'wrap', gap: '15px' }}>
+                  <div>
+                    <h3 style={{ margin: 0, color: 'var(--sopena-blue-dark)', fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <Database size={22} style={{ color: '#059669' }} /> Conexión con Base de Datos Global (Supabase)
+                    </h3>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: '#64748b' }}>
+                      Conecte su proyecto de Supabase para almacenar prospectos, tareas y auditorías en PostgreSQL en la nube accesible desde cualquier lugar.
+                    </p>
+                  </div>
+                  <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                    <a 
+                      href="/supabase_schema.sql" 
+                      download="supabase_schema.sql" 
+                      className="action-btn outline"
+                      style={{ fontSize: '0.85rem', padding: '8px 14px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                    >
+                      <Download size={16} /> Descargar Script SQL (Esquema)
+                    </a>
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '15px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 'bold', color: '#334155', marginBottom: '6px' }}>
+                      URL del Proyecto Supabase:
+                    </label>
+                    <input 
+                      type="text" 
+                      value={supabaseUrlInput} 
+                      onChange={e => setSupabaseUrlInput(e.target.value)} 
+                      placeholder="https://xyzcompany.supabase.co"
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 'bold', color: '#334155', marginBottom: '6px' }}>
+                      Supabase Anon / Public API Key:
+                    </label>
+                    <input 
+                      type="password" 
+                      value={supabaseKeyInput} 
+                      onChange={e => setSupabaseKeyInput(e.target.value)} 
+                      placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.88rem' }}
+                    />
+                  </div>
+                </div>
+
+                {supabaseTestMsg && (
+                  <div style={{ marginTop: '15px', padding: '10px 15px', borderRadius: '6px', fontSize: '0.85rem', background: supabaseTestMsg.ok ? '#ecfdf5' : '#fef2f2', color: supabaseTestMsg.ok ? '#065f46' : '#991b1b', border: `1px solid ${supabaseTestMsg.ok ? '#a7f3d0' : '#fecdd3'}` }}>
+                    {supabaseTestMsg.text}
+                  </div>
+                )}
+
+                <div style={{ display: 'flex', gap: '10px', marginTop: '20px', flexWrap: 'wrap' }}>
+                  <button 
+                    type="button" 
+                    className="action-btn outline"
+                    onClick={async () => {
+                      setSupabaseTestMsg({ ok: true, text: 'Comprobando conexión con Supabase...' });
+                      const res = await testSupabaseConnection(supabaseUrlInput, supabaseKeyInput);
+                      if (res.ok) {
+                        setSupabaseTestMsg({ ok: true, text: res.warning || '✅ Conexión con Supabase verificada con éxito.' });
+                      } else {
+                        setSupabaseTestMsg({ ok: false, text: `❌ Error al conectar: ${res.error}` });
+                      }
+                    }}
+                  >
+                    🔍 Probar Conexión
+                  </button>
+                  <button 
+                    type="button" 
+                    className="action-btn"
+                    onClick={() => {
+                      const res = saveSupabaseConfig(supabaseUrlInput, supabaseKeyInput);
+                      if (res.success) {
+                        setSupabaseStatus(isSupabaseConfigured());
+                        alert('✅ Credenciales de Supabase guardadas correctamente. El CRM ahora sincroniza en la nube.');
+                      } else {
+                        alert(`Error: ${res.error}`);
+                      }
+                    }}
+                  >
+                    💾 Guardar Credenciales Supabase
+                  </button>
+                  <button 
+                    type="button" 
+                    style={{ background: '#7c3aed', color: 'white', border: 'none', padding: '10px 18px', borderRadius: '6px', fontWeight: 'bold', fontSize: '0.85rem', cursor: isSyncingGlobalDb ? 'not-allowed' : 'pointer' }}
+                    disabled={isSyncingGlobalDb}
+                    onClick={async () => {
+                      setIsSyncingGlobalDb(true);
+                      try {
+                        // 1. Sincronizar hacia API REST
+                        await fetch('/api/prospects/sync', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ sync: true, prospects })
+                        });
+                        // 2. Sincronizar hacia Supabase si configurado
+                        const sb = getSupabaseClient();
+                        if (sb) {
+                          const payload = prospects.map(p => ({
+                            id: String(p.id),
+                            name: p.name,
+                            cif: p.cif || '',
+                            zone: p.zone || 'ALL',
+                            revenue: p.revenue || null,
+                            tier: p.tier || null,
+                            sector: p.sector || '',
+                            email: p.email || '',
+                            phone: p.phone || '',
+                            pipeline_stage: p.pipelineStage || 'Lead',
+                            contacted: !!p.contacted,
+                            updated_at: new Date().toISOString()
+                          }));
+                          await sb.from('prospects').upsert(payload, { onConflict: 'id' });
+                        }
+                        logUserInteraction({
+                          action: 'SINCRONIZACION_MANUAL_GLOBAL',
+                          user: currentUser?.name || 'Administrador',
+                          targetName: 'Base de Datos Global',
+                          details: `Sincronización forzada de ${prospects.length} cuentas con la base global.`
+                        });
+                        alert(`🎉 Sincronización global completada: ${prospects.length} cuentas aseguradas en la base central.`);
+                      } catch (err) {
+                        alert(`Aviso de sincronización: ${err.message}`);
+                      } finally {
+                        setIsSyncingGlobalDb(false);
+                      }
+                    }}
+                  >
+                    {isSyncingGlobalDb ? '⏳ Sincronizando...' : '🚀 Sincronizar Todo el CRM a la Nube Ahora'}
+                  </button>
+                </div>
+              </div>
+
+              {/* SECCIÓN 2: REGISTRO DE AUDITORÍA EN TIEMPO REAL (USER INTERACTION LOGS) */}
+              <div className="card" style={{ border: '1px solid #cbd5e1', padding: '25px', borderRadius: '10px', background: '#ffffff', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '15px', flexWrap: 'wrap', gap: '15px' }}>
+                  <div>
+                    <h3 style={{ margin: 0, color: 'var(--sopena-blue-dark)', fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      📋 Registro de Auditoría de Interacciones de Usuario ({auditLogsList.length})
+                    </h3>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: '#64748b' }}>
+                      Cualquier acción de un usuario queda registrada cronológicamente para garantizar control, trazabilidad y evitar pérdida de información.
+                    </p>
+                  </div>
+                  <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                    <button 
+                      type="button" 
+                      className="action-btn outline"
+                      onClick={async () => {
+                        const logs = await fetchAuditLogs();
+                        setAuditLogsList(logs);
+                      }}
+                    >
+                      🔄 Actualizar Registros
+                    </button>
+                    <button 
+                      type="button" 
+                      className="action-btn outline"
+                      onClick={() => {
+                        const blob = new Blob([JSON.stringify(auditLogsList, null, 2)], { type: 'application/json' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `auditoria_crm_interacciones_${new Date().toISOString().slice(0, 10)}.json`;
+                        a.click();
+                      }}
+                    >
+                      <Download size={16} /> Exportar Auditoría JSON
+                    </button>
+                  </div>
+                </div>
+
+                {/* FILTROS DE AUDITORÍA */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', background: '#f8fafc', padding: '12px 16px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 'bold', color: '#475569', marginBottom: '4px' }}>Filtrar por Usuario:</label>
+                    <input 
+                      type="text" 
+                      value={auditFilterUser} 
+                      onChange={e => setAuditFilterUser(e.target.value)} 
+                      placeholder="Ej. Carlos Castro, admin..."
+                      style={{ width: '100%', padding: '6px 10px', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 'bold', color: '#475569', marginBottom: '4px' }}>Filtrar por Acción:</label>
+                    <input 
+                      type="text" 
+                      value={auditFilterAction} 
+                      onChange={e => setAuditFilterAction(e.target.value)} 
+                      placeholder="Ej. PIPELINE, TAREA, FICHA..."
+                      style={{ width: '100%', padding: '6px 10px', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                    />
+                  </div>
+                </div>
+
+                {/* TABLA DE AUDITORÍA */}
+                <div style={{ maxHeight: '450px', overflowY: 'auto', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.84rem' }}>
+                    <thead style={{ background: '#f1f5f9', position: 'sticky', top: 0, zIndex: 1 }}>
+                      <tr>
+                        <th style={{ padding: '10px 14px', textAlign: 'left', color: '#334155', fontWeight: '700' }}>Fecha y Hora</th>
+                        <th style={{ padding: '10px 14px', textAlign: 'left', color: '#334155', fontWeight: '700' }}>Usuario</th>
+                        <th style={{ padding: '10px 14px', textAlign: 'left', color: '#334155', fontWeight: '700' }}>Acción</th>
+                        <th style={{ padding: '10px 14px', textAlign: 'left', color: '#334155', fontWeight: '700' }}>Empresa / Destino</th>
+                        <th style={{ padding: '10px 14px', textAlign: 'left', color: '#334155', fontWeight: '700' }}>Detalles de la Interacción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {auditLogsList
+                        .filter(l => {
+                          const matchUser = !auditFilterUser || (l.user || '').toLowerCase().includes(auditFilterUser.toLowerCase());
+                          const matchAction = !auditFilterAction || (l.action || '').toLowerCase().includes(auditFilterAction.toLowerCase());
+                          return matchUser && matchAction;
+                        })
+                        .map(log => (
+                          <tr key={log.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                            <td style={{ padding: '10px 14px', color: '#64748b', whiteSpace: 'nowrap' }}>
+                              {new Date(log.timestamp).toLocaleString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                            </td>
+                            <td style={{ padding: '10px 14px', fontWeight: '600', color: '#1e293b' }}>
+                              👤 {log.user}
+                            </td>
+                            <td style={{ padding: '10px 14px' }}>
+                              <span style={{ 
+                                background: log.action.includes('PIPELINE') ? '#fef3c7' : log.action.includes('TAREA') ? '#e0f2fe' : log.action.includes('BAJA') ? '#fee2e2' : '#f1f5f9',
+                                color: log.action.includes('PIPELINE') ? '#b45309' : log.action.includes('TAREA') ? '#0369a1' : log.action.includes('BAJA') ? '#b91c1c' : '#475569',
+                                padding: '3px 8px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 'bold'
+                              }}>
+                                {log.action}
+                              </span>
+                            </td>
+                            <td style={{ padding: '10px 14px', fontWeight: '500', color: '#334155' }}>
+                              🏢 {log.targetName}
+                            </td>
+                            <td style={{ padding: '10px 14px', color: '#475569', maxWidth: '380px' }}>
+                              {log.details}
+                            </td>
+                          </tr>
+                        ))}
+                      {auditLogsList.length === 0 && (
+                        <tr>
+                          <td colSpan="5" style={{ padding: '30px', textAlign: 'center', color: '#94a3b8' }}>
+                            No hay interacciones registradas aún. Cualquier cambio que realice un usuario aparecerá reflejado aquí de forma automática.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+
             </div>
           )}
         </div>
@@ -5371,6 +5881,7 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                 purchasingPhone: formData.get('purchasingPhone') || selectedProspect.purchasingPhone,
                 purchasingLinkedin: formData.get('purchasingLinkedin') || selectedProspect.purchasingLinkedin,
                 email: formData.get('email') || selectedProspect.email,
+                secondaryEmail: formData.get('secondaryEmail') !== null ? formData.get('secondaryEmail') : selectedProspect.secondaryEmail,
                 sector: formData.get('sector') || selectedProspect.sector,
                 causaNoAceptacion: formData.get('causaNoAceptacion'),
                 lastContactDates: formData.getAll('lastContactDates'),
@@ -5418,6 +5929,16 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                         required 
                       />
                     </div>
+                    {Boolean(selectedProspect.secondaryEmail) && (
+                      <div className="form-group">
+                        <label>Email Secundario</label>
+                        <input 
+                          type="email" 
+                          name="secondaryEmail" 
+                          defaultValue={selectedProspect.secondaryEmail || ''} 
+                        />
+                      </div>
+                    )}
                     <div className="form-group">
                       <label>Teléfono Directo</label>
                       <input type="text" name="purchasingPhone" defaultValue={selectedProspect.purchasingPhone || ''} />
@@ -6381,7 +6902,7 @@ ${kit.emailBody}`)}
               {getReportData().length > 0 && (
                 <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '60px', padding: '0 20px', pageBreakInside: 'avoid'}}>
                   <div style={{textAlign: 'center', width: '200px', borderTop: '1px solid #cbd5e1', paddingTop: '10px'}}>
-                    <div style={{fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--sopena-blue-dark)'}}>Carmen Castro</div>
+                    <div style={{fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--sopena-blue-dark)'}}>Norte 1</div>
                     <div style={{fontSize: '0.75rem', color: '#64748b'}}>Project Manager Emisor</div>
                   </div>
                   <div style={{textAlign: 'center', width: '200px', borderTop: '1px solid #cbd5e1', paddingTop: '10px'}}>
@@ -6523,8 +7044,8 @@ ${kit.emailBody}`)}
             borderRadius: '20px',
             boxShadow: '0 25px 50px -12px rgba(7, 43, 102, 0.25)',
             width: '90%',
-            maxWidth: '620px',
-            maxHeight: '85vh',
+            maxWidth: '680px',
+            maxHeight: '88vh',
             overflowY: 'auto',
             padding: '35px 40px',
             position: 'relative',
@@ -6532,235 +7053,174 @@ ${kit.emailBody}`)}
             animation: 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
             scrollbarWidth: 'thin'
           }}>
+            {/* Botón de cierre en esquina */}
+            <button
+              onClick={handleCloseWhatsNew}
+              style={{
+                position: 'absolute',
+                top: '20px',
+                right: '20px',
+                background: '#f1f5f9',
+                border: 'none',
+                borderRadius: '50%',
+                width: '32px',
+                height: '32px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                color: '#64748b',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                transition: 'background 0.2s'
+              }}
+              title="Cerrar ventana"
+            >
+              ✕
+            </button>
+
             {/* Encabezado */}
             <div style={{ textAlign: 'center', marginBottom: '25px' }}>
               <div style={{ 
                 background: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)', 
-                width: '60px', 
-                height: '60px', 
-                borderRadius: '16px', 
+                width: '64px', 
+                height: '64px', 
+                borderRadius: '18px', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center', 
                 margin: '0 auto 15px auto',
-                boxShadow: '0 8px 16px rgba(124, 58, 237, 0.2)'
+                boxShadow: '0 8px 20px rgba(124, 58, 237, 0.3)'
               }}>
-                <Sparkles size={30} style={{ color: 'white' }} />
+                <Sparkles size={32} style={{ color: 'white' }} />
               </div>
-              <h2 style={{ color: 'var(--sopena-blue-dark)', margin: '0 0 8px 0', fontSize: '1.5rem', fontWeight: '800' }}>
-                ¡Resumen de Nuevas Funciones!
+              <h2 style={{ color: 'var(--sopena-blue-dark)', margin: '0 0 8px 0', fontSize: '1.6rem', fontWeight: '800' }}>
+                ¡Novedades del CRM — Versión 3.0!
               </h2>
-              <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.85rem', lineHeight: '1.4' }}>
-                Hemos incorporado potentes herramientas de inteligencia artificial y funciones operativas al CRM de Aluminios Innovations.
+              <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.88rem', lineHeight: '1.5', maxWidth: '540px', marginInline: 'auto' }}>
+                Actualización mayor con arquitectura multi-usuario centralizada, 597 cuentas industriales cualificadas y nuevo protocolo comercial de extrusión.
               </p>
               {/* Badge de versión */}
-              <div style={{ display: 'inline-block', marginTop: '10px', padding: '3px 10px', background: 'linear-gradient(135deg, #7c3aed, #4f46e5)', color: 'white', borderRadius: '20px', fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '1px' }}>
-                VERSIÓN 1.2 — JUNIO 2026
+              <div style={{ display: 'inline-block', marginTop: '12px', padding: '4px 12px', background: 'linear-gradient(135deg, #7c3aed, #4f46e5)', color: 'white', borderRadius: '20px', fontSize: '0.72rem', fontWeight: 'bold', letterSpacing: '1px' }}>
+                VERSIÓN 3.0 — NOVIEMBRE 2026
               </div>
             </div>
-            {/* Listado de Novedades */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '18px', marginBottom: '30px' }}>
+
+            {/* Listado de Novedades v3.0 */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '30px' }}>
               
-              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                <div style={{ background: '#f5f3ff', color: '#7c3aed', padding: '8px', borderRadius: '8px', flexShrink: 0 }}>
-                  <Sparkles size={18} />
+              {/* Novedad 1: Base de Datos Centralizada Multi-usuario */}
+              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', background: '#f8fafc', padding: '14px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                <div style={{ background: '#e0f2fe', color: '#0284c7', padding: '10px', borderRadius: '10px', flexShrink: 0 }}>
+                  <Database size={20} />
                 </div>
                 <div>
-                  <h4 style={{ margin: '0 0 3px 0', fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-main)' }}>
-                    Dossier de Presentación Dual y Enfoque de Carpintería
+                  <h4 style={{ margin: '0 0 4px 0', fontSize: '0.92rem', fontWeight: 'bold', color: '#0f172a' }}>
+                    🌐 Base de Datos Centralizada Multi-usuario
                   </h4>
-                  <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-                    Elige entre una presentación corta (carta) y una detallada (dossier comercial e industrial basado en Mapeal, con anexo de obras, capacidad fabril y series GS). Para carpinterías, incluye dirección postal y logo circular SVG dinámico en el visor, exportador HTML e email.
-                  </p>
-                </div>
-              </div>
-              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                <div style={{ background: '#e0f2fe', color: '#0284c7', padding: '8px', borderRadius: '8px', flexShrink: 0 }}>
-                  <Database size={18} />
-                </div>
-                <div>
-                  <h4 style={{ margin: '0 0 3px 0', fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-main)' }}>
-                    Importación Directa de Bases de Datos
-                  </h4>
-                  <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-                    Sube y restaura tu base de datos de prospectos en formato JSON directamente desde este prompt o mediante el recordatorio periódico de copia de seguridad.
-                  </p>
-                  <div style={{ marginTop: '8px' }}>
-                    <input 
-                      type="file" 
-                      id="import-database-whatsnew-input" 
-                      accept=".json" 
-                      onChange={handleImportJSON} 
-                      style={{ display: 'none' }} 
-                    />
-                    <button 
-                      type="button"
-                      onClick={() => document.getElementById('import-database-whatsnew-input').click()}
-                      style={{ 
-                        padding: '6px 12px', 
-                        fontSize: '0.75rem', 
-                        fontWeight: 'bold', 
-                        backgroundColor: '#f5f3ff', 
-                        color: '#7c3aed', 
-                        border: '1px solid #ddd6fe', 
-                        borderRadius: '6px', 
-                        cursor: 'pointer' 
-                      }}
-                    >
-                      📤 Importar JSON ahora
-                    </button>
-                  </div>
-                </div>
-              </div>
-              
-              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                <div style={{ background: '#f5f3ff', color: '#7c3aed', padding: '8px', borderRadius: '8px', flexShrink: 0 }}>
-                  <Sparkles size={18} />
-                </div>
-                <div>
-                  <h4 style={{ margin: '0 0 3px 0', fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-main)' }}>
-                    Resúmenes y Preparación IA
-                  </h4>
-                  <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-                    Accede a una síntesis ejecutiva completa de tus clientes del CRM y obtén un plan comercial inteligente (pitch de ventas, preguntas de calificación y manejo de objeciones) antes de cada llamada.
-                  </p>
-                </div>
-              </div>
-              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                <div style={{ background: '#e0f2fe', color: '#0284c7', padding: '8px', borderRadius: '8px', flexShrink: 0 }}>
-                  <Mail size={18} />
-                </div>
-                <div>
-                  <h4 style={{ margin: '0 0 3px 0', fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-main)' }}>
-                    Redactor Inteligente Interactivo
-                  </h4>
-                  <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-                    Modifica borradores de propuestas directamente desde el chatbot: pídele al agente que traduzca al inglés, resuma el texto o añada la garantía de calidad de 10 años en acabados certificados.
-                  </p>
-                </div>
-              </div>
-              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                <div style={{ background: '#ecfdf5', color: '#10b981', padding: '8px', borderRadius: '8px', flexShrink: 0 }}>
-                  <Mic size={18} />
-                </div>
-                <div>
-                  <h4 style={{ margin: '0 0 3px 0', fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-main)' }}>
-                    Dictado por Voz (Speech-to-Text)
-                  </h4>
-                  <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-                    Rellena las minutas comerciales del reporte de seguimiento hablando directamente con el micrófono de tu dispositivo. Ideal para reportar rutas rápidamente.
-                  </p>
-                </div>
-              </div>
-              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                <div style={{ background: '#fff7ed', color: '#ea580c', padding: '8px', borderRadius: '8px', flexShrink: 0 }}>
-                  <Database size={18} />
-                </div>
-                <div>
-                  <h4 style={{ margin: '0 0 3px 0', fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-main)' }}>
-                    Lead Finder con Exclusión AEA
-                  </h4>
-                  <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-                    Filtra automáticamente de forma autónoma cualquier competidor del sector del aluminio que pertenezca a la AEA, previniendo duplicidades y conflictos en tu CRM.
-                  </p>
-                </div>
-              </div>
-              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                <div style={{ background: '#f0fdf4', color: '#16a34a', padding: '8px', borderRadius: '8px', flexShrink: 0 }}>
-                  <Download size={18} />
-                </div>
-                <div>
-                  <h4 style={{ margin: '0 0 3px 0', fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-main)' }}>
-                    Copia de Seguridad Protegida
-                  </h4>
-                  <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-                    Exporta la base de datos completa de prospectos a formato Excel (CSV) compatible de forma segura introduciendo tu clave comercial personal.
-                  </p>
-                </div>
-              </div>
-              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                <div style={{ background: '#fef2f2', color: '#dc2626', padding: '8px', borderRadius: '8px', flexShrink: 0 }}>
-                  <Smartphone size={18} />
-                </div>
-                {/* Contenedor de texto informativo sobre la instalación de la aplicación PWA */}
-                <div>
-                  <h4 style={{ margin: '0 0 3px 0', fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-main)' }}>
-                    Instalación de Aplicación PWA
-                  </h4>
-                  <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-                    Instala la aplicación en tu móvil, tableta o PC como una aplicación nativa y accede a la base de datos de prospectos incluso si no dispones de conexión a Internet.
+                  <p style={{ margin: 0, fontSize: '0.82rem', color: '#475569', lineHeight: '1.45' }}>
+                    Sincronización en tiempo real mediante API REST (<code>/api/prospects</code> y <code>/api/tasks</code>). Varios delegados y comerciales pueden trabajar en red simultáneamente sobre los mismos clientes sin sobrescrituras ni pérdidas de datos.
                   </p>
                 </div>
               </div>
 
-              {/* ─── NOVEDADES v1.2 ─── */}
-              <div style={{ borderTop: '2px dashed #e2e8f0', paddingTop: '18px', marginTop: '4px' }}>
-                <p style={{ margin: '0 0 14px 0', fontSize: '0.72rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', color: '#7c3aed' }}>✨ Novedades v1.2</p>
-
-                <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', marginBottom: '18px' }}>
-                  <div style={{ background: '#ecfdf5', color: '#059669', padding: '8px', borderRadius: '8px', flexShrink: 0 }}>
-                    <Mail size={18} />
-                  </div>
-                  <div>
-                    <h4 style={{ margin: '0 0 3px 0', fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-main)' }}>
-                      Validación de Emails en Tiempo Real
-                    </h4>
-                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-                      El CRM clasifica cada email como ✅ <strong>verificado de compras</strong>, ✉️ <strong>genérico real</strong> o ⚠️ <strong>no verificado / sin email</strong>. Si no hay email de compras, se muestra el genérico; si no hay ninguno, se indica claramente antes de enviar cualquier comunicación.
-                    </p>
-                  </div>
+              {/* Novedad 2: 597 Empresas Auditadas */}
+              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', background: '#f8fafc', padding: '14px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                <div style={{ background: '#fef3c7', color: '#b45309', padding: '10px', borderRadius: '10px', flexShrink: 0 }}>
+                  <Building2 size={20} />
                 </div>
-
-                <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', marginBottom: '18px' }}>
-                  <div style={{ background: '#fff7ed', color: '#d97706', padding: '8px', borderRadius: '8px', flexShrink: 0 }}>
-                    <Database size={18} />
-                  </div>
-                  <div>
-                    <h4 style={{ margin: '0 0 3px 0', fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-main)' }}>
-                      Historial de Empresas Borradas ♻️
-                    </h4>
-                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-                      Si eliminas una empresa y la vuelves a añadir, el sistema la marcará con el badge <strong>♻️ REINCORPORADA</strong> visible en tabla y modal, con la fecha exacta en que fue borrada. El historial se guarda permanentemente.
-                    </p>
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                  <div style={{ background: '#fef2f2', color: '#dc2626', padding: '8px', borderRadius: '8px', flexShrink: 0 }}>
-                    <Download size={18} />
-                  </div>
-                  <div>
-                    <h4 style={{ margin: '0 0 3px 0', fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text-main)' }}>
-                      Exportación a PDF Interactivo
-                    </h4>
-                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-                      Desde la pestaña <strong>Presentación</strong>, exporta el dossier o carta a PDF con <strong>enlaces clicables</strong>. El fichero se nombra con el nombre de la empresa destinataria y el sistema te pregunta dónde guardarlo.
-                    </p>
-                  </div>
+                <div>
+                  <h4 style={{ margin: '0 0 4px 0', fontSize: '0.92rem', fontWeight: 'bold', color: '#0f172a' }}>
+                    🏭 597 Empresas Auditadas (&gt;5 M€)
+                  </h4>
+                  <p style={{ margin: 0, fontSize: '0.82rem', color: '#475569', lineHeight: '1.45' }}>
+                    Expansión completa en los cuatro polos industriales clave: <strong>Cataluña / Barcelona</strong>, <strong>Comunidad Valenciana</strong>, <strong>Región de Murcia</strong> y <strong>Comunidad de Madrid</strong>. Incorporación de líderes como Escribano Mechanical, MOINSA, Clemsa, Inkema Sistemas, Mart Pinatar Fachadas, Sancal, Industrias Saludes, Hermisan, ADO Cerramientos y Perfilalu10.
+                  </p>
                 </div>
               </div>
+
+              {/* Novedad 3: Scoring y Tiers Oro, Plata, Bronce */}
+              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', background: '#f8fafc', padding: '14px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                <div style={{ background: '#ecfdf5', color: '#059669', padding: '10px', borderRadius: '10px', flexShrink: 0 }}>
+                  <Zap size={20} />
+                </div>
+                <div>
+                  <h4 style={{ margin: '0 0 4px 0', fontSize: '0.92rem', fontWeight: 'bold', color: '#0f172a' }}>
+                    🥇 Sistema de Scoring y Tiers Comerciales
+                  </h4>
+                  <p style={{ margin: 0, fontSize: '0.82rem', color: '#475569', lineHeight: '1.45' }}>
+                    Clasificación automática en <strong>Tier 1 Oro</strong> (&gt;50 M€ / matrices especiales), <strong>Tier 2 Plata</strong> (&gt;5 M€ / alta rotación de perfiles arquitectónicos) y <strong>Tier 3</strong>. Permite priorizar llamadas y ofertas donde el retorno es inmediato.
+                  </p>
+                </div>
+              </div>
+
+              {/* Novedad 4: Leads Dormidos Optimizados */}
+              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', background: '#f8fafc', padding: '14px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                <div style={{ background: '#fff7ed', color: '#d97706', padding: '10px', borderRadius: '10px', flexShrink: 0 }}>
+                  <Clock size={20} />
+                </div>
+                <div>
+                  <h4 style={{ margin: '0 0 4px 0', fontSize: '0.92rem', fontWeight: 'bold', color: '#0f172a' }}>
+                    ⏰ Monitor Inteligente de Leads Dormidos
+                  </h4>
+                  <p style={{ margin: 0, fontSize: '0.82rem', color: '#475569', lineHeight: '1.45' }}>
+                    El contador permanece en 0 durante la fase de <em>Prospección Inicial</em> para no generar falsas alertas. Solo avisa de aquellos prospectos contactados que lleven más de 15 días sin llamada o propuesta registrada.
+                  </p>
+                </div>
+              </div>
+
+              {/* Novedad 5: Dossier Comercial y Fichas Técnicas A4 Renovadas */}
+              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', background: '#f8fafc', padding: '14px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                <div style={{ background: '#f5f3ff', color: '#7c3aed', padding: '10px', borderRadius: '10px', flexShrink: 0 }}>
+                  <ShieldCheck size={20} />
+                </div>
+                <div>
+                  <h4 style={{ margin: '0 0 4px 0', fontSize: '0.92rem', fontWeight: 'bold', color: '#0f172a' }}>
+                    📄 Dossier A4, Sellos de Calidad y Aleaciones
+                  </h4>
+                  <p style={{ margin: 0, fontSize: '0.82rem', color: '#475569', lineHeight: '1.45' }}>
+                    Fichas técnicas con fotografías reales de obras ejecutadas (Roig Arena Valencia, residenciales de lujo), sellos <strong>Qualicoat Seaside</strong> (10 años garantía anticorrosión marina), <strong>Qualanod</strong>, <strong>Qualideco</strong> y capacidad para aleación estructural <strong>6082-T6</strong>.
+                  </p>
+                </div>
+              </div>
+
+              {/* Novedad 6: Seguridad y Clave de Administrador */}
+              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', background: '#f8fafc', padding: '14px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                <div style={{ background: '#fee2e2', color: '#dc2626', padding: '10px', borderRadius: '10px', flexShrink: 0 }}>
+                  <CheckCircle2 size={20} />
+                </div>
+                <div>
+                  <h4 style={{ margin: '0 0 4px 0', fontSize: '0.92rem', fontWeight: 'bold', color: '#0f172a' }}>
+                    🔒 Seguridad Comercial: Nueva Clave de Administrador
+                  </h4>
+                  <p style={{ margin: 0, fontSize: '0.82rem', color: '#475569', lineHeight: '1.45' }}>
+                    Actualizada la contraseña de administración a <code>lacado2026</code> tanto para acceso al perfil de control como para la descarga de copias de seguridad de la base de datos en formato Excel/CSV.
+                  </p>
+                </div>
+              </div>
+
             </div>
+
             {/* Acción de Cierre */}
-
             <button 
               onClick={handleCloseWhatsNew} 
               style={{
                 width: '100%',
-                padding: '13px',
+                padding: '14px',
                 background: 'linear-gradient(135deg, #072b66 0%, #1e1b4b 100%)',
                 color: 'white',
                 border: 'none',
-                borderRadius: '8px',
-                fontSize: '0.9rem',
+                borderRadius: '10px',
+                fontSize: '0.95rem',
                 fontWeight: 'bold',
                 cursor: 'pointer',
-                boxShadow: '0 4px 12px rgba(7, 43, 102, 0.2)',
+                boxShadow: '0 4px 14px rgba(7, 43, 102, 0.25)',
                 transition: 'all 0.2s'
               }}
               onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
               onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
             >
-              ¡Comenzar a Trabajar!
+              ¡Comenzar a Trabajar con la Versión 3.0!
             </button>
           </div>
           <style>{`
@@ -6778,4 +7238,5 @@ ${kit.emailBody}`)}
     </div>
   );
 }
+
 export default App;

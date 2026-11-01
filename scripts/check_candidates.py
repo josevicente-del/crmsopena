@@ -1,32 +1,36 @@
+# -*- coding: utf-8 -*-
 import json
 
 with open('src/data/prospects.json', 'r', encoding='utf-8') as f:
     prospects = json.load(f)
+with open('src/data/excludedCompanies.json', 'r', encoding='utf-8') as f:
+    excluded = json.load(f)
 
-existing_cifs = {p.get('cif', '').strip().upper() for p in prospects if p.get('cif')}
-existing_names = [p.get('name', '').lower() for p in prospects]
+crm_names = [p['name'].lower().strip() for p in prospects]
+ex_names = [e['name'].lower().strip() for e in excluded]
 
-def check_company(name, cif=None):
-    if cif and cif.strip().upper() in existing_cifs:
-        return True, f"Existe CIF {cif}"
-    for en in existing_names:
-        if name.lower() in en or en in name.lower():
-            return True, f"Existe nombre similar: {en}"
-    return False, "Nueva"
-
-terms = [
-    ("Sunfer Estructuras", "B98692791"),
-    ("Praxia Energy", "B74182969"),
-    ("Esasolar", "B90176843"),
-    ("Hiberlux", "A28704252"),
-    ("Klein Iberica", "A08082695"),
-    ("Aluminios Cortizo", ""),
-    ("Airfal International", "A50058817"),
-    ("Lamp Lighting", "A08316275"),
-    ("GARCIA FAURA", ""),
-    ("Citterio", "")
+candidates = [
+    'Angel Mir', 'Portes Bisbal', 'Industrias Roper', 'Matz-Erreka', 'Erreka',
+    'Portalum', 'Aludoors', 'Medva', 'Manusa', 'Collbaix', 'Grupo Collbaix',
+    'Doorgate', 'Flexidoor', 'Portrisa', 'Master Ingenieros',
+    'Gimenez Ganga', 'Saxun', 'Persax', 'Gradhermetic', 'Industrial Gradhermetic',
+    'Toldos Gomez', 'Durmi', 'Industrias Durmi', 'Bandalux', 'Llaza',
+    'Garcia Faura', 'Folcra', 'Riventi', 'Grupo Aluman', 'Inasus', 'Caamaño',
+    'Martifer', 'Metaloviana', 'Candido Hermida', 'Alcongal', 'Hermet 10',
+    'Puertas Padilla', 'Novoferm', 'Aprimatic', 'Aluplast', 'Deceuninck',
+    'Kommerling', 'Cortizo', 'Exlabesa', 'Extrugasa'
 ]
 
-for name, cif in terms:
-    exists, reason = check_company(name, cif)
-    print(f"{name} -> {exists} ({reason})")
+print("--- RESULTADOS DE CRUCE ---")
+for c in candidates:
+    cl = c.lower()
+    in_crm = [name for name in crm_names if cl in name]
+    in_ex = [name for name in ex_names if cl in name]
+    status = []
+    if in_crm:
+        status.append(f"EN CRM ({in_crm[0]})")
+    if in_ex:
+        status.append(f"EXCLUIDA ({in_ex[0]})")
+    if not status:
+        status.append("DISPONIBLE (NUEVA)")
+    print(f"{c:25} -> {' | '.join(status)}")

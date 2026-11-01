@@ -24,9 +24,11 @@ dist-ssr
 *.sw?
 .netlify
 # Backups temporales y caches
+*.bak
 *.bak_*
 src/data/prospects.backup*
 *.backup*
+scratch_*.json
 __pycache__/
 *.pyc
 *.pyo

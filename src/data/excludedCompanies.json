@@ -268,5 +268,811 @@
     "reason": "Excluida por indicación expresa del usuario en validación previa",
     "notes": "No incorporar a la base de datos por instrucción directa del usuario.",
     "excludedAt": "2026-10-28T20:48:09.578533+00:00"
+  },
+  {
+    "id": "PROP-LEAD26-0011",
+    "name": "Bancolor Baux S.L.",
+    "cif": "B02194820",
+    "domain": "baux.es",
+    "web": "https://baux.es",
+    "reason": "Lacador de bobinas de chapa de aluminio (Bancolor Baux) - No compra perfil extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Lacador de bobinas de chapa de aluminio (Bancolor Baux) - No compra perfil extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0021",
+    "name": "Araven Mobiliario y Hostelería S.L.",
+    "cif": "B50091824",
+    "domain": "araven.com",
+    "web": "https://araven.com",
+    "reason": "Envases y cestas de plástico inyectado para hostelería (Araven) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Envases y cestas de plástico inyectado para hostelería (Araven) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0023",
+    "name": "Isopan Ibérica S.L.",
+    "cif": "B43618240",
+    "domain": "isopan.es",
+    "web": "https://isopan.es",
+    "reason": "Paneles sándwich de chapa de acero (Isopan Ibérica) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Paneles sándwich de chapa de acero (Isopan Ibérica) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0135",
+    "name": "Dacame S.L.",
+    "cif": "B43291824",
+    "domain": "dacame.com",
+    "web": "https://dacame.com",
+    "reason": "Andamios y puntales de acero (Dacame) - Consumo de aluminio extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Andamios y puntales de acero (Dacame) - Consumo de aluminio extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0146",
+    "name": "Peygran S.L.",
+    "cif": "B03291845",
+    "domain": "peygran.com",
+    "web": "https://peygran.com",
+    "reason": "Cuñas y niveladores de plástico inyectado (Peygran) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Cuñas y niveladores de plástico inyectado (Peygran) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0147",
+    "name": "Favram S.L.",
+    "cif": "B79091823",
+    "domain": "favram.com",
+    "web": "https://favram.com",
+    "reason": "Transformación de chapa fina de acero (Favram) - Consumo de aluminio extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Transformación de chapa fina de acero (Favram) - Consumo de aluminio extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0181",
+    "name": "Eurotramex S.L.",
+    "cif": "B96191824",
+    "domain": "eurotramex.com",
+    "web": "https://eurotramex.com",
+    "reason": "Rejillas electrofundidas / tramex de acero (Eurotramex) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Rejillas electrofundidas / tramex de acero (Eurotramex) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0191",
+    "name": "Asturiana de Laminados S.A. (elZinc)",
+    "cif": "A33891045",
+    "domain": "elzinc.es",
+    "web": "https://www.elzinc.es",
+    "reason": "Productor de bobinas de zinc-titanio laminado (Asturiana de Laminados elZinc) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Productor de bobinas de zinc-titanio laminado (Asturiana de Laminados elZinc) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0200",
+    "name": "Rayter S.L.",
+    "cif": "B58918240",
+    "domain": "rayter.es",
+    "web": "https://rayter.es",
+    "reason": "Estampación de chapa metálica (Rayter) - Consumo de aluminio extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Estampación de chapa metálica (Rayter) - Consumo de aluminio extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0225",
+    "name": "Quinapa S.L.",
+    "cif": "B08791824",
+    "domain": "quinapa.com",
+    "web": "https://quinapa.com",
+    "reason": "Corte láser y plegado de chapa (Quinapa) - Consumo de aluminio extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Corte láser y plegado de chapa (Quinapa) - Consumo de aluminio extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0259",
+    "name": "Cercaolid Mallas y Paneles S.L.",
+    "cif": "B47591824",
+    "domain": "cercaolid.es",
+    "web": "https://cercaolid.es",
+    "reason": "Mallas de alambre y cerramientos de acero (Cercaolid) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Mallas de alambre y cerramientos de acero (Cercaolid) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0399",
+    "name": "Surpanel Cold S.L.",
+    "cif": "B90347717",
+    "domain": "surpanelcold.com",
+    "web": "https://surpanelcold.com",
+    "reason": "Sector Frío Industrial y paneles sándwich de acero (Surpanel Cold) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Sector Frío Industrial y paneles sándwich de acero (Surpanel Cold) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0400",
+    "name": "Taver-Coldkit S.A.",
+    "cif": "A08356446",
+    "domain": "taver.es",
+    "web": "https://www.taver.es",
+    "reason": "Sector Frío Industrial en chapa de acero (Taver-Coldkit) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Sector Frío Industrial en chapa de acero (Taver-Coldkit) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0401",
+    "name": "Estanterías Simón S.L. (SimonRack)",
+    "cif": "B50556463",
+    "domain": "simonrack.com",
+    "web": "https://simonrack.com",
+    "reason": "Estanterías de chapa de acero (SimonRack / Estanterías Simón) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Estanterías de chapa de acero (SimonRack / Estanterías Simón) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0402",
+    "name": "Esmelux Estantería Rápida S.L.",
+    "cif": "B82557125",
+    "domain": "esmelux.com",
+    "web": "https://www.esmelux.com",
+    "reason": "Estanterías metálicas de acero (Esmelux) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Estanterías metálicas de acero (Esmelux) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0404",
+    "name": "Polypal Storage Systems S.A.",
+    "cif": "A48007223",
+    "domain": "polypal.com",
+    "web": "https://www.polypal.com",
+    "reason": "Estanterías industriales de acero (Polypal Storage Systems) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Estanterías industriales de acero (Polypal Storage Systems) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0409",
+    "name": "Dierre Hispánica S.A.",
+    "cif": "A30706022",
+    "domain": "dierre.es",
+    "web": "https://www.dierre.es",
+    "reason": "Puertas acorazadas de acero (Dierre Hispánica) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Puertas acorazadas de acero (Dierre Hispánica) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0418",
+    "name": "Ulma C y E S. Coop. (Encofrados y Andamios)",
+    "cif": "F20042453",
+    "domain": "ulmaconstruction.com",
+    "web": "https://www.ulmaconstruction.com",
+    "reason": "Encofrados y andamios de acero (Ulma Construcción) - Consumo de aluminio extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Encofrados y andamios de acero (Ulma Construcción) - Consumo de aluminio extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0419",
+    "name": "Alquiler de Encofrados y Andamios S.L.U. (Alsina)",
+    "cif": "B08210353",
+    "domain": "alsina.com",
+    "web": "https://www.alsina.com",
+    "reason": "Encofrados para hormigón (Encofrados Alsina) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Encofrados para hormigón (Encofrados Alsina) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0420",
+    "name": "Hiansa Panels S.L.",
+    "cif": "B14643720",
+    "domain": "hiansa.com",
+    "web": "https://www.hiansa.com",
+    "reason": "Paneles sándwich de chapa de acero (Hiansa Panels) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Paneles sándwich de chapa de acero (Hiansa Panels) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0421",
+    "name": "Huurre Ibérica S.A.U.",
+    "cif": "A08534066",
+    "domain": "huurreiberica.com",
+    "web": "https://www.huurreiberica.com",
+    "reason": "Paneles sándwich frigoríficos de acero (Huurre Ibérica) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Paneles sándwich frigoríficos de acero (Huurre Ibérica) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0423",
+    "name": "Regaber S.A. (Grupo Mat Holding)",
+    "cif": "A08643263",
+    "domain": "regaber.com",
+    "web": "https://www.regaber.com",
+    "reason": "Riego por goteo en polietileno (Regaber) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Riego por goteo en polietileno (Regaber) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0424",
+    "name": "Italpannelli España S.L.",
+    "cif": "B50993070",
+    "domain": "italpannelli.es",
+    "web": "https://www.italpannelli.es",
+    "reason": "Paneles sándwich de acero (Italpannelli España) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Paneles sándwich de acero (Italpannelli España) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0432",
+    "name": "Industrias Metálicas Anro S.L.",
+    "cif": "B13014295",
+    "domain": "anro.es",
+    "web": "https://www.anro.es",
+    "reason": "Estructuras pesadas de acero (Industrias Metálicas Anro) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Estructuras pesadas de acero (Industrias Metálicas Anro) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0433",
+    "name": "Andreu Barberá S.L.",
+    "cif": "B46286084",
+    "domain": "andreu.es",
+    "web": "https://www.andreu.es",
+    "reason": "Puertas metálicas y cortafuegos de chapa de acero (Andreu Barberá) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Puertas metálicas y cortafuegos de chapa de acero (Andreu Barberá) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0440",
+    "name": "Cometal S.A.",
+    "cif": "A28135895",
+    "domain": "cometal.com",
+    "web": "https://www.cometal.com",
+    "reason": "Válvulas hidráulicas de fundición y latón (Cometal) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Válvulas hidráulicas de fundición y latón (Cometal) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0456",
+    "name": "All For Padel S.L. (AFP Courts / Adidas Padel)",
+    "cif": "B86333465",
+    "domain": "allforpadel.com",
+    "web": "https://allforpadel.com",
+    "reason": "All For Padel S.L. (Excluida previamente por el usuario + estructura en acero)",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: All For Padel S.L. (Excluida previamente por el usuario + estructura en acero)"
+  },
+  {
+    "id": "PROP-LEAD26-0481",
+    "name": "Hilti Española S.A.",
+    "cif": "A28258284",
+    "domain": "hilti.es",
+    "web": "https://www.hilti.es",
+    "reason": "Herramienta eléctrica y fijación química (Hilti Española) - No fabricante con aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Herramienta eléctrica y fijación química (Hilti Española) - No fabricante con aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0482",
+    "name": "Fischer Ibérica S.A.U.",
+    "cif": "A43029104",
+    "domain": "fischer.es",
+    "web": "https://www.fischer.es",
+    "reason": "Tacos de nylon y anclajes químicos (Fischer Ibérica) - No fabricante con aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Tacos de nylon y anclajes químicos (Fischer Ibérica) - No fabricante con aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0517",
+    "name": "Tecnifuelle S.L.",
+    "cif": "B20541298",
+    "domain": "tecnifuelle.com",
+    "web": "https://tecnifuelle.com",
+    "reason": "Fuelles de caucho y tejido técnico para maquinaria (Tecnifuelle) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Fuelles de caucho y tejido técnico para maquinaria (Tecnifuelle) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0519",
+    "name": "Dexis Ibérica (Grupo Dexis)",
+    "cif": "A50129482",
+    "domain": "dexis-iberica.com",
+    "web": "https://www.dexis-iberica.com",
+    "reason": "Distribuidor de rodamientos y transmisión mecánica (Dexis Ibérica) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Distribuidor de rodamientos y transmisión mecánica (Dexis Ibérica) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0524",
+    "name": "JCM Technologies S.A.U.",
+    "cif": "A08819482",
+    "domain": "jcm-tech.com",
+    "web": "https://www.jcm-tech.com",
+    "reason": "Mandos electrónicos de garaje por radiofrecuencia (JCM Technologies) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Mandos electrónicos de garaje por radiofrecuencia (JCM Technologies) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0525",
+    "name": "Puertas Castalla S.L.",
+    "cif": "B03219482",
+    "domain": "puertascastalla.com",
+    "web": "https://puertascastalla.com",
+    "reason": "Puertas de madera de interior (Puertas Castalla) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Puertas de madera de interior (Puertas Castalla) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0526",
+    "name": "Puertas Sanrafael S.A.",
+    "cif": "A45019284",
+    "domain": "puertassanrafael.com",
+    "web": "https://www.puertassanrafael.com",
+    "reason": "Puertas de madera de interior (Puertas Sanrafael) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Puertas de madera de interior (Puertas Sanrafael) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0527",
+    "name": "Orona S.Coop.",
+    "cif": "F20029145",
+    "domain": "orona.es",
+    "web": "https://www.orona.es",
+    "reason": "Ascensores en chapa de acero (Orona) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Ascensores en chapa de acero (Orona) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0528",
+    "name": "Mac Puar S.A. (MP Ascensores)",
+    "cif": "A41029184",
+    "domain": "mpascensores.com",
+    "web": "https://www.mpascensores.com",
+    "reason": "Ascensores en chapa de acero (MP Ascensores) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Ascensores en chapa de acero (MP Ascensores) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0529",
+    "name": "Hidral S.A.",
+    "cif": "A41094820",
+    "domain": "hidral.com",
+    "web": "https://www.hidral.com",
+    "reason": "Plataformas hidráulicas en acero (Hidral) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Plataformas hidráulicas en acero (Hidral) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0530",
+    "name": "Fain Ascensores S.A.",
+    "cif": "A28291845",
+    "domain": "fainascensores.com",
+    "web": "https://fainascensores.com",
+    "reason": "Mantenimiento e instalación de ascensores (Fain Ascensores) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Mantenimiento e instalación de ascensores (Fain Ascensores) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0531",
+    "name": "Embarba Ascensores S.A.",
+    "cif": "A29019284",
+    "domain": "embarba.com",
+    "web": "https://www.embarba.com",
+    "reason": "Ascensores (Embarba Ascensores) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Ascensores (Embarba Ascensores) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0532",
+    "name": "Ascensores Enor S.A.",
+    "cif": "A36601928",
+    "domain": "enor.es",
+    "web": "https://www.enor.es",
+    "reason": "Ascensores (Ascensores Enor) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Ascensores (Ascensores Enor) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0593",
+    "name": "Spigogroup (Spigotec / Spigoline)",
+    "cif": "B26291845",
+    "domain": "spigogroup.com",
+    "web": "https://spigogroup.com",
+    "reason": "Techos y revestimientos acústicos de madera (Spigogroup) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Techos y revestimientos acústicos de madera (Spigogroup) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0595",
+    "name": "Knauf Ceiling Solutions Ibérica S.L.",
+    "cif": "B82194820",
+    "domain": "knaufceilingsolutions.com",
+    "web": "https://knaufceilingsolutions.com",
+    "reason": "Techos acústicos de fibra mineral y yeso (Knauf Ceiling Solutions) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Techos acústicos de fibra mineral y yeso (Knauf Ceiling Solutions) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0601",
+    "name": "Aprimatic Doors S.L. (Aprimatic Puertas Automáticas)",
+    "cif": "B83066753",
+    "domain": "aprimatic.es",
+    "web": "https://www.aprimatic.es",
+    "reason": "Registro duplicado de Aprimatic Puertas Automáticas S.L. (ya existente en PROP-LEAD26-0523)",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Registro duplicado de Aprimatic Puertas Automáticas S.L. (ya existente en PROP-LEAD26-0523)"
+  },
+  {
+    "id": "PROP-LEAD26-0630",
+    "name": "O Feliz - Metalomecânica, S.A.",
+    "cif": "PT502348482",
+    "domain": "ofeliz.com",
+    "web": "https://www.ofeliz.com",
+    "reason": "Construcción metálica en acero (O Feliz Metalomecânica) - Consumo de aluminio extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Construcción metálica en acero (O Feliz Metalomecânica) - Consumo de aluminio extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0634",
+    "name": "Fametal - Construções Metálicas, S.A.",
+    "cif": "PT502614930",
+    "domain": "fametal.pt",
+    "web": "https://www.fametal.pt",
+    "reason": "Estructuras metálicas de acero (Fametal) - Consumo de aluminio extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Estructuras metálicas de acero (Fametal) - Consumo de aluminio extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0635",
+    "name": "Metaloviana - Metalomecânica de Viana, S.A.",
+    "cif": "PT503689126",
+    "domain": "metaloviana.pt",
+    "web": "https://www.metaloviana.pt",
+    "reason": "Estructuras metálicas pesadas de acero (Metaloviana) - Consumo de aluminio extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Estructuras metálicas pesadas de acero (Metaloviana) - Consumo de aluminio extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0636",
+    "name": "Metalúrgica Central da Trofa, S.A. (MCT)",
+    "cif": "PT500191845",
+    "domain": "mct.pt",
+    "web": "https://www.mct.pt",
+    "reason": "Calderería y estructuras de acero (Metalúrgica Central da Trofa MCT) - Consumo de aluminio extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Calderería y estructuras de acero (Metalúrgica Central da Trofa MCT) - Consumo de aluminio extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0637",
+    "name": "Vigobloco - Construções Metálicas e Pré-Esforçados, S.A.",
+    "cif": "PT503418920",
+    "domain": "vigobloco.pt",
+    "web": "https://www.vigobloco.pt",
+    "reason": "Prefabricados de hormigón y acero (Vigobloco) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Prefabricados de hormigón y acero (Vigobloco) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0640",
+    "name": "Horta-Coslada Construcciones Metálicas, S.L. (Horta Coslada)",
+    "cif": "B15032485",
+    "domain": "hortacoslada.com",
+    "web": "https://www.hortacoslada.com",
+    "reason": "Estructuras pesadas de acero, puentes y viaductos (Horta-Coslada) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Estructuras pesadas de acero, puentes y viaductos (Horta-Coslada) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0641",
+    "name": "Puertas Padilla, S.L.",
+    "cif": "B30129845",
+    "domain": "puertaspadilla.com",
+    "web": "http://www.puertaspadilla.com",
+    "reason": "Puertas cortafuegos de chapa de acero galvanizado (Puertas Padilla) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Puertas cortafuegos de chapa de acero galvanizado (Puertas Padilla) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0643",
+    "name": "Asturmadi Doors, S.L. (Grupo Asturmadi)",
+    "cif": "B33849209",
+    "domain": "asturmadidoors.com",
+    "web": "https://asturmadidoors.com",
+    "reason": "Puertas cortafuegos de chapa de acero (Asturmadi Doors) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Puertas cortafuegos de chapa de acero (Asturmadi Doors) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0653",
+    "name": "Cercados y Portones Metálicos Rivisa, S.A.",
+    "cif": "A08391849",
+    "domain": "rivisa.com",
+    "web": "https://www.rivisa.com",
+    "reason": "Mallas metálicas y postes de acero galvanizado (Rivisa) - Consumo de aluminio extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Mallas metálicas y postes de acero galvanizado (Rivisa) - Consumo de aluminio extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0661",
+    "name": "Ingeteam Power Technology, S.A.",
+    "cif": "A48491825",
+    "domain": "ingeteam.com",
+    "web": "https://www.ingeteam.com",
+    "reason": "Electrónica de potencia (Ingeteam) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Electrónica de potencia (Ingeteam) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0662",
+    "name": "Power Electronics España, S.L.",
+    "cif": "B96048192",
+    "domain": "power-electronics.com",
+    "web": "https://power-electronics.com",
+    "reason": "Electrónica de potencia (Power Electronics) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Electrónica de potencia (Power Electronics) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0663",
+    "name": "Grupo Arteche (Arteche Lantegi Elkartea, S.A.)",
+    "cif": "A48029184",
+    "domain": "arteche.com",
+    "web": "https://www.arteche.com",
+    "reason": "Equipos eléctricos y transformadores (Arteche) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Equipos eléctricos y transformadores (Arteche) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0664",
+    "name": "Wallbox Chargers, S.L.",
+    "cif": "B66542918",
+    "domain": "wallbox.com",
+    "web": "https://wallbox.com",
+    "reason": "Cargadores VE (Wallbox) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Cargadores VE (Wallbox) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0665",
+    "name": "Circontrol, S.A.",
+    "cif": "A61284915",
+    "domain": "circontrol.com",
+    "web": "https://circontrol.com",
+    "reason": "Electrónica y control (Circontrol) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Electrónica y control (Circontrol) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0666",
+    "name": "Pronutec, S.A. / Telergon, S.A. (Grupo Gorlan)",
+    "cif": "A48219485",
+    "domain": "pronutec.com",
+    "web": "https://www.pronutec.com",
+    "reason": "Aparamenta eléctrica (Pronutec / Telergon) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Aparamenta eléctrica (Pronutec / Telergon) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0667",
+    "name": "Jema Energy, S.A. (Grupo Irizar)",
+    "cif": "A20019482",
+    "domain": "jemaenergy.com",
+    "web": "https://www.jemaenergy.com",
+    "reason": "Electrónica de potencia (Jema Energy) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Electrónica de potencia (Jema Energy) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0668",
+    "name": "Salicru, S.A.",
+    "cif": "A08291845",
+    "domain": "salicru.com",
+    "web": "https://www.salicru.com",
+    "reason": "Electrónica de potencia SAIs (Salicru) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Electrónica de potencia SAIs (Salicru) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0669",
+    "name": "Orbis Tecnología Eléctrica, S.A.",
+    "cif": "A28048192",
+    "domain": "orbis.es",
+    "web": "https://www.orbis.es",
+    "reason": "Material eléctrico (Orbis) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Material eléctrico (Orbis) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0670",
+    "name": "Zigor Corporación, S.A.",
+    "cif": "A01248195",
+    "domain": "zigor.com",
+    "web": "https://www.zigor.com",
+    "reason": "Electrónica de potencia (Zigor) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Electrónica de potencia (Zigor) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0671",
+    "name": "Premium PSU, S.L.U.",
+    "cif": "B60194825",
+    "domain": "premiumpsu.com",
+    "web": "https://www.premiumpsu.com",
+    "reason": "Fuentes de alimentación (Premium PSU) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Fuentes de alimentación (Premium PSU) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0672",
+    "name": "Delvalle Box (Envolventes Especiales Delvalle, S.L.)",
+    "cif": "B01391845",
+    "domain": "delvallebox.com",
+    "web": "https://www.delvallebox.com",
+    "reason": "Armarios de acero inoxidable (Delvalle Box) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Armarios de acero inoxidable (Delvalle Box) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0673",
+    "name": "Keyter Intarcon (Keyter Technologies, S.L.)",
+    "cif": "B14819285",
+    "domain": "keyter.com",
+    "web": "https://www.keyter.com",
+    "reason": "Equipos frigoríficos en chapa de acero (Keyter Intarcon) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Equipos frigoríficos en chapa de acero (Keyter Intarcon) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0674",
+    "name": "Sodeca, S.L.U.",
+    "cif": "B08719284",
+    "domain": "sodeca.com",
+    "web": "https://www.sodeca.com",
+    "reason": "Ventiladores industriales en acero (Sodeca) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Ventiladores industriales en acero (Sodeca) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0675",
+    "name": "Hitecsa (Hiplus Aire Acondicionado, S.L.)",
+    "cif": "B62491820",
+    "domain": "hitecsa.com",
+    "web": "https://www.hitecsa.com",
+    "reason": "Climatización en chapa de acero (Hitecsa) - Consumo de perfil extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Climatización en chapa de acero (Hitecsa) - Consumo de perfil extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0676",
+    "name": "Zehnder Group Ibérica Indoor Climate, S.A.U.",
+    "cif": "A82194820",
+    "domain": "zehnder.es",
+    "web": "https://www.zehnder.es",
+    "reason": "Delegación comercial radiadores/ventilación (Zehnder) - Sin fabricación local con aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Delegación comercial radiadores/ventilación (Zehnder) - Sin fabricación local con aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0678",
+    "name": "Farcinox, S.L.",
+    "cif": "B13291845",
+    "domain": "farcinox.com",
+    "web": "https://www.farcinox.com",
+    "reason": "Cisternas de acero inoxidable (Farcinox) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Cisternas de acero inoxidable (Farcinox) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0682",
+    "name": "Astilleros Armón, S.A. / Auxnaval (División Catamaranes Aluminio)",
+    "cif": "A33019482",
+    "domain": "astillerosarmon.com",
+    "web": "https://www.astillerosarmon.com",
+    "reason": "Astilleros navales (Astilleros Armón) - Sector naval excluido (chapa naval)",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Astilleros navales (Astilleros Armón) - Sector naval excluido (chapa naval)"
+  },
+  {
+    "id": "PROP-LEAD26-0683",
+    "name": "Aister (Aislamientos Térmicos de Galicia, S.A.)",
+    "cif": "A36049182",
+    "domain": "aister.com",
+    "web": "https://www.aister.com",
+    "reason": "Astilleros y naval (Aister) - Sector naval excluido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Astilleros y naval (Aister) - Sector naval excluido"
+  },
+  {
+    "id": "PROP-LEAD26-0684",
+    "name": "Ronáutica Marinas, S.L.U.",
+    "cif": "B36918420",
+    "domain": "ronauticamarinas.com",
+    "web": "https://www.ronauticamarinas.com",
+    "reason": "Sector náutico/marítimo (Ronáutica Marinas) - Sector náutico excluido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Sector náutico/marítimo (Ronáutica Marinas) - Sector náutico excluido"
+  },
+  {
+    "id": "PROP-LEAD26-0685",
+    "name": "Almarin (Equipos de Ayuda a la Navegación, S.L.)",
+    "cif": "B64192845",
+    "domain": "almarin.es",
+    "web": "https://www.almarin.es",
+    "reason": "Boyas de polietileno y balizamiento (Almarin) - Consumo de aluminio extruido no comprobado",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Boyas de polietileno y balizamiento (Almarin) - Consumo de aluminio extruido no comprobado"
+  },
+  {
+    "id": "PROP-LEAD26-0686",
+    "name": "Ulma Agrícola, S.Coop.",
+    "cif": "F20048192",
+    "domain": "ulmaagricola.com",
+    "web": "https://www.ulmaagricola.com",
+    "reason": "Invernaderos en tubo de acero galvanizado Sendzimir (Ulma Agrícola) - No aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Invernaderos en tubo de acero galvanizado Sendzimir (Ulma Agrícola) - No aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0687",
+    "name": "Novedades Agrícolas, S.A. (APR Greenhouses)",
+    "cif": "A30049182",
+    "domain": "novedades-agricolas.com",
+    "web": "https://www.novedades-agricolas.com",
+    "reason": "Invernaderos en acero galvanizado y riego plástico (Novedades Agrícolas) - No aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Invernaderos en acero galvanizado y riego plástico (Novedades Agrícolas) - No aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0688",
+    "name": "RKD Irrigación, S.L.",
+    "cif": "B47049182",
+    "domain": "rkd.es",
+    "web": "https://www.rkd.es",
+    "reason": "Pivotes de riego en acero galvanizado (RKD Irrigación) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Pivotes de riego en acero galvanizado (RKD Irrigación) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0689",
+    "name": "J. Soares Correia - Armazéns de Ferro, S.A. (JSC)",
+    "cif": "PT500148920",
+    "domain": "jsc.pt",
+    "web": "https://www.jsc.pt",
+    "reason": "Almacén siderúrgico de hierro y acero (J. Soares Correia) - No aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Almacén siderúrgico de hierro y acero (J. Soares Correia) - No aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0690",
+    "name": "A. Silva Matos - Metalomecânica, S.A.",
+    "cif": "PT500918420",
+    "domain": "asilvamatos.pt",
+    "web": "https://www.asilvamatos.pt",
+    "reason": "Calderería pesada y tanques a presión de acero (A. Silva Matos) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Calderería pesada y tanques a presión de acero (A. Silva Matos) - No consume aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0691",
+    "name": "Perfisa - Fábrica de Perfis Metálicos, S.A.",
+    "cif": "PT503042815",
+    "domain": "perfisa.net",
+    "web": "https://www.perfisa.net",
+    "reason": "Perfiles de chapa de acero galvanizado conformados en frío para pladur/LSF (Perfisa) - No aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Perfiles de chapa de acero galvanizado conformados en frío para pladur/LSF (Perfisa) - No aluminio extruido"
+  },
+  {
+    "id": "PROP-LEAD26-0693",
+    "name": "Sandometal - Construções Metálicas, S.A.",
+    "cif": "PT503819420",
+    "domain": "sandometal.pt",
+    "web": "https://www.sandometal.pt",
+    "reason": "Estructuras metálicas pesadas de acero (Sandometal) - No consume aluminio extruido",
+    "excludedAt": "2026-10-28T22:23:52.639592+00:00",
+    "notes": "Dada de baja en auditoría de aluminio extruido: Estructuras metálicas pesadas de acero (Sandometal) - No consume aluminio extruido"
+  },
+  {
+    "name": "Codeval Aluminium, S.L.",
+    "cif": "B98697832",
+    "reason": "Exclusión expresa solicitada por el usuario (no incluir en base de datos de prospección)",
+    "date": "2026-11-01T13:54:00.000Z"
   }
 ]

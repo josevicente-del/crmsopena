@@ -40,19 +40,23 @@ export const calculateHaversineKm = (lat1, lon1, lat2, lon2) => {
 export const getB2BExtrusionProfile = (prospect) => {
   if (!prospect) {
     return {
-      estimatedTonsPerYear: 25,
-      b2bTier: 'Tier B',
-      profileType: 'Matriz Propia (Bajo Plano)',
+      estimatedTonsPerYear: 0,
+      b2bTier: '',
+      profileType: 'Carpintería / Arquitectura',
       alloy: '6063-T5 / 6060',
       finish: 'Lacado Qualicoat / RPT',
       incumbentSupplier: 'Sin homologar (Oportunidad Dual Sourcing)',
-      estimatedAnnualEurValue: 25 * AVG_EUR_PER_TON_EXTRUDED
+      estimatedAnnualEurValue: 0
     };
   }
 
   const sec = (prospect.sector || '').toLowerCase();
   const prods = Array.isArray(prospect.products) ? prospect.products.join(' ').toLowerCase() : '';
-  const rev = Number(prospect.revenue) || 5000000;
+  
+  // REGLA COMERCIAL ESTRICTA: Solo computa para Tier si la facturación o tonelaje están contrastados
+  const hasVerifiedRevenue = Boolean(prospect.revenue && !isNaN(Number(prospect.revenue)) && Number(prospect.revenue) > 0);
+  const hasExplicitTons = Boolean(prospect.estimatedTonsPerYear && !isNaN(Number(prospect.estimatedTonsPerYear)) && Number(prospect.estimatedTonsPerYear) > 0);
+  const rev = hasVerifiedRevenue ? Number(prospect.revenue) : 0;
 
   // 1. Determinación de Tipo de Perfil
   let profileType = prospect.profileType;
@@ -114,8 +118,11 @@ export const getB2BExtrusionProfile = (prospect) => {
   }
 
   // 4. Tonelaje anual estimado (Tn/año)
-  let estimatedTonsPerYear = Number(prospect.estimatedTonsPerYear);
-  if (!estimatedTonsPerYear || isNaN(estimatedTonsPerYear)) {
+  // Si no hay facturación verificada ni tonelaje explícito, queda a 0 Tn
+  let estimatedTonsPerYear = 0;
+  if (hasExplicitTons) {
+    estimatedTonsPerYear = Number(prospect.estimatedTonsPerYear);
+  } else if (hasVerifiedRevenue) {
     const revM = rev / 1000000;
     if (sec.includes('solar') || sec.includes('cerramiento') || sec.includes('fachada') || sec.includes('ventana')) {
       estimatedTonsPerYear = Math.round(Math.min(650, Math.max(12, revM * 6.5)));
@@ -127,9 +134,12 @@ export const getB2BExtrusionProfile = (prospect) => {
   }
 
   // 5. Clasificación Tier ABC
-  let b2bTier = prospect.b2bTier;
-  if (!b2bTier) {
-    if (estimatedTonsPerYear >= 100 || rev >= 25000000) {
+  // Quien NO tenga facturación verificada ni consumo contrastado: NO se tiene en cuenta para el Tier (queda en blanco)
+  let b2bTier = '';
+  if (hasExplicitTons || hasVerifiedRevenue) {
+    if (prospect.b2bTier) {
+      b2bTier = prospect.b2bTier;
+    } else if (estimatedTonsPerYear >= 100 || rev >= 25000000) {
       b2bTier = 'Tier A';
     } else if (estimatedTonsPerYear >= 35 || rev >= 5000000) {
       b2bTier = 'Tier B';
@@ -140,7 +150,6 @@ export const getB2BExtrusionProfile = (prospect) => {
 
   const incumbentSupplier = prospect.incumbentSupplier || 'Sin homologar (Oportunidad Dual Sourcing)';
   const estimatedAnnualEurValue = estimatedTonsPerYear * AVG_EUR_PER_TON_EXTRUDED;
-
   return {
     estimatedTonsPerYear,
     b2bTier,

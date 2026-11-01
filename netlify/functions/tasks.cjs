@@ -27,28 +27,46 @@ exports.handler = async (event) => {
     return { statusCode: 204, headers, body: '' };
   }
 
-  // GET /api/tasks
+  // GET /api/tasks (con soporte de filtrado por privilegios)
   if (method === 'GET') {
+    let result = inMemoryTasks;
+    const query = event.queryStringParameters || {};
+    const user = query.user;
+    const zone = query.zone;
+    if (zone && zone !== 'ALL') {
+      result = result.filter(t => t.zone === zone || t.zone === 'ALL');
+    }
+    if (user && user !== 'admin' && user !== 'ccastro') {
+      result = result.filter(t => t.assignedTo === user || t.createdBy === user);
+    }
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify(inMemoryTasks)
+      body: JSON.stringify(result)
     };
   }
 
-  // POST /api/tasks
+  // POST /api/tasks o /api/tasks/sync
   if (method === 'POST') {
     try {
       const payload = event.body ? JSON.parse(event.body) : {};
-      if (Array.isArray(payload)) {
-        inMemoryTasks = payload;
-      } else if (payload && Array.isArray(payload.tasks)) {
-        inMemoryTasks = payload.tasks;
+      if (Array.isArray(payload) || (payload && Array.isArray(payload.tasks))) {
+        const incoming = Array.isArray(payload) ? payload : payload.tasks;
+        const map = new Map();
+        inMemoryTasks.forEach(t => map.set(String(t.id).trim(), t));
+        incoming.forEach(t => {
+          if (t && t.id) map.set(String(t.id).trim(), t);
+        });
+        inMemoryTasks = Array.from(map.values());
       } else if (payload && payload.text) {
         const newTask = {
           id: payload.id || Date.now(),
           prospectId: payload.prospectId || null,
           prospectName: payload.prospectName || 'Tarea General',
+          zone: payload.zone || 'ALL',
+          assignedTo: payload.assignedTo || 'admin',
+          assignedToName: payload.assignedToName || 'Superadministrador Grupo Sopena',
+          createdBy: payload.createdBy || 'admin',
           text: payload.text,
           date: payload.date || new Date().toISOString(),
           dueDate: payload.dueDate || null,
@@ -57,7 +75,7 @@ exports.handler = async (event) => {
           priority: payload.priority || 'Normal',
           category: payload.category || 'General'
         };
-        inMemoryTasks = [newTask, ...inMemoryTasks.filter(t => t.id !== newTask.id)];
+        inMemoryTasks = [newTask, ...inMemoryTasks.filter(t => String(t.id).trim() !== String(newTask.id).trim())];
       }
 
       return {
@@ -78,10 +96,10 @@ exports.handler = async (event) => {
   if (method === 'PATCH' || method === 'PUT') {
     const isToggle = path.endsWith('/toggle');
     const segments = path.split('/').filter(Boolean);
-    const taskIdStr = isToggle ? segments[segments.length - 2] : segments[segments.length - 1];
+    const taskIdStr = (isToggle ? segments[segments.length - 2] : segments[segments.length - 1]).trim();
 
     inMemoryTasks = inMemoryTasks.map(t => {
-      if (String(t.id) === taskIdStr) {
+      if (String(t.id).trim() === taskIdStr) {
         if (isToggle) {
           return {
             ...t,
@@ -103,8 +121,8 @@ exports.handler = async (event) => {
   // DELETE /api/tasks/:id
   if (method === 'DELETE') {
     const segments = path.split('/').filter(Boolean);
-    const taskIdStr = segments[segments.length - 1];
-    inMemoryTasks = inMemoryTasks.filter(t => String(t.id) !== taskIdStr);
+    const taskIdStr = segments[segments.length - 1].trim();
+    inMemoryTasks = inMemoryTasks.filter(t => String(t.id).trim() !== taskIdStr);
 
     return {
       statusCode: 200,
