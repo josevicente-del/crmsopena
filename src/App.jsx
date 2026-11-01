@@ -784,7 +784,7 @@ const App = () => {
       whatsapp: '',
       zones: ['ALL'],
       isDefaultPass: true,
-      defaultPass: 'lacado2025'
+      defaultPass: 'lacado2026'
     },
     norte1: {
       username: 'norte1',
@@ -871,6 +871,13 @@ const App = () => {
 
     if (!userDef) {
       setLoginError(true);
+      return;
+    }
+
+    // Bloqueo estricto de contraseña obsoleta lacado2025
+    if (password === 'lacado2025') {
+      setLoginError(true);
+      alert("⚠️ La contraseña 'lacado2025' ha sido revocada y anulada por completo. Introduzca la clave válida 'lacado2026'.");
       return;
     }
 
@@ -1712,7 +1719,7 @@ const App = () => {
   const handleExportCSV = () => {
     const passwordConfirm = window.prompt("Por seguridad, introduzca la contraseña de administración del CRM para exportar los datos:");
     if (passwordConfirm === null) return; // Canceló el prompt
-    if (passwordConfirm !== 'aluminio') {
+    if (passwordConfirm !== 'lacado2026') {
       alert("⚠️ Contraseña incorrecta. Operación de exportación cancelada.");
       return;
     }
@@ -2817,7 +2824,7 @@ const App = () => {
               </button>
               <button 
                 type="button" 
-                onClick={() => { setUsername('admin'); setPassword('lacado2025'); }} 
+                onClick={() => { setUsername('admin'); setPassword('lacado2026'); }} 
                 style={{ padding: '4px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', background: username === 'admin' ? '#f3e8ff' : 'white', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600, color: '#7e22ce' }}
               >
                 👑 admin (Superadmin)

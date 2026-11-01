@@ -1,5 +1,34 @@
 [
   {
+    "id": "LOG-SECURITY-PASS-2026",
+    "timestamp": "2026-11-01T21:43:00.000Z",
+    "user": "Superadministrador Grupo Sopena",
+    "action": "REVOCACION_PASSWORD_Y_ACTUALIZACION",
+    "targetId": "admin",
+    "targetName": "Seguridad de Acceso",
+    "details": "Anulada y revocada taxativamente la contraseña 'lacado2025'. Clave válida y autorizada para acceso al sistema y exportación CSV: 'lacado2026'.",
+    "metadata": {
+      "revoked": "lacado2025",
+      "active": "lacado2026"
+    }
+  },
+  {
+    "id": "LOG-DATA-TRUTH-POLICY",
+    "timestamp": "2026-11-01T21:43:01.000Z",
+    "user": "Superadministrador Grupo Sopena",
+    "action": "CORRECCION_POLITICA_FACTURACION",
+    "targetId": "database",
+    "targetName": "Auditoría de Datos Financieros",
+    "details": "Aplicada política de no inventar facturaciones: cualquier empresa sin balance oficial auditado o cifra aportada por el usuario se deja vacía (null). Eliminadas facturaciones simuladas y dada de alta ALUMINIOS MARIN GOMEZ SL con facturación vacía.",
+    "metadata": {
+      "soltec": "18.000.000 € (Usuario)",
+      "sunconnection": "4.081.353,77 € (Usuario)",
+      "sunfer": "24.700.000 € (Usuario)",
+      "urdecon": "vacía (null)",
+      "marin_gomez": "vacía (null)"
+    }
+  },
+  {
     "id": "LOG-1793563270817",
     "timestamp": "2026-11-01T21:01:10.817797Z",
     "user": "Superadministrador Grupo Sopena",

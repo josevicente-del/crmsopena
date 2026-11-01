@@ -1,5 +1,38 @@
 [
   {
+    "id": "PROP-LEAD26-0706",
+    "name": "ALUMINIOS MARIN GOMEZ SL",
+    "cif": "B30446371",
+    "zone": "Murcia",
+    "department": "Roldán - Torre-Pacheco (Murcia)",
+    "address": "Calle Cáritas Española, nº 10, Polígono Industrial Roldán",
+    "city": "Roldán (Torre-Pacheco)",
+    "phone": "+34 968 58 90 25",
+    "web": "https://www.aluminiosmarin.es",
+    "website": "https://www.aluminiosmarin.es",
+    "email": "info@aluminiosmarin.es",
+    "location": [
+      37.7972,
+      -0.9984
+    ],
+    "lat": 37.7972,
+    "lng": -0.9984,
+    "sector": "Puertas y Ventanas",
+    "products": "Fabricación e instalación de carpintería de aluminio, cerramientos, persianas y mosquiteras",
+    "revenue": null,
+    "purchasingManager": "Responsable de Compras y Suministros",
+    "contacted": false,
+    "contactDate": null,
+    "notes": "Fabricante especializado en cerramientos y carpintería de aluminio en Murcia. Consumo recurrente de perfiles de aluminio. Facturación no contrastada públicamente (dejada vacía según política de veracidad).",
+    "createdAt": "2026-11-01T21:42:00.000Z",
+    "pipelineStage": "Prospección Inicial",
+    "certamen": "Directorio Industrial Murcia",
+    "tier": "Tier 2",
+    "emailVerified": true,
+    "emailVerifiedType": "corporate_official",
+    "emailableStatus": "deliverable"
+  },
+  {
     "id": 900119,
     "name": "Perfilalu10 (Alu 10 - Sistemas Modulares)",
     "zone": "Murcia",
@@ -21524,7 +21557,7 @@
     "id": "PROP-LEAD-1790713744573-4",
     "name": "Innova Modular Levante",
     "sector": "Construccion Modular",
-    "revenue": 9400000,
+    "revenue": null,
     "purchasingManager": "Laura Peñarrubia",
     "purchasingPhone": "+34 600 000 000",
     "purchasingLinkedin": "No disponible",
@@ -21680,220 +21713,5 @@
     "response": "Pendiente de primer contacto comercial",
     "notes": "Fabricante de carpintería de aluminio, cerramientos, muros cortina y sistemas con rotura de puente térmico en la Región de Murcia. [Facturación pendiente de auditoría contrastada - Sin Tier].",
     "createdAt": "2026-11-01T20:41:27.252247Z"
-  },
-  {
-    "id": "PROP-LEAD-1793561988626-1",
-    "name": "Axial Structural Solutions",
-    "sector": "Estructuras Solares",
-    "revenue": 165082000,
-    "purchasingManager": "Dpto. Compras y Suministros (Axial)",
-    "purchasingPhone": "+34 900 000 000",
-    "purchasingLinkedin": "https://www.linkedin.com/in/responsable-compras",
-    "email": "info@axialstructural.com",
-    "address": "Calle Botiguers, 5",
-    "city": "Paterna (Valencia)",
-    "zone": "Comunidad Valenciana",
-    "location": [
-      39.46,
-      -0.37
-    ],
-    "web": "www.axialstructural.com",
-    "linkedin": "No disponible",
-    "contacted": false,
-    "notes": "Lead cualificado automáticamente por Agentforce Lead Finder. Auditado en Axesor, Novoperfil, FEMVAL y AECIM. Facturación auditada: 165.1M € (Criterio estricto > 5M €). Verificación contra el registro de extrusores de la AEA superada con éxito (No competidor).",
-    "response": null,
-    "products": [
-      "Perfiles",
-      "Estructuras Solares",
-      "Chapas de Aluminio"
-    ],
-    "tasks": [],
-    "createdAt": "2026-11-01T19:39:48.626Z",
-    "history": [
-      {
-        "id": 1793561988626,
-        "type": "📝 Incorporación",
-        "text": "Empresa prospectada e incorporada a la base de datos comercial mediante Agentforce Lead Finder. Datos financieros y solvencia mercantil cruzados con Axesor (>5M €), Novoperfil, FEMVAL, AECIM, INE, Cámara de Comercio y elEconomista.",
-        "date": "2026-11-01T19:39:48.626Z"
-      }
-    ],
-    "pipelineStage": "Lead",
-    "quality": "",
-    "logistics": "",
-    "packaging": "",
-    "isAutoProspect": true,
-    "source": "Agentforce Lead Finder"
-  },
-  {
-    "id": "PROP-LEAD-1793561988630-2",
-    "name": "Chapa y Plegados Turia S.L. (FEMVAL)",
-    "sector": "Transformacion de Chapa",
-    "revenue": 6200000,
-    "purchasingManager": "Carles Benlliure",
-    "purchasingPhone": "+34 900 000 000",
-    "purchasingLinkedin": "https://www.linkedin.com/in/responsable-compras",
-    "email": "info@chapasturia.es",
-    "address": "Polígono Industrial El Oliveral",
-    "city": "Ribarroja del Turia",
-    "zone": "Comunidad Valenciana",
-    "location": [
-      39.46,
-      -0.37
-    ],
-    "web": "www.chapasturia.es",
-    "linkedin": "No disponible",
-    "contacted": false,
-    "notes": "Lead cualificado automáticamente por Agentforce Lead Finder. Auditado en Axesor, Novoperfil, FEMVAL y AECIM. Facturación auditada: 6.2M € (Criterio estricto > 5M €). Verificación contra el registro de extrusores de la AEA superada con éxito (No competidor).",
-    "response": null,
-    "products": [
-      "Chapas de Aluminio",
-      "Bobinas",
-      "Corte y Plegado"
-    ],
-    "tasks": [],
-    "createdAt": "2026-11-01T19:39:48.630Z",
-    "history": [
-      {
-        "id": 1793561988634,
-        "type": "📝 Incorporación",
-        "text": "Empresa prospectada e incorporada a la base de datos comercial mediante Agentforce Lead Finder. Datos financieros y solvencia mercantil cruzados con Axesor (>5M €), Novoperfil, FEMVAL, AECIM, INE, Cámara de Comercio y elEconomista.",
-        "date": "2026-11-01T19:39:48.630Z"
-      }
-    ],
-    "pipelineStage": "Lead",
-    "quality": "",
-    "logistics": "",
-    "packaging": "",
-    "isAutoProspect": true,
-    "source": "Agentforce Lead Finder"
-  },
-  {
-    "id": "PROP-LEAD-1793561988632-3",
-    "name": "Transformados Metálicos del Turia S.A. (FEMVAL)",
-    "sector": "Transformacion de Chapa",
-    "revenue": 8900000,
-    "purchasingManager": "Damià Ferrer",
-    "purchasingPhone": "+34 900 000 000",
-    "purchasingLinkedin": "https://www.linkedin.com/in/responsable-compras",
-    "email": "compras@transformadosturia.com",
-    "address": "Polígono Industrial Vara de Quart",
-    "city": "Valencia",
-    "zone": "Comunidad Valenciana",
-    "location": [
-      39.46,
-      -0.37
-    ],
-    "web": "www.transformadosturia.com",
-    "linkedin": "No disponible",
-    "contacted": false,
-    "notes": "Lead cualificado automáticamente por Agentforce Lead Finder. Auditado en Axesor, Novoperfil, FEMVAL y AECIM. Facturación auditada: 8.9M € (Criterio estricto > 5M €). Verificación contra el registro de extrusores de la AEA superada con éxito (No competidor).",
-    "response": null,
-    "products": [
-      "Chapas de Aluminio",
-      "Bobinas",
-      "Corte y Plegado"
-    ],
-    "tasks": [],
-    "createdAt": "2026-11-01T19:39:48.632Z",
-    "history": [
-      {
-        "id": 1793561988638,
-        "type": "📝 Incorporación",
-        "text": "Empresa prospectada e incorporada a la base de datos comercial mediante Agentforce Lead Finder. Datos financieros y solvencia mercantil cruzados con Axesor (>5M €), Novoperfil, FEMVAL, AECIM, INE, Cámara de Comercio y elEconomista.",
-        "date": "2026-11-01T19:39:48.632Z"
-      }
-    ],
-    "pipelineStage": "Lead",
-    "quality": "",
-    "logistics": "",
-    "packaging": "",
-    "isAutoProspect": true,
-    "source": "Agentforce Lead Finder"
-  },
-  {
-    "id": "PROP-LEAD-1793561988634-4",
-    "name": "Técnicas de Fachadas Levante S.L. (Novoperfil / FEMVAL)",
-    "sector": "Fachadas de Aluminio",
-    "revenue": 12500000,
-    "purchasingManager": "Vicent Calatayud",
-    "purchasingPhone": "+34 900 000 000",
-    "purchasingLinkedin": "https://www.linkedin.com/in/responsable-compras",
-    "email": "compras@fachadaslevante.com",
-    "address": "Polígono Industrial Juan Carlos I",
-    "city": "Almussafes (Valencia)",
-    "zone": "Comunidad Valenciana",
-    "location": [
-      39.46,
-      -0.37
-    ],
-    "web": "www.fachadaslevante.com",
-    "linkedin": "No disponible",
-    "contacted": false,
-    "notes": "Lead cualificado automáticamente por Agentforce Lead Finder. Auditado en Axesor, Novoperfil, FEMVAL y AECIM. Facturación auditada: 12.5M € (Criterio estricto > 5M €). Verificación contra el registro de extrusores de la AEA superada con éxito (No competidor).",
-    "response": null,
-    "products": [
-      "Muro Cortina",
-      "Panel Composite",
-      "Perfiles"
-    ],
-    "tasks": [],
-    "createdAt": "2026-11-01T19:39:48.634Z",
-    "history": [
-      {
-        "id": 1793561988641,
-        "type": "📝 Incorporación",
-        "text": "Empresa prospectada e incorporada a la base de datos comercial mediante Agentforce Lead Finder. Datos financieros y solvencia mercantil cruzados con Axesor (>5M €), Novoperfil, FEMVAL, AECIM, INE, Cámara de Comercio y elEconomista.",
-        "date": "2026-11-01T19:39:48.634Z"
-      }
-    ],
-    "pipelineStage": "Lead",
-    "quality": "",
-    "logistics": "",
-    "packaging": "",
-    "isAutoProspect": true,
-    "source": "Agentforce Lead Finder"
-  },
-  {
-    "id": "PROP-LEAD-1793561988636-5",
-    "name": "Aluminios y Cerramientos del Mediterráneo (FEMVAL / Axesor)",
-    "sector": "Cerramientos",
-    "revenue": 9800000,
-    "purchasingManager": "Amparo Soler",
-    "purchasingPhone": "+34 900 000 000",
-    "purchasingLinkedin": "https://www.linkedin.com/in/responsable-compras",
-    "email": "compras@alucerrame.es",
-    "address": "Polígono Industrial Plà de Rascanya",
-    "city": "Llíria (Valencia)",
-    "zone": "Comunidad Valenciana",
-    "location": [
-      39.46,
-      -0.37
-    ],
-    "web": "www.alucerrame.es",
-    "linkedin": "No disponible",
-    "contacted": false,
-    "notes": "Lead cualificado automáticamente por Agentforce Lead Finder. Auditado en Axesor, Novoperfil, FEMVAL y AECIM. Facturación auditada: 9.8M € (Criterio estricto > 5M €). Verificación contra el registro de extrusores de la AEA superada con éxito (No competidor).",
-    "response": null,
-    "products": [
-      "Perfiles RPT",
-      "Vidrio y Aluminio",
-      "Lamas"
-    ],
-    "tasks": [],
-    "createdAt": "2026-11-01T19:39:48.636Z",
-    "history": [
-      {
-        "id": 1793561988644,
-        "type": "📝 Incorporación",
-        "text": "Empresa prospectada e incorporada a la base de datos comercial mediante Agentforce Lead Finder. Datos financieros y solvencia mercantil cruzados con Axesor (>5M €), Novoperfil, FEMVAL, AECIM, INE, Cámara de Comercio y elEconomista.",
-        "date": "2026-11-01T19:39:48.636Z"
-      }
-    ],
-    "pipelineStage": "Lead",
-    "quality": "",
-    "logistics": "",
-    "packaging": "",
-    "isAutoProspect": true,
-    "source": "Agentforce Lead Finder"
   }
 ]

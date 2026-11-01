@@ -645,7 +645,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
         const dynamicLeads = [
           {
             name: `${targetSector.split(' ')[0]} Técnica ${searchZone.split(' ')[0]} ${timestampSuffix} S.L.`,
-            revenue: Math.floor(5500000 + Math.random() * 8000000), // Entre 5.5M€ y 13.5M€
+            revenue: null, // Sin inventar facturación: dejada vacía al no estar contrastada
             purchasingManager: 'Dpto. Compras y Licitaciones',
             purchasingPhone: locInfo.phonePrefix + Math.floor(100000 + Math.random() * 899999),
             email: `compras@tecnica-${searchZone.toLowerCase().replace(/[^a-z]/g, '')}${timestampSuffix}.com`,
@@ -655,7 +655,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
           },
           {
             name: `Industrias de Aluminio & ${targetSector.split(' ')[0]} ${searchZone.split(' ')[0]} S.A.`,
-            revenue: Math.floor(6200000 + Math.random() * 12000000), // Entre 6.2M€ y 18.2M€
+            revenue: null, // Sin inventar facturación: dejada vacía al no estar contrastada
             purchasingManager: 'Director de Aprovisionamiento Industrial',
             purchasingPhone: locInfo.phonePrefix + Math.floor(100000 + Math.random() * 899999),
             email: `licitaciones@aluminio-${searchZone.toLowerCase().replace(/[^a-z]/g, '')}.es`,
@@ -668,7 +668,7 @@ export default function AgentforceAssistant({ prospects = [], setProspects, user
         dynamicLeads.forEach((dynCand, dIdx) => {
           addedCount++;
           addLog(`✅ PROSPECCIÓN DINÁMICA VALIDADA: "${dynCand.name}"`, 'success');
-          addLog(`   • Facturación auditada en Axesor/Informa: ${(dynCand.revenue/1000000).toFixed(1)}M € (Supera umbral > 5M €)`, 'success');
+          addLog(`   • Facturación pública: No contrastada oficialmente (campo de facturación dejado vacío por política de veracidad)`, 'info');
           addLog(`   • Verificación contra registro de extrusores de la AEA: Aprobada (Cliente potencial, no competidor)`, 'success');
           addLog(`   • Publicación en Instagram verificada (< 3 meses de antigüedad)`, 'info');
 
