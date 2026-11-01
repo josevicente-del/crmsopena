@@ -1,5 +1,20 @@
 [
   {
+    "id": "LOG-GARDENGATE-REV-10",
+    "timestamp": "2026-11-01T21:54:00.000Z",
+    "user": "Superadministrador Grupo Sopena",
+    "action": "ACTUALIZACION_FACTURACION_CONFIRMADA",
+    "targetId": "PROP-LEAD26-0628",
+    "targetName": "Gardengate, S.A. (Gardengate Group - Portaluxe / GreenDoor)",
+    "details": "Actualizada la facturación anual confirmada por el usuario a 78.000.000 €/año (Clasificada en Tier 1 / Gran Cuenta Industrial).",
+    "metadata": {
+      "revenue": 78000000,
+      "currency": "EUR",
+      "tier": "Tier 1",
+      "zone": "Portugal"
+    }
+  },
+  {
     "id": "LOG-CLEAN-REVENUES-9",
     "timestamp": "2026-11-01T21:51:00.000Z",
     "user": "Superadministrador Grupo Sopena",

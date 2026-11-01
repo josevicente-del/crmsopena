@@ -20110,7 +20110,7 @@
     "department": "Adaúfe, Braga (Portugal)",
     "cif": "",
     "web": "https://gardengate.group/es/",
-    "revenue": null,
+    "revenue": 78000000,
     "purchasingManager": "",
     "phone": "921568627",
     "email": "info@gardengate.group",
@@ -20137,7 +20137,8 @@
     "lat": 41.5862,
     "lng": -8.3975,
     "website": "https://gardengate.group/es/",
-    "contact": ""
+    "contact": "",
+    "tier": "Tier 1"
   },
   {
     "name": "Metalusa, S.A. (Grupo Patrilar)",
