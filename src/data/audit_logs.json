@@ -1,5 +1,19 @@
 [
   {
+    "id": "LOG-TRUTH-AUDIT-11",
+    "timestamp": "2026-11-01T22:00:00.000Z",
+    "user": "Superadministrador Grupo Sopena",
+    "action": "ERRADICACION_DEFAULT_5M_Y_AUDITORIA_INTERNET",
+    "targetId": "crm_database",
+    "targetName": "Auditoría Financiera Integral",
+    "details": "Erradicado definitivamente el valor por defecto 5.000.000 € en el código de saneamiento y caché del navegador. Contrastadas en eInforma y balances oficiales las grandes cuentas (Escribano 488.3M€, Lecitrailer 295M€, Gaviota Simbac 261.3M€, Tvitec 190.3M€, Kimak 129M€, Aluman 126M€, Isopractic 40.8M€, García Faura 38.3M€), mantenidas las 4 aportadas por el usuario (Gardengate 78M€, Sunfer 24.7M€, Soltec 18M€, Sunconnection 4.08M€) y dejadas completamente vacías (null) las 589 restantes.",
+    "metadata": {
+      "verifiedTotal": 12,
+      "emptyTotal": 589,
+      "default5MRemoved": true
+    }
+  },
+  {
     "id": "LOG-GARDENGATE-REV-10",
     "timestamp": "2026-11-01T21:54:00.000Z",
     "user": "Superadministrador Grupo Sopena",

@@ -565,7 +565,8 @@ const App = () => {
             let clean = { ...p };
             if (!clean.name) clean.name = 'Empresa sin nombre';
             if (!clean.zone) clean.zone = clean.provincia || 'Otras';
-            if (typeof clean.revenue !== 'number' || isNaN(clean.revenue)) clean.revenue = 5000000;
+            // Facturación limpia: solo valores numéricos reales confirmados, nunca 5.000.000 por defecto
+            clean.revenue = (typeof p.revenue === 'number' && !isNaN(p.revenue) && p.revenue > 0 && p.revenue !== 5000000) ? p.revenue : null;
             // Garantizar coordenadas válidas: si no viene location pero sí lat y lng numéricos, asignarlos
             if (!clean.location || !Array.isArray(clean.location) || clean.location.length !== 2 || isNaN(clean.location[0]) || isNaN(clean.location[1])) {
               const latNum = Number(clean.lat);
@@ -636,9 +637,12 @@ const App = () => {
               const mod = modsMap.get(p.id);
               if (!mod) return p;
               const raw = rawMap.get(p.id);
+              // Si mod tiene 5.000.000 heredado del bug antiguo de LocalStorage, ignorarlo
+              const effectiveRevenue = (mod.revenue && mod.revenue !== 5000000) ? mod.revenue : (raw && raw.revenue !== 5000000 ? raw.revenue : null);
               return {
                 ...p,
                 ...mod,
+                revenue: effectiveRevenue,
                 // Garantizar que la geolocalización y demarcación oficial de la base no sea corrompida por modificaciones obsoletas
                 location: raw ? raw.location : (mod.location || p.location),
                 zone: raw ? raw.zone : (mod.zone || p.zone),

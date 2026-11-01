@@ -71,7 +71,7 @@
     "cif": "B85172286",
     "web": "https://eme-es.com",
     "website": "https://eme-es.com",
-    "revenue": null,
+    "revenue": 488300000,
     "purchasingManager": "Dirección de Cadena de Suministro (Supply Chain)",
     "phone": "+34 91 889 89 20",
     "email": "info@eme-es.com",
@@ -562,7 +562,7 @@
     "department": "Casetas, Zaragoza (Aragón)",
     "cif": "",
     "web": "https://lecitrailer.es",
-    "revenue": null,
+    "revenue": 295000000,
     "purchasingManager": "",
     "phone": "+34 976 46 21 21",
     "email": "lt@lecitrailer.es",
@@ -588,7 +588,8 @@
     "lat": 41.7186,
     "lng": -1.0258,
     "website": "https://lecitrailer.es",
-    "contact": ""
+    "contact": "",
+    "tier": "Tier 1"
   },
   {
     "name": "Thyssenkrupp Materials Ibérica S.A.",
@@ -631,7 +632,7 @@
     "department": "Cubillos del Sil (León)",
     "cif": "",
     "web": "https://tvitecglass.com",
-    "revenue": null,
+    "revenue": 190350000,
     "purchasingManager": "",
     "phone": "+34 91 590 10 20",
     "email": "glask@tvitec.com",
@@ -657,7 +658,8 @@
     "lat": 42.6186,
     "lng": -6.5684,
     "website": "https://tvitecglass.com",
-    "contact": ""
+    "contact": "",
+    "tier": "Tier 1"
   },
   {
     "id": "PROP-LEAD26-0004",
@@ -699,7 +701,7 @@
     "department": "Sax (Alicante)",
     "cif": "B03022449",
     "web": "https://gaviotagroup.com",
-    "revenue": null,
+    "revenue": 261300000,
     "purchasingManager": "",
     "phone": "+34 965 47 42 00",
     "email": "info@gaviotagroup.com",
@@ -725,7 +727,8 @@
     "lat": 38.5385,
     "lng": -0.8164,
     "website": "https://gaviotagroup.com",
-    "contact": ""
+    "contact": "",
+    "tier": "Tier 1"
   },
   {
     "name": "Sunclear SAS",
@@ -1127,7 +1130,7 @@
     "department": "Gavà (Barcelona)",
     "cif": "B58753005",
     "web": "https://www.garciafaura.com",
-    "revenue": null,
+    "revenue": 38287293,
     "purchasingManager": "",
     "phone": "+34 93 638 80 00",
     "email": "info@garciafaura.com",
@@ -1155,7 +1158,7 @@
     "website": "https://www.garciafaura.com",
     "contact": "",
     "certamen": "VETECO",
-    "tier": "Tier 1"
+    "tier": "Tier 2"
   },
   {
     "name": "Kimak Systems & Design S.L.U.",
@@ -1163,7 +1166,7 @@
     "department": "Culleredo (A Coruña)",
     "cif": "",
     "web": "https://kimak.com",
-    "revenue": null,
+    "revenue": 129000000,
     "purchasingManager": "",
     "phone": "+34 981 65 40 00",
     "email": "hello@kimak.com",
@@ -1189,7 +1192,8 @@
     "lat": 43.2882,
     "lng": -8.3892,
     "website": "https://kimak.com",
-    "contact": ""
+    "contact": "",
+    "tier": "Tier 1"
   },
   {
     "name": "Aalco Metales S.A. (Amari Metals)",
@@ -1231,7 +1235,7 @@
     "department": "Madrid (Madrid)",
     "cif": "",
     "web": "https://isopractic.es",
-    "revenue": null,
+    "revenue": 40857461,
     "purchasingManager": "",
     "phone": "+34 91 661 20 10",
     "email": "compras@isopractic.es",
@@ -1257,7 +1261,8 @@
     "lat": 40.4168,
     "lng": -3.7038,
     "website": "https://isopractic.es",
-    "contact": ""
+    "contact": "",
+    "tier": "Tier 2"
   },
   {
     "name": "Alsimet S.A.",
@@ -13811,7 +13816,7 @@
     "department": "Arteixo (A Coruña)",
     "cif": "B15042286",
     "web": "https://www.grupoaluman.com/es/",
-    "revenue": null,
+    "revenue": 126000000,
     "purchasingManager": "",
     "phone": "+34 981 60 27 11",
     "email": "compras@grupoaluman.com",
@@ -13841,7 +13846,8 @@
     "lng": -8.5085,
     "website": "https://www.grupoaluman.com/es/",
     "contact": "",
-    "emailableStatus": "deliverable"
+    "emailableStatus": "deliverable",
+    "tier": "Tier 1"
   },
   {
     "id": "PROP-LEAD26-0389",
