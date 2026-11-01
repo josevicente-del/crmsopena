@@ -1,5 +1,22 @@
 [
   {
+    "id": "LOG-CLEAN-REVENUES-9",
+    "timestamp": "2026-11-01T21:51:00.000Z",
+    "user": "Superadministrador Grupo Sopena",
+    "action": "DEPURACION_FACTURACIONES_NO_COMPROBADAS",
+    "targetId": "prospects_database",
+    "targetName": "Base de Datos Comercial",
+    "details": "Eliminadas 148 facturaciones no comprobadas dejándolas vacías (null). Mantenidas exclusivamente las 3 empresas con facturación real contrastada/aportada por el usuario (Sunfer Energy: 24.7M€, Soltec: 18M€, Sun Connection: 4.08M€).",
+    "metadata": {
+      "cleanedCount": 148,
+      "keptCompanies": [
+        "Sunfer Energy S.L.",
+        "Soltec Energías Renovables S.L.U.",
+        "Sunconnection Worldwide S.L."
+      ]
+    }
+  },
+  {
     "id": "LOG-EXPORT-PASS-ALUMINIO",
     "timestamp": "2026-11-01T21:47:00.000Z",
     "user": "Superadministrador Grupo Sopena",

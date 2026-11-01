@@ -5226,7 +5226,7 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                             </span>
                             <span style={{fontSize: '0.68rem', padding: '2px 6px', borderRadius: '4px', background: '#f1f5f9', color: '#475569'}}>{b2b.alloy.split(' ')[0]}</span>
                           </div>
-                          <p style={{margin: '0 0 10px 0', fontSize: '0.82rem', color: '#64748b'}}>{p.sector} - {new Intl.NumberFormat('es-ES', {style: 'currency', currency: 'EUR'}).format(p.revenue)}</p>
+                          <p style={{margin: '0 0 10px 0', fontSize: '0.82rem', color: '#64748b'}}>{p.sector}{p.revenue ? ` - ${new Intl.NumberFormat('es-ES', {style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(p.revenue)}` : ''}</p>
                           <div style={{display: 'flex', gap: '6px'}}>
                             <select 
                               value={p.pipelineStage || 'Lead'} 
