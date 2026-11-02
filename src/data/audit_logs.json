@@ -1,5 +1,20 @@
 [
   {
+    "id": "LOG-KANBAN-STAGE-DATE-TASK-13",
+    "timestamp": "2026-11-02T19:46:00.000Z",
+    "user": "Superadministrador Grupo Sopena",
+    "action": "CONFIGURACION_FECHA_KANBAN_Y_TAREA_AUTOMATICA_3_DIAS",
+    "targetId": "pipeline_kanban_engine",
+    "targetName": "Pipeline de Ventas (Kanban)",
+    "details": "Implementado el registro y visualización de la fecha de cambio de estado en la ficha Kanban y modal del cliente. Configurada la creación automática de tareas de seguimiento a los 3 días de cualquier cambio de fase con categoría 'Revisión Kanban' e indicador visual de +3 días.",
+    "metadata": {
+      "stageDateTracking": true,
+      "autoTaskDays": 3,
+      "taskCategory": "Revisión Kanban",
+      "cardVisualBadge": true
+    }
+  },
+  {
     "id": "LOG-FIX-PRESENTATION-EXPORT-12",
     "timestamp": "2026-11-02T19:38:00.000Z",
     "user": "Superadministrador Grupo Sopena",
@@ -54,21 +69,21 @@
     "metadata": {
       "cleanedCount": 148,
       "keptCompanies": [
-  {
-    "id": "LOG-FIX-PRESENTATION-EXPORT-12",
-    "timestamp": "2026-11-02T19:38:00.000Z",
-    "user": "Superadministrador Grupo Sopena",
-    "action": "CORRECCION_EXPORTACION_PDF_Y_HTML_PRESENTACION",
-    "targetId": "presentation_engine",
-    "targetName": "Cartas de Presentación y Dossiers B2B",
-    "details": "Corregido el renderizado en la exportación a PDF (A/A, De, Fecha) sustituyendo variables CSS var(--text-secondary) por estilos sólidos hexadecimales y agregando fallbacks directos para destinatarios de compras no definidos. Corregida la exportación a HTML comercial erradicando caracteres de escape erróneos y embebiendo el logo oficial en base64 para total autonomía offline y envío por email.",
-    "metadata": {
-      "pdfRendererFix": "Colores directos #334155 / #0f172a en etiquetas span para html2canvas",
-      "purchasingFallback": "Dirección de Compras / Departamento Técnico (ES) / Gabinete Técnico (PT)",
-      "htmlCommercialEscapesFixed": 61,
-      "standaloneBase64Logo": true
-    }
-  },
+        {
+          "id": "LOG-FIX-PRESENTATION-EXPORT-12",
+          "timestamp": "2026-11-02T19:38:00.000Z",
+          "user": "Superadministrador Grupo Sopena",
+          "action": "CORRECCION_EXPORTACION_PDF_Y_HTML_PRESENTACION",
+          "targetId": "presentation_engine",
+          "targetName": "Cartas de Presentación y Dossiers B2B",
+          "details": "Corregido el renderizado en la exportación a PDF (A/A, De, Fecha) sustituyendo variables CSS var(--text-secondary) por estilos sólidos hexadecimales y agregando fallbacks directos para destinatarios de compras no definidos. Corregida la exportación a HTML comercial erradicando caracteres de escape erróneos y embebiendo el logo oficial en base64 para total autonomía offline y envío por email.",
+          "metadata": {
+            "pdfRendererFix": "Colores directos #334155 / #0f172a en etiquetas span para html2canvas",
+            "purchasingFallback": "Dirección de Compras / Departamento Técnico (ES) / Gabinete Técnico (PT)",
+            "htmlCommercialEscapesFixed": 61,
+            "standaloneBase64Logo": true
+          }
+        },
         "Sunfer Energy S.L.",
         "Soltec Energías Renovables S.L.U.",
         "Sunconnection Worldwide S.L."
@@ -144,21 +159,21 @@
       "createdUser": "norte1",
       "displayName": "Norte 1",
       "zones": [
-  {
-    "id": "LOG-FIX-PRESENTATION-EXPORT-12",
-    "timestamp": "2026-11-02T19:38:00.000Z",
-    "user": "Superadministrador Grupo Sopena",
-    "action": "CORRECCION_EXPORTACION_PDF_Y_HTML_PRESENTACION",
-    "targetId": "presentation_engine",
-    "targetName": "Cartas de Presentación y Dossiers B2B",
-    "details": "Corregido el renderizado en la exportación a PDF (A/A, De, Fecha) sustituyendo variables CSS var(--text-secondary) por estilos sólidos hexadecimales y agregando fallbacks directos para destinatarios de compras no definidos. Corregida la exportación a HTML comercial erradicando caracteres de escape erróneos y embebiendo el logo oficial en base64 para total autonomía offline y envío por email.",
-    "metadata": {
-      "pdfRendererFix": "Colores directos #334155 / #0f172a en etiquetas span para html2canvas",
-      "purchasingFallback": "Dirección de Compras / Departamento Técnico (ES) / Gabinete Técnico (PT)",
-      "htmlCommercialEscapesFixed": 61,
-      "standaloneBase64Logo": true
-    }
-  },
+        {
+          "id": "LOG-FIX-PRESENTATION-EXPORT-12",
+          "timestamp": "2026-11-02T19:38:00.000Z",
+          "user": "Superadministrador Grupo Sopena",
+          "action": "CORRECCION_EXPORTACION_PDF_Y_HTML_PRESENTACION",
+          "targetId": "presentation_engine",
+          "targetName": "Cartas de Presentación y Dossiers B2B",
+          "details": "Corregido el renderizado en la exportación a PDF (A/A, De, Fecha) sustituyendo variables CSS var(--text-secondary) por estilos sólidos hexadecimales y agregando fallbacks directos para destinatarios de compras no definidos. Corregida la exportación a HTML comercial erradicando caracteres de escape erróneos y embebiendo el logo oficial en base64 para total autonomía offline y envío por email.",
+          "metadata": {
+            "pdfRendererFix": "Colores directos #334155 / #0f172a en etiquetas span para html2canvas",
+            "purchasingFallback": "Dirección de Compras / Departamento Técnico (ES) / Gabinete Técnico (PT)",
+            "htmlCommercialEscapesFixed": 61,
+            "standaloneBase64Logo": true
+          }
+        },
         "Asturias",
         "Castilla y Leon",
         "Portugal",

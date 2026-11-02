@@ -1010,11 +1010,12 @@ const App = () => {
         const hasTasks = Array.isArray(p.tasks) && p.tasks.length > 0;
         const hasNewHistory = Array.isArray(p.history) && p.history.length > (Array.isArray(orig.history) ? orig.history.length : 0);
         const stageChanged = p.pipelineStage && p.pipelineStage !== (orig.pipelineStage || 'Lead');
+        const stageDateChanged = p.stageChangedAt !== orig.stageChangedAt;
         const contactChanged = p.contacted !== orig.contacted || p.contactDate !== orig.contactDate;
         const notesChanged = p.notes !== orig.notes;
         const respChanged = p.response !== orig.response;
         const dataChanged = p.email !== orig.email || p.purchasingManager !== orig.purchasingManager;
-        return hasTasks || hasNewHistory || stageChanged || contactChanged || notesChanged || respChanged || dataChanged;
+        return hasTasks || hasNewHistory || stageChanged || stageDateChanged || contactChanged || notesChanged || respChanged || dataChanged;
       });
       localStorage.setItem('aluminio_crm_modifications', JSON.stringify(modifiedOnly));
 
@@ -1450,48 +1451,64 @@ const App = () => {
     const targetP = prospects.find(p => p.id === prospectId);
     const oldStageName = targetP?.pipelineStage || 'Lead';
 
+    if (oldStageName === newStage) return;
+
+    const nowIso = new Date().toISOString();
+
+    // Fecha objetivo: exactamente a los 3 días de cambiar de estado
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 3);
+    const formattedDate = targetDate.toLocaleDateString('es-ES');
+
     // REGISTRO INDELEBLE DE AUDITORÍA DE INTERACCIÓN
     logUserInteraction({
       action: 'CAMBIO_FASE_PIPELINE',
       user: currentUser?.name || 'Administrador',
       targetId: prospectId,
       targetName: targetP ? targetP.name : 'Empresa',
-      details: `Cambio en pipeline de ventas: de '${oldStageName}' a '${newStage}'`,
-      metadata: { oldStage: oldStageName, newStage }
+      details: `Cambio en pipeline Kanban: de '${oldStageName}' a '${newStage}'`,
+      metadata: { oldStage: oldStageName, newStage, stageChangedAt: nowIso, taskReviewDue: targetDate.toISOString() }
     }).then(newEntry => {
       if (newEntry) setAuditLogsList(prev => [newEntry, ...prev]);
     });
 
+    // Crear automáticamente la tarea pendiente a los 3 días para revisar si procede cambiar de estado
+    const taskTitle = `Revisar si hay que cambiar de estado a ${targetP ? targetP.name : 'la empresa'} (Fase actual: ${newStage})`;
+    handleAddTask(prospectId, taskTitle, {
+      dueDate: targetDate.toISOString(),
+      dueDateFormatted: formattedDate,
+      priority: 'Media',
+      category: 'Revisión Kanban'
+    });
+
+    // Registrar en el historial del prospecto para mantener trazabilidad indeleble
+    const historyEntry = {
+      id: Date.now() + 1,
+      type: '📊 Kanban',
+      text: `Cambio de estado: '${oldStageName}' ➔ '${newStage}'. Tarea automática programada para el ${formattedDate} (Revisar si hay que cambiar de estado).`,
+      date: nowIso
+    };
+
     setProspects(prev => prev.map(p => {
       if (p.id === prospectId) {
-        const oldStage = p.pipelineStage || 'Lead';
-        let updatedProspect = { ...p, pipelineStage: newStage };
-        // Si se transiciona de la columna 'Lead' a 'Propuesta', generamos una tarea automática para dentro de 3 días
-        if (oldStage === 'Lead' && newStage === 'Propuesta') {
-          const targetDate = new Date();
-          targetDate.setDate(targetDate.getDate() + 3);
-          const formattedDate = targetDate.toLocaleDateString('es-ES');
-
-          handleAddTask(prospectId, `📞 Llamada de seguimiento: contacto comercial (Agendada para el ${formattedDate})`, {
-            dueDate: targetDate.toISOString(),
-            dueDateFormatted: formattedDate,
-            priority: 'Alta',
-            category: 'Llamada'
-          });
-
-          // Registrar en el historial del prospecto para mantener la trazabilidad del proceso
-          const historyEntry = {
-            id: Date.now() + 1,
-            type: '📝 Nota',
-            text: `Tránsito automático: Movido de 'Lead' a 'Propuesta'. Generada tarea de llamada de seguimiento para el ${formattedDate}.`,
-            date: new Date().toISOString()
-          };
-          updatedProspect.history = [historyEntry, ...(p.history || [])];
-        }
-        return updatedProspect;
+        return {
+          ...p,
+          pipelineStage: newStage,
+          stageChangedAt: nowIso,
+          history: [historyEntry, ...(p.history || [])]
+        };
       }
       return p;
     }));
+
+    if (selectedProspect && selectedProspect.id === prospectId) {
+      setSelectedProspect(prev => ({
+        ...prev,
+        pipelineStage: newStage,
+        stageChangedAt: nowIso,
+        history: [historyEntry, ...(prev.history || [])]
+      }));
+    }
   };
   const handleDeleteProspect = (prospectId) => {
     const prospect = prospects.find(p => p.id === prospectId);
@@ -5268,7 +5285,35 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                             </span>
                             <span style={{fontSize: '0.68rem', padding: '2px 6px', borderRadius: '4px', background: '#f1f5f9', color: '#475569'}}>{b2b.alloy.split(' ')[0]}</span>
                           </div>
-                          <p style={{margin: '0 0 10px 0', fontSize: '0.82rem', color: '#64748b'}}>{p.sector}{p.revenue ? ` - ${new Intl.NumberFormat('es-ES', {style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(p.revenue)}` : ''}</p>
+                          <p style={{margin: '0 0 8px 0', fontSize: '0.82rem', color: '#64748b'}}>{p.sector}{p.revenue ? ` - ${new Intl.NumberFormat('es-ES', {style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(p.revenue)}` : ''}</p>
+                          
+                          {/* FECHA DEL CAMBIO DE ESTADO Y ALERTA DE REVISIÓN A LOS 3 DÍAS */}
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', padding: '5px 8px', background: '#f8fafc', borderRadius: '6px', border: '1px solid #e2e8f0', fontSize: '0.74rem' }}>
+                            <span style={{ color: '#475569', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                              <span>📅</span>
+                              <span>
+                                {p.stageChangedAt ? (
+                                  <>
+                                    <strong>Estado:</strong> {new Date(p.stageChangedAt).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                                    {(() => {
+                                      const diffDays = Math.floor((Date.now() - new Date(p.stageChangedAt).getTime()) / (1000 * 60 * 60 * 24));
+                                      if (diffDays === 0) return ' (Hoy)';
+                                      if (diffDays === 1) return ' (Ayer)';
+                                      return ` (${diffDays}d)`;
+                                    })()}
+                                  </>
+                                ) : (
+                                  <><strong>Estado:</strong> Inicial</>
+                                )}
+                              </span>
+                            </span>
+                            {p.stageChangedAt && Math.floor((Date.now() - new Date(p.stageChangedAt).getTime()) / (1000 * 60 * 60 * 24)) >= 3 && !['Cerrado Ganado', 'Cerrado Perdido'].includes(p.pipelineStage) && (
+                              <span style={{ background: '#fef3c7', color: '#92400e', border: '1px solid #fde68a', borderRadius: '4px', padding: '1px 5px', fontSize: '0.68rem', fontWeight: 'bold' }} title="Han pasado 3 o más días en esta fase. Tarea de revisión activada.">
+                                ⚠️ +3 días
+                              </span>
+                            )}
+                          </div>
+
                           <div style={{display: 'flex', gap: '6px'}}>
                             <select 
                               value={p.pipelineStage || 'Lead'} 
@@ -5873,6 +5918,10 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                   {selectedProspect.contacted ? '🟢 Contactado' : '🟡 Pendiente'}
                 </span>
                 <span style={{ marginLeft: '10px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>ID: {selectedProspect.id} | {selectedProspect.zone}</span>
+                <span style={{ marginLeft: '10px', fontSize: '0.82rem', color: '#334155', background: '#f1f5f9', padding: '3px 8px', borderRadius: '4px', border: '1px solid #cbd5e1' }} title="Fase actual en el pipeline de ventas Kanban">
+                  📊 <strong>Fase:</strong> {selectedProspect.pipelineStage || 'Lead'}
+                  {selectedProspect.stageChangedAt ? ` (${new Date(selectedProspect.stageChangedAt).toLocaleDateString('es-ES')})` : ''}
+                </span>
                 {/* Aviso si la empresa fue borrada y luego reincorporada */}
                 {selectedProspect.wasDeleted && (
                   <div style={{
@@ -6037,6 +6086,25 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
                 {/* TAB 2: SEGUIMIENTO */}
                 {activeModalTab === 'seguimiento' && (
                   <div>
+                    {/* RESUMEN DE FASE KANBAN, FECHA DE ESTADO Y ALERTA DE REVISIÓN A LOS 3 DÍAS */}
+                    <div style={{ background: '#f8fafc', padding: '12px 16px', borderRadius: '8px', borderLeft: '4px solid var(--sopena-blue)', marginBottom: '15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                      <div>
+                        <div style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 'bold' }}>Fase en Pipeline Kanban</div>
+                        <div style={{ fontSize: '1.05rem', fontWeight: 'bold', color: 'var(--sopena-blue-dark)', marginTop: '2px' }}>
+                          {selectedProspect.pipelineStage || 'Lead'}
+                        </div>
+                      </div>
+                      <div style={{ textAlign: 'right', fontSize: '0.85rem', color: '#475569' }}>
+                        <span>📅 <strong>Fecha de Estado:</strong> {selectedProspect.stageChangedAt ? `${new Date(selectedProspect.stageChangedAt).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' })}` : 'Fase inicial'}</span>
+                        {selectedProspect.stageChangedAt && Math.floor((Date.now() - new Date(selectedProspect.stageChangedAt).getTime()) / (1000 * 60 * 60 * 24)) >= 3 && !['Cerrado Ganado', 'Cerrado Perdido'].includes(selectedProspect.pipelineStage) && (
+                          <div style={{ marginTop: '3px' }}>
+                            <span style={{ background: '#fef3c7', color: '#92400e', border: '1px solid #fde68a', borderRadius: '4px', padding: '2px 6px', fontSize: '0.72rem', fontWeight: 'bold' }}>
+                              ⚠️ Requiere revisión (+3 días en esta fase)
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                     <div className="modal-grid-2" style={{ marginBottom: '15px' }}>
                       <div className="form-group">
                         <label>Estado de Contacto</label>
