@@ -1,5 +1,30 @@
 [
   {
+    "id": "LOG-1793647859390-697",
+    "timestamp": "2026-11-02T19:30:59.390Z",
+    "user": "Superadministrador Grupo Sopena",
+    "action": "SINCRONIZACION_MANUAL_GLOBAL",
+    "targetId": null,
+    "targetName": "Base de Datos Global",
+    "details": "Sincronización forzada de 598 cuentas con la base global.",
+    "metadata": {}
+  },
+  {
+    "id": "LOG-1793646601111-997",
+    "timestamp": "2026-11-02T19:10:01.111Z",
+    "user": "Norte 1",
+    "action": "CAMBIO_FASE_PIPELINE",
+    "targetId": "PROP-LEAD26-0012",
+    "targetName": "Alu-Stock S.A.",
+    "details": "Cambio en pipeline Kanban: de 'Lead' a 'Contactado'",
+    "metadata": {
+      "oldStage": "Lead",
+      "newStage": "Contactado",
+      "stageChangedAt": "2026-11-02T19:10:01.101Z",
+      "taskReviewDue": "2026-11-05T19:10:01.102Z"
+    }
+  },
+  {
     "id": "LOG-KANBAN-STAGE-DATE-TASK-13",
     "timestamp": "2026-11-02T19:46:00.000Z",
     "user": "Superadministrador Grupo Sopena",

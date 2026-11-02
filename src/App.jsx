@@ -567,7 +567,7 @@ const App = () => {
             if (!clean.name) clean.name = 'Empresa sin nombre';
             if (!clean.zone) clean.zone = clean.provincia || 'Otras';
             // Facturación limpia: solo valores numéricos reales confirmados, nunca 5.000.000 por defecto
-            clean.revenue = (typeof p.revenue === 'number' && !isNaN(p.revenue) && p.revenue > 0 && p.revenue !== 5000000) ? p.revenue : null;
+            clean.revenue = (typeof p.revenue === 'number' && !isNaN(p.revenue) && p.revenue > 0 && p.revenue !== 5000000 && p.revenue !== 6200000 && p.revenue !== 1000000) ? p.revenue : null;
             // Garantizar coordenadas válidas: si no viene location pero sí lat y lng numéricos, asignarlos
             if (!clean.location || !Array.isArray(clean.location) || clean.location.length !== 2 || isNaN(clean.location[0]) || isNaN(clean.location[1])) {
               const latNum = Number(clean.lat);
@@ -639,7 +639,7 @@ const App = () => {
               if (!mod) return p;
               const raw = rawMap.get(p.id);
               // Si mod tiene 5.000.000 heredado del bug antiguo de LocalStorage, ignorarlo
-              const effectiveRevenue = (mod.revenue && mod.revenue !== 5000000) ? mod.revenue : (raw && raw.revenue !== 5000000 ? raw.revenue : null);
+              const effectiveRevenue = (mod.revenue && mod.revenue !== 5000000 && mod.revenue !== 6200000 && mod.revenue !== 1000000) ? mod.revenue : (raw && raw.revenue !== 5000000 && raw.revenue !== 6200000 && raw.revenue !== 1000000 ? raw.revenue : null);
               return {
                 ...p,
                 ...mod,
@@ -1608,11 +1608,12 @@ const App = () => {
       }
     }
 
+    const parsedManualRev = formData.get('revenue');
     const newCompany = {
       id: 'PROP-MANUAL-' + Date.now(),
       name: companyName,
       sector: formData.get('sector'),
-      revenue: 1000000,
+      revenue: (parsedManualRev && !isNaN(Number(parsedManualRev)) && Number(parsedManualRev) > 0) ? Number(parsedManualRev) : null,
       purchasingManager: formData.get('purchasingManager'),
       purchasingPhone: formData.get('purchasingPhone') || '',
       purchasingLinkedin: formData.get('purchasingLinkedin') || '',
@@ -2318,9 +2319,9 @@ const App = () => {
   const [isExportingPDF, setIsExportingPDF] = useState(false);
 
   const handleExportPDF = async () => {
-    // Obtener el elemento A4 renderizado en el DOM
-    const a4El = document.querySelector('.a4-page');
-    if (!a4El) {
+    // Obtener todas las páginas A4 renderizadas en el DOM (.a4-page)
+    const pageElements = Array.from(document.querySelectorAll('.a4-container .a4-page'));
+    if (!pageElements || pageElements.length === 0) {
       alert('No se encuentra la presentación. Asegúrate de estar en la pestaña Presentación.');
       return;
     }
@@ -2332,69 +2333,60 @@ const App = () => {
       const safeName = targetName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '_');
       const fileName = `Grupo_Sopena_${isDossier ? 'Dossier' : 'Carta'}_${safeName}.pdf`;
 
-      // --- 1. Capturar el DOM como imagen de alta resolución ---
-      const canvas = await html2canvas(a4El, {
-        scale: 2,               // 2x para mayor calidad (equivale a ~192 DPI)
-        useCORS: true,          // Permitir imágenes externas (logos)
-        allowTaint: false,
-        logging: false,
-        backgroundColor: '#ffffff'
-      });
-
-      // --- 2. Dimensiones del PDF (A4 en mm) ---
+      // --- Dimensiones del PDF (A4 en mm) ---
       const PDF_W_MM = 210;
       const PDF_H_MM = 297;
-      const imgW = canvas.width;
-      const imgH = canvas.height;
-      // Calcular cuántas páginas necesitamos
-      const pxPerMm = imgW / PDF_W_MM;
-      const pageHeightPx = PDF_H_MM * pxPerMm;
-      const totalPages = Math.ceil(imgH / pageHeightPx);
-
-      // --- 3. Crear documento PDF ---
       const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
 
-      for (let page = 0; page < totalPages; page++) {
-        if (page > 0) pdf.addPage();
-        // Recortar fragmento de la imagen correspondiente a esta página
-        const sliceCanvas = document.createElement('canvas');
-        sliceCanvas.width = imgW;
-        const sliceH = Math.min(pageHeightPx, imgH - page * pageHeightPx);
-        sliceCanvas.height = sliceH;
-        const sliceCtx = sliceCanvas.getContext('2d');
-        sliceCtx.drawImage(canvas, 0, page * pageHeightPx, imgW, sliceH, 0, 0, imgW, sliceH);
-        const sliceData = sliceCanvas.toDataURL('image/jpeg', 0.95);
-        const sliceHMm = (sliceH / pxPerMm);
-        pdf.addImage(sliceData, 'JPEG', 0, 0, PDF_W_MM, sliceHMm);
+      for (let i = 0; i < pageElements.length; i++) {
+        const pageEl = pageElements[i];
+        if (i > 0) pdf.addPage();
 
-        // --- 4. Añadir anotaciones de enlace (PDF interactivo) ---
-        // Buscar todos los <a> dentro del elemento a4-page
-        const links = a4El.querySelectorAll('a[href]');
-        const a4Rect = a4El.getBoundingClientRect();
+        // Capturar cada página A4 individual con proporción milimétrica
+        const canvas = await html2canvas(pageEl, {
+          scale: 2,               // 2x para calidad nítida (~192 DPI)
+          useCORS: true,          // Permitir imágenes externas y sellos
+          allowTaint: false,
+          logging: false,
+          backgroundColor: '#ffffff',
+          width: pageEl.clientWidth,
+          height: pageEl.clientHeight,
+          windowWidth: pageEl.scrollWidth,
+          windowHeight: pageEl.scrollHeight,
+          scrollX: 0,
+          scrollY: 0
+        });
+
+        const imgData = canvas.toDataURL('image/jpeg', 0.98);
+        pdf.addImage(imgData, 'JPEG', 0, 0, PDF_W_MM, PDF_H_MM, undefined, 'FAST');
+
+        // Hipervínculos interactivos propios de esta página
+        const links = pageEl.querySelectorAll('a[href]');
+        const pageRect = pageEl.getBoundingClientRect();
+        const pxPerMmX = pageEl.clientWidth / PDF_W_MM;
+        const pxPerMmY = pageEl.clientHeight / PDF_H_MM;
+
         links.forEach(link => {
           const href = link.getAttribute('href');
           if (!href || href.startsWith('#') || href.startsWith('javascript')) return;
           const linkRect = link.getBoundingClientRect();
-          // Posición relativa al elemento a4-page en píxeles del canvas (x2 scale)
-          const relTop = (linkRect.top - a4Rect.top) * 2;
-          const relLeft = (linkRect.left - a4Rect.left) * 2;
-          const relW = linkRect.width * 2;
-          const relH = linkRect.height * 2;
-          // Convertir a mm para esta página
-          const topInPage = relTop - page * pageHeightPx;
-          if (topInPage < 0 || topInPage > pageHeightPx) return; // link fuera de esta página
-          const xMm = relLeft / pxPerMm;
-          const yMm = topInPage / pxPerMm;
-          const wMm = relW / pxPerMm;
-          const hMm = relH / pxPerMm;
+          const relTop = linkRect.top - pageRect.top;
+          const relLeft = linkRect.left - pageRect.left;
+          const relW = linkRect.width;
+          const relH = linkRect.height;
+
+          const xMm = relLeft / pxPerMmX;
+          const yMm = relTop / pxPerMmY;
+          const wMm = relW / pxPerMmX;
+          const hMm = relH / pxPerMmY;
+
           pdf.link(xMm, yMm, wMm, hMm, { url: href });
         });
       }
 
-      // --- 5. Guardar el PDF: preguntar ruta si el navegador lo soporta ---
+      // Guardar PDF con diálogo nativo o descarga directa
       const pdfBlob = pdf.output('blob');
       if (typeof window.showSaveFilePicker === 'function') {
-        // File System Access API: abre diálogo nativo de guardado
         try {
           const fileHandle = await window.showSaveFilePicker({
             suggestedName: fileName,
@@ -2406,12 +2398,10 @@ const App = () => {
           alert(`✅ PDF guardado correctamente como:\n"${fileName}"`);
         } catch (saveErr) {
           if (saveErr.name !== 'AbortError') {
-            // Fallback si falla el guardado nativo
             pdf.save(fileName);
           }
         }
       } else {
-        // Fallback: descarga directa con nombre de fichero personalizado
         pdf.save(fileName);
       }
     } catch (err) {
@@ -2422,7 +2412,7 @@ const App = () => {
     }
   };
 
-  // Copia la carta de presentación al portapapeles como HTML enriquecido para que se pueda pegar en Outlook/Gmail directamente.
+    // Copia la carta de presentación al portapapeles como HTML enriquecido para que se pueda pegar en Outlook/Gmail directamente.
   const handleCopyToMailClipboard = async () => {
     const target = presentationTarget;
     const isPt = target && target.zone === 'Portugal';
@@ -3432,8 +3422,8 @@ const App = () => {
                               </span>
                             )}
                           </div>
-                          {p.web !== 'No disponible' ? (
-                            <a href={p.web.startsWith('http') ? p.web : `https://${p.web}`} target="_blank" rel="noreferrer" style={{color: 'var(--sopena-blue)', fontSize: '0.85rem'}}>{p.web.replace('https://www.','').replace('http://www.','').replace('https://','')}</a>
+                          {p.web && typeof p.web === 'string' && p.web.trim() !== '' && p.web !== 'No disponible' ? (
+                            <a href={p.web.startsWith('http') ? p.web : `https://${p.web}`} target="_blank" rel="noreferrer" style={{color: 'var(--sopena-blue)', fontSize: '0.85rem'}}>{p.web.replace(/^https?:\/\/(www\.)?/, '')}</a>
                           ) : (
                             <span style={{color: 'var(--text-secondary)', fontSize: '0.85rem'}}>No disponible</span>
                           )}
@@ -4374,441 +4364,627 @@ const App = () => {
               )}
 
               <div style={{gridColumn: '1 / -1'}} className="a4-container">
-                <div className="a4-page" style={{padding: 0, overflow: 'hidden', position: 'relative', height: 'auto', minHeight: '297mm'}}>
-                  
-                  {/* MODERN HEADER CON DOBLE LOGO PARA CARPINTERÍAS */}
-                  <div style={{background: 'linear-gradient(135deg, var(--sopena-blue-dark) 0%, var(--sopena-blue) 100%)', padding: '40px 50px', color: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px'}}>
-                    <div style={{display: 'flex', alignItems: 'center', gap: '20px'}}>
-                      <div style={{background: 'white', padding: '10px 20px', borderRadius: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)'}}>
-                        <img src="/sopena_sistemas_logo.png" alt="Logotipo Sopena Sistemas" style={{height: '50px', objectFit: 'contain'}} />
+                {presentationType === 'corta' ? (
+                  /* ========================================================= */
+                  /* CARTA CORTA: EXACTAMENTE 1 PÁGINA A4 PERFECTAMENTE BALANCEADA */
+                  /* ========================================================= */
+                  <div className="a4-page" data-page="1">
+                    {/* CABECERA CORPORATIVA INSTITUCIONAL */}
+                    <div style={{background: 'linear-gradient(135deg, #072b66 0%, #0a3d91 100%)', padding: '16px 36px', color: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px', flexShrink: 0}}>
+                      <div style={{display: 'flex', alignItems: 'center', gap: '16px'}}>
+                        <div style={{background: 'white', padding: '6px 14px', borderRadius: '6px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)'}}>
+                          <img src="/sopena_sistemas_logo.png" alt="Logotipo Sopena Sistemas" style={{height: '42px', objectFit: 'contain'}} />
+                        </div>
+                        {presentationTarget && isCarpinteriaRelated(presentationTarget) && renderClientLogo(presentationTarget.name)}
                       </div>
-                      {/* Mostrar logotipo dinámico del cliente si está relacionado con carpintería */}
-                      {presentationTarget && isCarpinteriaRelated(presentationTarget) && renderClientLogo(presentationTarget.name)}
+                      <div style={{textAlign: 'right', fontSize: '0.80rem', lineHeight: '1.35', opacity: 0.95}}>
+                        <strong style={{fontSize: '0.86rem', color: '#ffffff'}}>SOPENA INNOVATIONS, S.L.</strong><br/>
+                        Pol. Ind. Los Vientos, C/ Garbí, 9<br/>
+                        46119 Náquera, Valencia {isPt ? 'Espanha' : 'España'}<br/>
+                        +34 96 145 20 50 | <a href="https://www.gruposopena.com/" target="_blank" rel="noopener noreferrer" style={{color: 'inherit', textDecoration: 'underline'}}>gruposopena.com</a>
+                      </div>
                     </div>
-                    <div style={{textAlign: 'right', fontSize: '0.85rem', lineHeight: '1.4', opacity: 0.9}}>
-                      <strong>SOPENA INNOVATIONS, S.L.</strong><br/>
-                      Pol. Ind. Los Vientos, C/ Garbí, 9<br/>
-                      46119 Náquera, Valencia {isPt ? 'Espanha' : 'España'}<br/>
-                      +34 96 145 20 50 | <a href="https://www.gruposopena.com/" target="_blank" rel="noopener noreferrer" style={{color: 'inherit', textDecoration: 'underline'}}>gruposopena.com</a>
-                    </div>
-                  </div>
-                  {/* CONTENT AREA */}
-                  <div style={{padding: '50px', position: 'relative'}}>
-                    {/* Decorative element */}
-                    <div style={{position: 'absolute', top: '0', right: '50px', width: '4px', height: '100px', background: 'var(--sopena-accent)', borderRadius: '0 0 4px 4px'}}></div>
-                    
-                    {presentationTarget ? (
-                      <div style={{marginBottom: '40px'}}>
-                        <h2 style={{color: '#072b66', fontSize: '2.2rem', marginTop: 0, marginBottom: '15px', fontWeight: '800', letterSpacing: '-0.5px'}}>
-                          {isPt ? 'Soluções de Alumínio para' : 'Soluciones de Aluminio para'} <br/>
-                          <span style={{color: '#0a3d91'}}>{presentationTarget.name}</span>
-                        </h2>
-                        <div style={{background: '#f8fafc', padding: '20px', borderRadius: '8px', borderLeft: '4px solid #00a8e8', display: 'inline-block', minWidth: '350px'}}>
-                          <p style={{margin: '0 0 8px 0', color: '#334155', fontSize: '0.95rem'}}>
-                            <strong style={{color: '#0f172a'}}>{isPt ? 'A/C:' : 'A/A:'}</strong>{' '}
-                            <span style={{color: '#334155'}}>
-                              {presentationTarget.purchasingManager || (isPt ? 'Direção de Compras / Gabinete Técnico' : 'Dirección de Compras / Departamento Técnico')}
-                            </span>
-                            {presentationTarget.purchasingPhone && <span style={{color: '#475569'}}> | 📞 {presentationTarget.purchasingPhone}</span>}
-                            {presentationTarget.email && <span style={{color: '#475569'}}> | ✉️ {presentationTarget.email}</span>}
-                          </p>
-                          {/* Dirección física del cliente (Carpintería) */}
-                          {(isCarpinteriaRelated(presentationTarget) || presentationTarget.address) && (
-                            <p style={{margin: '0 0 8px 0', color: '#475569', fontSize: '0.9rem'}}>
-                              <strong style={{color: '#0f172a'}}>📍 {isPt ? 'Endereço:' : 'Dirección:'}</strong>{' '}
-                              <span style={{color: '#334155'}}>
-                                {presentationTarget.address || 'Polígono de Pocomaco, 1ª Avda. 26'}, {presentationTarget.city || 'A Coruña'} ({presentationTarget.zone})
-                              </span>
-                            </p>
-                          )}
-                          <p style={{margin: '0 0 8px 0', color: '#334155', fontSize: '0.95rem'}}>
-                            <strong style={{color: '#0f172a'}}>De:</strong>{' '}
-                            <span style={{color: '#334155'}}>
-                              {getActiveSalesperson().name} ({getActiveSalesperson().role})
-                            </span>
-                          </p>
-                          <p style={{margin: 0, color: '#334155', fontSize: '0.95rem'}}>
-                            <strong style={{color: '#0f172a'}}>{isPt ? 'Data:' : 'Fecha:'}</strong>{' '}
-                            <span style={{color: '#334155'}}>
-                              {new Date().toLocaleDateString(isPt ? 'pt-PT' : 'es-ES')}
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    ) : (
-                      <div style={{marginBottom: '40px'}}>
-                        <div style={{display: 'inline-block', background: 'rgba(10, 61, 145, 0.08)', color: '#0a3d91', padding: '4px 12px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px'}}>
-                          📄 {presentationType === 'detallada' ? 'Dossier Corporativo e Industrial B2B' : 'Carta de Presentación Corporativa'}
-                        </div>
-                        <h2 style={{color: '#072b66', fontSize: '2.2rem', marginTop: 0, marginBottom: '15px', fontWeight: '800', letterSpacing: '-0.5px'}}>
-                          {isPt ? 'Soluções Industriais em Extrusão de Alumínio' : 'Soluciones Industriales en Extrusión de Aluminio'}
-                        </h2>
-                        <div style={{background: '#f8fafc', padding: '18px 24px', borderRadius: '8px', borderLeft: '4px solid #00a8e8', display: 'inline-block', minWidth: '350px'}}>
-                          <p style={{margin: '0 0 8px 0', color: '#334155', fontSize: '0.95rem'}}>
-                            <strong style={{color: '#0f172a'}}>{isPt ? 'A/C:' : 'A/A:'}</strong>{' '}
-                            <span style={{color: '#334155'}}>
-                              {isPt ? 'Direção de Compras / Gabinete Técnico' : 'Dirección de Compras / Departamento Técnico'}
-                            </span>
-                          </p>
-                          <p style={{margin: '0 0 8px 0', color: '#334155', fontSize: '0.95rem'}}>
-                            <strong style={{color: '#0f172a'}}>De:</strong>{' '}
-                            <span style={{color: '#334155'}}>
-                              {getActiveSalesperson().name} ({getActiveSalesperson().role})
-                            </span>
-                          </p>
-                          <p style={{margin: 0, color: '#334155', fontSize: '0.95rem'}}>
-                            <strong style={{color: '#0f172a'}}>{isPt ? 'Data:' : 'Fecha:'}</strong>{' '}
-                            <span style={{color: '#334155'}}>
-                              {new Date().toLocaleDateString(isPt ? 'pt-PT' : 'es-ES')}
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    )}
 
-                    {/* VISTA 1: PRESENTACIÓN CORTA (CARTA TRADICIONAL) o VISTA 2: PRESENTACIÓN DETALLADA (DOSSIER) */}
-                    {presentationType === 'corta' ? (
-                      <div style={{display: 'grid', gridTemplateColumns: '3fr 2fr', gap: '40px'}}>
+                    {/* CUERPO CENTRAL DE LA CARTA CORTA */}
+                    <div style={{padding: '20px 36px 14px 36px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflow: 'hidden'}}>
+                      {/* FILA SUPERIOR: TÍTULO Y METADATOS */}
+                      <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '20px', marginBottom: '14px'}}>
+                        <div style={{flex: 1}}>
+                          <div style={{display: 'inline-block', background: '#eff6ff', color: '#0a3d91', padding: '3px 10px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px'}}>
+                            🗎 {isPt ? 'Carta de Apresentação Corporativa' : 'Carta de Presentación Corporativa'}
+                          </div>
+                          <h2 style={{color: '#072b66', fontSize: '1.45rem', margin: 0, fontWeight: '800', letterSpacing: '-0.4px', lineHeight: '1.2'}}>
+                            {presentationTarget 
+                              ? (isPt ? `Soluções de Alumínio para ${presentationTarget.name}` : `Soluciones de Aluminio para ${presentationTarget.name}`)
+                              : (isPt ? 'Soluções Industriais para a Indústria do Alumínio' : 'Soluciones Industriales para la Industria del Aluminio')}
+                          </h2>
+                        </div>
+                        <div style={{background: '#f8fafc', padding: '8px 14px', borderRadius: '6px', borderLeft: '4px solid #00a8e8', minWidth: '280px', flexShrink: 0, fontSize: '0.82rem', lineHeight: '1.35'}}>
+                          <p style={{margin: '0 0 4px 0', color: '#334155'}}>
+                            <strong style={{color: '#0f172a'}}>{isPt ? 'A/C:' : 'A/A:'}</strong>{' '}
+                            {presentationTarget?.purchasingManager || (isPt ? 'Direção de Compras / Gabinete Técnico' : 'Dirección de Compras / Departamento Técnico')}
+                          </p>
+                          <p style={{margin: '0 0 4px 0', color: '#334155'}}>
+                            <strong style={{color: '#0f172a'}}>De:</strong>{' '}
+                            {getActiveSalesperson().name} ({getActiveSalesperson().role})
+                          </p>
+                          <p style={{margin: 0, color: '#334155'}}>
+                            <strong style={{color: '#0f172a'}}>{isPt ? 'Data:' : 'Fecha:'}</strong>{' '}
+                            {new Date().toLocaleDateString(isPt ? 'pt-PT' : 'es-ES')}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* COMPOSICIÓN A 2 COLUMNAS */}
+                      <div style={{display: 'grid', gridTemplateColumns: '1.25fr 1fr', gap: '22px', alignItems: 'start', flex: 1}}>
+                        {/* COLUMNA IZQUIERDA: QUIÉNES SOMOS + COMPROMISO */}
                         <div>
-                          <h3 style={{color: 'var(--sopena-accent)', marginTop: 0, fontSize: '1.4rem', borderBottom: '2px solid #e2e8f0', paddingBottom: '10px'}}>{isPt ? 'Quem Somos' : 'Quiénes Somos'}</h3>
-                          <p style={{lineHeight: '1.7', color: '#475569'}}>{isPt ? 'Somos uma empresa industrial especializada no design e fabricação de perfis de alumínio extrudado sob medida, localizados estrategicamente no ' : 'Somos una empresa industrial especializada en el diseño y fabricación de perfiles de aluminio extruido a medida, ubicados estratégicamente en el '}<strong>Polígono Industrial Los Vientos (Náquera, Valencia)</strong>. {isPt ? 'Esta produção centralizada permite-nos oferecer uma proximidade logística imbatível para toda a Península Ibérica, garantindo prazos de entrega ágeis, nula dependência de importações e um suporte técnico direto.' : 'Esta producción centralizada nos permite ofrecer una cercanía logística inmejorable para toda la Península Ibérica, garantizando plazos de entrega ágiles, nula dependencia de importaciones y un soporte técnico directo.'}</p>
-                          
-                          <h3 style={{color: 'var(--sopena-accent)', fontSize: '1.4rem', borderBottom: '2px solid #e2e8f0', paddingBottom: '10px', marginTop: '30px'}}>{isPt ? 'Compromisso e Normativa' : 'Compromiso y Normativa'}</h3>
-                          <ul style={{paddingLeft: '20px', lineHeight: '1.7', color: '#475569'}}>
-                            <li><strong>{isPt ? 'Alumínio Reciclado:' : 'Aluminio Reciclado:'}</strong> {isPt ? 'Utilização de tarugos de alumínio reciclável de muito baixo impacto.' : 'Uso de tochos de aluminio reciclable de muy bajo impacto.'}</li>
-                            <li><strong>{isPt ? 'Ligas Especializadas:' : 'Aleaciones Especializadas:'}</strong> {isPt ? 'Capacidade para extrudar ligas exigentes (6060, 6005, 6082, 6083).' : 'Capacidad para extruir aleaciones exigentes (6060, 6005, 6082, 6083).'}</li>
-                            <li><strong>{isPt ? 'Cumprimento Rigoroso:' : 'Cumplimiento Estricto:'}</strong> {isPt ? 'Marcação CE e avalizados pelos selos internacionais mais exigentes.' : 'Marcado CE y avalados por los sellos internacionales más exigentes.'}</li>
+                          <h3 style={{color: '#072b66', marginTop: 0, fontSize: '1.02rem', fontWeight: '800', borderBottom: '2px solid #e2e8f0', paddingBottom: '4px', marginBottom: '6px'}}>
+                            {isPt ? 'Quem Somos' : 'Quiénes Somos'}
+                          </h3>
+                          <p style={{lineHeight: '1.45', color: '#475569', fontSize: '0.82rem', margin: '0 0 12px 0'}}>
+                            {isPt 
+                              ? 'Somos uma empresa industrial especializada no design e fabricação de perfis de alumínio extrudado sob medida, localizados estrategicamente no Polígono Industrial Los Vientos (Náquera, Valencia). Esta produção centralizada permite-nos oferecer uma proximidade logística imbatível para toda a Península Ibérica, com prazos ágeis, nula dependência de importações e suporte técnico direto.'
+                              : 'Somos una empresa industrial especializada en el diseño y fabricación de perfiles de aluminio extruido a medida, ubicados estratégicamente en el Polígono Industrial Los Vientos (Náquera, Valencia). Esta producción centralizada nos permite ofrecer una cercanía logística inmejorable para toda la Península Ibérica, con plazos ágiles, nula dependencia de importaciones y soporte técnico directo.'}
+                          </p>
+
+                          <h3 style={{color: '#072b66', fontSize: '1.02rem', fontWeight: '800', borderBottom: '2px solid #e2e8f0', paddingBottom: '4px', margin: '0 0 6px 0'}}>
+                            {isPt ? 'Compromisso e Normativa' : 'Compromiso y Normativa'}
+                          </h3>
+                          <ul style={{lineHeight: '1.4', color: '#475569', fontSize: '0.80rem', paddingLeft: '18px', margin: 0}}>
+                            <li style={{marginBottom: '5px'}}>
+                              <strong style={{color: '#0f172a'}}>{isPt ? 'Alumínio Reciclado:' : 'Aluminio Reciclado:'}</strong> {isPt ? 'Tochos recicláveis de muito baixo impacto com certificação de sustentabilidade.' : 'Tochos reciclables de muy bajo impacto con certificación de sostenibilidad.'}
+                            </li>
+                            <li style={{marginBottom: '5px'}}>
+                              <strong style={{color: '#0f172a'}}>{isPt ? 'Ligas Especializadas:' : 'Aleaciones Especializadas:'}</strong> {isPt ? 'Capacidade para ligas 6060, 6005, 6082 t, 6083 de alta exigência mecânica.' : 'Capacidad para aleaciones 6060, 6005, 6082 t, 6083 de alta exigencia mecánica.'}
+                            </li>
+                            <li>
+                              <strong style={{color: '#0f172a'}}>{isPt ? 'Cumprimento Estrito:' : 'Cumplimiento Estricto:'}</strong> {isPt ? 'Marcação CE e avaliados pelos selos internacionais mais exigentes.' : 'Marcado CE y avalados por los sellos internacionales más exigentes.'}
+                            </li>
                           </ul>
                         </div>
-                        
+
+                        {/* COLUMNA DERECHA: TARJETA CAPACIDADES + SELLOS */}
                         <div>
-                          <div style={{background: 'var(--sopena-blue)', color: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 10px 25px rgba(10, 61, 145, 0.2)'}}>
-                            <h3 style={{marginTop: 0, color: 'white', fontSize: '1.4rem'}}>{isPt ? 'As Nossas Capacidades' : 'Nuestras Capacidades'}</h3>
-                            <ul style={{paddingLeft: '20px', lineHeight: '1.6', margin: 0, opacity: 0.9}}>
-                              <li style={{marginBottom: '15px'}}><strong>{isPt ? 'Extrusão de Precisão:' : 'Extrusión de Precisión:'}</strong><br/>{isPt ? 'Capacidade diária de 55 Tm com duas prensas (7" e 9") para geometrias e ligas diversas (incluindo 6082).' : 'Capacidad diaria de 55 Tm con dos prensas (7" y 9") para geometrías y aleaciones de distintos tipos (incluida 6082).'}</li>
-                              <li style={{marginBottom: '15px'}}><strong>{isPt ? 'Tratamentos Superficiais:' : 'Tratamientos Superficiales:'}</strong><br/>{isPt ? 'Lacagem (Qualicoat ou Qualicoat Seaside), Anodização (Qualanod) e Efeito Madeira (Qualideco).' : 'Lacado (Qualicoat o Qualicoat Seaside), Anodizado (Qualanod) y Efecto Madera (Qualideco).'}</li>
-                              <li><strong>{isPt ? 'Engenharia e Design:' : 'Ingeniería y Diseño:'}</strong><br/>{isPt ? 'Apoio ao cliente no desenvolvimento, adaptação e extrusão das suas próprias séries.' : 'Apoyo al cliente en el desarrollo, adaptación y extrusión de sus propias series.'}</li>
+                          <div style={{background: '#072b66', color: 'white', padding: '12px 14px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(7,43,102,0.15)', marginBottom: '10px'}}>
+                            <h4 style={{margin: '0 0 6px 0', color: 'white', fontSize: '0.92rem', fontWeight: '800'}}>
+                              {isPt ? 'As Nossas Capacidades' : 'Nuestras Capacidades'}
+                            </h4>
+                            <ul style={{listStyle: 'none', padding: 0, margin: 0, fontSize: '0.78rem', lineHeight: '1.35'}}>
+                              <li style={{marginBottom: '5px'}}>
+                                <strong style={{color: '#38bdf8'}}>• {isPt ? 'Extrusão de Precisão:' : 'Extrusión de Precisión:'}</strong><br/>
+                                <span style={{opacity: 0.9}}>{isPt ? 'Capacidade diária de 55 Tm com duas prensas (7" e 9") para geometrias diversas.' : 'Capacidad diaria de 55 Tm con dos prensas (7" y 9") para geometrías diversas.'}</span>
+                              </li>
+                              <li style={{marginBottom: '5px'}}>
+                                <strong style={{color: '#38bdf8'}}>• {isPt ? 'Tratamentos Superficiais:' : 'Tratamientos Superficiales:'}</strong><br/>
+                                <span style={{opacity: 0.9}}>{isPt ? 'Lacagem (Qualicoat Seaside), Anodização (Qualanod) e Madeira (Qualideco).' : 'Lacado (Qualicoat Seaside), Anodizado (Qualanod) y Madera (Qualideco).'}</span>
+                              </li>
+                              <li>
+                                <strong style={{color: '#38bdf8'}}>• {isPt ? 'Engenharia e Design:' : 'Ingeniería y Diseño:'}</strong><br/>
+                                <span style={{opacity: 0.9}}>{isPt ? 'Desenvolvimento e extrusão das suas próprias séries sob medida.' : 'Desarrollo y extrusión de sus propias series a medida.'}</span>
+                              </li>
                             </ul>
                           </div>
-                          <div className="cert-grid" style={{marginTop: '30px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px'}}>
-                            <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>⚙️ ISO 9001</div>
-                            <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>🌱 ISO 14001</div>
-                            <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>🛡️ ISO 45001</div>
-                            <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>🇪🇺 Marcado CE</div>
-                            <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>🎖️ QUALICOAT / QUALICOAT SEASIDE</div>
-                            <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>🎖️ QUALANOD</div>
-                            <div style={{background: '#f1f5f9', padding: '8px', borderRadius: '6px', fontSize: '0.8rem', textAlign: 'center', fontWeight: 'bold', color: '#334155'}}>🎖️ QUALIDECO</div>
-                          </div>
-                        </div>
-                        {presentationTarget && (
-                          <div style={{gridColumn: '1 / -1', marginTop: '40px', background: '#f8fafc', padding: '30px', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
-                            <h3 style={{color: 'var(--sopena-blue-dark)', marginTop: 0, fontSize: '1.4rem'}}>{isPt ? 'Abordagem para' : 'Enfoque Especializado para'} {presentationTarget.name}</h3>
-                            <div style={{lineHeight: '1.7', color: '#475569'}}>
-                              {['Cerramientos', 'Puertas y Ventanas', 'Construccion Modular'].includes(presentationTarget.sector) && (
-                                <p style={{margin: 0}}>{isPt ? `Centrados no setor de ${presentationTarget.sector}, fabricamos e montamos perfis com rotura de ponte térmica e poliamidas reforzadas para o máximo isolamento. Extrudimos tanto para os nossos sistemas próprios de arquitetura como para sistemas de terceiros. Além disso, os nossos lacados Qualicoat Seaside e acabamentos com efeito madeira (Qualideco) garantirão a máxima resistência e estética nas suas caixilharias.` : `Centrados en el sector de ${presentationTarget.sector}, fabricamos y ensamblamos perfiles con rotura de puente térmico y poliamidas reforzadas para el máximo aislamiento. Extruimos tanto para nuestros sistemas propios de arquitectura como para sistemas de terceros. Además, nuestros lacados Qualicoat Seaside y acabados con efecto madera (Qualideco) garantizarán la máxima resistencia y estética en todos sus cerramientos.`}</p>
-                              )}
-                              {['Fachadas de Aluminio', 'Fabricantes de Escaleras de Aluminio'].includes(presentationTarget.sector) && (
-                                <p style={{margin: 0}}>{isPt ? `Para ${presentationTarget.sector}, extrudimos ligas estruturais (6005/6083) que oferecem as propriedades mecânicas avançadas requeridas para muros cortina e estruturas portantes, sempre com acabamentos Qualideco impecáveis.` : `Para ${presentationTarget.sector}, extruimos aleaciones estructurales (6005/6083) que ofrecen las propiedades mecánicas avanzadas requeridas para muros cortina y estructuras portantes, siempre con acabados Qualideco impecables.`}</p>
-                              )}
-                              {['Estructuras Solares'].includes(presentationTarget.sector) && (
-                                <p style={{margin: 0}}>{isPt ? `Em Estructuras Solares, o alumínio leve e sem corrosão é vital. As nossas ligas anodizadas (Qualanod) garantirão a ${presentationTarget.name} a máxima durabilidade em plantas fotovoltaicas e trackers.` : `En Estructuras Solares, el aluminio ligero y sin corrosión es vital. Nuestras aleaciones anodizadas (Qualanod) asegurarán a ${presentationTarget.name} la máxima durabilidad en plantas fotovoltaicas y trackers.`}</p>
-                              )}
-                              {['Fabricantes de Estanterias de Aluminio'].includes(presentationTarget.sector) && (
-                                <p style={{margin: 0}}>{isPt ? `Para reduzir tempos de montagem em ${presentationTarget.sector}, na Empresa de Aluminio integramos ranhuras e encaixes diretos na matriz de extrusão, agilizando radicalmente a fabricação dos sus produtos.` : `Para reducir tiempos de montaje en ${presentationTarget.sector}, en Empresa de Aluminio integramos ranuras y encajes directos en la matriz de extrusión, agilizando radicalmente la fabricación de sus productos.`}</p>
-                              )}
-                              {['Fabricantes de Carrocerias'].includes(presentationTarget.sector) && (
-                                <p style={{margin: 0}}>{isPt ? `No setor dos transportes, asseguramos a ${presentationTarget.name} perfis estruturais leves e robustos para maximizar a carga útil em carroçarias frigoríficas e plataformas.` : `En el sector del transporte, aseguramos a ${presentationTarget.name} perfiles estructurales ligeros y robustos para maximizar la carga útil en carrocerías frigoríficas y plataformas.`}</p>
-                              )}
-                              {['Sistemas de Proteccion Solar', 'Armarios de Aluminio'].includes(presentationTarget.sector) && (
-                                <p style={{margin: 0}}>{isPt ? `Oferecemos tolerâncias estritas para ${presentationTarget.sector}, ideais para pergolas e toldos, avalados por acabamentos Seaside resistentes à corrosão salina.` : `Ofrecemos tolerancias estrictas para ${presentationTarget.sector}, ideales para pergolas y toldos, avalados por acabados Seaside resistentes a la corrosión salina.`}</p>
-                              )}
-                              {['Transformacion de Chapa', 'Metal Arquitectonico y Chapa Perforada', 'PLV y Mobiliario Comercial', 'Armarios de Aluminio'].includes(presentationTarget.sector) && (
-                                <p style={{margin: 0}}>{isPt ? `Para ${presentationTarget.sector}, aplicamos tratamentos superficiais Premium (Qualicoat, Qualideco) que mantêm as suas envolventes, expositores e displays comerciais inalteráveis ao longo do tempo.` : `Para ${presentationTarget.sector}, aplicamos tratamientos superficiales Premium (Qualicoat, Qualideco) que mantienen sus envolventes, expositores y displays comerciales inalterables a lo largo del tiempo.`}</p>
-                              )}
-                              {['Perfiles Estructurales Aluminio'].includes(presentationTarget.sector) && (
-                                <p style={{margin: 0}}>{isPt ? `Na indústria moderna, os ${presentationTarget.sector} são o standard para a construção de maquinaria e linhas de montagem. Na Aluminios Innovations contamos com a capacidade técnica para extrudar perfis ranhurados con tolerâncias milimétricas.` : `En el sector de ${presentationTarget.sector}, proporcionamos perfiles estructurales de precisión con acabados certificados para soportar sus líneas de montaje.`}</p>
-                              )}
-                              {['Distribucion de Aluminio y Metales'].includes(presentationTarget.sector) && (
-                                <p style={{margin: 0}}>{isPt ? `Como distribuidor e fornecedor de alumínio, propomos a ${presentationTarget.name} uma colaboração estratégica de extrusão. Podemos fornecer perfis e lamas sob medida com acabamentos premium anodizados e lacados com a garantia de qualidade Aluminios Innovations.` : `Como distribuidor y proveedor de aluminio, proponemos a ${presentationTarget.name} una colaboración estratégica de extrusión. Podemos suministrar perfiles y lamas a medida con acabados premium anodizados y lacados con la garantía de calidad de Aluminios Innovations.`}</p>
-                              )}
+
+                          <div>
+                            <div style={{fontSize: '0.72rem', fontWeight: '800', color: '#072b66', textTransform: 'uppercase', marginBottom: '6px', letterSpacing: '0.3px', display: 'flex', alignItems: 'center', gap: '5px'}}>
+                              🛡️ {isPt ? 'Selos e Certificações Oficiais:' : 'Sellos y Certificaciones Oficiales:'}
                             </div>
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      /* VISTA 2: PRESENTACIÓN DETALLADA (DOSSIER TÉCNICO Y COMERCIAL) */
-                      <div style={{ color: '#334155', lineHeight: '1.7' }}>
-                        <div>
-                          <h3 style={{ color: 'var(--sopena-blue-dark)', marginTop: 0, fontSize: '1.4rem', borderBottom: '2px solid #e2e8f0', paddingBottom: '10px' }}>
-                            {isPt ? 'Proposta de Colaboração e Distribuição B2B' : 'Propuesta de Colaboración y Distribución B2B'}
-                          </h3>
-                          <p style={{ whiteSpace: 'pre-line', marginBottom: '20px' }}>
-                            {isPt ? (
-                              presentationTarget ? (
-                                `Estimados companheiros da ${presentationTarget.name},
-
-Me dirijo a vocês na minha qualidade de ${getActiveSalesperson().role} do Grupo Sopena. Conheço em primeira mão a vossa liderança no fornecimento e distribuição de perfilaria e acessórios de alumínio. O vosso compromisso com a qualidade e a capacidade de oferecer soluções à medida à rede de serralharias e carpintarias metálicas da região coincide plenamente com os valores da nossa empresa.
-
-A SOPENA INNOVATIONS, S.L. conta com uma trajetória de mais de 75 anos na vanguarda da extrusão e tratamento de superfícies de alumínio na Península Ibérica. Especializamo-nos no desenvolvimento de sistemas próprios de arquitetura com marcação CE e ensaios oficiais de alta performance. Dispomos de armazém regulador próprio para garantir um fornecimento ágil e estável, eliminando as incertezas de stock no mercado.`
-                              ) : (
-                                `Estimada Direção Técnica e Responsáveis de Compras,
-
-Apresento-me na qualidade de ${getActiveSalesperson().role} do Grupo Sopena para lhe apresentar a nossa capacidade industrial em extrusão e acabamento de perfis de alumínio. O nosso compromisso com a máxima qualidade e precisão dimensional coincide com as necessidades das empresas mais exigentes do setor.
-
-A SOPENA INNOVATIONS, S.L. conta com uma trajetória de mais de 75 anos na vanguarda da extrusão e tratamento de superfícies de alumínio na Península Ibérica. Especializamo-nos no desenvolvimento de perfilaria à medida, sistemas próprios de arquitetura com marcação CE e ensaios oficiais de alta performance. Dispomos de armazém regulador próprio para garantir um fornecimento ágil e estável, eliminando as incertezas de stock e prazos no mercado.`
-                              )
-                            ) : (
-                              presentationTarget ? (
-                                `Estimados compañeros de ${presentationTarget.name},
-
-Me dirijo a ustedes en mi calidad de ${getActiveSalesperson().role} de Grupo Sopena. Conozco de primera mano el liderazgo de ${presentationTarget.name} en el suministro y distribución de perfilería y accesorios de aluminio. Su compromiso con la calidad y la capacidad de ofrecer soluciones a medida a la red de carpinterías metálicas coincide plenamente con los valores fundacionales de nuestra compañía.
-
-SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vanguardia de la extrusión y el tratamiento de superficies de aluminio en España. A lo largo de esta historia, nos hemos especializado en el desarrollo de sistemas propios de carpintería y fachadas (con ensayos oficiales y marcado CE) de altísimas prestaciones térmicas y acústicas. Contamos con un almacén regulador propio y una sólida capacidad productiva que nos permite garantizar un suministro ágil, estable y directo a nuestros colaboradores, eliminando las incertidumbres de stock que tanto afectan al sector en la actualidad.`
-                              ) : (
-                                `Estimada Dirección Técnica y Responsables de Compras,
-
-Me dirijo a ustedes en mi calidad de ${getActiveSalesperson().role} de Grupo Sopena para presentarles formalmente nuestra capacidad industrial en extrusión y tratamiento de superficies de perfiles de aluminio. Nuestro compromiso fundacional con la calidad técnica y la fiabilidad logística responde a las exigencias más estrictas de los fabricantes y distribuidores industriales de la Península Ibérica y Europa.
-
-SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vanguardia de la extrusión de aluminio en España. A lo largo de esta historia, nos hemos especializado en el desarrollo de matricería a medida y perfiles de altísimas prestaciones térmicas, acústicas y mecánicas (con ensayos oficiales y marcado CE). Disponemos de almacén regulador propio y una sólida capacidad productiva autónoma que nos permite garantizar un suministro ágil, estable y directo, eliminando las incertidumbres de stock e importación que tanto afectan al tejido industrial.`
-                              )
-                            )}
-                          </p>
-                          
-                          <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '10px', borderLeft: '4px solid var(--sopena-accent)', border: '1px solid #e2e8f0', borderLeftWidth: '4px', marginTop: '20px', marginBottom: '30px' }}>
-                            <strong style={{ color: 'var(--sopena-blue-dark)', display: 'block', marginBottom: '8px', fontSize: '1rem' }}>
-                              🛡️ Acabados Certificados para Ambientes Exigentes:
-                            </strong>
-                            <p style={{ margin: 0, fontSize: '0.85rem', lineHeight: '1.5' }}>
-                              Controlamos íntegramente todo el proceso de acabados superficiales bajo sellos internacionales de máxima exigencia:
-                              <br/>• <strong>Qualicoat / Qualicoat Seaside:</strong> Sello para lacado arquitectónico. El tratamiento Seaside previene la corrosión filiforme, idóneo para combatir la humedad y salinidad del litoral gallego y portugués.
-                              <br/>• <strong>Qualanod:</strong> Certificación para anodizado, garantizando máxima dureza superficial frente a la abrasión salina.
-                              <br/>• <strong>Qualideco:</strong> Tecnología de sublimación de alta precisión para acabados de efecto madera con máxima fidelidad visual y resistencia a la radiación UV.
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* ANEXO: DOSSIER TÉCNICO DE OBRAS REALES */}
-                        <div className="dossier-section page-break">
-                          <h3 className="dossier-section-title">Anexo: Dossier Técnico de Obras Reales</h3>
-                          <p style={{ fontSize: '0.85rem', marginBottom: '15px' }}>
-                            Nuestros desarrollos técnicos de extrusión y acabados de aluminio dan soporte a obras singulares de gran repercusión:
-                          </p>
-                          <div className="dossier-project-grid">
-                            <div className="dossier-project-card">
-                              <div style={{ height: '140px', overflow: 'hidden', position: 'relative', background: '#0f172a' }}>
-                                <img src="/roig_arena.jpg" alt="Fachadas Singulares: Roig Arena" style={{ width: '100%', height: '100%', objectFit: 'cover' }} crossOrigin="anonymous" />
-                                <span className="dossier-image-subtext" style={{ position: 'absolute', bottom: '6px', left: '8px', background: 'rgba(0,0,0,0.65)', color: 'white', padding: '2px 8px', borderRadius: '4px', fontSize: '0.75rem' }}>Valencia, España</span>
+                            <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px'}}>
+                              <div style={{background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px', textAlign: 'center'}}>
+                                <img src="/quality/qualicoat-seaside-439.jpg" alt="Qualicoat Seaside" style={{height: '24px', maxWidth: '100%', objectFit: 'contain'}} />
+                                <div style={{fontSize: '0.62rem', color: '#072b66', fontWeight: '700', marginTop: '2px'}}>Qualicoat Seaside</div>
                               </div>
-                              <div className="dossier-project-content">
-                                <h4 className="dossier-project-name">1. Fachadas Singulares: Roig Arena</h4>
-                                <p className="dossier-project-desc">Participación mediante el suministro de perfiles especiales para la envolvente de lamas de aluminio onduladas, resistente a altas cargas dinámicas de viento.</p>
+                              <div style={{background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px', textAlign: 'center'}}>
+                                <img src="/quality/qualanod-architecture-industrial.jpg" alt="Qualanod" style={{height: '24px', maxWidth: '100%', objectFit: 'contain'}} />
+                                <div style={{fontSize: '0.62rem', color: '#072b66', fontWeight: '700', marginTop: '2px'}}>Qualanod</div>
                               </div>
-                            </div>
-                            <div className="dossier-project-card">
-                              <div className="dossier-image-placeholder" style={{ background: 'linear-gradient(135deg, #0f766e 0%, #14b8a6 100%)' }}>
-                                🏛️ Mercado Municipal
-                                <span className="dossier-image-subtext">Renovación de Espacio Público</span>
+                              <div style={{background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px', textAlign: 'center'}}>
+                                <img src="/quality/qualicoat-qualideco-es-0004.jpg" alt="Qualideco" style={{height: '24px', maxWidth: '100%', objectFit: 'contain'}} />
+                                <div style={{fontSize: '0.62rem', color: '#072b66', fontWeight: '700', marginTop: '2px'}}>Qualideco</div>
                               </div>
-                              <div className="dossier-project-content">
-                                <h4 className="dossier-project-name">2. Carpintería Interior y Lucernarios</h4>
-                                <p className="dossier-project-desc">Renovación del Mercado Municipal. Instalación de lucernarios superiores y carpintería abatible Empresa de Aluminio para el aprovechamiento de luz natural y climatización pasiva.</p>
+                              <div style={{background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px', textAlign: 'center'}}>
+                                <img src="/quality/kiwa-iso-9001.jpg" alt="Kiwa ISO 9001" style={{height: '24px', maxWidth: '100%', objectFit: 'contain'}} />
+                                <div style={{fontSize: '0.62rem', color: '#072b66', fontWeight: '700', marginTop: '2px'}}>Kiwa ISO 9001</div>
                               </div>
-                            </div>
-                            <div className="dossier-project-card">
-                              <div style={{ height: '140px', overflow: 'hidden', position: 'relative', background: '#1e1b4b' }}>
-                                <img src="/viviendas_premium.jpg" alt="Residencial de Alta Gama" style={{ width: '100%', height: '100%', objectFit: 'cover' }} crossOrigin="anonymous" />
-                                <span className="dossier-image-subtext" style={{ position: 'absolute', bottom: '6px', left: '8px', background: 'rgba(0,0,0,0.65)', color: 'white', padding: '2px 8px', borderRadius: '4px', fontSize: '0.75rem' }}>Arquitectura Minimalista</span>
+                              <div style={{background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px', textAlign: 'center'}}>
+                                <img src="/quality/kiwa-iso-14001.jpg" alt="Kiwa ISO 14001" style={{height: '24px', maxWidth: '100%', objectFit: 'contain'}} />
+                                <div style={{fontSize: '0.62rem', color: '#072b66', fontWeight: '700', marginTop: '2px'}}>Kiwa ISO 14001</div>
                               </div>
-                              <div className="dossier-project-content">
-                                <h4 className="dossier-project-name">3. Residencial de Alta Gama</h4>
-                                <p className="dossier-project-desc">Cerramientos con sistemas de corredera minimalista RPT (serie GS-120RT). Sección de cruce central de 25 mm y rodamientos reforzados para grandes luces.</p>
+                              <div style={{background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px', textAlign: 'center'}}>
+                                <img src="/quality/marcado-ce.jpg" alt="Marcado CE" style={{height: '24px', maxWidth: '100%', objectFit: 'contain'}} />
+                                <div style={{fontSize: '0.62rem', color: '#072b66', fontWeight: '700', marginTop: '2px'}}>Marcado CE</div>
                               </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* CAPACIDAD FABRIL PROPIA */}
-                        <div className="dossier-section page-break">
-                          <h3 className="dossier-section-title">Capacidad Industrial e Infraestructura Propia</h3>
-                          <p style={{ fontSize: '0.85rem', marginBottom: '15px' }}>
-                            En Sopena Innovations controlamos todo el ciclo productivo de forma autónoma en nuestras plantas fabriles. Todas las capacidades indicadas son <strong>diarias</strong>:
-                          </p>
-                          <div className="dossier-fabril-grid">
-                            <div className="dossier-fabril-card">
-                              <span className="dossier-fabril-icon">🔬</span>
-                              <div>
-                                <h4 className="dossier-fabril-title">Departamento de Ingeniería e I+D</h4>
-                                <p className="dossier-fabril-desc">Departamento propio de ingeniería que ayuda a desarrollar, adaptar y extruir las series que ya pueda tener el cliente, así como diseñar nuevas soluciones a medida.</p>
-                              </div>
-                            </div>
-                            <div className="dossier-fabril-card">
-                              <span className="dossier-fabril-icon">🏭</span>
-                              <div>
-                                <h4 className="dossier-fabril-title">Dos Prensas de Extrusión (7" y 9")</h4>
-                                <p className="dossier-fabril-desc">Capacidad productiva de 55 Tm de extrusión diarias con dos prensas, una de 7 y otra de 9 pulgadas, aptas para geometrías y aleaciones de distintos tipos (incluida aleación 6082).</p>
-                              </div>
-                            </div>
-                            <div className="dossier-fabril-card">
-                              <span className="dossier-fabril-icon">⚙️</span>
-                              <div>
-                                <h4 className="dossier-fabril-title">Ensamblaje RPT Integrado</h4>
-                                <p className="dossier-fabril-desc">Línea automatizada para inserción de varillas de poliamida reforzada en los perfiles para rotura de puente térmico.</p>
-                              </div>
-                            </div>
-                            <div className="dossier-fabril-card">
-                              <span className="dossier-fabril-icon">🎨</span>
-                              <div>
-                                <h4 className="dossier-fabril-title">Planta de Lacado Vertical</h4>
-                                <p className="dossier-fabril-desc">Capacidad de 11.000 barras lacadas diarias robotizadas bajo sellos certificados Qualicoat o Qualicoat Seaside.</p>
-                              </div>
-                            </div>
-                            <div className="dossier-fabril-card">
-                              <span className="dossier-fabril-icon">🪵</span>
-                              <div>
-                                <h4 className="dossier-fabril-title">Planta de Sublimación Madera</h4>
-                                <p className="dossier-fabril-desc">Capacidad de 1.500 barras sublimadas diarias de efecto madera con extraordinario realismo exterior bajo sello Qualideco.</p>
-                              </div>
-                            </div>
-                            <div className="dossier-fabril-card">
-                              <span className="dossier-fabril-icon">🛡️</span>
-                              <div>
-                                <h4 className="dossier-fabril-title">Planta de Anodizado del Aluminio</h4>
-                                <p className="dossier-fabril-desc">Capacidad de 4.500 barras anodizadas diarias bajo norma de calidad y sello internacional Qualanod.</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* RESUMEN TÉCNICO DE SISTEMAS SOPENA */}
-                        <div className="dossier-section page-break">
-                          <h3 className="dossier-section-title">Resumen de Especificaciones de Carpintería</h3>
-                          <div style={{ background: '#f8fafc', padding: '14px 18px', borderRadius: '8px', borderLeft: '4px solid #0284c7', marginBottom: '18px', fontSize: '0.86rem', color: '#334155', lineHeight: '1.5' }}>
-                            <strong>ℹ️ Nota Técnica:</strong> Estas series son solo una muestra representativa de nuestro catálogo de arquitectura. Si su proyecto precisa de otras prestaciones térmicas, acústicas, secciones de marco o requerimientos específicos, <strong>consulte con nuestro equipo técnico</strong>; disponemos de múltiples desarrollos adicionales y capacidad de adaptación a medida.
-                          </div>
-                          <p style={{ fontSize: '0.85rem', marginBottom: '15px' }}>
-                            Especificaciones de referencia ensayadas en laboratorios acreditados (con marcado CE):
-                          </p>
-                          <div className="dossier-tech-grid">
-                            <div className="dossier-tech-card">
-                              <div className="dossier-tech-header">
-                                <span className="dossier-tech-name">Serie GS-88 RT</span>
-                                <span className="dossier-tech-badge">Premium Abisagrada</span>
-                              </div>
-                              <div className="dossier-tech-specs">
-                                <div className="dossier-tech-spec-item">Transmitancia: <strong>Uw &lt; 0.8 W/m²K</strong></div>
-                                <div className="dossier-tech-spec-item">Ensayos AEV: <strong>Clase 4 / E1500 / C5</strong></div>
-                              </div>
-                              <p className="dossier-tech-desc">Sistema abisagrada practicable y oscilobatiente de máximas prestaciones con marco de 80 u 88 mm, ideal para triple vidrio y opción de hoja oculta.</p>
-                            </div>
-
-                            <div className="dossier-tech-card">
-                              <div className="dossier-tech-header">
-                                <span className="dossier-tech-name">Serie GS-73 RT</span>
-                                <span className="dossier-tech-badge">Estándar Abisagrada</span>
-                              </div>
-                              <div className="dossier-tech-specs">
-                                <div className="dossier-tech-spec-item">Transmitancia: <strong>Uf = 1.6 W/m²K</strong></div>
-                                <div className="dossier-tech-spec-item">Ensayos AEV: <strong>Clase 4 / 9A / C5</strong></div>
-                              </div>
-                              <p className="dossier-tech-desc">Carpintería practicable y oscilobatiente versátil con rotura de puente térmico y marco de 65 o 73 mm. Excelente relación calidad/coste para edificación colectiva.</p>
-                            </div>
-
-                            <div className="dossier-tech-card">
-                              <div className="dossier-tech-header">
-                                <span className="dossier-tech-name">Serie GS-120 RT</span>
-                                <span className="dossier-tech-badge">Minimalista Corredera</span>
-                              </div>
-                              <div className="dossier-tech-specs">
-                                <div className="dossier-tech-spec-item">Sección Cruce: <strong>25 mm visual</strong></div>
-                                <div className="dossier-tech-spec-item">Carga de Hoja: <strong>Hasta 400 kg (Elevable)</strong></div>
-                              </div>
-                              <p className="dossier-tech-desc">Corredera elevable perimetral para grandes dimensiones de acristalamiento. Nudo central minimalista y rodadura reforzada para deslizamiento suave.</p>
-                            </div>
-
-                            <div className="dossier-tech-card">
-                              <div className="dossier-tech-header">
-                                <span className="dossier-tech-name">Serie GS-82 RT</span>
-                                <span className="dossier-tech-badge">Estándar Corredera</span>
-                              </div>
-                              <div className="dossier-tech-specs">
-                                <div className="dossier-tech-spec-item">Espesor Marco: <strong>82 mm</strong></div>
-                                <div className="dossier-tech-spec-item">Ensayos AEV: <strong>Clase 3 / 7A / C3</strong></div>
-                              </div>
-                              <p className="dossier-tech-desc">Corredera perimetral clásica con rotura de puente térmico. Apta para hojas de peso medio de hasta 200 kg. Óptima para reposición y reformas rápidas.</p>
                             </div>
                           </div>
                         </div>
                       </div>
-                    )}
-                    {(includeArchitectureLink || includeIndustrialLink) && (
-                      <div style={{marginTop: '30px', borderLeft: '4px solid #10b981', background: '#ecfdf5', padding: '20px', borderRadius: '0 8px 8px 0'}}>
-                        <h4 style={{marginTop: 0, color: '#047857', fontSize: '1.2rem', marginBottom: '15px'}}>{isPt ? 'Documentação Técnica Anexa:' : 'Documentación Técnica Adjunta:'}</h4>
-                        <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
-                          {includeArchitectureLink && (
-                            <a href="https://www.gruposopena.com/architectural.php?lang=es" target="_blank" rel="noopener noreferrer" style={{display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'var(--sopena-blue-dark)', background: 'white', padding: '12px 15px', borderRadius: '6px', border: '1px solid #a7f3d0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', fontWeight: 'bold'}}>
-                              <span style={{fontSize: '1.5rem'}}>🏛️</span> {isPt ? 'Catálogo de Sistemas de Arquitetura' : 'Catálogo de Sistemas de Arquitectura'} <span style={{color: '#10b981', marginLeft: 'auto'}}>{isPt ? 'Ver online \u2192' : 'Ver online \u2192'}</span>
-                            </a>
-                          )}
-                          {includeIndustrialLink && (
-                            <a href="https://www.gruposopena.com/series.php?lang=es&cat=1&id=54" target="_blank" rel="noopener noreferrer" style={{display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'var(--sopena-blue-dark)', background: 'white', padding: '12px 15px', borderRadius: '6px', border: '1px solid #a7f3d0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', fontWeight: 'bold'}}>
-                              <span style={{fontSize: '1.5rem'}}>🏭</span> {isPt ? 'Catálogo de Perfis Industriais' : 'Catálogo de Perfiles Industriales'} <span style={{color: '#10b981', marginLeft: 'auto'}}>{isPt ? 'Ver online \u2192' : 'Ver online \u2192'}</span>
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                    {/* PRÓXIMOS PASOS DE COLABORACIÓN (CALL-TO-ACTION) */}
-                    <div style={{ marginTop: '35px', marginBottom: '25px', background: 'linear-gradient(135deg, #072b66 0%, #1e1b4b 100%)', color: 'white', padding: '24px 28px', borderRadius: '12px', boxShadow: '0 8px 20px rgba(7, 43, 102, 0.15)' }}>
-                      <h4 style={{ margin: '0 0 14px 0', fontSize: '1.15rem', fontWeight: '800', color: '#38bdf8', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        🚀 Próximos Pasos de Colaboración
-                      </h4>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '14px', fontSize: '0.84rem' }}>
-                        <div style={{ background: 'rgba(255,255,255,0.08)', padding: '14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.12)' }}>
-                          <strong style={{ color: '#fcd34d', display: 'block', marginBottom: '5px' }}>1️⃣ Envío de Requerimientos</strong>
-                          <span style={{ opacity: 0.9, lineHeight: '1.4', display: 'block' }}>Comparta con nuestro departamento técnico sus planos o requerimientos de perfil para un estudio de viabilidad sin compromiso.</span>
-                        </div>
-                        <div style={{ background: 'rgba(255,255,255,0.08)', padding: '14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.12)' }}>
-                          <strong style={{ color: '#fcd34d', display: 'block', marginBottom: '5px' }}>2️⃣ Oferta Personalizada (RFQ)</strong>
-                          <span style={{ opacity: 0.9, lineHeight: '1.4', display: 'block' }}>Le remitiremos una propuesta económica detallada con plazos directos a sus instalaciones y condiciones preferentes.</span>
-                        </div>
-                        <div style={{ background: 'rgba(255,255,255,0.08)', padding: '14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.12)' }}>
-                          <strong style={{ color: '#fcd34d', display: 'block', marginBottom: '5px' }}>3️⃣ Muestrario o Reunión Técnica</strong>
-                          <span style={{ opacity: 0.9, lineHeight: '1.4', display: 'block' }}>Podemos suministrarle probetas de acabado (Qualicoat, Qualanod, Qualideco) o coordinar una visita con su delegado.</span>
-                        </div>
-                      </div>
-                    </div>
 
-                    <div style={{marginTop: '40px', paddingTop: '30px', borderTop: '2px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end'}}>
-                      <div style={{lineHeight: '1.6', color: '#334155'}}>
-                        <p style={{margin: '0 0 15px 0', color: '#475569'}}>{isPt ? 'Com os melhores cumprimentos,' : 'Atentamente,'}</p>
-                        <p style={{margin: 0, fontWeight: 'bold', fontSize: '1.1rem', color: '#072b66'}}>{getActiveSalesperson().name}</p>
-                        <p style={{margin: 0, fontSize: '0.9rem', color: '#334155', fontWeight: '500'}}>{getActiveSalesperson().role.toUpperCase()} - GRUPO SOPENA</p>
-                        <p style={{margin: '5px 0 0 0', fontSize: '0.9rem', color: '#475569'}}>
-                          📞 {getActiveSalesperson().phone} | ✉️ <a href={`mailto:${getActiveSalesperson().email}`} style={{color: '#0a3d91', textDecoration: 'none', fontWeight: '600'}}>{getActiveSalesperson().email}</a>
-                        </p>
-                        <div className="no-print" style={{marginTop: '10px', display: 'flex', gap: '10px', flexWrap: 'wrap'}}>
+                      {/* CALL TO ACTION: PRÓXIMOS PASOS DE COLABORACIÓN */}
+                      <div style={{background: 'linear-gradient(135deg, #072b66 0%, #0a3d91 100%)', color: 'white', padding: '12px 18px', borderRadius: '8px', margin: '10px 0'}}>
+                        <h4 style={{margin: '0 0 8px 0', fontSize: '0.96rem', fontWeight: '800', color: '#38bdf8', display: 'flex', alignItems: 'center', gap: '8px'}}>
+                          🚀 {isPt ? 'Próximos Passos de Colaboração' : 'Próximos Pasos de Colaboración'}
+                        </h4>
+                        <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', fontSize: '0.80rem'}}>
+                          <div style={{background: 'rgba(255,255,255,0.08)', padding: '8px 12px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.15)'}}>
+                            <strong style={{color: '#fcd34d', fontSize: '0.86rem', display: 'block', marginBottom: '3px'}}>1 {isPt ? 'Envio de Requisitos' : 'Envío de Requerimientos'}</strong>
+                            <span style={{opacity: 0.95, lineHeight: '1.35', fontSize: '0.78rem', display: 'block'}}>{isPt ? 'Partilhe planos técnicos para estudo.' : 'Comparta planos o requerimientos para estudio técnico.'}</span>
+                          </div>
+                          <div style={{background: 'rgba(255,255,255,0.08)', padding: '8px 12px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.15)'}}>
+                            <strong style={{color: '#fcd34d', fontSize: '0.86rem', display: 'block', marginBottom: '3px'}}>2 {isPt ? 'Oferta à Medida (RFQ)' : 'Oferta a Medida (RFQ)'}</strong>
+                            <span style={{opacity: 0.95, lineHeight: '1.35', fontSize: '0.78rem', display: 'block'}}>{isPt ? 'Proposta direta com prazos de entrega ágeis.' : 'Propuesta económica directa con plazos de entrega ágiles.'}</span>
+                          </div>
+                          <div style={{background: 'rgba(255,255,255,0.08)', padding: '8px 12px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.15)'}}>
+                            <strong style={{color: '#fcd34d', fontSize: '0.86rem', display: 'block', marginBottom: '3px'}}>3 {isPt ? 'Amostras ou Reunião' : 'Muestrario o Reunión'}</strong>
+                            <span style={{opacity: 0.95, lineHeight: '1.35', fontSize: '0.78rem', display: 'block'}}>{isPt ? 'Envio de provetes ou visita comercial presencial.' : 'Envío de probetas de acabado o visita comercial presencial.'}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* FIRMA Y CONTACTO */}
+                      <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', paddingTop: '10px', borderTop: '1px solid #e2e8f0'}}>
+                        <div style={{lineHeight: '1.4', color: '#334155'}}>
+                          <p style={{margin: '0 0 2px 0', color: '#64748b', fontSize: '0.86rem'}}>{isPt ? 'Com os melhores cumprimentos,' : 'Atentamente,'}</p>
+                          <p style={{margin: 0, fontWeight: '800', fontSize: '1.14rem', color: '#072b66', letterSpacing: '-0.2px'}}>{getActiveSalesperson().name}</p>
+                          <p style={{margin: '1px 0 0 0', fontSize: '0.84rem', color: '#1e293b', fontWeight: '700', textTransform: 'uppercase'}}>{getActiveSalesperson().role} - GRUPO SOPENA</p>
+                          <p style={{margin: '3px 0 0 0', fontSize: '0.84rem', color: '#475569'}}>
+                            📞 <strong style={{color: '#072b66'}}>{getActiveSalesperson().phone}</strong> | ✉️ <a href={`mailto:${getActiveSalesperson().email}`} style={{color: '#0a3d91', textDecoration: 'none', fontWeight: '700'}}>{getActiveSalesperson().email}</a>
+                          </p>
+                        </div>
+                        <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
                           {getActiveSalesperson().whatsapp && (
-                            <a href={`https://wa.me/${getActiveSalesperson().whatsapp}?text=${encodeURIComponent(isPt ? 'Olá, gostaria de fazer uma consulta sobre a proposta' : 'Hola, me gustaría hacer una consulta sobre la propuesta')}`} target="_blank" rel="noopener noreferrer" style={{display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#25D366', color: 'white', padding: '6px 12px', borderRadius: '4px', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 'bold'}}>
+                            <a href={`https://wa.me/${getActiveSalesperson().whatsapp}?text=${encodeURIComponent(isPt ? 'Olá, gostaria de fazer uma consulta sobre a proposta' : 'Hola, me gustaría hacer una consulta sobre la propuesta')}`} target="_blank" rel="noopener noreferrer" style={{display: 'inline-flex', alignItems: 'center', gap: '7px', background: '#25D366', color: 'white', padding: '7px 14px', borderRadius: '5px', textDecoration: 'none', fontSize: '0.84rem', fontWeight: 'bold', boxShadow: '0 2px 6px rgba(37,211,102,0.25)'}}>
                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                              Contactar por WhatsApp
+                              WhatsApp
                             </a>
                           )}
-                          <a href="https://www.instagram.com/gruposopena/" target="_blank" rel="noopener noreferrer" style={{display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)', color: 'white', padding: '6px 12px', borderRadius: '4px', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 'bold'}}>
+                          <a href="https://www.instagram.com/gruposopena/" target="_blank" rel="noopener noreferrer" style={{display: 'inline-flex', alignItems: 'center', gap: '7px', background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)', color: 'white', padding: '7px 14px', borderRadius: '5px', textDecoration: 'none', fontSize: '0.84rem', fontWeight: 'bold', boxShadow: '0 2px 6px rgba(225,48,108,0.25)'}}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                             Instagram
                           </a>
                         </div>
                       </div>
-                      {presentationTarget && presentationTarget.purchasingLinkedin && (
-                        <div className="no-print">
-                            <a href={presentationTarget.purchasingLinkedin} target="_blank" rel="noopener noreferrer" style={{background: '#0077b5', color: 'white', padding: '8px 15px', borderRadius: '4px', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 'bold', display: 'inline-block'}}>
-                                Conectar en LinkedIn
-                            </a>
-                        </div>
-                      )}
+                    </div>
+
+                    {/* PIE DE PÁGINA: PÁGINA 1 DE 1 */}
+                    <div className="a4-footer-bar">
+                      <span>SOPENA INNOVATIONS, S.L. | Pol. Ind. Los Vientos, C/ Garbí, 9, 46119 Náquera (Valencia) | Tel. +34 96 145 20 50 | <a href="https://www.gruposopena.com/" target="_blank" rel="noopener noreferrer" style={{color: 'inherit', textDecoration: 'underline'}}>www.gruposopena.com</a></span>
+                      <strong style={{color: '#072b66'}}>Página 1 de 1</strong>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  /* ========================================================= */
+                  /* DOSSIER B2B: EXACTAMENTE 3 PÁGINAS A4 INDEPENDIENTES      */
+                  /* ========================================================= */
+                  <>
+                    {/* ----------------- DOSSIER PÁGINA 1 DE 3 ----------------- */}
+                    <div className="a4-page" data-page="1">
+                      {/* CABECERA INSTITUCIONAL */}
+                      <div style={{background: 'linear-gradient(135deg, #072b66 0%, #0a3d91 100%)', padding: '16px 36px', color: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px', flexShrink: 0}}>
+                        <div style={{display: 'flex', alignItems: 'center', gap: '16px'}}>
+                          <div style={{background: 'white', padding: '6px 14px', borderRadius: '6px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)'}}>
+                            <img src="/sopena_sistemas_logo.png" alt="Logotipo Sopena Sistemas" style={{height: '42px', objectFit: 'contain'}} />
+                          </div>
+                          {presentationTarget && isCarpinteriaRelated(presentationTarget) && renderClientLogo(presentationTarget.name)}
+                        </div>
+                        <div style={{textAlign: 'right', fontSize: '0.80rem', lineHeight: '1.35', opacity: 0.95}}>
+                          <strong style={{fontSize: '0.86rem', color: '#ffffff'}}>SOPENA INNOVATIONS, S.L.</strong><br/>
+                          Pol. Ind. Los Vientos, C/ Garbí, 9<br/>
+                          46119 Náquera, Valencia {isPt ? 'Espanha' : 'España'}<br/>
+                          +34 96 145 20 50 | <a href="https://www.gruposopena.com/" target="_blank" rel="noopener noreferrer" style={{color: 'inherit', textDecoration: 'underline'}}>gruposopena.com</a>
+                        </div>
+                      </div>
+
+                      {/* CONTENIDO PÁGINA 1 */}
+                      <div style={{padding: '18px 36px 12px 36px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflow: 'hidden'}}>
+                        {/* FILA SUPERIOR: METADATOS */}
+                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '20px', marginBottom: '10px'}}>
+                          <div style={{flex: 1}}>
+                            <div style={{display: 'inline-block', background: '#eff6ff', color: '#0a3d91', padding: '3px 10px', borderRadius: '4px', fontSize: '0.72rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '4px'}}>
+                              🗎 {isPt ? 'Dossier Corporativo e Industrial B2B' : 'Dossier Corporativo e Industrial B2B'}
+                            </div>
+                            <h2 style={{color: '#072b66', fontSize: '1.40rem', margin: 0, fontWeight: '800', letterSpacing: '-0.4px', lineHeight: '1.2'}}>
+                              {isPt ? 'Proposta de Colaboração e Distribuição B2B' : 'Propuesta de Colaboración y Distribución B2B'}
+                            </h2>
+                          </div>
+                          <div style={{background: '#f8fafc', padding: '8px 14px', borderRadius: '6px', borderLeft: '4px solid #00a8e8', minWidth: '280px', flexShrink: 0, fontSize: '0.80rem', lineHeight: '1.35'}}>
+                            <p style={{margin: '0 0 3px 0', color: '#334155'}}>
+                              <strong style={{color: '#0f172a'}}>{isPt ? 'A/C:' : 'A/A:'}</strong>{' '}
+                              {presentationTarget?.purchasingManager || (isPt ? 'Direção de Compras / Gabinete Técnico' : 'Dirección de Compras / Departamento Técnico')}
+                            </p>
+                            <p style={{margin: '0 0 3px 0', color: '#334155'}}>
+                              <strong style={{color: '#0f172a'}}>De:</strong>{' '}
+                              {getActiveSalesperson().name} ({getActiveSalesperson().role})
+                            </p>
+                            <p style={{margin: 0, color: '#334155'}}>
+                              <strong style={{color: '#0f172a'}}>{isPt ? 'Data:' : 'Fecha:'}</strong>{' '}
+                              {new Date().toLocaleDateString(isPt ? 'pt-PT' : 'es-ES')}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* CARTA FORMAL B2B */}
+                        <div style={{fontSize: '0.80rem', lineHeight: '1.45', color: '#334155'}}>
+                          <p style={{margin: '0 0 6px 0'}}>
+                            {isPt 
+                              ? `Estimada Direção Técnica e Responsáveis de Compras${presentationTarget ? ` da ${presentationTarget.name}` : ''}, me dirijo a vocês na minha qualidade de ${getActiveSalesperson().role} do Grupo Sopena para apresentar-lhes formalmente a nossa capacidade industrial integral em extrusão e tratamento de superfícies de perfis de alumínio.`
+                              : `Estimada Dirección Técnica y Responsables de Compras${presentationTarget ? ` de ${presentationTarget.name}` : ''}, me dirijo a ustedes en mi calidad de ${getActiveSalesperson().role} de Grupo Sopena para presentarles formalmente nuestra capacidad industrial integral en extrusión y tratamiento de superficies de perfiles de aluminio.`}
+                          </p>
+                          <p style={{margin: '0 0 6px 0'}}>
+                            {isPt 
+                              ? 'A SOPENA INNOVATIONS, S.L. atesora uma trajetória de mais de 75 anos na vanguarda da extrusão e do tratamento de superfícies de alumínio em Espanha. Ao longo desta história, especializamo-nos no desenvolvimento de matrizes sob medida e perfis de altíssimas prestações térmicas e mecânicas (com ensaios oficiais e marcação CE). Dispomos de armazém regulador próprio e uma sólida capacidade produtiva que nos permite garantir um fornecimento ágil, estável e direto, eliminando incertezas de stock e importação.'
+                              : 'SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vanguardia de la extrusión y el tratamiento de superficies de aluminio en España. A lo largo de esta historia, nos hemos especializado en el desarrollo de matricería a medida y perfiles de altísimas prestaciones térmicas y mecánicas (con ensayos oficiales y marcado CE). Disponemos de almacén regulador propio y una sólida capacidad productiva que nos permite garantizar un suministro ágil, estable y directo, eliminando las incertidumbres de stock e importación.'}
+                          </p>
+                          <p style={{margin: 0}}>
+                            {isPt 
+                              ? 'A nossa integração vertical fabril permite-nos controlar desde o tocho de liga homologada até ao tratamento superficial definitivo, garantindo uma rastreabilidade milimétrica em cada lote e o cumprimento rigoroso dos prazos acordados.'
+                              : 'Nuestra integración vertical fabril nos permite controlar desde el tocho de aleación homologada hasta el tratamiento superficial definitivo, garantizando una trazabilidad milimétrica en cada lote y el cumplimiento estricto de los plazos comprometidos.'}
+                          </p>
+                        </div>
+
+                        {/* BLOQUE ACABADOS CERTIFICADOS PARA AMBIENTES EXIGENTES */}
+                        <div style={{background: '#f8fafc', padding: '10px 14px', borderRadius: '6px', borderLeft: '4px solid #00a8e8', margin: '8px 0'}}>
+                          <h4 style={{margin: '0 0 5px 0', color: '#072b66', fontSize: '0.86rem', fontWeight: '800'}}>
+                            🛡️ {isPt ? 'Acabamentos Certificados para Ambientes Exigentes:' : 'Acabados Certificados para Ambientes Exigentes:'}
+                          </h4>
+                          <p style={{fontSize: '0.76rem', color: '#475569', margin: '0 0 5px 0', lineHeight: '1.3'}}>
+                            {isPt ? 'Controlamos integralmente todo o processo sob selos internacionais de máxima exigência europeia:' : 'Controlamos íntegramente todo el proceso de acabados superficiales bajo sellos internacionales de máxima exigencia europea:'}
+                          </p>
+                          <ul style={{listStyle: 'none', padding: 0, margin: 0, fontSize: '0.74rem', lineHeight: '1.35', color: '#334155'}}>
+                            <li style={{marginBottom: '3px'}}>
+                              <strong>• Qualicoat / Qualicoat Seaside:</strong> {isPt ? 'Selo para lacagem arquitetónica. O tratamento Seaside previne a corrosão filiforme, ideal para combater a humidade e salinidade litoral com até 10 anos de garantia anticorrosão.' : 'Sello para lacado arquitectónico. El tratamiento Seaside previene la corrosión filiforme, idóneo para combatir la humedad y salinidad litoral con hasta 10 años de garantía anticorrosión.'}
+                            </li>
+                            <li style={{marginBottom: '3px'}}>
+                              <strong>• Qualanod:</strong> {isPt ? 'Certificação internacional para anodização de alumínio, garantindo máxima dureza superficial, resistência ao desgaste abrasivo e estabilidade de cor.' : 'Certificación internacional para anodizado de aluminio, garantizando máxima dureza superficial, resistencia al desgaste abrasivo y estabilidad de color.'}
+                            </li>
+                            <li>
+                              <strong>• Qualideco:</strong> {isPt ? 'Tecnologia de termotransferência e sublimação de alta precisão para acabamentos de efeito madeira com extraordinária fidelidade visual e resistência solar UV.' : 'Tecnología de termotransferencia y sublimación de alta precisión para acabados de efecto madera con extraordinaria fidelidad visual y resistencia a la radiación solar UV.'}
+                            </li>
+                          </ul>
+                        </div>
+
+                        {/* MALLA DE 8 SELLOS OFICIALES DE CALIDAD */}
+                        <div style={{border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px 12px', background: '#ffffff'}}>
+                          <div style={{fontSize: '0.72rem', fontWeight: '800', color: '#072b66', textTransform: 'uppercase', marginBottom: '6px', textAlign: 'center', letterSpacing: '0.3px'}}>
+                            🛡️ {isPt ? 'CERTIFICAÇÕES E SELOS INTERNACIONAIS DE QUALIDADE HOMOLOGADOS' : 'CERTIFICACIONES Y SELLOS INTERNACIONALES DE CALIDAD HOMOLOGADOS'}
+                          </div>
+                          <div style={{display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '6px'}}>
+                            <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px', textAlign: 'center'}}>
+                              <img src="/quality/qualicoat-seaside-439.jpg" alt="Qualicoat Seaside" style={{height: '22px', maxWidth: '100%', objectFit: 'contain'}} />
+                              <div style={{fontSize: '0.62rem', color: '#072b66', fontWeight: '700'}}>Qualicoat Seaside</div>
+                              <div style={{fontSize: '0.55rem', color: '#64748b'}}>Licencia 439</div>
+                            </div>
+                            <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px', textAlign: 'center'}}>
+                              <img src="/quality/qualanod-architecture-industrial.jpg" alt="Qualanod" style={{height: '22px', maxWidth: '100%', objectFit: 'contain'}} />
+                              <div style={{fontSize: '0.62rem', color: '#072b66', fontWeight: '700'}}>Qualanod</div>
+                              <div style={{fontSize: '0.55rem', color: '#64748b'}}>Arq. e Industrial</div>
+                            </div>
+                            <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px', textAlign: 'center'}}>
+                              <img src="/quality/qualicoat-qualideco-es-0004.jpg" alt="Qualideco" style={{height: '22px', maxWidth: '100%', objectFit: 'contain'}} />
+                              <div style={{fontSize: '0.62rem', color: '#072b66', fontWeight: '700'}}>Qualideco</div>
+                              <div style={{fontSize: '0.55rem', color: '#64748b'}}>Licencia ES-0004</div>
+                            </div>
+                            <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px', textAlign: 'center'}}>
+                              <img src="/quality/marcado-ce.jpg" alt="Marcado CE" style={{height: '22px', maxWidth: '100%', objectFit: 'contain'}} />
+                              <div style={{fontSize: '0.62rem', color: '#072b66', fontWeight: '700'}}>Marcado CE</div>
+                              <div style={{fontSize: '0.55rem', color: '#64748b'}}>Normativa EN</div>
+                            </div>
+                            <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px', textAlign: 'center'}}>
+                              <img src="/quality/kiwa-iso-9001.jpg" alt="Kiwa ISO 9001" style={{height: '22px', maxWidth: '100%', objectFit: 'contain'}} />
+                              <div style={{fontSize: '0.62rem', color: '#072b66', fontWeight: '700'}}>Kiwa ISO 9001</div>
+                              <div style={{fontSize: '0.55rem', color: '#64748b'}}>Gestión Calidad</div>
+                            </div>
+                            <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px', textAlign: 'center'}}>
+                              <img src="/quality/kiwa-iso-14001.jpg" alt="Kiwa ISO 14001" style={{height: '22px', maxWidth: '100%', objectFit: 'contain'}} />
+                              <div style={{fontSize: '0.62rem', color: '#072b66', fontWeight: '700'}}>Kiwa ISO 14001</div>
+                              <div style={{fontSize: '0.55rem', color: '#64748b'}}>Medio Ambiente</div>
+                            </div>
+                            <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px', textAlign: 'center'}}>
+                              <img src="/quality/kiwa-iso-45001.jpg" alt="Kiwa ISO 45001" style={{height: '22px', maxWidth: '100%', objectFit: 'contain'}} />
+                              <div style={{fontSize: '0.62rem', color: '#072b66', fontWeight: '700'}}>Kiwa ISO 45001</div>
+                              <div style={{fontSize: '0.55rem', color: '#64748b'}}>Seguridad Laboral</div>
+                            </div>
+                            <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '4px', textAlign: 'center'}}>
+                              <img src="/quality/sgs-iso-50001.jpg" alt="SGS ISO 50001" style={{height: '22px', maxWidth: '100%', objectFit: 'contain'}} />
+                              <div style={{fontSize: '0.62rem', color: '#072b66', fontWeight: '700'}}>SGS ISO 50001</div>
+                              <div style={{fontSize: '0.55rem', color: '#64748b'}}>Gestión Energética</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* INDICADOR INFERIOR DE CONTINUACIÓN */}
+                        <div style={{textAlign: 'center', color: '#64748b', fontSize: '0.78rem', fontWeight: '600', padding: '4px 0'}}>
+                          {isPt ? 'Continua na página 2: Infraestrutura Fabril e Obras Singulares →' : 'Continúa en página 2: Infraestructura Fabril y Obras Singulares →'}
+                        </div>
+                      </div>
+
+                      {/* PIE DE PÁGINA: PÁGINA 1 DE 3 */}
+                      <div className="a4-footer-bar">
+                        <span>SOPENA INNOVATIONS, S.L. | {isPt ? 'Dossier Corporativo B2B' : 'Dossier Corporativo B2B'} | <a href="https://www.gruposopena.com/" target="_blank" rel="noopener noreferrer" style={{color: 'inherit', textDecoration: 'underline'}}>www.gruposopena.com</a></span>
+                        <strong style={{color: '#072b66'}}>Página 1 de 3</strong>
+                      </div>
+                    </div>
+
+                    {/* ----------------- DOSSIER PÁGINA 2 DE 3 ----------------- */}
+                    <div className="a4-page" data-page="2">
+                      {/* CABECERA COMPACTA DE CONTINUACIÓN */}
+                      <div className="a4-header-continuation">
+                        <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+                          <div className="logo-wrap">
+                            <img src="/sopena_sistemas_logo.png" alt="Sopena Sistemas" />
+                          </div>
+                          <span className="continuation-title">
+                            {isPt ? 'CAPACIDADE INDUSTRIAL E OBRAS SINGULARES' : 'CAPACIDAD INDUSTRIAL Y OBRAS SINGULARES'}
+                          </span>
+                        </div>
+                        <div style={{fontSize: '0.78rem', opacity: 0.9}}>
+                          Sopena Innovations, S.L. | +34 96 145 20 50
+                        </div>
+                      </div>
+
+                      {/* CONTENIDO PÁGINA 2 */}
+                      <div style={{padding: '18px 36px 12px 36px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflow: 'hidden'}}>
+                        {/* SECCIÓN 1: CAPACIDAD FABRIL PROPIA */}
+                        <div>
+                          <h3 style={{color: '#072b66', fontSize: '1.20rem', fontWeight: '800', margin: '0 0 2px 0', letterSpacing: '-0.3px'}}>
+                            {isPt ? 'Capacidade Industrial' : 'Capacidad Industrial'}
+                          </h3>
+                          <p style={{fontSize: '0.76rem', color: '#64748b', margin: '0 0 8px 0'}}>
+                            {isPt ? 'Controlo integral de todo o ciclo produtivo de forma autónoma nas nossas fábricas. Todas as capacidades são diárias:' : 'Control integral de todo el ciclo productivo de forma autónoma en nuestras plantas. Todas las capacidades son diarias:'}
+                          </p>
+                          <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px'}}>
+                            <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px 10px'}}>
+                              <div style={{fontSize: '0.82rem', fontWeight: '800', color: '#072b66', marginBottom: '2px'}}>📐 {isPt ? 'Engenharia e I&D' : 'Ingeniería e I+D'}</div>
+                              <div style={{fontSize: '0.72rem', color: '#64748b', lineHeight: '1.3'}}>{isPt ? 'Gabinete próprio que ajuda a desenvolver, adaptar e extrudar séries à medida.' : 'Departamento propio que ayuda a desarrollar, adaptar y extruir series a medida según planos del cliente.'}</div>
+                            </div>
+                            <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px 10px'}}>
+                              <div style={{fontSize: '0.82rem', fontWeight: '800', color: '#072b66', marginBottom: '2px'}}>🏭 {isPt ? '2 Prensas (7" e 9")' : '2 Prensas (7" y 9")'}</div>
+                              <div style={{fontSize: '0.72rem', color: '#64748b', lineHeight: '1.3'}}>{isPt ? 'Capacidade diária de 55 Tm de extrusão para geometrias exigentes e ligas 6060, 6005, 6082 t, 6083.' : 'Capacidad diaria de 55 Tm de extrusión para geometrías exigentes y aleaciones 6060, 6005, 6082 t, 6083.'}</div>
+                            </div>
+                            <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px 10px'}}>
+                              <div style={{fontSize: '0.82rem', fontWeight: '800', color: '#072b66', marginBottom: '2px'}}>⚙️ {isPt ? 'Montagem RPT' : 'Ensamblaje RPT'}</div>
+                              <div style={{fontSize: '0.72rem', color: '#64748b', lineHeight: '1.3'}}>{isPt ? 'Linha para inserção de barras de poliamida tubular reforçada com rutura de ponte térmica.' : 'Línea para inserción de varillas de poliamida tubular reforzada con rotura de puente térmico.'}</div>
+                            </div>
+                            <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px 10px'}}>
+                              <div style={{fontSize: '0.82rem', fontWeight: '800', color: '#072b66', marginBottom: '2px'}}>🎨 {isPt ? 'Lacagem Vertical' : 'Lacado Vertical'}</div>
+                              <div style={{fontSize: '0.72rem', color: '#64748b', lineHeight: '1.3'}}>{isPt ? '11.000 barras diárias lacadas robotizadas sob selo Qualicoat e Qualicoat Seaside para ambientes marinhos.' : '11.000 barras diarias lacadas robotizadas bajo sello Qualicoat y Qualicoat Seaside para ambientes marinos.'}</div>
+                            </div>
+                            <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px 10px'}}>
+                              <div style={{fontSize: '0.82rem', fontWeight: '800', color: '#072b66', marginBottom: '2px'}}>🪵 {isPt ? 'Sublimação Madeira' : 'Sublimación Madera'}</div>
+                              <div style={{fontSize: '0.72rem', color: '#64748b', lineHeight: '1.3'}}>{isPt ? '1.500 barras diárias de efeito madeira com extraordinário realismo exterior sob selo oficial Qualideco.' : '1.500 barras diarias de efecto madera con extraordinario realismo exterior bajo sello oficial Qualideco.'}</div>
+                            </div>
+                            <div style={{background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px 10px'}}>
+                              <div style={{fontSize: '0.82rem', fontWeight: '800', color: '#072b66', marginBottom: '2px'}}>🛡️ {isPt ? 'Planta de Anodização' : 'Planta de Anodizado'}</div>
+                              <div style={{fontSize: '0.72rem', color: '#64748b', lineHeight: '1.3'}}>{isPt ? '4.500 barras anodizadas diárias sob selo Qualanod com acabamentos escovados/gratados, polidos/repulidos, diferentes colorações e classes de espessura.' : '4.500 barras anodizadas diarias bajo sello Qualanod con acabados gratados, repulidos, distintas coloraciones y clases de espesor.'}</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* SECCIÓN 2: DOSSIER TÉCNICO DE OBRAS REALES */}
+                        <div>
+                          <h3 style={{color: '#072b66', fontSize: '1.20rem', fontWeight: '800', margin: '0 0 2px 0', letterSpacing: '-0.3px'}}>
+                            {isPt ? 'Anexo: Dossier Técnico de Obras Reais' : 'Anexo: Dossier Técnico de Obras Reales'}
+                          </h3>
+                          <p style={{fontSize: '0.76rem', color: '#64748b', margin: '0 0 8px 0'}}>
+                            {isPt ? 'Os nossos desenvolvimentos técnicos de extrusão e acabamentos dão suporte a obras singulares de grande repercussão:' : 'Nuestros desarrollos técnicos de extrusión y acabados dan soporte a obras singulares de gran repercusión:'}
+                          </p>
+                          <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px'}}>
+                            {/* OBRA 1: ROIG ARENA */}
+                            <div style={{background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '6px', overflow: 'hidden', display: 'flex', flexDirection: 'column'}}>
+                              <div style={{height: '110px', position: 'relative', background: '#0f172a'}}>
+                                <img src="/roig_arena.jpg" alt="Fachadas Singulares: Roig Arena" style={{width: '100%', height: '100%', objectFit: 'cover'}} crossOrigin="anonymous" />
+                                <span style={{position: 'absolute', bottom: '5px', left: '6px', background: 'rgba(0,0,0,0.7)', color: 'white', padding: '2px 6px', borderRadius: '3px', fontSize: '0.68rem', fontWeight: '600'}}>Valencia, España</span>
+                              </div>
+                              <div style={{padding: '8px 10px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+                                <h4 style={{margin: '0 0 4px 0', fontSize: '0.82rem', fontWeight: '800', color: '#072b66'}}>1. Fachadas: Roig Arena</h4>
+                                <p style={{margin: 0, fontSize: '0.70rem', color: '#475569', lineHeight: '1.3'}}>
+                                  {isPt ? 'Fornecimento de perfis especiais para envolvente de lâminas onduladas, resistente a altas cargas dinâmicas de vento.' : 'Suministro de perfiles especiales para envolvente de lamas onduladas, resistente a altas cargas dinámicas de viento.'}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* OBRA 2: MERCADO MUNICIPAL */}
+                            <div style={{background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '6px', overflow: 'hidden', display: 'flex', flexDirection: 'column'}}>
+                              <div style={{height: '110px', position: 'relative', background: 'linear-gradient(135deg, #0d9488 0%, #115e59 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
+                                <span style={{fontSize: '2.2rem'}}>🏛️</span>
+                                <div style={{color: 'white', fontWeight: 'bold', fontSize: '0.82rem', marginTop: '2px'}}>Mercado Municipal</div>
+                                <span style={{position: 'absolute', bottom: '5px', left: '6px', background: 'rgba(0,0,0,0.5)', color: 'white', padding: '2px 6px', borderRadius: '3px', fontSize: '0.68rem', fontWeight: '600'}}>Espacio Público</span>
+                              </div>
+                              <div style={{padding: '8px 10px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+                                <h4 style={{margin: '0 0 4px 0', fontSize: '0.82rem', fontWeight: '800', color: '#072b66'}}>2. Carpintería y Lucernarios</h4>
+                                <p style={{margin: 0, fontSize: '0.70rem', color: '#475569', lineHeight: '1.3'}}>
+                                  {isPt ? 'Renovação do Mercado com claraboias superiores e caixilharia basculante para luz natural e ventilação passiva.' : 'Renovación del Mercado con lucernarios superiores y carpintería abatible para luz natural y climatización pasiva.'}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* OBRA 3: RESIDENCIAL ALTA GAMA */}
+                            <div style={{background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '6px', overflow: 'hidden', display: 'flex', flexDirection: 'column'}}>
+                              <div style={{height: '110px', position: 'relative', background: '#0f172a'}}>
+                                <img src="/viviendas_premium.jpg" alt="Residencial Alta Gama" style={{width: '100%', height: '100%', objectFit: 'cover'}} crossOrigin="anonymous" />
+                                <span style={{position: 'absolute', bottom: '5px', left: '6px', background: 'rgba(0,0,0,0.7)', color: 'white', padding: '2px 6px', borderRadius: '3px', fontSize: '0.68rem', fontWeight: '600'}}>Minimalista RPT</span>
+                              </div>
+                              <div style={{padding: '8px 10px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+                                <h4 style={{margin: '0 0 4px 0', fontSize: '0.82rem', fontWeight: '800', color: '#072b66'}}>3. Residencial Alta Gama</h4>
+                                <p style={{margin: 0, fontSize: '0.70rem', color: '#475569', lineHeight: '1.3'}}>
+                                  {isPt ? 'Caixilharia de correr minimalista GS-120 RT. Secção de cruzamento central de 25 mm para grandes vãos envidraçados.' : 'Cerramientos de corredera minimalista GS-120 RT. Sección de cruce central de 25 mm para grandes luces de acristalamiento.'}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* INDICADOR INFERIOR DE CONTINUACIÓN */}
+                        <div style={{textAlign: 'center', color: '#64748b', fontSize: '0.78rem', fontWeight: '600', padding: '4px 0'}}>
+                          {isPt ? 'Continua na página 3: Fichas Técnicas de Caixilharia e Catálogos →' : 'Continúa en página 3: Fichas Técnicas de Carpintería y Catálogos →'}
+                        </div>
+                      </div>
+
+                      {/* PIE DE PÁGINA: PÁGINA 2 DE 3 */}
+                      <div className="a4-footer-bar">
+                        <span>SOPENA INNOVATIONS, S.L. | {isPt ? 'Capacidade Industrial e Referências Técnicas' : 'Capacidad Industrial y Referencias Técnicas'} | <a href="https://www.gruposopena.com/" target="_blank" rel="noopener noreferrer" style={{color: 'inherit', textDecoration: 'underline'}}>www.gruposopena.com</a></span>
+                        <strong style={{color: '#072b66'}}>Página 2 de 3</strong>
+                      </div>
+                    </div>
+
+                    {/* ----------------- DOSSIER PÁGINA 3 DE 3 ----------------- */}
+                    <div className="a4-page" data-page="3">
+                      {/* CABECERA COMPACTA DE CONTINUACIÓN */}
+                      <div className="a4-header-continuation">
+                        <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+                          <div className="logo-wrap">
+                            <img src="/sopena_sistemas_logo.png" alt="Sopena Sistemas" />
+                          </div>
+                          <span className="continuation-title">
+                            {isPt ? 'ESPECIFICAÇÕES TÉCNICAS E CATÁLOGOS OFICIAIS' : 'ESPECIFICACIONES TÉCNICAS Y CATÁLOGOS OFICIALES'}
+                          </span>
+                        </div>
+                        <div style={{fontSize: '0.78rem', opacity: 0.9}}>
+                          Sopena Innovations, S.L. | www.gruposopena.com
+                        </div>
+                      </div>
+
+                      {/* CONTENIDO PÁGINA 3 */}
+                      <div style={{padding: '16px 36px 12px 36px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflow: 'hidden'}}>
+                        {/* SECCIÓN 1: RESUMEN DE ESPECIFICACIONES DE CARPINTERÍA */}
+                        <div>
+                          <h3 style={{color: '#072b66', fontSize: '1.20rem', fontWeight: '800', margin: '0 0 3px 0', letterSpacing: '-0.3px'}}>
+                            {isPt ? 'Resumo de Especificações de Caixilharia' : 'Resumen de Especificaciones de Carpintería'}
+                          </h3>
+                          <div style={{background: '#eff6ff', borderLeft: '3px solid #00a8e8', padding: '6px 12px', borderRadius: '4px', fontSize: '0.82rem', lineHeight: '1.4', color: '#1e40af', marginBottom: '8px'}}>
+                            ℹ️ <strong>{isPt ? 'Nota Técnica:' : 'Nota Técnica:'}</strong> {isPt ? 'Amostra representativa do catálogo de arquitetura. Para prestações térmicas ou seções específicas, contacte a nossa equipa técnica; dispomos de desenvolvimentos à medida.' : 'Muestra representativa de nuestro catálogo de arquitectura. Si su proyecto precisa de otras prestaciones térmicas o secciones, consulte a nuestro equipo técnico; disponemos de desarrollos y adaptación a medida.'}
+                          </div>
+
+                          <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px'}}>
+                            {/* SERIE GS-88 RT */}
+                            <div style={{background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px 10px'}}>
+                              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2px'}}>
+                                <strong style={{color: '#072b66', fontSize: '0.84rem'}}>Serie GS-88 RT</strong>
+                                <span style={{background: '#e0f2fe', color: '#0369a1', fontSize: '0.65rem', fontWeight: 'bold', padding: '1px 6px', borderRadius: '3px'}}>Premium Abisagrada</span>
+                              </div>
+                              <div style={{fontSize: '0.70rem', color: '#0f172a', fontWeight: '600', marginBottom: '2px'}}>
+                                Transmitancia: Uw &lt; 0.8 W/m²K | Ensayos: Clase 4 / E1500 / C5
+                              </div>
+                              <div style={{fontSize: '0.68rem', color: '#64748b', lineHeight: '1.3'}}>
+                                Sistema practicable y oscilobatiente de máximas prestaciones con marco de 80 u 88 mm, ideal para triple vidrio y opción de hoja oculta.
+                              </div>
+                            </div>
+
+                            {/* SERIE GS-73 RT */}
+                            <div style={{background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px 10px'}}>
+                              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2px'}}>
+                                <strong style={{color: '#072b66', fontSize: '0.84rem'}}>Serie GS-73 RT</strong>
+                                <span style={{background: '#e0f2fe', color: '#0369a1', fontSize: '0.65rem', fontWeight: 'bold', padding: '1px 6px', borderRadius: '3px'}}>Estándar Abisagrada</span>
+                              </div>
+                              <div style={{fontSize: '0.70rem', color: '#0f172a', fontWeight: '600', marginBottom: '2px'}}>
+                                Transmitancia: Uf = 1.6 W/m²K | Ensayos: Clase 4 / 9A / C5
+                              </div>
+                              <div style={{fontSize: '0.68rem', color: '#64748b', lineHeight: '1.3'}}>
+                                Carpintería practicable y oscilobatiente versátil con rotura de puente térmico y marco de 65 o 73 mm. Máxima rentabilidad en edificación colectiva.
+                              </div>
+                            </div>
+
+                            {/* SERIE GS-120 RT */}
+                            <div style={{background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px 10px'}}>
+                              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2px'}}>
+                                <strong style={{color: '#072b66', fontSize: '0.84rem'}}>Serie GS-120 RT</strong>
+                                <span style={{background: '#fef3c7', color: '#b45309', fontSize: '0.65rem', fontWeight: 'bold', padding: '1px 6px', borderRadius: '3px'}}>Minimalista Corredera</span>
+                              </div>
+                              <div style={{fontSize: '0.70rem', color: '#0f172a', fontWeight: '600', marginBottom: '2px'}}>
+                                Sección Cruce: 25 mm visual | Carga de Hoja: Hasta 400 kg
+                              </div>
+                              <div style={{fontSize: '0.68rem', color: '#64748b', lineHeight: '1.3'}}>
+                                Corredera elevable perimetral para grandes dimensiones de acristalamiento. Nudo central minimalista para máxima luminosidad.
+                              </div>
+                            </div>
+
+                            {/* SERIE GS-82 RT */}
+                            <div style={{background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px 10px'}}>
+                              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2px'}}>
+                                <strong style={{color: '#072b66', fontSize: '0.84rem'}}>Serie GS-82 RT</strong>
+                                <span style={{background: '#f1f5f9', color: '#475569', fontSize: '0.65rem', fontWeight: 'bold', padding: '1px 6px', borderRadius: '3px'}}>Estándar Corredera</span>
+                              </div>
+                              <div style={{fontSize: '0.70rem', color: '#0f172a', fontWeight: '600', marginBottom: '2px'}}>
+                                Espesor Marco: 82 mm | Ensayos: Clase 3 / 7A / C3
+                              </div>
+                              <div style={{fontSize: '0.68rem', color: '#64748b', lineHeight: '1.3'}}>
+                                Corredera perimetral clásica con rotura de puente térmico. Apta para hojas de hasta 200 kg. Óptima para reposición y reformas rápidas.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* SECCIÓN 2: DOCUMENTACIÓN TÉCNICA ADJUNTA */}
+                        <div style={{background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '6px', padding: '8px 14px', margin: '4px 0'}}>
+                          <div style={{fontSize: '0.78rem', fontWeight: '800', color: '#166534', marginBottom: '5px'}}>
+                            📚 {isPt ? 'Documentação Técnica Anexa (Acesso Online):' : 'Documentación Técnica Adjunta (Acceso Online):'}
+                          </div>
+                          <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px'}}>
+                            <a href="https://www.gruposopena.com/sistemas/" target="_blank" rel="noopener noreferrer" style={{background: '#ffffff', border: '1px solid #86efac', borderRadius: '4px', padding: '5px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', textDecoration: 'none', color: '#14532d', fontSize: '0.72rem', fontWeight: '700'}}>
+                              <span>🏛️ {isPt ? 'Catálogo Sistemas Arquitetura' : 'Catálogo Sistemas Arquitectura'}</span>
+                              <span style={{color: '#15803d'}}>Ver →</span>
+                            </a>
+                            <a href="https://www.gruposopena.com/extrusion/" target="_blank" rel="noopener noreferrer" style={{background: '#ffffff', border: '1px solid #86efac', borderRadius: '4px', padding: '5px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', textDecoration: 'none', color: '#14532d', fontSize: '0.72rem', fontWeight: '700'}}>
+                              <span>🏭 {isPt ? 'Catálogo Perfis Industriais' : 'Catálogo Perfiles Industriales'}</span>
+                              <span style={{color: '#15803d'}}>Ver →</span>
+                            </a>
+                          </div>
+                        </div>
+
+                        {/* SECCIÓN 3: PRÓXIMOS PASOS DE COLABORACIÓN */}
+                        <div style={{background: 'linear-gradient(135deg, #072b66 0%, #0a3d91 100%)', color: 'white', padding: '12px 18px', borderRadius: '8px', margin: '6px 0'}}>
+                          <h4 style={{margin: '0 0 8px 0', fontSize: '0.96rem', fontWeight: '800', color: '#38bdf8', display: 'flex', alignItems: 'center', gap: '8px'}}>
+                            🚀 {isPt ? 'Próximos Passos de Colaboração' : 'Próximos Pasos de Colaboración'}
+                          </h4>
+                          <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', fontSize: '0.80rem'}}>
+                            <div style={{background: 'rgba(255,255,255,0.08)', padding: '8px 12px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.15)'}}>
+                              <strong style={{color: '#fcd34d', fontSize: '0.86rem', display: 'block', marginBottom: '3px'}}>1 {isPt ? 'Envio de Requisitos' : 'Envío de Requerimientos'}</strong>
+                              <span style={{opacity: 0.95, lineHeight: '1.35', fontSize: '0.78rem', display: 'block'}}>{isPt ? 'Partilhe planos técnicos para estudo.' : 'Comparta planos o requerimientos para estudio técnico.'}</span>
+                            </div>
+                            <div style={{background: 'rgba(255,255,255,0.08)', padding: '8px 12px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.15)'}}>
+                              <strong style={{color: '#fcd34d', fontSize: '0.86rem', display: 'block', marginBottom: '3px'}}>2 {isPt ? 'Oferta à Medida (RFQ)' : 'Oferta a Medida (RFQ)'}</strong>
+                              <span style={{opacity: 0.95, lineHeight: '1.35', fontSize: '0.78rem', display: 'block'}}>{isPt ? 'Proposta direta com prazos de entrega ágeis.' : 'Propuesta económica directa con plazos de entrega ágiles.'}</span>
+                            </div>
+                            <div style={{background: 'rgba(255,255,255,0.08)', padding: '8px 12px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.15)'}}>
+                              <strong style={{color: '#fcd34d', fontSize: '0.86rem', display: 'block', marginBottom: '3px'}}>3 {isPt ? 'Amostras ou Reunião' : 'Muestrario o Reunión'}</strong>
+                              <span style={{opacity: 0.95, lineHeight: '1.35', fontSize: '0.78rem', display: 'block'}}>{isPt ? 'Envio de provetes ou visita comercial presencial.' : 'Envío de probetas de acabado o visita comercial presencial.'}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* SECCIÓN 4: FIRMA Y CONTACTO */}
+                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', paddingTop: '10px', borderTop: '1px solid #e2e8f0'}}>
+                          <div style={{lineHeight: '1.4', color: '#334155'}}>
+                            <p style={{margin: '0 0 2px 0', color: '#64748b', fontSize: '0.86rem'}}>{isPt ? 'Com os melhores cumprimentos,' : 'Atentamente,'}</p>
+                            <p style={{margin: 0, fontWeight: '800', fontSize: '1.14rem', color: '#072b66', letterSpacing: '-0.2px'}}>{getActiveSalesperson().name}</p>
+                            <p style={{margin: '1px 0 0 0', fontSize: '0.84rem', color: '#1e293b', fontWeight: '700', textTransform: 'uppercase'}}>{getActiveSalesperson().role} - GRUPO SOPENA</p>
+                            <p style={{margin: '3px 0 0 0', fontSize: '0.84rem', color: '#475569'}}>
+                              📞 <strong style={{color: '#072b66'}}>{getActiveSalesperson().phone}</strong> | ✉️ <a href={`mailto:${getActiveSalesperson().email}`} style={{color: '#0a3d91', textDecoration: 'none', fontWeight: '700'}}>{getActiveSalesperson().email}</a>
+                            </p>
+                          </div>
+                          <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
+                            {getActiveSalesperson().whatsapp && (
+                              <a href={`https://wa.me/${getActiveSalesperson().whatsapp}?text=${encodeURIComponent(isPt ? 'Olá, gostaria de fazer uma consulta sobre a proposta' : 'Hola, me gustaría hacer una consulta sobre la propuesta')}`} target="_blank" rel="noopener noreferrer" style={{display: 'inline-flex', alignItems: 'center', gap: '7px', background: '#25D366', color: 'white', padding: '7px 14px', borderRadius: '5px', textDecoration: 'none', fontSize: '0.84rem', fontWeight: 'bold', boxShadow: '0 2px 6px rgba(37,211,102,0.25)'}}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                WhatsApp
+                              </a>
+                            )}
+                            <a href="https://www.instagram.com/gruposopena/" target="_blank" rel="noopener noreferrer" style={{display: 'inline-flex', alignItems: 'center', gap: '7px', background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)', color: 'white', padding: '7px 14px', borderRadius: '5px', textDecoration: 'none', fontSize: '0.84rem', fontWeight: 'bold', boxShadow: '0 2px 6px rgba(225,48,108,0.25)'}}>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                              Instagram
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* PIE DE PÁGINA: PÁGINA 3 DE 3 */}
+                      <div className="a4-footer-bar">
+                        <span>SOPENA INNOVATIONS, S.L. | Pol. Ind. Los Vientos, C/ Garbí, 9, 46119 Náquera (Valencia) | Tel. +34 96 145 20 50 | <a href="https://www.gruposopena.com/" target="_blank" rel="noopener noreferrer" style={{color: 'inherit', textDecoration: 'underline'}}>www.gruposopena.com</a></span>
+                        <strong style={{color: '#072b66'}}>Página 3 de 3</strong>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           )}
@@ -6654,6 +6830,10 @@ ${kit.emailBody}`)}
                   <option value="Distribucion de Aluminio y Metales">Distribución de Aluminio y Metales</option>
                   <option value="Armarios de Aluminio">Armarios de Aluminio</option>
                 </select>
+              </div>
+              <div className="form-group">
+                <label>Facturación Anual (€) — <span style={{fontWeight: 'normal', color: '#64748b'}}>Dejar vacío si no está contrastada</span></label>
+                <input type="number" name="revenue" placeholder="Dejar vacío si no se conoce con certeza" />
               </div>
               <div className="form-group">
                 <label>Responsable de Compras</label>

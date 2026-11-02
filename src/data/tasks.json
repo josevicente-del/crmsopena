@@ -1,5 +1,21 @@
 [
   {
+    "id": 1793646602578,
+    "prospectId": "PROP-LEAD26-0012",
+    "prospectName": "Alu-Stock S.A.",
+    "zone": "ALL",
+    "assignedTo": "admin",
+    "assignedToName": "Superadministrador Grupo Sopena",
+    "createdBy": "admin",
+    "text": "Revisar si hay que cambiar de estado a Alu-Stock S.A. (Fase actual: Contactado)",
+    "date": "2026-11-02T19:10:01.113Z",
+    "dueDate": "2026-11-05T19:10:01.102Z",
+    "dueDateFormatted": "5/11/2026",
+    "completed": false,
+    "priority": "Media",
+    "category": "Revisión Kanban"
+  },
+  {
     "id": 1792933038395,
     "prospectId": "PROP-LEAD26-0477",
     "prospectName": "Aluminios Villalta S.L.",
