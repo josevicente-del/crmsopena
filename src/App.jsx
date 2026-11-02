@@ -16,6 +16,7 @@ import initialServerTasks from './data/tasks.json';
 import excludedCompaniesData from './data/excludedCompanies.json';
 import './App.css';
 import './index.css';
+import { SOPENA_LOGO_B64 } from './data/sopena_logo_b64';
 import { calculateShortestDistance } from './utils/distance';
 import AgentforceAssistant from './components/AgentforceAssistant';
 
@@ -1900,16 +1901,16 @@ const App = () => {
         <div class="card catalogs-card" style="margin-top: 40px; border-left: 4px solid #10b981; background: #ecfdf5; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
           <h4 style="margin-top: 0; color: #047857; font-size: 1.2rem; margin-bottom: 15px;">${isPt ? 'Documentação Técnica Interativa:' : 'Documentación Técnica Interactiva:'}</h4>
           <div style="display: flex; flex-direction: column; gap: 12px;">
-            \${includeArchitectureLink ? \`
+            ${includeArchitectureLink ? `
               <a href="https://www.gruposopena.com/architectural.php?lang=es" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #0f172a; background: white; padding: 12px 15px; border-radius: 6px; border: 1px solid #a7f3d0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-weight: bold; transition: all 0.2s ease;">
-                <span style="font-size: 1.5rem;">🏛️</span> \${isPt ? 'Catálogo de Sistemas de Arquitetura' : 'Catálogo de Sistemas de Arquitectura'} <span style="color: #10b981; margin-left: auto;">\${isPt ? 'Aceder catálogo →' : 'Acceder catálogo →'}</span>
+                <span style="font-size: 1.5rem;">🏛️</span> ${isPt ? 'Catálogo de Sistemas de Arquitetura' : 'Catálogo de Sistemas de Arquitectura'} <span style="color: #10b981; margin-left: auto;">${isPt ? 'Aceder catálogo →' : 'Acceder catálogo →'}</span>
               </a>
-            \` : ''}
-            \${includeIndustrialLink ? \`
+            ` : ''}
+            ${includeIndustrialLink ? `
               <a href="https://www.gruposopena.com/series.php?lang=es&cat=1&id=54" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #0f172a; background: white; padding: 12px 15px; border-radius: 6px; border: 1px solid #a7f3d0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-weight: bold; transition: all 0.2s ease;">
-                <span style="font-size: 1.5rem;">🏭</span> \${isPt ? 'Catálogo de Perfis Industriais' : 'Catálogo de Perfiles Industriales'} <span style="color: #10b981; margin-left: auto;">\${isPt ? 'Aceder catálogo →' : 'Acceder catálogo →'}</span>
+                <span style="font-size: 1.5rem;">🏭</span> ${isPt ? 'Catálogo de Perfis Industriais' : 'Catálogo de Perfiles Industriales'} <span style="color: #10b981; margin-left: auto;">${isPt ? 'Aceder catálogo →' : 'Acceder catálogo →'}</span>
               </a>
-            \` : ''}
+            ` : ''}
           </div>
         </div>
       `;
@@ -1917,11 +1918,11 @@ const App = () => {
     // HTML del documento completo
     const htmlContent = `
 <!DOCTYPE html>
-<html lang="\${isPt ? 'pt' : 'es'}">
+<html lang="${isPt ? 'pt' : 'es'}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>\${titleText}</title>
+  <title>${titleText}</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -2157,12 +2158,12 @@ const App = () => {
   <div class="container">
     <header>
       <div class="logo-container">
-        <img src="/sopena_sistemas_logo.png" alt="Logotipo Grupo Sopena Sistemas">
+        <img src="${SOPENA_LOGO_B64}" alt="Logotipo Grupo Sopena Sistemas">
       </div>
       <div class="header-info">
         <strong>SOPENA INNOVATIONS, S.L.</strong><br>
         Pol. Ind. Los Vientos, C/ Garbí, 9<br>
-        46119 Náquera, Valencia (\${isPt ? 'Espanha' : 'España'})<br>
+        46119 Náquera, Valencia (${isPt ? 'Espanha' : 'España'})<br>
         +34 96 145 20 50 | <a href="https://www.gruposopena.com/" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">gruposopena.com</a>
       </div>
     </header>
@@ -2170,38 +2171,47 @@ const App = () => {
       <div class="decorator-bar"></div>
       
       <div class="intro">
-        <h2>\${titleText}</h2>
+        <h2>${titleText}</h2>
         <div class="meta-box">
-          \${target ? \`
-            <p><strong>\${isPt ? 'A/C:' : 'A/A:'}</strong> \${target.purchasingManager} 
-            \${target.purchasingPhone ? \`| 📞 \${target.purchasingPhone}\` : ''}
-            \${target.email ? \`| ✉️ \${target.email}\` : ''}</p>
-          \` : \`
-            <p><strong>\${isPt ? 'A/C:' : 'A/A:'}</strong> \${isPt ? 'Direção de Compras / Gabinete Técnico' : 'Dirección de Compras / Departamento Técnico'}</p>
-          \`}
-          <p><strong>De:</strong> \${salesperson.name} (\${salesperson.role})</p>
-          <p><strong>\${isPt ? 'Data:' : 'Fecha:'}</strong> \${dateStr}</p>
+          ${target ? `
+            <p style="margin-bottom: 6px; color: #334155; font-size: 0.95rem;">
+              <strong style="color: #0f172a;">${isPt ? 'A/C:' : 'A/A:'}</strong> ${target.purchasingManager || (isPt ? 'Direção de Compras / Gabinete Técnico' : 'Dirección de Compras / Departamento Técnico')}
+              ${target.purchasingPhone ? ` | 📞 ${target.purchasingPhone}` : ''}
+              ${target.email ? ` | ✉️ <a href="mailto:${target.email}" style="color: #0a3d91; text-decoration: none;">${target.email}</a>` : ''}
+            </p>
+            ${(isCarpinteriaRelated(target) || target.address) ? `
+              <p style="margin-bottom: 6px; color: #475569; font-size: 0.9rem;">
+                <strong style="color: #0f172a;">📍 ${isPt ? 'Endereço:' : 'Dirección:'}</strong> ${target.address || 'Polígono de Pocomaco, 1ª Avda. 26'}, ${target.city || 'A Coruña'} (${target.zone})
+              </p>
+            ` : ''}
+          ` : `
+            <p style="margin-bottom: 6px; color: #334155; font-size: 0.95rem;">
+              <strong style="color: #0f172a;">${isPt ? 'A/C:' : 'A/A:'}</strong> ${isPt ? 'Direção de Compras / Gabinete Técnico' : 'Dirección de Compras / Departamento Técnico'}
+            </p>
+          `}
+          <p style="margin-bottom: 6px; color: #334155; font-size: 0.95rem;"><strong style="color: #0f172a;">De:</strong> ${salesperson.name} (${salesperson.role})</p>
+          <p style="margin: 0; color: #334155; font-size: 0.95rem;"><strong style="color: #0f172a;">${isPt ? 'Data:' : 'Fecha:'}</strong> ${dateStr}</p>
         </div>
       </div>
       <div class="grid">
         <div>
-          <h3>\${isPt ? 'Quem Somos' : 'Quiénes Somos'}</h3>
-          <p>\${isPt ? 'Somos uma empresa industrial especializada no design e fabricação de perfis de alumínio extrudado sob medida, localizados estrategicamente no ' : 'Somos una empresa industrial especializada en el diseño y fabricación de perfiles de aluminio extruido a medida, ubicados estratégicamente en el '}<strong>Polígono Industrial Los Vientos (Náquera, Valencia)</strong>. \${isPt ? 'Esta produção centralizada permite-nos oferecer uma proximidade logística imbatível para toda a Península Ibérica, garantindo prazos de entrega ágeis, nula dependência de importações e um suporte técnico direto.' : 'Esta producción centralizada nos permite ofrecer una cercanía logística inmejorable para toda la Península Ibérica, garantizando plazos de entrega ágiles, nula dependencia de importaciones y un soporte técnico directo.'}</p>
+          <h3>${isPt ? 'Quem Somos' : 'Quiénes Somos'}</h3>
+          <p>${isPt ? 'Somos uma empresa industrial especializada no design e fabricação de perfis de alumínio extrudado sob medida, localizados estrategicamente no ' : 'Somos una empresa industrial especializada en el diseño y fabricación de perfiles de aluminio extruido a medida, ubicados estratégicamente en el '}<strong>Polígono Industrial Los Vientos (Náquera, Valencia)</strong>. ${isPt ? 'Esta produção centralizada permite-nos oferecer uma proximidade logística imbatível para toda a Península Ibérica, garantindo prazos de entrega ágeis, nula dependência de importações e um suporte técnico direto.' : 'Esta producción centralizada nos permite ofrecer una cercanía logística inmejorable para toda la Península Ibérica, garantizando plazos de entrega ágiles, nula dependencia de importaciones y un soporte técnico directo.'}</p>
           
-          <h3 style="margin-top: 30px;">\${isPt ? 'Compromisso e Normativa' : 'Compromiso y Normativa'}</h3>
+          <h3 style="margin-top: 30px;">${isPt ? 'Compromisso e Normativa' : 'Compromiso y Normativa'}</h3>
           <ul>
-            <li><strong>\${isPt ? 'Alumínio Reciclado:' : 'Aluminio Reciclado:'}</strong> \${isPt ? 'Utilização de tarugos de alumínio reciclável de muito baixo impacto.' : 'Uso de tochos de aluminio reciclable de muy bajo impacto.'}</li>
-            <li><strong>\${isPt ? 'Ligas Especializadas:' : 'Aleaciones Especializadas:'}</strong> \${isPt ? 'Capacidade para extrudar ligas exigentes (6060, 6005, 6082, 6083).' : 'Capacidad para extruir aleaciones exigentes (6060, 6005, 6082, 6083).'}</li>
-            <li><strong>\${isPt ? 'Cumprimento Rigoroso:' : 'Cumplimiento Estricto:'}</strong> \${isPt ? 'Marcação CE e avalizados pelos selos internacionais mais exigentes.' : 'Marcado CE y avalados por los sellos internacionales más exigentes.'}</li>
+            <li><strong>${isPt ? 'Alumínio Reciclado:' : 'Aluminio Reciclado:'}</strong> ${isPt ? 'Utilização de tarugos de alumínio reciclável de muito baixo impacto.' : 'Uso de tochos de aluminio reciclable de muy bajo impacto.'}</li>
+            <li><strong>${isPt ? 'Ligas Especializadas:' : 'Aleaciones Especializadas:'}</strong> ${isPt ? 'Capacidade para extrudar ligas exigentes (6060, 6005, 6082, 6083).' : 'Capacidad para extruir aleaciones exigentes (6060, 6005, 6082, 6083).'}</li>
+            <li><strong>${isPt ? 'Cumprimento Rigoroso:' : 'Cumplimiento Estricto:'}</strong> ${isPt ? 'Marcação CE e avalizados pelos selos internacionais mais exigentes.' : 'Marcado CE y avalados por los sellos internacionales más exigentes.'}</li>
           </ul>
         </div>
         <div>
           <div class="capabilities-box">
-            <h3>\${isPt ? 'As Nossas Capacidades' : 'Nuestras Capacidades'}</h3>
+            <h3>${isPt ? 'As Nossas Capacidades' : 'Nuestras Capacidades'}</h3>
             <ul style="margin: 0; padding-left: 15px;">
-              <li style="margin-bottom: 12px;"><strong>\${isPt ? 'Extrusão de Precisão:' : 'Extrusión de Precisión:'}</strong><br>\${isPt ? 'Capacidade diária de 55 Tm com duas prensas (7" e 9") para geometrias e ligas diversas (incluindo 6082).' : 'Capacidad diaria de 55 Tm con dos prensas (7" y 9") para geometrías y aleaciones de distintos tipos (incluida 6082).'}</li>
-              <li style="margin-bottom: 12px;"><strong>\${isPt ? 'Tratamentos Superficiais:' : 'Tratamientos Superficiales:'}</strong><br>\${isPt ? 'Lacagem (Qualicoat ou Qualicoat Seaside), Anodização (Qualanod) e Efeito Madeira (Qualideco).' : 'Lacado (Qualicoat o Qualicoat Seaside), Anodizado (Qualanod) y Efecto Madera (Qualideco).'}</li>
-              <li><strong>\${isPt ? 'Engenharia e Design:' : 'Ingeniería y Diseño:'}</strong><br>\${isPt ? 'Apoio ao cliente no desenvolvimento, adaptação e extrusão das suas próprias séries.' : 'Apoyo al cliente en el desarrollo, adaptación y extrusión de sus propias series.'}</li>
+              <li style="margin-bottom: 12px;"><strong>${isPt ? 'Extrusão de Precisão:' : 'Extrusión de Precisión:'}</strong><br>${isPt ? 'Capacidade diária de 55 Tm com duas prensas (7" e 9") para geometrias e ligas diversas (incluindo 6082).' : 'Capacidad diaria de 55 Tm con dos prensas (7" y 9") para geometrías y aleaciones de distintos tipos (incluida 6082).'}</li>
+              <li style="margin-bottom: 12px;"><strong>${isPt ? 'Tratamentos Superficiais:' : 'Tratamientos Superficiales:'}</strong><br>${isPt ? 'Lacagem (Qualicoat ou Qualicoat Seaside), Anodização (Qualanod) e Efeito Madeira (Qualideco).' : 'Lacado (Qualicoat o Qualicoat Seaside), Anodizado (Qualanod) y Efecto Madera (Qualideco).'}</li>
+              <li><strong>${isPt ? 'Engenharia e Design:' : 'Ingeniería y Diseño:'}</strong><br>${isPt ? 'Apoio ao cliente no desenvolvimento, adaptação e extrusão das suas próprias séries.' : 'Apoyo al cliente en el desarrollo, adaptación y extrusión de sus propias series.'}</li>
             </ul>
           </div>
           <div class="cert-grid">
@@ -2215,55 +2225,55 @@ const App = () => {
           </div>
         </div>
       </div>
-      \${sectorHtml}
-      \${catalogsHtml}
+      ${sectorHtml}
+      ${catalogsHtml}
 
       <!-- PRÓXIMOS PASOS DE COLABORACIÓN (CALL-TO-ACTION) -->
       <div style="margin-top: 35px; margin-bottom: 25px; background: linear-gradient(135deg, #072b66 0%, #1e1b4b 100%); color: white; padding: 24px 28px; border-radius: 12px; box-shadow: 0 8px 20px rgba(7, 43, 102, 0.15);">
         <h4 style="margin: 0 0 14px 0; font-size: 1.15rem; font-weight: 800; color: #38bdf8; display: flex; align-items: center; gap: 8px;">
-          🚀 \${isPt ? 'Próximos Passos de Colaboração' : 'Próximos Pasos de Colaboración'}
+          🚀 ${isPt ? 'Próximos Passos de Colaboração' : 'Próximos Pasos de Colaboración'}
         </h4>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; font-size: 0.84rem;">
           <div style="background: rgba(255,255,255,0.08); padding: 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12);">
-            <strong style="color: #fcd34d; display: block; margin-bottom: 5px;">1️⃣ \${isPt ? 'Envio de Requisitos' : 'Envío de Requerimientos'}</strong>
-            <span style="opacity: 0.9; line-height: 1.4; display: block;">\${isPt ? 'Partilhe com o nosso departamento técnico os seus desenhos ou requisitos de perfil para um estudo de viabilidade sem compromisso.' : 'Comparta con nuestro departamento técnico sus planos o requerimientos de perfil para un estudio de viabilidad sin compromiso.'}</span>
+            <strong style="color: #fcd34d; display: block; margin-bottom: 5px;">1️⃣ ${isPt ? 'Envio de Requisitos' : 'Envío de Requerimientos'}</strong>
+            <span style="opacity: 0.9; line-height: 1.4; display: block;">${isPt ? 'Partilhe com o nosso departamento técnico os seus desenhos ou requisitos de perfil para um estudo de viabilidade sem compromisso.' : 'Comparta con nuestro departamento técnico sus planos o requerimientos de perfil para un estudio de viabilidad sin compromiso.'}</span>
           </div>
           <div style="background: rgba(255,255,255,0.08); padding: 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12);">
-            <strong style="color: #fcd34d; display: block; margin-bottom: 5px;">2️⃣ \${isPt ? 'Proposta Personalizada (RFQ)' : 'Oferta Personalizada (RFQ)'}</strong>
-            <span style="opacity: 0.9; line-height: 1.4; display: block;">\${isPt ? 'Apresentaremos uma proposta económica detalhada com prazos diretos para as suas instalações e condições preferenciais.' : 'Le remitiremos una propuesta económica detallada con plazos directos a sus instalaciones y condiciones preferentes.'}</span>
+            <strong style="color: #fcd34d; display: block; margin-bottom: 5px;">2️⃣ ${isPt ? 'Proposta Personalizada (RFQ)' : 'Oferta Personalizada (RFQ)'}</strong>
+            <span style="opacity: 0.9; line-height: 1.4; display: block;">${isPt ? 'Apresentaremos uma proposta económica detalhada com prazos diretos para as suas instalações e condições preferenciais.' : 'Le remitiremos una propuesta económica detallada con plazos directos a sus instalaciones y condiciones preferentes.'}</span>
           </div>
           <div style="background: rgba(255,255,255,0.08); padding: 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12);">
-            <strong style="color: #fcd34d; display: block; margin-bottom: 5px;">3️⃣ \${isPt ? 'Amostras ou Reunião Técnica' : 'Muestrario o Reunión Técnica'}</strong>
-            <span style="opacity: 0.9; line-height: 1.4; display: block;">\${isPt ? 'Podemos fornecer amostras de acabamento (Qualicoat, Qualanod, Qualideco) ou coordenar uma visita com o vosso delegado.' : 'Podemos suministrarle probetas de acabado (Qualicoat, Qualanod, Qualideco) o coordinar una visita con su delegado.'}</span>
+            <strong style="color: #fcd34d; display: block; margin-bottom: 5px;">3️⃣ ${isPt ? 'Amostras ou Reunião Técnica' : 'Muestrario o Reunión Técnica'}</strong>
+            <span style="opacity: 0.9; line-height: 1.4; display: block;">${isPt ? 'Podemos fornecer amostras de acabamento (Qualicoat, Qualanod, Qualideco) ou coordenar uma visita com o vosso delegado.' : 'Podemos suministrarle probetas de acabado (Qualicoat, Qualanod, Qualideco) o coordinar una visita con su delegado.'}</span>
           </div>
         </div>
       </div>
       <div class="footer-section">
         <div class="signature-info">
-          <p style="margin-bottom: 15px;">\${isPt ? 'Com os melhores cumprimentos,' : 'Atentamente,'}</p>
-          <p style="font-weight: bold; font-size: 1.1rem; color: var(--sopena-blue-dark); margin: 0;">\${salesperson.name}</p>
-          <p style="font-size: 0.9rem; margin: 0; font-weight: 500;">\${salesperson.role.toUpperCase()} - GRUPO SOPENA</p>
+          <p style="margin-bottom: 15px;">${isPt ? 'Com os melhores cumprimentos,' : 'Atentamente,'}</p>
+          <p style="font-weight: bold; font-size: 1.1rem; color: var(--sopena-blue-dark); margin: 0;">${salesperson.name}</p>
+          <p style="font-size: 0.9rem; margin: 0; font-weight: 500;">${salesperson.role.toUpperCase()} - GRUPO SOPENA</p>
           <p style="font-size: 0.85rem; margin: 5px 0 0 0; color: var(--text-secondary);">
-            📞 \${salesperson.phone} | ✉️ <a href="mailto:\${salesperson.email}">\${salesperson.email}</a>
+            📞 ${salesperson.phone} | ✉️ <a href="mailto:${salesperson.email}">${salesperson.email}</a>
           </p>
           <div style="margin-top: 15px; display: flex; gap: 8px;">
-            \${salesperson.whatsapp ? \`
-              <a href="https://wa.me/\${salesperson.whatsapp}?text=\${encodeURIComponent(isPt ? 'Olá, recebi a vossa proposta' : 'Hola, recibí su propuesta')}" class="social-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">
+            ${salesperson.whatsapp ? `
+              <a href="https://wa.me/${salesperson.whatsapp}?text=${encodeURIComponent(isPt ? 'Olá, recebi a vossa proposta' : 'Hola, recibí su propuesta')}" class="social-btn whatsapp-btn" target="_blank" rel="noopener noreferrer">
                 WhatsApp
               </a>
-            \` : ''}
+            ` : ''}
             <a href="https://www.instagram.com/gruposopena/" class="social-btn instagram-btn" target="_blank" rel="noopener noreferrer">
               Instagram
             </a>
           </div>
         </div>
-        \${target && target.purchasingLinkedin && target.purchasingLinkedin !== 'No disponible' ? \`
+        ${target && target.purchasingLinkedin && target.purchasingLinkedin !== 'No disponible' ? `
           <div>
-            <a href="\${target.purchasingLinkedin}" class="social-btn linkedin-btn" target="_blank" rel="noopener noreferrer">
+            <a href="${target.purchasingLinkedin}" class="social-btn linkedin-btn" target="_blank" rel="noopener noreferrer">
               Conectar en LinkedIn
             </a>
           </div>
-        \` : ''}
+        ` : ''}
       </div>
     </div>
   </div>
@@ -2275,7 +2285,7 @@ const App = () => {
     const link = document.createElement('a');
     const sanitizedName = clientName.toLowerCase().replace(/[^a-z0-9]/g, '_');
     link.setAttribute('href', url);
-    link.setAttribute('download', `propuesta_aluminio_\${sanitizedName}.html`);
+    link.setAttribute('download', `propuesta_aluminio_${sanitizedName}.html`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -4372,40 +4382,68 @@ const App = () => {
                     
                     {presentationTarget ? (
                       <div style={{marginBottom: '40px'}}>
-                        <h2 style={{color: 'var(--sopena-blue-dark)', fontSize: '2.2rem', marginTop: 0, marginBottom: '15px', fontWeight: '800', letterSpacing: '-0.5px'}}>{isPt ? 'Soluções de Alumínio para' : 'Soluciones de Aluminio para'} <br/><span style={{color: 'var(--sopena-blue)'}}>{presentationTarget.name}</span></h2>
-                        <div style={{background: '#f8fafc', padding: '20px', borderRadius: '8px', borderLeft: '4px solid var(--sopena-accent)', display: 'inline-block', minWidth: '350px'}}>
-                          <p style={{margin: '0 0 8px 0', color: 'var(--text-secondary)'}}>
-                            <strong>{isPt ? 'A/C:' : 'A/A:'}</strong> {presentationTarget.purchasingManager} 
-                            {presentationTarget.purchasingPhone && <span> | 📞 {presentationTarget.purchasingPhone}</span>}
-                            {presentationTarget.email && <span> | ✉️ {presentationTarget.email}</span>}
+                        <h2 style={{color: '#072b66', fontSize: '2.2rem', marginTop: 0, marginBottom: '15px', fontWeight: '800', letterSpacing: '-0.5px'}}>
+                          {isPt ? 'Soluções de Alumínio para' : 'Soluciones de Aluminio para'} <br/>
+                          <span style={{color: '#0a3d91'}}>{presentationTarget.name}</span>
+                        </h2>
+                        <div style={{background: '#f8fafc', padding: '20px', borderRadius: '8px', borderLeft: '4px solid #00a8e8', display: 'inline-block', minWidth: '350px'}}>
+                          <p style={{margin: '0 0 8px 0', color: '#334155', fontSize: '0.95rem'}}>
+                            <strong style={{color: '#0f172a'}}>{isPt ? 'A/C:' : 'A/A:'}</strong>{' '}
+                            <span style={{color: '#334155'}}>
+                              {presentationTarget.purchasingManager || (isPt ? 'Direção de Compras / Gabinete Técnico' : 'Dirección de Compras / Departamento Técnico')}
+                            </span>
+                            {presentationTarget.purchasingPhone && <span style={{color: '#475569'}}> | 📞 {presentationTarget.purchasingPhone}</span>}
+                            {presentationTarget.email && <span style={{color: '#475569'}}> | ✉️ {presentationTarget.email}</span>}
                           </p>
                           {/* Dirección física del cliente (Carpintería) */}
                           {(isCarpinteriaRelated(presentationTarget) || presentationTarget.address) && (
-                            <p style={{margin: '0 0 8px 0', color: 'var(--text-secondary)', fontSize: '0.9rem'}}>
-                              <strong>📍 Dirección:</strong> {presentationTarget.address || 'Polígono de Pocomaco, 1ª Avda. 26'}, {presentationTarget.city || 'A Coruña'} ({presentationTarget.zone})
+                            <p style={{margin: '0 0 8px 0', color: '#475569', fontSize: '0.9rem'}}>
+                              <strong style={{color: '#0f172a'}}>📍 {isPt ? 'Endereço:' : 'Dirección:'}</strong>{' '}
+                              <span style={{color: '#334155'}}>
+                                {presentationTarget.address || 'Polígono de Pocomaco, 1ª Avda. 26'}, {presentationTarget.city || 'A Coruña'} ({presentationTarget.zone})
+                              </span>
                             </p>
                           )}
-                          <p style={{margin: '0 0 8px 0', color: 'var(--text-secondary)'}}><strong>De:</strong> {getActiveSalesperson().name} ({getActiveSalesperson().role})</p>
-                          <p style={{margin: 0, color: 'var(--text-secondary)'}}><strong>{isPt ? 'Data:' : 'Fecha:'}</strong> {new Date().toLocaleDateString(isPt ? 'pt-PT' : 'es-ES')}</p>
+                          <p style={{margin: '0 0 8px 0', color: '#334155', fontSize: '0.95rem'}}>
+                            <strong style={{color: '#0f172a'}}>De:</strong>{' '}
+                            <span style={{color: '#334155'}}>
+                              {getActiveSalesperson().name} ({getActiveSalesperson().role})
+                            </span>
+                          </p>
+                          <p style={{margin: 0, color: '#334155', fontSize: '0.95rem'}}>
+                            <strong style={{color: '#0f172a'}}>{isPt ? 'Data:' : 'Fecha:'}</strong>{' '}
+                            <span style={{color: '#334155'}}>
+                              {new Date().toLocaleDateString(isPt ? 'pt-PT' : 'es-ES')}
+                            </span>
+                          </p>
                         </div>
                       </div>
                     ) : (
                       <div style={{marginBottom: '40px'}}>
-                        <div style={{display: 'inline-block', background: 'rgba(10, 61, 145, 0.08)', color: 'var(--sopena-blue)', padding: '4px 12px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px'}}>
+                        <div style={{display: 'inline-block', background: 'rgba(10, 61, 145, 0.08)', color: '#0a3d91', padding: '4px 12px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px'}}>
                           📄 {presentationType === 'detallada' ? 'Dossier Corporativo e Industrial B2B' : 'Carta de Presentación Corporativa'}
                         </div>
-                        <h2 style={{color: 'var(--sopena-blue-dark)', fontSize: '2.2rem', marginTop: 0, marginBottom: '15px', fontWeight: '800', letterSpacing: '-0.5px'}}>
+                        <h2 style={{color: '#072b66', fontSize: '2.2rem', marginTop: 0, marginBottom: '15px', fontWeight: '800', letterSpacing: '-0.5px'}}>
                           {isPt ? 'Soluções Industriais em Extrusão de Alumínio' : 'Soluciones Industriales en Extrusión de Aluminio'}
                         </h2>
-                        <div style={{background: '#f8fafc', padding: '18px 24px', borderRadius: '8px', borderLeft: '4px solid var(--sopena-accent)', display: 'inline-block', minWidth: '350px'}}>
-                          <p style={{margin: '0 0 8px 0', color: 'var(--text-secondary)'}}>
-                            <strong>{isPt ? 'A/C:' : 'A/A:'}</strong> {isPt ? 'Direção de Compras / Gabinete Técnico' : 'Dirección de Compras / Departamento Técnico'}
+                        <div style={{background: '#f8fafc', padding: '18px 24px', borderRadius: '8px', borderLeft: '4px solid #00a8e8', display: 'inline-block', minWidth: '350px'}}>
+                          <p style={{margin: '0 0 8px 0', color: '#334155', fontSize: '0.95rem'}}>
+                            <strong style={{color: '#0f172a'}}>{isPt ? 'A/C:' : 'A/A:'}</strong>{' '}
+                            <span style={{color: '#334155'}}>
+                              {isPt ? 'Direção de Compras / Gabinete Técnico' : 'Dirección de Compras / Departamento Técnico'}
+                            </span>
                           </p>
-                          <p style={{margin: '0 0 8px 0', color: 'var(--text-secondary)'}}>
-                            <strong>De:</strong> {getActiveSalesperson().name} ({getActiveSalesperson().role})
+                          <p style={{margin: '0 0 8px 0', color: '#334155', fontSize: '0.95rem'}}>
+                            <strong style={{color: '#0f172a'}}>De:</strong>{' '}
+                            <span style={{color: '#334155'}}>
+                              {getActiveSalesperson().name} ({getActiveSalesperson().role})
+                            </span>
                           </p>
-                          <p style={{margin: 0, color: 'var(--text-secondary)'}}>
-                            <strong>{isPt ? 'Data:' : 'Fecha:'}</strong> {new Date().toLocaleDateString(isPt ? 'pt-PT' : 'es-ES')}
+                          <p style={{margin: 0, color: '#334155', fontSize: '0.95rem'}}>
+                            <strong style={{color: '#0f172a'}}>{isPt ? 'Data:' : 'Fecha:'}</strong>{' '}
+                            <span style={{color: '#334155'}}>
+                              {new Date().toLocaleDateString(isPt ? 'pt-PT' : 'es-ES')}
+                            </span>
                           </p>
                         </div>
                       </div>
@@ -4725,11 +4763,11 @@ SOPENA INNOVATIONS, S.L. atesora una trayectoria de más de 75 años a la vangua
 
                     <div style={{marginTop: '40px', paddingTop: '30px', borderTop: '2px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end'}}>
                       <div style={{lineHeight: '1.6', color: '#334155'}}>
-                        <p style={{margin: '0 0 15px 0'}}>{isPt ? 'Com os melhores cumprimentos,' : 'Atentamente,'}</p>
-                        <p style={{margin: 0, fontWeight: 'bold', fontSize: '1.1rem', color: 'var(--sopena-blue-dark)'}}>{getActiveSalesperson().name}</p>
-                        <p style={{margin: 0, fontSize: '0.9rem'}}>{getActiveSalesperson().role.toUpperCase()} - GRUPO SOPENA</p>
-                        <p style={{margin: '5px 0 0 0', fontSize: '0.9rem', color: 'var(--text-secondary)'}}>
-                          📞 {getActiveSalesperson().phone} | ✉️ <a href={`mailto:${getActiveSalesperson().email}`} style={{color: 'var(--sopena-blue)', textDecoration: 'none'}}>{getActiveSalesperson().email}</a>
+                        <p style={{margin: '0 0 15px 0', color: '#475569'}}>{isPt ? 'Com os melhores cumprimentos,' : 'Atentamente,'}</p>
+                        <p style={{margin: 0, fontWeight: 'bold', fontSize: '1.1rem', color: '#072b66'}}>{getActiveSalesperson().name}</p>
+                        <p style={{margin: 0, fontSize: '0.9rem', color: '#334155', fontWeight: '500'}}>{getActiveSalesperson().role.toUpperCase()} - GRUPO SOPENA</p>
+                        <p style={{margin: '5px 0 0 0', fontSize: '0.9rem', color: '#475569'}}>
+                          📞 {getActiveSalesperson().phone} | ✉️ <a href={`mailto:${getActiveSalesperson().email}`} style={{color: '#0a3d91', textDecoration: 'none', fontWeight: '600'}}>{getActiveSalesperson().email}</a>
                         </p>
                         <div className="no-print" style={{marginTop: '10px', display: 'flex', gap: '10px', flexWrap: 'wrap'}}>
                           {getActiveSalesperson().whatsapp && (
