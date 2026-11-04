@@ -93,7 +93,11 @@ async function main() {
   if (!url || !key) throw new Error('Faltan VITE_SUPABASE_URL / clave en .env');
   console.log(`🔑 Usando clave: ${process.env.SUPABASE_SERVICE_ROLE_KEY ? 'service_role' : 'anon'}`);
 
-  const supabase = createClient(url, key, { auth: { persistSession: false } });
+  const supabase = createClient(url, key, {
+    auth: { persistSession: false },
+    // Cabeceras de auditoría (Fase 2): identifican este script en audit.log
+    global: { headers: { 'x-app-user': 'script', 'x-app-source': 'script:migrate_json' } },
+  });
   const json = JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
 
   // 1. Integridad previa: IDs únicos

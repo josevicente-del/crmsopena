@@ -58,6 +58,33 @@ export function saveSupabaseConfig(url, anonKey) {
 let _supabaseInstance = null;
 
 /**
+ * Nombre del usuario del CRM con sesión activa (para la auditoría).
+ * Se quitan acentos porque las cabeceras HTTP deben ser ASCII.
+ */
+function getAuditUserName() {
+  try {
+    const session = JSON.parse(localStorage.getItem('sopena_user_session') || 'null');
+    const name = session?.name || session?.username || 'anonimo';
+    return String(name).normalize('NFD').replace(/[^\x20-\x7E]/g, '').slice(0, 120);
+  } catch {
+    return 'anonimo';
+  }
+}
+
+/**
+ * fetch con cabeceras de auditoría: el trigger audit.fn_log_change()
+ * las lee para guardar QUIÉN (x-app-user) y DESDE DÓNDE (x-app-source)
+ * se hizo cada cambio. Se calcula en cada petición, así refleja
+ * cambios de sesión sin recrear el cliente.
+ */
+function auditFetch(input, init = {}) {
+  const headers = new Headers(init.headers || {});
+  headers.set('x-app-user', getAuditUserName());
+  headers.set('x-app-source', 'ui');
+  return fetch(input, { ...init, headers });
+}
+
+/**
  * Obtiene la instancia activa de Supabase (o null si no está configurado)
  */
 export function getSupabaseClient() {
@@ -72,7 +99,8 @@ export function getSupabaseClient() {
         auth: {
           persistSession: true,
           autoRefreshToken: true
-        }
+        },
+        global: { fetch: auditFetch } // cabeceras de auditoría en cada petición
       });
     } catch (e) {
       console.error('[SupabaseClient] Error al inicializar cliente Supabase:', e);
