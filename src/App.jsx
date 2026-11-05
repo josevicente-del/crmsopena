@@ -30,6 +30,12 @@ import {
   getSupabaseConfig, 
   testSupabaseConnection 
 } from './utils/supabaseClient';
+import {
+  fetchAllProspectsFromSupabase,
+  syncSingleProspectToSupabase,
+  softDeleteProspectInSupabase,
+  subscribeToProspectChanges
+} from './utils/supabaseSync';
 import { logUserInteraction, fetchAuditLogs } from './utils/auditLogger';
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -739,33 +745,53 @@ const App = () => {
     };
     loadAuditHistory();
 
-    // Sincronización activa con la API REST central (/api/prospects) y Supabase al iniciar
+    // Sincronización bidireccional prioritaria con Supabase PostgreSQL (Fase 4)
+    let unsubscribeRealtime = () => {};
     const syncFromGlobalDb = async () => {
       try {
-        const res = await fetch('/api/prospects');
-        if (res.ok) {
-          const cloudProspects = await res.json();
-          if (Array.isArray(cloudProspects) && cloudProspects.length > 0 && isMounted) {
-            // Reconciliar sin perder modificaciones locales no persistidas
-            setProspects(prev => {
-              const cloudMap = new Map(cloudProspects.map(p => [String(p.id), p]));
-              return prev.map(p => {
-                const cloudRecord = cloudMap.get(String(p.id));
-                if (cloudRecord) {
-                  return { ...p, ...cloudRecord, tasks: p.tasks || cloudRecord.tasks || [] };
-                }
-                return p;
+        // 1. Carga directa de la base de datos PostgreSQL en Supabase
+        const supabaseProspects = await fetchAllProspectsFromSupabase();
+        if (Array.isArray(supabaseProspects) && supabaseProspects.length > 0 && isMounted) {
+          console.log("[SupabaseSync] Prospectos sincronizados desde Supabase:", supabaseProspects.length);
+          setProspects(supabaseProspects);
+        } else {
+          // Fallback a API REST Netlify si Supabase no está disponible
+          const res = await fetch("/api/prospects");
+          if (res.ok) {
+            const cloudProspects = await res.json();
+            if (Array.isArray(cloudProspects) && cloudProspects.length > 0 && isMounted) {
+              setProspects(prev => {
+                const cloudMap = new Map(cloudProspects.map(p => [String(p.id), p]));
+                return prev.map(p => cloudMap.get(String(p.id)) || p);
               });
-            });
+            }
           }
         }
       } catch (err) {
-        console.warn('[GlobalDB] Conexión activa con API de prospectos:', err);
+        console.warn("[SupabaseSync] Conexión activa:", err);
+      }
+
+      // 2. Suscripción en Tiempo Real (Supabase Realtime)
+      if (isMounted) {
+        unsubscribeRealtime = subscribeToProspectChanges(
+          (newProspect) => {
+            setProspects(prev => {
+              if (prev.some(p => String(p.id) === String(newProspect.id))) return prev;
+              return [newProspect, ...prev];
+            });
+          },
+          (updatedProspect) => {
+            setProspects(prev => prev.map(p => String(p.id) === String(updatedProspect.id) ? { ...p, ...updatedProspect } : p));
+          },
+          (deletedId) => {
+            setProspects(prev => prev.filter(p => String(p.id) !== String(deletedId)));
+          }
+        );
       }
     };
     syncFromGlobalDb();
 
-    return () => { isMounted = false; };
+    return () => { isMounted = false; if (typeof unsubscribeRealtime === "function") unsubscribeRealtime(); };
   }, []);
 
   // Sincronizar bidireccionalmente las tareas dentro de la propiedad p.tasks de cada prospecto
@@ -1161,11 +1187,31 @@ const App = () => {
   }, [filteredProspects, currentPage, itemsPerPage]);
 
   // Memoizamos la lista específica para el Pipeline (Kanban), aplicando únicamente prospectos autorizados
+  // Búsqueda alfabética del Pipeline: texto libre (nombre/CIF) e inicial A-Z
+  const [pipelineSearch, setPipelineSearch] = useState('');
+  const [pipelineLetter, setPipelineLetter] = useState(''); // '' = todas, '#' = número/símbolo
+
+  /** Inicial normalizada (sin acentos, mayúscula) del nombre; '#' si no es letra. */
+  const getInitialLetter = (name = '') => {
+    const first = String(name).trim().charAt(0).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
+    return /[A-Z]/.test(first) ? first : '#';
+  };
+
+  // Columnas del Kanban. Cualquier etapa desconocida, antigua ("Prospección Inicial") o vacía
+  // se muestra en "Lead" para que NINGUNA empresa quede fuera del tablero.
+  const PIPELINE_STAGES = ["Lead","Contactado","Propuesta","Cerrado Ganado","Cerrado Perdido"];
+  const normalizePipelineStage = (stage) => (PIPELINE_STAGES.includes(stage) ? stage : 'Lead');
+
   const pipelineProspects = useMemo(() => {
+    const q = pipelineSearch.trim().toLowerCase();
     const result = userProspects.filter(p => {
       const matchZone = filterZone === '' || p.zone === filterZone;
       const matchSector = filterSector === '' || p.sector === filterSector;
-      return matchZone && matchSector;
+      const matchSearch = q === '' ||
+        (p.name || '').toLowerCase().includes(q) ||
+        (p.cif || '').toLowerCase().includes(q);
+      const matchLetter = pipelineLetter === '' || getInitialLetter(p.name) === pipelineLetter;
+      return matchZone && matchSector && matchSearch && matchLetter;
     });
     return [...result].sort((a, b) => {
       if (pipelineSortOrder === 'alphabetical') {
@@ -1179,7 +1225,7 @@ const App = () => {
       }
       return 0;
     });
-  }, [userProspects, filterZone, filterSector, pipelineSortOrder]);
+  }, [userProspects, filterZone, filterSector, pipelineSortOrder, pipelineSearch, pipelineLetter]);
 
   // Estados para filtrar en la Calculadora / Planificador de Rutas
   const [routingFilterName, setRoutingFilterName] = useState('');
@@ -1555,6 +1601,7 @@ const App = () => {
       } catch (e) {
         console.error('Error al actualizar empresas añadidas tras eliminación:', e);
       }
+      softDeleteProspectInSupabase(prospectId);
       setProspects(prev => prev.filter(p => p.id !== prospectId));
       if (selectedProspect && selectedProspect.id === prospectId) {
         setSelectedProspect(null);
@@ -5435,7 +5482,52 @@ const App = () => {
                     <option value="revenue-asc">Facturación (Asc.)</option>
                   </select>
                 </div>
+                {/* Buscador por nombre o CIF dentro del Pipeline */}
+                <div className="filter-group">
+                  <label>Buscar empresa</label>
+                  <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                    <input
+                      type="text"
+                      placeholder="Nombre o CIF..."
+                      value={pipelineSearch}
+                      onChange={e => setPipelineSearch(e.target.value)}
+                      style={{ width: '100%', padding: '8px 28px 8px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '13px', backgroundColor: '#ffffff', color: '#0f172a' }}
+                    />
+                    {pipelineSearch && (
+                      <button onClick={() => setPipelineSearch('')} title="Limpiar búsqueda"
+                        style={{ position: 'absolute', right: '6px', background: 'none', border: 'none', cursor: 'pointer', color: '#64748b', fontSize: '14px' }}>✕</button>
+                    )}
+                  </div>
+                </div>
               </div>
+
+              {/* Índice alfabético: filtra el Kanban por la inicial del nombre */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '15px', alignItems: 'center' }}>
+                <span style={{ fontSize: '0.78rem', color: '#475569', fontWeight: 600, marginRight: '6px' }}>Inicial:</span>
+                {['', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''), '#'].map(letter => {
+                  const active = pipelineLetter === letter;
+                  return (
+                    <button
+                      key={letter || 'all'}
+                      onClick={() => setPipelineLetter(letter)}
+                      title={letter === '' ? 'Todas las letras' : letter === '#' ? 'Empiezan por número o símbolo' : `Empresas que empiezan por ${letter}`}
+                      style={{
+                        minWidth: letter === '' ? '52px' : '28px', padding: '4px 6px', borderRadius: '6px', cursor: 'pointer',
+                        fontSize: '0.75rem', fontWeight: 700,
+                        border: active ? '1px solid var(--sopena-blue)' : '1px solid #cbd5e1',
+                        background: active ? 'var(--sopena-blue)' : '#ffffff',
+                        color: active ? '#ffffff' : '#334155'
+                      }}
+                    >
+                      {letter === '' ? 'Todas' : letter}
+                    </button>
+                  );
+                })}
+                <span style={{ fontSize: '0.75rem', color: '#64748b', marginLeft: '8px' }}>
+                  {pipelineProspects.length} empresas
+                </span>
+              </div>
+
               <div className="pipeline-container" style={{display: 'flex', gap: '20px', overflowX: 'auto', paddingBottom: '20px', height: 'calc(100vh - 150px)'}}>
                 {['Lead', 'Contactado', 'Propuesta', 'Cerrado Ganado', 'Cerrado Perdido'].map(stage => (
                   <div key={stage} style={{flex: '0 0 300px', background: '#f1f5f9', borderRadius: '12px', padding: '15px', display: 'flex', flexDirection: 'column'}}>
@@ -5443,13 +5535,13 @@ const App = () => {
                        {stage} 
                         <span style={{display: 'flex', alignItems: 'center', gap: '6px'}}>
                           <span style={{background: '#ecfdf5', color: '#065f46', border: '1px solid #a7f3d0', borderRadius: '6px', padding: '2px 6px', fontSize: '0.72rem', fontWeight: 700}}>
-                            {new Intl.NumberFormat('es-ES').format(pipelineProspects.filter(p => (p.pipelineStage || 'Lead') === stage).reduce((s, p) => s + (getB2BExtrusionProfile(p).estimatedTonsPerYear || 0), 0))} Tn/año
+                            {new Intl.NumberFormat('es-ES').format(pipelineProspects.filter(p => normalizePipelineStage(p.pipelineStage) === stage).reduce((s, p) => s + (getB2BExtrusionProfile(p).estimatedTonsPerYear || 0), 0))} Tn/año
                           </span>
-                          <span style={{background: 'var(--sopena-blue)', color: 'white', borderRadius: '50%', padding: '2px 8px', fontSize: '0.8rem'}}>{pipelineProspects.filter(p => (p.pipelineStage || 'Lead') === stage).length}</span>
+                          <span style={{background: 'var(--sopena-blue)', color: 'white', borderRadius: '50%', padding: '2px 8px', fontSize: '0.8rem'}}>{pipelineProspects.filter(p => normalizePipelineStage(p.pipelineStage) === stage).length}</span>
                         </span>
                     </h3>
                     <div style={{flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '10px', paddingRight: '5px'}}>
-                      {pipelineProspects.filter(p => (p.pipelineStage || 'Lead') === stage).map(p => {
+                      {pipelineProspects.filter(p => normalizePipelineStage(p.pipelineStage) === stage).map(p => {
                         const b2b = getB2BExtrusionProfile(p);
                         return (
                         <div key={p.id} style={{background: 'white', padding: '15px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', borderLeft: `4px solid ${stage.includes('Ganado') ? '#10b981' : stage.includes('Perdido') ? '#ef4444' : 'var(--sopena-blue)'}`, position: 'relative'}}>

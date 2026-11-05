@@ -54,7 +54,7 @@ function buildProspect(p, idx) {
     response: 'Pendiente de primer contacto comercial',
     notes: p.notes,
     createdAt: new Date().toISOString(),
-    pipelineStage: 'Prospección Inicial',
+    pipelineStage: 'Lead',
     certamen: null,
     emailableStatus: p.email ? 'unverified' : 'not_found',
     tasks: [],
