@@ -132,16 +132,16 @@ function buildSupabaseRow(comp, sourceTag) {
 }
 
 /**
- * Sincroniza un lote de empresas en prospects.json y Supabase, devolviendo un resumen.
+ * Inicializa el cliente Supabase con las cabeceras de auditoría estándar del proyecto.
  */
-async function syncProspectBatch(companies, { appUser, appSource, dbPath = DEFAULT_DB_PATH, envPath = DEFAULT_ENV_PATH }) {
+function createAuditedSupabaseClient({ appUser, appSource, envPath = DEFAULT_ENV_PATH }) {
   loadEnvFile(envPath);
 
   if (!process.env.VITE_SUPABASE_URL || !process.env.VITE_SUPABASE_ANON_KEY) {
     throw new Error('Faltan VITE_SUPABASE_URL o VITE_SUPABASE_ANON_KEY en .env o entorno.');
   }
 
-  const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.VITE_SUPABASE_ANON_KEY, {
+  return createClient(process.env.VITE_SUPABASE_URL, process.env.VITE_SUPABASE_ANON_KEY, {
     auth: { persistSession: false },
     global: {
       headers: {
@@ -150,6 +150,13 @@ async function syncProspectBatch(companies, { appUser, appSource, dbPath = DEFAU
       }
     }
   });
+}
+
+/**
+ * Sincroniza un lote de empresas en prospects.json y Supabase, devolviendo un resumen.
+ */
+async function syncProspectBatch(companies, { appUser, appSource, dbPath = DEFAULT_DB_PATH, envPath = DEFAULT_ENV_PATH }) {
+  const supabase = createAuditedSupabaseClient({ appUser, appSource, envPath });
 
   // 1. Leer base local e indexar identificadores, CIFs y dominios existentes
   const db = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
@@ -212,10 +219,39 @@ async function syncProspectBatch(companies, { appUser, appSource, dbPath = DEFAU
   };
 }
 
+/**
+ * Enriquece un registro existente por ID en prospects.json y Supabase sin duplicarlo.
+ */
+async function enrichExistingProspect(
+  id,
+  jsonPatch,
+  supabasePatch,
+  { appUser, appSource, dbPath = DEFAULT_DB_PATH, envPath = DEFAULT_ENV_PATH }
+) {
+  const supabase = createAuditedSupabaseClient({ appUser, appSource, envPath });
+  const db = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+  const targetIndex = db.findIndex(item => String(item.id) === String(id));
+
+  if (targetIndex === -1) {
+    throw new Error(`No se encontró el registro ${id} en ${dbPath}`);
+  }
+
+  db[targetIndex] = { ...db[targetIndex], ...jsonPatch };
+  fs.writeFileSync(dbPath, JSON.stringify(db, null, 2), 'utf8');
+
+  const { error } = await supabase.from('prospects').update(supabasePatch).eq('id', id);
+  if (error) {
+    throw new Error(`Error actualizando ${id} en Supabase: ${error.message}`);
+  }
+
+  return { id, totalJsonCount: db.length };
+}
+
 module.exports = {
   normalizeDomain,
   buildJsonRecord,
   buildSupabaseRow,
-  syncProspectBatch
+  syncProspectBatch,
+  enrichExistingProspect
 };
 
