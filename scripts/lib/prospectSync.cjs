@@ -205,17 +205,29 @@ async function syncProspectBatch(companies, { appUser, appSource, dbPath = DEFAU
 
   // 4. Sincronizar registros en Supabase PostgreSQL
   const rowsToSync = (inserted.length > 0 ? inserted : companies).map(c => buildSupabaseRow(c, appSource));
-  const { error } = await supabase.from('prospects').upsert(rowsToSync, { onConflict: 'id' });
+  let supabaseSynced = false;
+  let supabaseError = null;
 
-  if (error) {
-    throw new Error(`Error sincronizando con Supabase: ${error.message}`);
+  try {
+    const { error } = await supabase.from('prospects').upsert(rowsToSync, { onConflict: 'id' });
+    if (error) {
+      supabaseError = error.message;
+      console.warn(`[Supabase Sync] Advertencia en upsert: ${error.message}`);
+    } else {
+      supabaseSynced = true;
+    }
+  } catch (err) {
+    supabaseError = err.message || String(err);
+    console.warn(`[Supabase Sync] No se pudo conectar con el endpoint de Supabase (${err.code || err.message}). Posible proyecto pausado o sin resolución DNS.`);
   }
 
   return {
     addedCount: inserted.length,
     skipped,
     totalJsonCount: db.length,
-    syncedCount: rowsToSync.length
+    syncedCount: supabaseSynced ? rowsToSync.length : 0,
+    supabaseSynced,
+    supabaseError
   };
 }
 

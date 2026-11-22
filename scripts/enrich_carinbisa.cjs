@@ -88,3 +88,4 @@ main().catch(err => {
   console.error('Error actualizando Carinbisa:', err.message);
   process.exit(1);
 });
+

@@ -61,3 +61,4 @@ main().catch(err => {
   console.error('Error en script VETECO Inrialsa:', err.message);
   process.exit(1);
 });
+
