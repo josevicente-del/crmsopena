@@ -826,12 +826,22 @@ const App = () => {
       whatsapp: '34610240017',
       zones: ['Asturias', 'Castilla y Leon', 'Portugal', 'Pais Vasco']
     },
-    // Configuración de usuario comercial: Alfredo Domingo
+    // Configuración de usuario comercial: Delegado Comunidad Valenciana, Madrid y Castilla-La Mancha
+    delegadocv: {
+      username: 'delegadocv',
+      name: 'Delegado Comunidad Valenciana, Madrid y Castilla-La Mancha',
+      role: 'Delegado Comercial Comunidad Valenciana, Madrid y Castilla-La Mancha',
+      email: 'info@gruposopena.com',
+      phone: '+34 609 634 869',
+      whatsapp: '34609634869',
+      zones: ['Comunidad Valenciana', 'Comunidad de Madrid', 'Castilla-La Mancha']
+    },
+    // Alias de retrocompatibilidad
     adomingo: {
-      username: 'adomingo',
-      name: 'Alfredo Domingo',
-      role: 'Comercial Senior',
-      email: 'adomingo@gruposopena.com',
+      username: 'delegadocv',
+      name: 'Delegado Comunidad Valenciana, Madrid y Castilla-La Mancha',
+      role: 'Delegado Comercial Comunidad Valenciana, Madrid y Castilla-La Mancha',
+      email: 'info@gruposopena.com',
       phone: '+34 609 634 869',
       whatsapp: '34609634869',
       zones: ['Comunidad Valenciana', 'Comunidad de Madrid', 'Castilla-La Mancha']
@@ -860,6 +870,17 @@ const App = () => {
           parsed.phone = '+34 610 240 017';
           parsed.whatsapp = '34610240017';
           parsed.zones = ['Asturias', 'Castilla y Leon', 'Portugal', 'Pais Vasco'];
+          localStorage.setItem('sopena_user_session', JSON.stringify(parsed));
+          return parsed;
+        }
+        if (parsed && (parsed.username === 'adomingo' || parsed.username === 'delegadocv')) {
+          parsed.username = 'delegadocv';
+          parsed.name = 'Delegado Comunidad Valenciana, Madrid y Castilla-La Mancha';
+          parsed.role = 'Delegado Comercial Comunidad Valenciana, Madrid y Castilla-La Mancha';
+          parsed.email = 'info@gruposopena.com';
+          parsed.phone = '+34 609 634 869';
+          parsed.whatsapp = '34609634869';
+          parsed.zones = ['Comunidad Valenciana', 'Comunidad de Madrid', 'Castilla-La Mancha'];
           localStorage.setItem('sopena_user_session', JSON.stringify(parsed));
           return parsed;
         }
@@ -2602,7 +2623,7 @@ const App = () => {
 
   // Estados para asignación de comercial en la Presentación Corporativa
   // 'auto': según la zona del cliente seleccionado
-  // 'norte1' | 'adomingo' | 'karim': comercial específico
+  // 'norte1' | 'delegadocv' | 'karim': comercial específico
   // 'custom': comercial genérico configurable con campos libres
   const [selectedSalespersonId, setSelectedSalespersonId] = useState('auto');
   const [customSalesperson, setCustomSalesperson] = useState({
@@ -2618,7 +2639,7 @@ const App = () => {
     if (!zone) return SOPENA_USERS.norte1;
     const z = zone.toLowerCase();
     if (z.includes('valenciana') || z.includes('madrid') || z.includes('mancha')) {
-      return SOPENA_USERS.adomingo;
+      return SOPENA_USERS.delegadocv;
     }
     if (z.includes('francia') || z.includes('france')) {
       return SOPENA_USERS.karim;
@@ -2885,10 +2906,10 @@ const App = () => {
               </button>
               <button 
                 type="button" 
-                onClick={() => { setUsername('adomingo'); setPassword(''); }} 
-                style={{ padding: '4px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', background: username === 'adomingo' ? '#e0f2fe' : 'white', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600, color: '#0369a1' }}
+                onClick={() => { setUsername('delegadocv'); setPassword(''); }} 
+                style={{ padding: '4px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', background: (username === 'delegadocv' || username === 'adomingo') ? '#e0f2fe' : 'white', cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600, color: '#0369a1' }}
               >
-                👤 adomingo (CV, Mad, CLM)
+                👤 Delegado (CV, Mad, CLM)
               </button>
               <button 
                 type="button" 
@@ -2912,7 +2933,7 @@ const App = () => {
               <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#475569', marginBottom: '4px', display: 'block' }}>Usuario</label>
               <input 
                 type="text" 
-                placeholder="Ej. adomingo, karim, norte1" 
+                placeholder="Ej. delegadocv, karim, norte1" 
                 value={username} 
                 onChange={e => setUsername(e.target.value)} 
                 style={{width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '0.95rem', boxSizing: 'border-box'}}
@@ -4242,7 +4263,7 @@ const App = () => {
                         🔄 Automático según zona ({presentationTarget ? `${presentationTarget.zone} → ${getSalespersonByZone(presentationTarget.zone).name}` : 'General → Norte 1'})
                       </option>
                       <option value="norte1">Norte 1 (Delegado Comercial / Ast, CyL, Por, PV)</option>
-                      <option value="adomingo">Alfredo Domingo (Comercial Senior / Levante y Centro)</option>
+                      <option value="delegadocv">Delegado Comunidad Valenciana, Madrid y Castilla-La Mancha</option>
                       <option value="karim">Karim Kharkhor (Comercial Francia)</option>
                       <option value="custom">✏️ Comercial Personalizado / Genérico...</option>
                     </select>
